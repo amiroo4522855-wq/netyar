@@ -285,7 +285,7 @@ function secHead(icon,iconCls,title,mini){
   return '<div class="sec-head reveal"><span class="sq '+iconCls+'">'+ic(icon,16)+'</span><h2>'+title+'</h2><span class="mini">'+mini+'</span><span class="ln"></span></div>';
 }
 /* ---------- لینک پروژه در گیت‌هاب ---------- */
-const GH={user:'USERNAME',repo:'netyar'};
+const GH={user:'amiroo4522855-wq',repo:'netyar'};
 function ghUrl(){return 'https://github.com/'+GH.user+'/'+GH.repo;}
 function ghPage(){return 'https://'+GH.user+'.github.io/'+GH.repo+'/';}
 function footHtml(){

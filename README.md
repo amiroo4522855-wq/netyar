@@ -53,7 +53,7 @@ python3 -m http.server 3000
 
 1. ریپو را بساز و push کن (دستورات پایین 👇)
 2. در ریپو: **Settings → Pages → Source: GitHub Actions**
-3. تمام! آدرس زنده: `https://USERNAME.github.io/netyar/`
+3. تمام! آدرس زنده: `https://amiroo4522855-wq.github.io/netyar/`
 
 *(ورک‌فلو آماده در `.github/workflows/pages.yml` هست و با هر push خودکار منتشر می‌کند.)*
 
@@ -61,7 +61,7 @@ python3 -m http.server 3000
 
 ```bash
 # در github.com یک ریپوی جدید به نام netyar بساز (بدون README) بعد:
-git remote add origin https://github.com/USERNAME/netyar.git
+git remote add origin https://github.com/amiroo4522855-wq/netyar.git
 git push -u origin main
 ```
 
