@@ -13,7 +13,7 @@ font-weight:100 900;font-style:normal;font-display:swap;}
 </style>`;
 
 /* دیتای سایت‌ها */
-const dataFiles = ['data1.js','data2.js','data3.js','data4.js','data5.js','data6.js','data7.js','data8.js','data9.js'];
+const dataFiles = ['data1.js','data2.js','data3.js','data4.js','data5.js','data6.js','data7.js','data8.js','data9.js','data10.js'];
 const DATA = dataFiles.map(read).join('\n')
   + '\nconst RAW=[].concat(' + dataFiles.map((_, i) => 'SITES_P' + (i + 1)).join(',') + ');';
 

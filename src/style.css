@@ -956,3 +956,36 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.25)}
 .m-art{transition:transform .12s linear,box-shadow .3s}
 .m-now:hover .m-ttl{color:var(--gold2)}
 .m-ttl{transition:color .3s}
+
+/* ============ v7: انیمیشن نرم باز و بسته شدن بخش‌ها ============ */
+.content{will-change:opacity,transform}
+.content.v-leave{animation:vLeave .16s cubic-bezier(.4,0,.7,1) forwards}
+.content.v-enter{animation:vEnter .4s cubic-bezier(.2,.8,.25,1)}
+@keyframes vLeave{to{opacity:0;transform:translateY(-12px) scale(.994);filter:blur(3px)}}
+@keyframes vEnter{from{opacity:0;transform:translateY(20px) scale(.988);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.content.v-leave,.content.v-enter{animation:none}.content.v-leave{opacity:.5}}
+/* ============ v7: پخش فوری ============ */
+.quick-band{margin-top:15px;display:flex;flex-direction:column;gap:9px;align-items:center}
+.qb-lbl{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:850;color:var(--gold2)}
+.quick-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.qk{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:99px;cursor:pointer;
+  background:rgba(148,180,224,.06);border:1px solid var(--line);transition:all .22s;font-family:inherit;color:var(--tx)}
+.qk b{font-size:11px;font-weight:800}
+.qk svg{color:var(--gold2);flex-shrink:0}
+.qk:hover{background:rgba(217,174,62,.13);border-color:rgba(217,174,62,.5);transform:translateY(-2px);box-shadow:0 8px 18px rgba(217,174,62,.15)}
+.qk:active{transform:scale(.95)}
+.qk.ontrack{background:rgba(217,174,62,.16);border-color:rgba(217,174,62,.6)}
+/* ============ v7: پلیر شیک و تمیز ============ */
+.m-art{transition:border-radius .6s cubic-bezier(.2,.8,.3,1),box-shadow .4s,transform .1s linear}
+.playing .m-art{border-radius:50%;box-shadow:0 0 0 3px rgba(240,199,94,.45),0 18px 44px rgba(2,8,20,.65),0 0 46px rgba(240,199,94,.2)}
+.playing .m-art img{animation:vinyl 9s linear infinite}
+.playing .m-art .fallback{animation:vinyl 9s linear infinite}
+@keyframes vinyl{to{transform:rotate(360deg)}}
+.playing .m-ttl{color:var(--gold2);text-shadow:0 0 26px rgba(240,199,94,.32)}
+.playing .ctl.main{animation:beatp 2.4s ease-in-out infinite}
+@keyframes beatp{0%,100%{transform:scale(1)}7%{transform:scale(1.06)}14%{transform:scale(1)}}
+#mSeek{cursor:pointer;transition:height .16s ease}
+#mSeek:hover{height:8px}
+#mSeek::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(240,199,94,.16);transition:box-shadow .2s,transform .2s}
+#mSeek:hover::-webkit-slider-thumb{box-shadow:0 0 0 9px rgba(240,199,94,.26)}
+#mSeek::-moz-range-thumb{box-shadow:0 0 0 5px rgba(240,199,94,.16)}

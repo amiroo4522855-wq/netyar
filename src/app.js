@@ -254,7 +254,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۶٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۷٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -323,7 +323,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۶٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۷٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -566,6 +566,17 @@ function wireAudio(a){
   a.addEventListener('error',()=>{
     const t=MUS.queue[MUS.qi];
     if(!t)return;
+    /* اول: استریم را از هاست بعدی اوودیوس امتحان کن */
+    if(t.p==='audius'){
+      const hi=(t.hi||0)+1;
+      if(hi<AUDIUS_HOSTS.length){
+        t.hi=hi;
+        t.stream=AUDIUS_HOSTS[hi]+'/v1/tracks/'+t.id+'/stream?app_name=NETYAR';
+        MUS.retried=null;
+        musLoad(t);
+        return;
+      }
+    }
     if(a.crossOrigin==='anonymous'&&MUS.retried!==t.id){
       MUS.retried=t.id;
       try{MUS.corsCache[new URL(t.stream,location.href).origin]=false;}catch(e){}
@@ -621,6 +632,21 @@ function fmtPlays(n){
   if(n>=1e3)return faNum(grp(Math.round(n/1e3)))+' هزار';
   return faNum(grp(n));
 }
+/* --- پخش فوری: قطعه‌های تأییدشده که همیشه پخش می‌شوند (لینک مستقیم آرشیو) --- */
+const QUICK_TRACKS=[
+  {t:'سونات پاتتیک — بتهوون',a:'آرتور روبینشتاین — پیانو',id:'HSTR-503',u:'https://archive.org/download/HSTR-503/Beethoven%20Piano%20Sonata%20No.%208%2C%20Op.%2013%20Path%C3%A9tique%2C%20I-Arthur%20Rubinstein%20-%20voyxkC-AiG0.mp3'},
+  {t:'سونات پیانو ۱۲ — بتهوون',a:'آندانته با واریاسیون‌ها',id:'parso-1c14b3b5d7149adf7b279b0c6e5932248a49c936',u:'https://archive.org/download/parso-1c14b3b5d7149adf7b279b0c6e5932248a49c936/001_I_Andante_con_variazioni.mp3'},
+  {t:'سونات کروتزر — آداجیو',a:'ویولن و پیانو — بوش و سرکین',id:'Kreutzer1stmvmtbuschSerkin',u:'https://archive.org/download/Kreutzer1stmvmtbuschSerkin/kreutzer-1stmvmt%20(busch%2C%20serkin).mp3'},
+  {t:'سونات کروتزر — فیناله پرستو',a:'ویولن و پیانو — بتهوون',id:'612ViolinSonataNo.9InAMajorOp.47KreutzerIII.FinalePresto',u:'https://archive.org/download/612ViolinSonataNo.9InAMajorOp.47KreutzerIII.FinalePresto/6-12%20Violin%20Sonata%20No.%209%20in%20A%20major%2C%20Op.%2047%2C%20_Kreutzer_%20-%20III.%20Finale_%20Presto.mp3'},
+  {t:'نوکتورن اُپوس ۶۲ — شوپن',a:'اریک تن‌برگ — پیانو',id:'then-bergh-chopin-op.-62-2',u:'https://archive.org/download/then-bergh-chopin-op.-62-2/Then-Bergh%20-%20%20Chopin%20op.%2062%20(2).mp3'},
+  {t:'نوکتورن دو مینور — شوپن',a:'B.108 — پیانوی کلاسیک',id:'parso-0376f076666a403745bbb1c79277856a9f5ef9d4',u:'https://archive.org/download/parso-0376f076666a403745bbb1c79277856a9f5ef9d4/000_Nocturne_B_108_in_C_minor.mp3'},
+  {t:'جاز کلاسیک و سوئینگ',a:'دیوین یاماناکا — رادیو',id:'ClassicJazzAndSwing-91111',u:'https://archive.org/download/ClassicJazzAndSwing-91111/CJS110911.mp3'},
+];
+function musQuickPlay(i){
+  MUS.queue=QUICK_TRACKS.map(q=>({p:'arch',id:q.id,t:q.t,a:q.a,
+    art:'https://archive.org/services/img/'+encodeURIComponent(q.id),d:0,g:'پخش فوری',pc:0,stream:q.u}));
+  musPlayAt(i);
+}
 /* --- هاست‌های discovery (استریم را سرو می‌کنند) --- */
 const AUDIUS_HOSTS=[
   'https://discoveryprovider.audius.co',
@@ -659,31 +685,36 @@ function musSearch(q,autoPlay){
     const seen=new Set();
     list=list.filter(t=>{const k=(t.t+'|'+t.a).toLowerCase();if(seen.has(k))return false;seen.add(k);return true;});
     MUS.loading=false;
-    if(!list.length){MUS.err='نتیجه‌ای برای «'+q+'» پیدا نشد — عبارت دیگری امتحان کن یا با دکمه‌های گوگل و یوتیوب دنبالش بگرد.';}
+    if(!list.length){MUS.err='نتیجه‌ای برای «'+q+'» پیدا نشد — عبارت دیگری امتحان کن، یا همین بالا از «پخش فوری» بزن که همیشه کار می‌کند. لینک گوگل و یوتیوب هم سر جایش است.';}
     MUS.results=list;
     renderMusResults();
     if(MUS.autoPlay&&list.length){MUS.autoPlay=false;musPlayAt(0);}
   });
 }
+function raceAny(ps){
+  if(Promise.any)return Promise.any(ps);
+  return new Promise((res,rej)=>{
+    let n=ps.length;const errs=[];
+    ps.forEach(p=>p.then(res,e=>{errs.push(e);if(--n===0)rej(errs[0]);}));
+  });
+}
 function audiusSearch(q){
   if(typeof fetch==='undefined')return Promise.reject(new Error('no fetch'));
-  let hi=0;
-  function attempt(){
-    const h=AUDIUS_HOSTS[hi];
-    return fetch(h+'/v1/tracks/search?query='+encodeURIComponent(q)+'&app_name=NETYAR',{headers:{'Accept':'application/json'}})
-      .then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.json();})
-      .catch(err=>{hi++;if(hi<AUDIUS_HOSTS.length){MUS.host=AUDIUS_HOSTS[hi];return attempt();}throw err;});
-  }
-  return attempt().then(j=>{
-    const arr=(j&&j.data)||[];
-    return arr.filter(t=>t&&(t.is_streamable===true||t.is_streamable===undefined)).map(t=>({
-      p:'audius',id:t.id,t:t.title||'بدون نام',
-      a:(t.user&&(t.user.name||t.user.handle))||'ناشناس',
-      art:(t.artwork&&(t.artwork['480x480']||t.artwork['150x150']))||'',
-      d:t.duration||0,g:t.genre||'',pc:t.play_count||0,
-      stream:MUS.host+'/v1/tracks/'+t.id+'/stream?app_name=NETYAR'
-    }));
-  });
+  const one=h=>fetch(h+'/v1/tracks/search?query='+encodeURIComponent(q)+'&app_name=NETYAR',{headers:{'Accept':'application/json'}})
+    .then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.json();})
+    .then(j=>{
+      MUS.host=h;
+      const arr=(j&&j.data)||[];
+      return arr.filter(t=>t&&(t.is_streamable===true||t.is_streamable===undefined)).map(t=>({
+        p:'audius',id:t.id,t:t.title||'بدون نام',
+        a:(t.user&&(t.user.name||t.user.handle))||'ناشناس',
+        art:(t.artwork&&(t.artwork['480x480']||t.artwork['150x150']))||'',
+        d:t.duration||0,g:t.genre||'',pc:t.play_count||0,
+        stream:h+'/v1/tracks/'+t.id+'/stream?app_name=NETYAR'
+      }));
+    });
+  /* هر سه هاست همزمان؛ هر کدام زودتر جواب داد همان برنده است */
+  return raceAny(AUDIUS_HOSTS.map(one)).catch(()=>[]);
 }
 function archSearch(q){
   if(typeof fetch==='undefined')throw new Error('no fetch');
@@ -719,6 +750,7 @@ function musPlayAt(i){
   if(!MUS.queue.length)return;
   MUS.qi=(i+MUS.queue.length)%MUS.queue.length;
   MUS.retried=null;
+  if(MUS.queue[MUS.qi])MUS.queue[MUS.qi].hi=0;
   const t=MUS.queue[MUS.qi];
   const prep=t.p==='arch'?archResolve(t):Promise.resolve(t);
   prep.then(tt=>musLoad(tt)).catch(()=>{toast('فایل این آهنگ در دسترس نیست','alert');});
@@ -931,6 +963,8 @@ function musHero(){
       +'<span class="mtab'+(MUS.prov==='audius'?' active':'')+'" onclick="musProv(\'audius\')">'+ic('radio',14)+'اودیوس — موزیک زنده</span>'
       +'<span class="mtab'+(MUS.prov==='arch'?' active':'')+'" onclick="musProv(\'arch\')">'+ic('library',14)+'آرشیو اینترنت — کلاسیک و تاریخی</span>'
     +'</div>'
+    +'<div class="quick-band"><span class="qb-lbl">'+ic('zap',13)+'پخش فوری — بدون جستجو، همیشه کار می‌کند:</span>'
+      +'<div class="quick-row">'+QUICK_TRACKS.map((q,i)=>'<span class="qk" onclick="musQuickPlay('+i+')" title="'+esc(q.a)+'">'+ic('play',12)+'<b>'+q.t+'</b></span>').join('')+'</div></div>'
     +'<div class="chips" style="justify-content:center">'+QUICK.map(q=>'<span class="chip" onclick="musQuick(\''+q+'\')">'+ic('music',12)+q+'</span>').join('')+'</div>'
   +'</section>'
   +'<div class="mus-grid">'
@@ -1232,11 +1266,37 @@ function render(){
     case 'game-tower':body=vGame('tower');break;
     default:body=(state.view.indexOf('game-')===0&&GAME_META[state.view.slice(5)])?vGame(state.view.slice(5)):vHome();
   }
-  app.innerHTML=sideHtml()+topHtml()+'<main class="content">'+body+'</main>';
+  const oldC=document.querySelector('.content');
+  const viewChanged=oldC&&oldC.dataset.view!==undefined&&oldC.dataset.view!==state.view;
+  if(!viewChanged){
+    app.innerHTML=sideHtml()+topHtml()+'<main class="content" data-view="'+state.view+'">'+body+'</main>';
+    updateNav();
+    afterRender();
+    window.scrollTo({top:0});
+    return;
+  }
+  /* تعویض نما با انیمیشن نرمِ باز و بسته شدن */
+  updateNav();
+  window.scrollTo({top:0});
+  oldC.classList.add('v-leave');
+  if(renderTimer)clearTimeout(renderTimer);
+  renderTimer=setTimeout(()=>{
+    oldC.innerHTML=body;
+    oldC.dataset.view=state.view;
+    oldC.classList.remove('v-leave');
+    oldC.classList.add('v-enter');
+    afterRender();
+    renderTimer=setTimeout(()=>{oldC.classList.remove('v-enter');renderTimer=0;},430);
+  },165);
+}
+let renderTimer=0;
+function updateNav(){
+  document.querySelectorAll('[data-v]').forEach(el=>el.classList.toggle('active',el.dataset.v===state.view));
+}
+function afterRender(){
   tick();
   animateCounts();
   observeReveals();
-  window.scrollTo({top:0});
   if(state.view==='music'){
     renderMusResults();
     if(MUS.playing)musStartViz();

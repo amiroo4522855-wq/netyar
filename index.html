@@ -971,6 +971,39 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.25)}
 .m-now:hover .m-ttl{color:var(--gold2)}
 .m-ttl{transition:color .3s}
 
+/* ============ v7: انیمیشن نرم باز و بسته شدن بخش‌ها ============ */
+.content{will-change:opacity,transform}
+.content.v-leave{animation:vLeave .16s cubic-bezier(.4,0,.7,1) forwards}
+.content.v-enter{animation:vEnter .4s cubic-bezier(.2,.8,.25,1)}
+@keyframes vLeave{to{opacity:0;transform:translateY(-12px) scale(.994);filter:blur(3px)}}
+@keyframes vEnter{from{opacity:0;transform:translateY(20px) scale(.988);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.content.v-leave,.content.v-enter{animation:none}.content.v-leave{opacity:.5}}
+/* ============ v7: پخش فوری ============ */
+.quick-band{margin-top:15px;display:flex;flex-direction:column;gap:9px;align-items:center}
+.qb-lbl{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:850;color:var(--gold2)}
+.quick-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.qk{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:99px;cursor:pointer;
+  background:rgba(148,180,224,.06);border:1px solid var(--line);transition:all .22s;font-family:inherit;color:var(--tx)}
+.qk b{font-size:11px;font-weight:800}
+.qk svg{color:var(--gold2);flex-shrink:0}
+.qk:hover{background:rgba(217,174,62,.13);border-color:rgba(217,174,62,.5);transform:translateY(-2px);box-shadow:0 8px 18px rgba(217,174,62,.15)}
+.qk:active{transform:scale(.95)}
+.qk.ontrack{background:rgba(217,174,62,.16);border-color:rgba(217,174,62,.6)}
+/* ============ v7: پلیر شیک و تمیز ============ */
+.m-art{transition:border-radius .6s cubic-bezier(.2,.8,.3,1),box-shadow .4s,transform .1s linear}
+.playing .m-art{border-radius:50%;box-shadow:0 0 0 3px rgba(240,199,94,.45),0 18px 44px rgba(2,8,20,.65),0 0 46px rgba(240,199,94,.2)}
+.playing .m-art img{animation:vinyl 9s linear infinite}
+.playing .m-art .fallback{animation:vinyl 9s linear infinite}
+@keyframes vinyl{to{transform:rotate(360deg)}}
+.playing .m-ttl{color:var(--gold2);text-shadow:0 0 26px rgba(240,199,94,.32)}
+.playing .ctl.main{animation:beatp 2.4s ease-in-out infinite}
+@keyframes beatp{0%,100%{transform:scale(1)}7%{transform:scale(1.06)}14%{transform:scale(1)}}
+#mSeek{cursor:pointer;transition:height .16s ease}
+#mSeek:hover{height:8px}
+#mSeek::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(240,199,94,.16);transition:box-shadow .2s,transform .2s}
+#mSeek:hover::-webkit-slider-thumb{box-shadow:0 0 0 9px rgba(240,199,94,.26)}
+#mSeek::-moz-range-thumb{box-shadow:0 0 0 5px rgba(240,199,94,.16)}
+
 </style>
 </head>
 <body>
@@ -1562,7 +1595,30 @@ const SITES_P9=[
 ["ساماندهی","samandehi.ir","cafe","استعلام و ثبت سامانه‌های اینترنتی ایرانی"]
 ];
 
-const RAW=[].concat(SITES_P1,SITES_P2,SITES_P3,SITES_P4,SITES_P5,SITES_P6,SITES_P7,SITES_P8,SITES_P9);
+/* دسته‌های تکمیلی نسخهٔ ۷ — خدمات ایرانی فول، بورس، خبر، کاریابی */
+const SITES_P10=[
+["اسنپ‌تریپ","snapptrip.com","iran","بلیط هواپیما، قطار و اتوبوس داخلی و خارجی با مقایسهٔ قیمت"],
+["آیدی‌پی","idpay.ir","iran","درگاه پرداخت اینترنتی آسان برای فروشنده‌ها و کاربرها"],
+["زیبال","zibal.ir","iran","درگاه پرداخت و لینک خرید سریع، بدون دردسر"],
+["دیجی‌پای","mydigipay.com","iran","کیف پول و پرداخت یکپارچهٔ گروه دیجی‌کالا"],
+["پیام‌رسان بله","ble.ir","iran","پیام‌رسان ملی با چت، پرداخت و سرویس‌های روزمره"],
+["آیگپ","igap.net","iran","پیام‌رسان ایرانی با گروه‌ها و کانال‌های رسمی"],
+["هواشناسی کشور","weather.ir","iran","پیش‌بینی دقیق آب‌وهوای همهٔ شهرهای ایران"],
+["بیمه ایران","bim.ir","iran","بیمهٔ بدنه، شخص ثالث، درمان و عمر — صدور آنلاین"],
+["بیمه آسیا","bimehasia.com","iran","یکی از بزرگ‌ترین بیمه‌های کشور با صدور آنلاین بیمه‌نامه"],
+["بیمه پارسیان","bimehparsian.ir","iran","بیمه‌نامهٔ ثالث و بدنه با تخفیف خوب"],
+["بیمه دانا","danainsurance.ir","iran","بیمهٔ دانا — بیمه‌نامهٔ اتومبیل، آتش‌سوزی و درمان"],
+["آسیاتک","asiatech.ir","iran","اینترنت پرسرعت خانگی و سازمانی FTTH"],
+["بانک سامان","sb24.ir","iran","بانکداری اینترنتی سامان، کارت به کارت و سرویس‌ها"],
+["بانک گردشگری","tourismbank.ir","iran","بانک گردشگری با خدمات ارزی و سفر"],
+["خبرگزاری تسنیم","tasnimnews.com","iran","آخرین اخبار لحظه‌ای ایران و جهان در همهٔ حوزه‌ها"],
+["ای‌استخدام","e-estekhdam.com","iran","هزاران آگهی استخدام روزانه در سراسر ایران"],
+["کارگزاری مفید","emofid.com","iran","خرید و فروش آنلاین سهام با پلتفرم مفیدتریدر"],
+["کارگزاری آگاه","agah.com","iran","بورس و صندوق‌ها با پلتفرم معاملاتی آگاه"],
+["تماشا","tamasha.com","iran","تماشای آنلاین فیلم، سریال و برنامه‌های تلویزیون"],
+];
+
+const RAW=[].concat(SITES_P1,SITES_P2,SITES_P3,SITES_P4,SITES_P5,SITES_P6,SITES_P7,SITES_P8,SITES_P9,SITES_P10);
 /* ===== سیستم آیکون SVG استاندارد (سبک Lucide) ===== */
 const IC = {
   'coffee':'<path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/>',
@@ -3566,7 +3622,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۶٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۷٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -3635,7 +3691,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۶٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۷٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -3878,6 +3934,17 @@ function wireAudio(a){
   a.addEventListener('error',()=>{
     const t=MUS.queue[MUS.qi];
     if(!t)return;
+    /* اول: استریم را از هاست بعدی اوودیوس امتحان کن */
+    if(t.p==='audius'){
+      const hi=(t.hi||0)+1;
+      if(hi<AUDIUS_HOSTS.length){
+        t.hi=hi;
+        t.stream=AUDIUS_HOSTS[hi]+'/v1/tracks/'+t.id+'/stream?app_name=NETYAR';
+        MUS.retried=null;
+        musLoad(t);
+        return;
+      }
+    }
     if(a.crossOrigin==='anonymous'&&MUS.retried!==t.id){
       MUS.retried=t.id;
       try{MUS.corsCache[new URL(t.stream,location.href).origin]=false;}catch(e){}
@@ -3933,6 +4000,21 @@ function fmtPlays(n){
   if(n>=1e3)return faNum(grp(Math.round(n/1e3)))+' هزار';
   return faNum(grp(n));
 }
+/* --- پخش فوری: قطعه‌های تأییدشده که همیشه پخش می‌شوند (لینک مستقیم آرشیو) --- */
+const QUICK_TRACKS=[
+  {t:'سونات پاتتیک — بتهوون',a:'آرتور روبینشتاین — پیانو',id:'HSTR-503',u:'https://archive.org/download/HSTR-503/Beethoven%20Piano%20Sonata%20No.%208%2C%20Op.%2013%20Path%C3%A9tique%2C%20I-Arthur%20Rubinstein%20-%20voyxkC-AiG0.mp3'},
+  {t:'سونات پیانو ۱۲ — بتهوون',a:'آندانته با واریاسیون‌ها',id:'parso-1c14b3b5d7149adf7b279b0c6e5932248a49c936',u:'https://archive.org/download/parso-1c14b3b5d7149adf7b279b0c6e5932248a49c936/001_I_Andante_con_variazioni.mp3'},
+  {t:'سونات کروتزر — آداجیو',a:'ویولن و پیانو — بوش و سرکین',id:'Kreutzer1stmvmtbuschSerkin',u:'https://archive.org/download/Kreutzer1stmvmtbuschSerkin/kreutzer-1stmvmt%20(busch%2C%20serkin).mp3'},
+  {t:'سونات کروتزر — فیناله پرستو',a:'ویولن و پیانو — بتهوون',id:'612ViolinSonataNo.9InAMajorOp.47KreutzerIII.FinalePresto',u:'https://archive.org/download/612ViolinSonataNo.9InAMajorOp.47KreutzerIII.FinalePresto/6-12%20Violin%20Sonata%20No.%209%20in%20A%20major%2C%20Op.%2047%2C%20_Kreutzer_%20-%20III.%20Finale_%20Presto.mp3'},
+  {t:'نوکتورن اُپوس ۶۲ — شوپن',a:'اریک تن‌برگ — پیانو',id:'then-bergh-chopin-op.-62-2',u:'https://archive.org/download/then-bergh-chopin-op.-62-2/Then-Bergh%20-%20%20Chopin%20op.%2062%20(2).mp3'},
+  {t:'نوکتورن دو مینور — شوپن',a:'B.108 — پیانوی کلاسیک',id:'parso-0376f076666a403745bbb1c79277856a9f5ef9d4',u:'https://archive.org/download/parso-0376f076666a403745bbb1c79277856a9f5ef9d4/000_Nocturne_B_108_in_C_minor.mp3'},
+  {t:'جاز کلاسیک و سوئینگ',a:'دیوین یاماناکا — رادیو',id:'ClassicJazzAndSwing-91111',u:'https://archive.org/download/ClassicJazzAndSwing-91111/CJS110911.mp3'},
+];
+function musQuickPlay(i){
+  MUS.queue=QUICK_TRACKS.map(q=>({p:'arch',id:q.id,t:q.t,a:q.a,
+    art:'https://archive.org/services/img/'+encodeURIComponent(q.id),d:0,g:'پخش فوری',pc:0,stream:q.u}));
+  musPlayAt(i);
+}
 /* --- هاست‌های discovery (استریم را سرو می‌کنند) --- */
 const AUDIUS_HOSTS=[
   'https://discoveryprovider.audius.co',
@@ -3971,31 +4053,36 @@ function musSearch(q,autoPlay){
     const seen=new Set();
     list=list.filter(t=>{const k=(t.t+'|'+t.a).toLowerCase();if(seen.has(k))return false;seen.add(k);return true;});
     MUS.loading=false;
-    if(!list.length){MUS.err='نتیجه‌ای برای «'+q+'» پیدا نشد — عبارت دیگری امتحان کن یا با دکمه‌های گوگل و یوتیوب دنبالش بگرد.';}
+    if(!list.length){MUS.err='نتیجه‌ای برای «'+q+'» پیدا نشد — عبارت دیگری امتحان کن، یا همین بالا از «پخش فوری» بزن که همیشه کار می‌کند. لینک گوگل و یوتیوب هم سر جایش است.';}
     MUS.results=list;
     renderMusResults();
     if(MUS.autoPlay&&list.length){MUS.autoPlay=false;musPlayAt(0);}
   });
 }
+function raceAny(ps){
+  if(Promise.any)return Promise.any(ps);
+  return new Promise((res,rej)=>{
+    let n=ps.length;const errs=[];
+    ps.forEach(p=>p.then(res,e=>{errs.push(e);if(--n===0)rej(errs[0]);}));
+  });
+}
 function audiusSearch(q){
   if(typeof fetch==='undefined')return Promise.reject(new Error('no fetch'));
-  let hi=0;
-  function attempt(){
-    const h=AUDIUS_HOSTS[hi];
-    return fetch(h+'/v1/tracks/search?query='+encodeURIComponent(q)+'&app_name=NETYAR',{headers:{'Accept':'application/json'}})
-      .then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.json();})
-      .catch(err=>{hi++;if(hi<AUDIUS_HOSTS.length){MUS.host=AUDIUS_HOSTS[hi];return attempt();}throw err;});
-  }
-  return attempt().then(j=>{
-    const arr=(j&&j.data)||[];
-    return arr.filter(t=>t&&(t.is_streamable===true||t.is_streamable===undefined)).map(t=>({
-      p:'audius',id:t.id,t:t.title||'بدون نام',
-      a:(t.user&&(t.user.name||t.user.handle))||'ناشناس',
-      art:(t.artwork&&(t.artwork['480x480']||t.artwork['150x150']))||'',
-      d:t.duration||0,g:t.genre||'',pc:t.play_count||0,
-      stream:MUS.host+'/v1/tracks/'+t.id+'/stream?app_name=NETYAR'
-    }));
-  });
+  const one=h=>fetch(h+'/v1/tracks/search?query='+encodeURIComponent(q)+'&app_name=NETYAR',{headers:{'Accept':'application/json'}})
+    .then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.json();})
+    .then(j=>{
+      MUS.host=h;
+      const arr=(j&&j.data)||[];
+      return arr.filter(t=>t&&(t.is_streamable===true||t.is_streamable===undefined)).map(t=>({
+        p:'audius',id:t.id,t:t.title||'بدون نام',
+        a:(t.user&&(t.user.name||t.user.handle))||'ناشناس',
+        art:(t.artwork&&(t.artwork['480x480']||t.artwork['150x150']))||'',
+        d:t.duration||0,g:t.genre||'',pc:t.play_count||0,
+        stream:h+'/v1/tracks/'+t.id+'/stream?app_name=NETYAR'
+      }));
+    });
+  /* هر سه هاست همزمان؛ هر کدام زودتر جواب داد همان برنده است */
+  return raceAny(AUDIUS_HOSTS.map(one)).catch(()=>[]);
 }
 function archSearch(q){
   if(typeof fetch==='undefined')throw new Error('no fetch');
@@ -4031,6 +4118,7 @@ function musPlayAt(i){
   if(!MUS.queue.length)return;
   MUS.qi=(i+MUS.queue.length)%MUS.queue.length;
   MUS.retried=null;
+  if(MUS.queue[MUS.qi])MUS.queue[MUS.qi].hi=0;
   const t=MUS.queue[MUS.qi];
   const prep=t.p==='arch'?archResolve(t):Promise.resolve(t);
   prep.then(tt=>musLoad(tt)).catch(()=>{toast('فایل این آهنگ در دسترس نیست','alert');});
@@ -4243,6 +4331,8 @@ function musHero(){
       +'<span class="mtab'+(MUS.prov==='audius'?' active':'')+'" onclick="musProv(\'audius\')">'+ic('radio',14)+'اودیوس — موزیک زنده</span>'
       +'<span class="mtab'+(MUS.prov==='arch'?' active':'')+'" onclick="musProv(\'arch\')">'+ic('library',14)+'آرشیو اینترنت — کلاسیک و تاریخی</span>'
     +'</div>'
+    +'<div class="quick-band"><span class="qb-lbl">'+ic('zap',13)+'پخش فوری — بدون جستجو، همیشه کار می‌کند:</span>'
+      +'<div class="quick-row">'+QUICK_TRACKS.map((q,i)=>'<span class="qk" onclick="musQuickPlay('+i+')" title="'+esc(q.a)+'">'+ic('play',12)+'<b>'+q.t+'</b></span>').join('')+'</div></div>'
     +'<div class="chips" style="justify-content:center">'+QUICK.map(q=>'<span class="chip" onclick="musQuick(\''+q+'\')">'+ic('music',12)+q+'</span>').join('')+'</div>'
   +'</section>'
   +'<div class="mus-grid">'
@@ -4544,11 +4634,37 @@ function render(){
     case 'game-tower':body=vGame('tower');break;
     default:body=(state.view.indexOf('game-')===0&&GAME_META[state.view.slice(5)])?vGame(state.view.slice(5)):vHome();
   }
-  app.innerHTML=sideHtml()+topHtml()+'<main class="content">'+body+'</main>';
+  const oldC=document.querySelector('.content');
+  const viewChanged=oldC&&oldC.dataset.view!==undefined&&oldC.dataset.view!==state.view;
+  if(!viewChanged){
+    app.innerHTML=sideHtml()+topHtml()+'<main class="content" data-view="'+state.view+'">'+body+'</main>';
+    updateNav();
+    afterRender();
+    window.scrollTo({top:0});
+    return;
+  }
+  /* تعویض نما با انیمیشن نرمِ باز و بسته شدن */
+  updateNav();
+  window.scrollTo({top:0});
+  oldC.classList.add('v-leave');
+  if(renderTimer)clearTimeout(renderTimer);
+  renderTimer=setTimeout(()=>{
+    oldC.innerHTML=body;
+    oldC.dataset.view=state.view;
+    oldC.classList.remove('v-leave');
+    oldC.classList.add('v-enter');
+    afterRender();
+    renderTimer=setTimeout(()=>{oldC.classList.remove('v-enter');renderTimer=0;},430);
+  },165);
+}
+let renderTimer=0;
+function updateNav(){
+  document.querySelectorAll('[data-v]').forEach(el=>el.classList.toggle('active',el.dataset.v===state.view));
+}
+function afterRender(){
   tick();
   animateCounts();
   observeReveals();
-  window.scrollTo({top:0});
   if(state.view==='music'){
     renderMusResults();
     if(MUS.playing)musStartViz();
