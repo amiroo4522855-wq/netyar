@@ -209,7 +209,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-T('نسخه ۸٫۰',bodyTxt().includes('نسخه ۸٫۰'));
+T('نسخه ۹٫۰',bodyTxt().includes('نسخه ۹٫۰'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);
@@ -218,6 +218,51 @@ const src=fs.readFileSync('netyar.html','utf-8');
 T('شب/روز ۱۳ ثانیه',src.includes('D.t%13000'));
 T('سختی فزاینده',src.includes('dt*0.00027')&&src.includes('D.dist/7000'));
 T('بدون ایموجی',!/(?:[\uD800-\uDBFF][\uDC00-\uDFFF])/.test(src));
+
+console.log('— v9: آموزش تایپ —');
+T('منوی آموزش',$$('body').length&&d.body.textContent.includes('آموزش')&&!!ev('NAV.find(n=>n.v==="typing")'));
+w.go('typing');await sleep(320);
+T('نمای تایپ رندر شد',!!$('.typ-wrap')&&$$('.tls').length===9);
+T('کیبورد فارسی کامل',$$('.kk').length>=45&&!!kbKey('ش'));
+T('هایلایت انگشت‌ها',$$('.kk.z-li').length>=6);
+w.eval('typSetLang("en")');await sleep(320);
+T('سوییچ انگلیسی: کیبورد QWERTY',!!kbKey('q')&&!!kbKey(';'));
+T('درس‌های انگلیسی',d.body.textContent.includes('Home row basics'));
+w.eval('typSetLang("fa")');await sleep(320);
+w.eval('typClickLesson(0)');await sleep(320);
+T('تمرین شروع شد',ev('TYP.text.length')>50&&!!$('.typ-text'));
+const t0=ev('TYP.text[0]');
+const wrong=t0==='ش'?'ب':t0==='ب'?'ش':'ظ';
+w.eval('typChar('+JSON.stringify(t0)+')');
+T('حرف درست جلو می‌رود',ev('TYP.log.length')===1);
+T('کلید بعدی روی کیبورد روشن',!!$('.kk.next'));
+w.eval('typChar('+JSON.stringify(wrong)+')');
+T('حرف اشتباه بلاک می‌شود',ev('TYP.log.length')===1&&ev('TYP.errs')===1);
+w.eval('TYP.text="اب";TYP.log=[];TYP.fin=false');
+w.eval('typChar("ا")');w.eval('typChar("ب")');
+await sleep(120);
+T('درس تمام شد و ذخیره',ev('TYP.fin')===true&&ev('Object.keys(typStats().done||{}).length')===1);
+T('کارنامهٔ درس',!!$('.typ-modal')&&d.body.textContent.includes('WPM'));
+$('.typ-modal .x').click();
+w.eval('typDur(30)');w.eval('typStartTest()');await sleep(320);
+T('آزمون زمان‌دار شروع شد',ev('TYP.mode')==='test'&&ev('TYP.testLeft')<=30);
+for(const ch of ev('TYP.text.slice(0,8).split("")'))w.eval('typChar('+JSON.stringify(ch)+')');
+T('۸ حرف درست در آزمون',ev('TYP.log.filter(x=>x.ok).length')===8);
+w.eval('typBack()');
+T('Backspace در آزمون',ev('TYP.log.length')===7);
+w.eval('typFinishTest()');
+T('نتیجهٔ آزمون + رکورد',ev('TYP.res')&&ev('TYP.res.wpm')>=0&&ev('typStats().best[30]')!==undefined);
+w.eval('typMode("free")');await sleep(320);
+const ta=$('#typInpFree');
+ta.value='سلام دنیا این یک آزمون تایپ آزاد است';
+ta.dispatchEvent(new w.Event('input',{bubbles:true}));
+T('تایپ آزاد: شمارنده‌ها',d.getElementById('tfWd').textContent!=='۰');
+w.eval('typLight()');
+T('حالت روشن سکشن',!!$('.typ-wrap.light'));
+w.eval('typLight()');
+w.go('games');await sleep(320);
+w.go('typing');await sleep(320);
+T('بازگشت به تایپ بدون خطا',!!$('.typ-wrap'));
 
 console.log('— v8: کاورها و مار موسی —');
 w.go('games');await sleep(320);
@@ -247,7 +292,8 @@ T('فیلور هاست اوودیوس در کد',src.includes('raceAny(AUDIUS_HO
 T('فیلور استریم در کد',src.includes('t.stream=AUDIUS_HOSTS[hi]'));
 T('انیمیشن تعویض نما',src.includes('v-leave')&&src.includes('v-enter')&&src.includes('data-view'));
 
-console.log('\n═══ v8: '+pass+' ✓ / '+fail+' ✗ ═══');
+function kbKey(k){return [...$$('.kk')].find(b=>b.dataset.k===k);}
+console.log('\n═══ v9: '+pass+' ✓ / '+fail+' ✗ ═══');
 if(fail)console.log('FAILS: '+fails.join(' | '));
 process.exit(fail?1:0);
 }catch(e){console.log('FATAL:',e.message,e.stack.split('\n')[1]||'');process.exit(2);}})();

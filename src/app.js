@@ -232,8 +232,9 @@ const NAV=[
   {v:'games',i:'gamepad',t:'بازی‌ها'},
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
+  {v:'typing',i:'type',t:'آموزش'},
 ];
-const VIEWS=['home','sites','fav','games','music','calc'];
+const VIEWS=['home','sites','fav','games','music','calc','typing'];
 const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
@@ -254,7 +255,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۸٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۹٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -323,7 +324,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۸٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۹٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -1264,6 +1265,7 @@ function render(){
     case 'games':body=vGames();break;
     case 'music':body=musHero();break;
     case 'calc':body=vCalc();break;
+    case 'typing':body=typView();break;
     case 'game-dino':body=vGame('dino');break;
     case 'game-tower':body=vGame('tower');break;
     default:body=(state.view.indexOf('game-')===0&&GAME_META[state.view.slice(5)])?vGame(state.view.slice(5)):vHome();
@@ -1307,6 +1309,7 @@ function afterRender(){
   }else{
     musStopViz();
     attachMini();
+    if(state.view!=='typing'&&typeof typStopAll==='function')typStopAll();
   }
   if(GAME_VIEWS.includes(state.view)){
     gameStart(state.view.replace('game-',''));
@@ -1384,6 +1387,14 @@ document.addEventListener('change',e=>{
 });
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target&&e.target.id==='musInp'){musGo(true);return;}
+  if(e.target&&e.target.id==='typInpFree')return;
+  if(state.view==='typing'){
+    if(e.key==='Backspace'){e.preventDefault();typBack();return;}
+    if(e.target&&e.target.id==='typInput')return;
+    if(e.key==='Escape')return;
+    if(e.key.length===1&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();typChar(e.key);}
+    return;
+  }
 });
 document.addEventListener('keyup',e=>{
   if(e.key==='ArrowDown'&&GAME_VIEWS.includes(state.view)){
@@ -1454,6 +1465,7 @@ document.addEventListener('keydown',e=>{
   }
   if(document.querySelector('.overlay'))return;
   if(inInput)return;
+  if(state.view==='typing')return;
   const onBtn=tag==='BUTTON';
   /* بازی‌ها: کلیدها مال بازی‌اند */
   if(GAME_VIEWS.includes(state.view)){

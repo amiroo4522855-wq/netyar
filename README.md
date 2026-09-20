@@ -4,7 +4,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/نسخه-۸٫۰-d9ae3e?style=for-the-badge)
+![Version](https://img.shields.io/badge/نسخه-۹٫۰-d9ae3e?style=for-the-badge)
 ![Sites](https://img.shields.io/badge/سایت‌ها-۵۱۲-4a8fe2?style=for-the-badge)
 ![Categories](https://img.shields.io/badge/دسته‌ها-۲۵-3fa97c?style=for-the-badge)
 ![Vanilla JS](https://img.shields.io/badge/بدون_وابستگی-Vanilla_JS-0a1424?style=for-the-badge&logo=javascript&logoColor=f0c75e)
@@ -38,6 +38,7 @@
 | ⭐ **علاقه‌مندی‌ها** | ذخیره روی دستگاه (localStorage) |
 | ⌨️ **میان‌برها** | `/` جستجو · `Space` پخش/مکث · `↑↓` صدا · `←→` جلو/عقب · `1-6` ناوبری |
 | 📱 **ریسپانسیو کامل** | سایدبار در دسکتاپ، نویگیشن پایین در موبایل |
+| ⌨️ **آموزش تایپ (Typing Lab)** | ۹ درس مرحله‌ای فارسی/انگلیسی، کیبورد زندهٔ رنگ‌بندی انگشت‌ها با هایلایت کلید بعدی، حالت آموزشی سخت‌گیر، آزمون زمان‌دار (۳۰ث تا ۵دق + سفارشی) با WPM/دقت/رکورد، تایپ آزاد، پیشرفت و سطح روی دستگاه، حالت روشن/تاریک |
 | 🌊 **تعویض نرم بخش‌ها** | هر بخش (بازی، آهنگ، ماشین‌حساب و…) با انیمیشن محو+لغزش باز و بسته می‌شود |
 
 ## 🖥️ اجرا
