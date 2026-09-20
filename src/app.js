@@ -234,6 +234,8 @@ const NAV=[
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
 ];
 const VIEWS=['home','sites','fav','games','music','calc'];
+const GAME_VIEWS=['game-dino','game-tower'];
+const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 function sideHtml(){
   const catKeys=Object.keys(CATS);
@@ -252,7 +254,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۴٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۵٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -321,7 +323,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۴٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۵٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -405,16 +407,94 @@ const GAMES=[
   {t:'تست ری‌اکشن',i:'zap',c:'#4c8ddb',d:'ببین چقدر سریعی'},
   {t:'تاس شانس',i:'dice5',c:'#c46a8e',d:'بدون تاس، شروع نکن!'},
 ];
+const GAME_META={
+  'dino':{t:'دایی ناصر',c:'#4fae6b',
+    desc:'با Enter بپر، با فلش پایین خم شو! از کاکتوس‌های صحرا، تنه‌های جنگل و کنده‌های رود رد شو و از پرنده‌ها خم بشو. هر ۴٫۵ ثانیه شب می‌شود و دوباره روز — با خورشید، ماه و ستاره‌های چشمک‌زن. هرچه بروی جلو، تندتر و سخت‌تر!',
+    ctrl:'Enter یا کلیک = پرش · فلش پایین = خم شدن · Esc = خروج'},
+  'tower':{t:'برج‌سازی',c:'#5b8dbe',
+    desc:'بلوکِ در حال حرکت را در لحظهٔ درست رها کن؛ هر خطا لبهٔ برجت را می‌برد و برجت باریک‌تر می‌شود. زنجیرهٔ «عالی!» بلوک را دوباره پهن می‌کند. هرچه بالاتر بروی، آسمان تاریک‌تر و ستاره‌ها نزدیک‌تر!',
+    ctrl:'Enter یا کلیک = رها کردن بلوک · Esc = خروج'},
+};
+function bannerDino(){
+  return '<div class="g-banner" onclick="go(\'game-dino\')" role="button" title="بازی دایی ناصر">'
+  +'<svg class="gb-svg" viewBox="0 0 560 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'
+    +'<defs><linearGradient id="gbd" x1="0" y1="0" x2="1" y2="0">'
+      +'<stop offset="0" stop-color="#6fc3f7"/><stop offset=".47" stop-color="#fdeec9"/>'
+      +'<stop offset=".53" stop-color="#1c2b52"/><stop offset="1" stop-color="#0a1030"/></linearGradient></defs>'
+    +'<rect width="560" height="210" fill="url(#gbd)"/>'
+    +'<circle cx="70" cy="54" r="34" fill="rgba(255,215,110,.35)"/><circle cx="70" cy="54" r="21" fill="#ffd76e"/>'
+    +'<g fill="#fff"><circle cx="405" cy="30" r="1.6"/><circle cx="445" cy="60" r="1.2"/><circle cx="480" cy="24" r="1.8"/><circle cx="520" cy="55" r="1.3"/><circle cx="425" cy="80" r="1"/><circle cx="540" cy="90" r="1.5"/></g>'
+    +'<circle cx="485" cy="50" r="17" fill="#eef3ff"/><circle cx="479" cy="46" r="4" fill="rgba(160,175,215,.55)"/><circle cx="490" cy="56" r="2.6" fill="rgba(160,175,215,.55)"/>'
+    +'<path d="M0 170 Q90 130 200 162 T420 158 T560 150 V210 H0 Z" fill="#e7c27d"/>'
+    +'<path d="M300 165 Q380 140 460 158 T560 152 V210 H300 Z" fill="#2a2f52"/>'
+    +'<g class="bn-cac" transform="translate(96,116)"><rect x="0" y="0" width="14" height="46" rx="7" fill="#3f9e5c"/><rect x="-9" y="14" width="7" height="18" rx="3.5" fill="#3f9e5c"/><rect x="16" y="8" width="7" height="22" rx="3.5" fill="#3f9e5c"/></g>'
+    +'<g class="bn-dino" transform="translate(210,116)">'
+      +'<rect x="0" y="0" width="52" height="58" rx="16" fill="#5cc46f"/>'
+      +'<rect x="20" y="26" width="20" height="26" rx="8" fill="#d9f2cf"/>'
+      +'<path d="M6 4 L11 -8 L16 4 Z" fill="#2f8a41"/><path d="M18 4 L23 -8 L28 4 Z" fill="#2f8a41"/><path d="M30 4 L35 -8 L40 4 Z" fill="#2f8a41"/>'
+      +'<circle cx="40" cy="16" r="9" fill="#fff"/><circle cx="42.5" cy="17" r="4.2" fill="#1d2b3a"/><circle cx="44" cy="15.6" r="1.5" fill="#fff"/>'
+      +'<circle cx="30" cy="27" r="4" fill="rgba(247,140,160,.6)"/>'
+      +'<path d="M33 30 q5 5 10 1" stroke="#1d4a2c" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
+      +'<rect x="10" y="54" width="11" height="10" rx="4" fill="#3f9e52"/><rect x="30" y="54" width="11" height="10" rx="4" fill="#3f9e52"/>'
+    +'</g>'
+    +'<g class="bn-rock" transform="translate(452,130)"><path d="M0 32 L8 8 L30 2 L46 18 L46 32 Z" fill="#3c4468"/><path d="M8 8 L30 2 L24 32 L10 32 Z" fill="#4c5580"/></g>'
+  +'</svg>'
+  +'<div class="gb-body"><span class="gb-tag">قابل بازی همین حالا</span><h3>دایی ناصر</h3>'
+  +'<p>دایناسور گوگولی ما؛ با شب و روز واقعی، صحرا و جنگل و رود!</p>'
+  +'<div class="gb-keys"><kbd>Enter</kbd> پرش <kbd>↓</kbd> خم شو</div>'
+  +'<button class="btn gold">'+ic('play',15)+'بازی کن</button></div></div>';
+}
+function bannerTower(){
+  return '<div class="g-banner" onclick="go(\'game-tower\')" role="button" title="بازی برج‌سازی">'
+  +'<svg class="gb-svg" viewBox="0 0 560 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'
+    +'<defs><linearGradient id="gbt" x1="0" y1="0" x2="0" y2="1">'
+      +'<stop offset="0" stop-color="#3f7fd4"/><stop offset=".65" stop-color="#9fd0f0"/><stop offset="1" stop-color="#e8f3ea"/></linearGradient></defs>'
+    +'<rect width="560" height="210" fill="url(#gbt)"/>'
+    +'<g fill="#fff" opacity=".8"><ellipse cx="90" cy="46" rx="30" ry="12"/><ellipse cx="115" cy="40" rx="24" ry="11"/><ellipse cx="420" cy="34" rx="34" ry="13"/><ellipse cx="450" cy="28" rx="22" ry="10"/></g>'
+    +'<g class="bn-blocks">'
+      +'<g transform="translate(215,164)"><rect width="130" height="26" rx="4" fill="hsl(205 62% 48%)"/><path d="M3 0 L12 -8 L118 -8 L127 0 Z" fill="hsl(205 68% 60%)"/></g>'
+      +'<g transform="translate(207,138)"><rect width="130" height="26" rx="4" fill="hsl(223 62% 48%)"/><path d="M3 0 L12 -8 L118 -8 L127 0 Z" fill="hsl(223 68% 60%)"/></g>'
+      +'<g transform="translate(222,112)"><rect width="112" height="26" rx="4" fill="hsl(241 62% 48%)"/><path d="M3 0 L12 -8 L100 -8 L109 0 Z" fill="hsl(241 68% 60%)"/></g>'
+      +'<g transform="translate(214,86)"><rect width="118" height="26" rx="4" fill="hsl(259 62% 50%)"/><path d="M3 0 L12 -8 L106 -8 L115 0 Z" fill="hsl(259 68% 62%)"/></g>'
+      +'<g transform="translate(228,60)"><rect width="104" height="26" rx="4" fill="hsl(277 62% 54%)"/><path d="M3 0 L12 -8 L92 -8 L101 0 Z" fill="hsl(277 68% 66%)"/></g>'
+      +'<g class="bn-slide" transform="translate(238,34)"><rect width="104" height="26" rx="4" fill="hsl(295 62% 56%)"/><path d="M3 0 L12 -8 L92 -8 L101 0 Z" fill="hsl(295 68% 68%)"/></g>'
+      +'<rect x="224" y="30" width="112" height="30" fill="none" stroke="rgba(255,255,255,.6)" stroke-dasharray="5 5" rx="4"/>'
+    +'</g>'
+    +'<g fill="#ffd76e"><path d="M130 60 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 Z"/><path d="M452 96 l2.4 6.4 6.4 2.4 -6.4 2.4 -2.4 6.4 -2.4 -6.4 -6.4 -2.4 6.4 -2.4 Z"/></g>'
+    +'<rect y="190" width="560" height="20" fill="#79b877"/>'
+  +'</svg>'
+  +'<div class="gb-body"><span class="gb-tag">قابل بازی همین حالا</span><h3>برج‌سازی</h3>'
+  +'<p>دقیق باش! هر خطا لبهٔ برجت را می‌برد؛ زنجیرهٔ عالی برجت را پهن می‌کند.</p>'
+  +'<div class="gb-keys"><kbd>Enter</kbd> یا کلیک = رها کردن</div>'
+  +'<button class="btn gold">'+ic('play',15)+'بازی کن</button></div></div>';
+}
 function vGames(){
-  return '<section class="soon-hero"><span class="soon-badge"><span class="d"></span> به‌زودی فعال می‌شود</span>'
+  return '<section class="soon-hero" style="margin-bottom:18px"><span class="soon-badge live"><span class="d"></span> دو بازی کامل، آمادهٔ بازی!</span>'
     +'<h2>بازی‌خانهٔ کافی‌نت</h2>'
-    +'<p>اینجا قرار است آرکیدِ کافی‌نت ساخته شود — '+faNum(GAMES.length)+' بازی خفن که مستقیم در همین صفحه بازی می‌کنی، بدون نصب و بدون دردسر. فعلاً منو را ببین و ذوق کن!</p>'
+    +'<p>اینجا قهوه‌ات را بردار و بازی کن — بدون نصب، بدون انتظار. بازی‌های بعدی هم در راهند!</p>'
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
+  +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
+  +secHead('zap','blue','بازی‌های در راه','به‌زودی به بازی‌خانه اضافه می‌شوند')
   +'<div class="game-grid">'+GAMES.map((g,i)=>
     '<div class="game-card reveal" style="--gc:'+g.c+';transition-delay:'+Math.min(i*35,450)+'ms" onclick="soon(\'بازی‌خانه\')">'
     +'<span class="ribbon">به‌زودی</span><span class="ge">'+ic(g.i,26)+'</span>'
     +'<div class="gt">'+g.t+'</div><div class="gd">'+g.d+'</div></div>').join('')
   +'</div>'+footHtml();
+}
+function vGame(id){
+  const m=GAME_META[id];
+  if(!m)return vGames();
+  const bestKey=id==='dino'?'dinoBest':'towerBest';
+  return secHead('gamepad','blue',m.t,'بازی سرویس‌شدهٔ کافی‌نت — امتیازت روی همین دستگاه ذخیره می‌شود')
+  +'<div class="game-stage"><canvas id="gameCv"></canvas></div>'
+  +'<div class="touch-btns">'
+    +'<button class="btn primary" id="actBtn">'+ic('zap',16)+(id==='dino'?'پرش!':'رها کن!')+'</button>'
+    +(id==='dino'?'<button class="btn ghost" id="duckBtn">'+ic('chevron-down',16)+'خم شو (نگه‌دار)</button>':'')
+  +'</div>'
+  +'<div class="game-info-bar"><span>'+ic('info',13)+m.ctrl+'</span><span>'+ic('trophy',13)+'رکورد شما: '+faNum(store.get(bestKey,0))+'</span>'
+    +'<span class="gi-back" onclick="go(\'games\')">'+ic('arrow-left',13)+'بازی‌خانه</span></div>'
+  +'<p class="game-desc">'+m.desc+'</p>'
+  +footHtml();
 }
 function soon(name){toast('بخش «'+name+'» به‌زودی فعال می‌شود','lightbulb');}
 
@@ -521,18 +601,18 @@ function musSearch(q,autoPlay){
   if(!q)return;
   MUS.q=q;MUS.loading=true;MUS.err='';MUS.autoPlay=!!autoPlay;MUS.results=null;
   renderMusResults();
-  const call=MUS.prov==='audius'?audiusSearch(q):archSearch(q);
-  call.then(list=>{
+  /* هر دو منبع همزمان؛ منبع انتخابی اول می‌نشیند */
+  const first=MUS.prov==='audius'?audiusSearch(q).catch(()=>[]):archSearch(q).catch(()=>[]);
+  const second=MUS.prov==='audius'?archSearch(q).catch(()=>[]):audiusSearch(q).catch(()=>[]);
+  Promise.all([first,second]).then(rs=>{
+    let list=rs[0].slice(0,18).concat(rs[1].slice(0,12));
+    const seen=new Set();
+    list=list.filter(t=>{const k=(t.t+'|'+t.a).toLowerCase();if(seen.has(k))return false;seen.add(k);return true;});
     MUS.loading=false;
-    if(!list.length){MUS.err='نتیجه‌ای برای «'+q+'» پیدا نشد — عبارت دیگری امتحان کن.';}
+    if(!list.length){MUS.err='نتیجه‌ای برای «'+q+'» پیدا نشد — عبارت دیگری امتحان کن یا با دکمه‌های گوگل و یوتیوب دنبالش بگرد.';}
     MUS.results=list;
     renderMusResults();
     if(MUS.autoPlay&&list.length){MUS.autoPlay=false;musPlayAt(0);}
-  }).catch(()=>{
-    MUS.loading=false;
-    MUS.err='اتصال به سرویس برقرار نشد — اینترنت را چک کن و دوباره تلاش کن.';
-    MUS.results=null;
-    renderMusResults();
   });
 }
 function audiusSearch(q){
@@ -841,7 +921,10 @@ function renderMusResults(){
     h='<div class="mus-empty"><span class="e-ic">'+ic('alert',30)+'</span><h3>ای!</h3><p>'+esc(MUS.err)+'</p>'
     +'<button class="btn primary" onclick="musSearch(MUS.q)">'+ic('rotate-ccw',15)+'تلاش دوباره</button></div>';
   }else if(MUS.results&&MUS.results.length){
-    h='<div class="mus-qinfo">'+ic('music',13)+faNum(MUS.results.length)+' نتیجه برای «'+esc(MUS.q)+'» — کلیک = پخش فوری</div>'
+    h='<div class="mus-qinfo">'+ic('music',13)+faNum(MUS.results.length)+' نتیجه برای «'+esc(MUS.q)+'» — کلیک = پخش فوری'
+      +'<span class="qext">جستجوی دقیق: '
+      +'<a href="https://www.google.com/search?q='+encodeURIComponent(MUS.q)+'" target="_blank" rel="noopener">'+ic('search',11)+'گوگل</a>'
+      +'<a class="yt" href="https://www.youtube.com/results?search_query='+encodeURIComponent(MUS.q)+'" target="_blank" rel="noopener">'+ic('play',11)+'یوتیوب</a></span></div>'
     +MUS.results.map((t,i)=>rrow(t,i)).join('');
   }else{
     h=resPlaceholder();
@@ -855,6 +938,10 @@ function rrow(t,i){
     +'<span class="r-art">'+(t.art?'<img src="'+esc(t.art)+'" alt="" loading="lazy" onerror="this.remove()">':ic('music',16))+'</span>'
     +'<span class="r-tt"><span class="a">'+esc(t.t)+'</span><span class="b">'+esc(t.a)+(t.g?' · '+esc(t.g):'')+(t.pc?' · '+fmtPlays(t.pc)+' پخش':'')+'</span></span>'
     +'<span class="r-dur">'+(t.d?fmtT(t.d):'—')+'</span>'
+    +'<span class="r-ext">'
+      +'<a class="rext" href="https://www.google.com/search?q='+encodeURIComponent(t.t+' '+t.a)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="همین آهنگ در گوگل">'+ic('search',12)+'</a>'
+      +'<a class="rext yt" href="https://www.youtube.com/results?search_query='+encodeURIComponent(t.t+' '+t.a)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="همین آهنگ در یوتیوب">'+ic('play',12)+'</a>'
+    +'</span>'
     +'<span class="r-play">'+ic('play',14)+'</span>'
   +'</div>';
 }
@@ -1051,6 +1138,8 @@ function render(){
     case 'games':body=vGames();break;
     case 'music':body=musHero();break;
     case 'calc':body=vCalc();break;
+    case 'game-dino':body=vGame('dino');break;
+    case 'game-tower':body=vGame('tower');break;
     default:body=vHome();
   }
   app.innerHTML=sideHtml()+topHtml()+'<main class="content">'+body+'</main>';
@@ -1067,6 +1156,18 @@ function render(){
     musStopViz();
     attachMini();
   }
+  if(GAME_VIEWS.includes(state.view)){
+    gameStart(state.view.replace('game-',''));
+    const gid=state.view.replace('game-','');
+    const ab=document.getElementById('actBtn');
+    if(ab)ab.addEventListener('pointerdown',e=>{e.preventDefault();GAME_ENG[gid].action();});
+    const db=document.getElementById('duckBtn');
+    if(db){
+      db.addEventListener('pointerdown',e=>{e.preventDefault();GAME_ENG.dino.down();});
+      const up=()=>GAME_ENG.dino.up();
+      db.addEventListener('pointerup',up);db.addEventListener('pointerleave',up);
+    }
+  }else gameStopAll();
 }
 function randomSite(){
   const s=SITES[Math.floor(Math.random()*SITES.length)];
@@ -1122,6 +1223,12 @@ document.addEventListener('change',e=>{
 });
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target&&e.target.id==='musInp'){musGo(true);return;}
+});
+document.addEventListener('keyup',e=>{
+  if(e.key==='ArrowDown'&&GAME_VIEWS.includes(state.view)){
+    const eng=GAME_ENG[state.view.replace('game-','')];
+    if(eng&&eng.up)eng.up();
+  }
 });
 
 /* ---------- میکرو-تعامل‌ها ---------- */
@@ -1179,6 +1286,7 @@ document.addEventListener('keydown',e=>{
   const inInput=tag==='INPUT'||tag==='TEXTAREA';
   if(e.key==='Escape'){
     if(document.querySelector('.overlay')){document.querySelector('.overlay').remove();return;}
+    if(GAME_VIEWS.includes(state.view)&&!inInput){go('games');return;}
     if(state.view==='calc'&&!inInput){calcKey('AC');return;}
     if(state.q){state.q='';render();}
     return;
@@ -1186,6 +1294,15 @@ document.addEventListener('keydown',e=>{
   if(document.querySelector('.overlay'))return;
   if(inInput)return;
   const onBtn=tag==='BUTTON';
+  /* بازی‌ها: کلیدها مال بازی‌اند */
+  if(GAME_VIEWS.includes(state.view)){
+    const eng=GAME_ENG[state.view.replace('game-','')];
+    if(!eng)return;
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();eng.action();return;}
+    if(e.key==='ArrowDown'&&eng.down){e.preventDefault();eng.down();return;}
+    if(e.key==='Escape'){go('games');return;}
+    return;
+  }
   /* میان‌برهای پلیر (وقتی آهنگی در جریان است) */
   if(MUS.cur&&!onBtn){
     if(e.key===' '){e.preventDefault();musToggle();return;}
@@ -1282,11 +1399,11 @@ setInterval(tick,1000);
 /* ---------- شروع ---------- */
 function start(){
   const h=(location.hash||'').replace('#','');
-  if(VIEWS.includes(h))state.view=h;
+  if(ALL_VIEWS.includes(h))state.view=h;
   render();
 }
 window.addEventListener('hashchange',()=>{
   const h=(location.hash||'').replace('#','');
-  if(VIEWS.includes(h)&&h!==state.view){state.view=h;state.cat=null;render();}
+  if(ALL_VIEWS.includes(h)&&h!==state.view){state.view=h;state.cat=null;render();}
 });
 start();

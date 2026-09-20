@@ -4,7 +4,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/نسخه-۴٫۰-d9ae3e?style=for-the-badge)
+![Version](https://img.shields.io/badge/نسخه-۵٫۰-d9ae3e?style=for-the-badge)
 ![Sites](https://img.shields.io/badge/سایت‌ها-۵۱۲-4a8fe2?style=for-the-badge)
 ![Categories](https://img.shields.io/badge/دسته‌ها-۲۵-3fa97c?style=for-the-badge)
 ![Vanilla JS](https://img.shields.io/badge/بدون_وابستگی-Vanilla_JS-0a1424?style=for-the-badge&logo=javascript&logoColor=f0c75e)
@@ -30,6 +30,7 @@
 | 🔍 **جستجوی زنده** | نتایج لحظه‌ای با هایلایت، سازگار با نیم‌فاصله و اعداد فارسی |
 | 🎧 **پلیر موزیک واقعی** | جستجوی زنده در Audius و Internet Archive، شافل، تکرار، Media Session، اکولایزر واقعی (Web Audio API) |
 | 💃 **رقص نور بیس-محور** | پس‌زمینه با انرژی بیس نفس می‌کشد و رنگ می‌چرخاند |
+| 🎮 **دو بازی کامل** | «دایی ناصر» (شب/روز هر ۴٫۵ ثانیه، صحرا/جنگل/رود، پرش و خم شدن) + «برج‌سازی» با کمبوی عالی
 | 🧮 **ماشین‌حساب واقعی** | اولویت استاندارد عملیات، درصد، تاریخچه، کیبورد فیزیکی + ارقام فارسی |
 | 🎬 **لودینگ سه‌بعدی** | مکعب چرخان ۳بعدی با حلقه‌های ژیروسکوپی — ۱۰ ثانیه |
 | ⭐ **علاقه‌مندی‌ها** | ذخیره روی دستگاه (localStorage) |
