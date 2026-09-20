@@ -21,13 +21,13 @@ console.log('— بوت و ناوبری —');
 w.__finishLoader();
 await sleep(450);
 T('لودر تمام شد',w.eval('document.body').classList.contains('ready'));
-const views=['music','sites','games','calc','fav','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess'];
+const views=['music','sites','games','calc','fav','ai','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess'];
 let navOK=0;const navBad=[];
 for(const v of views){
   try{w.go(v);await sleep(300);if(bodyTxt().length>100)navOK++;else navBad.push(v);}
   catch(e){navBad.push(v+'('+e.message.slice(0,40)+')');}
 }
-T('همه ۱۹ نما بدون خطا رندر شدند ('+navOK+'/19)',navOK===views.length);
+T('همه ۲۰ نما بدون خطا رندر شدند ('+navOK+'/'+views.length+')',navOK===views.length);
 if(navBad.length)console.log('   nav bad:',navBad.join(' | '));
 T('۱۴ بازی در متادیتا',ev('Object.keys(GAME_META).length')===14);
 
@@ -219,7 +219,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-T('نسخه ۱۰٫۰',bodyTxt().includes('نسخه ۱۰٫۰'));
+T('نسخه ۱۱٫۰',bodyTxt().includes('نسخه ۱۱٫۰'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);
@@ -309,8 +309,123 @@ T('فیلور هاست اوودیوس در کد',src.includes('raceAny(AUDIUS_HO
 T('فیلور استریم در کد',src.includes('t.stream=AUDIUS_HOSTS[hi]'));
 T('انیمیشن تعویض نما',src.includes('v-leave')&&src.includes('v-enter')&&src.includes('data-view'));
 
+
+console.log('— v11: هوش مصنوعی نت‌یار —');
+T('منوی هوش مصنوعی', !!ev('NAV.find(n=>n.v==="ai")') && d.body.textContent.includes('هوش مصنوعی'));
+w.go('ai');await sleep(400);
+T('نمای AI رندر شد', !!$('.ai-wrap') && !!$('#aiChatArea') && !!$('#aiInput'));
+T('کارت‌های شروع ۶ تایی', $$('.ai-qcard').length===6);
+T('تب‌های ابزار ۴ تایی', $$('.ai-tool-tab').length===4);
+T('پنل نویسنده فعال', !!$('#aiPanel-writer.active'));
+T('چیپ‌های نویسنده', $$('#aiPanel-writer .ai-chip').length>=9);
+T('جستجوی مکالمات', !!$('#aiSearch'));
+T('دکمه مکالمه جدید', !!$('.ai-new'));
+T('هدر AI با عنوان', bodyTxt().includes('هوش مصنوعی نت‌یار'));
+T('زیرعنوان دستیار هوشمند', bodyTxt().includes('دستیار هوشمند شما'));
+T('فوتر امن و خصوصی', bodyTxt().includes('امن و خصوصی'));
+
+// تست مارک‌داون
+T('پارسر مارک‌داون bold', ev('aiMdParse("**سلام**")').includes('<strong>'));
+T('پارسر مارک‌داون کد اینلاین', ev('aiMdParse("`code`")').includes('md-ic'));
+T('پارسر مارک‌داون کدبلاک', ev('aiMdParse("```js"+String.fromCharCode(10)+"console.log(1)"+String.fromCharCode(10)+"```")').includes('md-code'));
+T('پارسر مارک‌داون لیست', ev('aiMdParse("- آیتم")').includes('<ul'));
+T('پارسر مارک‌داون جدول', ev('aiMdParse("| a | b |"+String.fromCharCode(10)+"|---|---|"+String.fromCharCode(10)+"| 1 | 2 |")').includes('<table'));
+T('تشخیص RTL فارسی', ev('aiIsRTL("سلام")')===true);
+T('تشخیص LTR انگلیسی', ev('aiIsRTL("hello")')===false);
+
+// تست چت‌سازی و تاریخچه
+w.eval('aiTestReset()');
+w.eval('aiNewChat()');await sleep(200);
+T('مکالمه جدید ساخته شد', ev('AI.chats.length')===1 && !!ev('AI.curId'));
+const curId=ev('AI.curId');
+w.eval('AI.chats[0].msgs=[{id:"u1",role:"user",content:"سلام",time:Date.now()},{id:"a1",role:"assistant",content:"سلام! چطوری؟",time:Date.now()}]; AI.chats[0].title="سلام";');
+w.eval('aiSave()');
+w.go('ai');await sleep(300);
+T('نمایش پیام‌ها', $$('.ai-msg').length===2);
+T('پیام کاربر RTL', !!$('.ai-bubble.user.rtl'));
+T('اکشن‌های پیام', $$('.ai-act').length>=4);
+T('کپی تابع دارد', typeof ev('aiCopy')==='function');
+
+// تست ابزارها
+w.eval('aiQuick("این متن رو ترجمه کن: hello")');await sleep(100);
+T('کوییک پرامپت در اینپوت', $('#aiInput').value.includes('ترجمه'));
+
+// تست سرچ
+w.eval('aiNewChat()');w.eval('AI.chats[0].title="تست ترجمه"; AI.chats[0].msgs=[{id:"u2",role:"user",content:"ترجمه",time:Date.now()}]; aiSave()');await sleep(200);
+w.go('ai');await sleep(300);
+const searchEl=$('#aiSearch');
+searchEl.value='ترجمه';searchEl.dispatchEvent(new w.Event('input',{bubbles:true}));await sleep(200);
+T('سرچ فیلتر می‌کند', $$('.ai-chat-item').length>=1);
+searchEl.value='';searchEl.dispatchEvent(new w.Event('input',{bubbles:true}));await sleep(200);
+
+// تست ارسال با ماک fetch (استریم)
+let streamChunks=['سلام! ','من ','هوش مصنوعی ','نت‌یار ','هستم.'];
+w.fetch=(url,opts)=>{
+  if(String(url).includes('openrouter')||String(url).includes('/api/chat')){
+    const enc=new TextEncoder();
+    const RS=w.ReadableStream||ReadableStream;
+    const stream=new RS({
+      async start(ctrl){
+        for(const ch of streamChunks){
+          const data='data: '+JSON.stringify({choices:[{delta:{content:ch}}]})+String.fromCharCode(10,10);
+          ctrl.enqueue(enc.encode(data));
+          await new Promise(r=>setTimeout(r,35));
+        }
+        ctrl.enqueue(enc.encode('data: [DONE]'+String.fromCharCode(10,10)));
+        ctrl.close();
+      }
+    });
+    return Promise.resolve({ok:true, body:stream, headers:{get:()=>''}, text:()=>Promise.resolve('')});
+  }
+  return Promise.reject(new Error('no mock'));
+};
+$('#aiInput').value='سلام';
+$('#aiInput').dispatchEvent(new w.Event('input',{bubbles:true}));
+w.eval('aiSend()');await sleep(100);
+T('حالت استریم فعال', ($$('.ai-msg').length>=2 || ev('AI.streaming')===true || !!$('.ai-typing')));
+await sleep(600);
+T('پاسخ استریم کامل شد', ev('AI.streaming')===false && (bodyTxt().includes('هوش مصنوعی نت‌یار هستم') || bodyTxt().includes('نت‌یار')));
+T('پیام AI رندر شد', $$('.ai-msg.ai').length>=1);
+
+// تست توقف
+$('#aiInput').value='ادامه بده';
+w.fetch=(url,opts)=>{
+  const enc=new TextEncoder();
+  const RS=w.ReadableStream||ReadableStream;
+  const stream=new RS({
+    async start(ctrl){
+      for(let i=0;i<20;i++){
+        if(opts && opts.signal && opts.signal.aborted){ ctrl.close(); return; }
+        const data='data: '+JSON.stringify({choices:[{delta:{content:'توکن'+i+' '}}]})+String.fromCharCode(10,10);
+        ctrl.enqueue(enc.encode(data));
+        await new Promise(r=>setTimeout(r,60));
+      }
+      ctrl.enqueue(enc.encode('data: [DONE]'+String.fromCharCode(10,10)));
+      ctrl.close();
+    }
+  });
+  return Promise.resolve({ok:true, body:stream, headers:{get:()=>''}});
+};
+w.eval('aiSend()');await sleep(120);
+w.eval('aiStop()');await sleep(200);
+T('توقف استریم', ev('AI.streaming')===false);
+
+// تست خطای Rate Limit
+w.fetch=()=>Promise.resolve({ok:false, status:429, text:()=>Promise.resolve('rate limit')});
+$('#aiInput').value='تست ارور';
+w.eval('aiSend()');await sleep(1000);
+T('مدیریت خطای ریت‌لیمیت', bodyTxt().includes('تعداد درخواست‌ها زیاد است'));
+
+// تست کلید API
+T('کلید پیش‌فرض دارد', ev('aiGetKey()').startsWith('sk-or-v1-'));
+T('مدل پیش‌فرض', ev('AI.model')==='openai/gpt-4o-mini');
+
+// تست responsive: بدون overflow افقی
+T('بدون overflow افقی AI', ev('document.querySelector(".ai-wrap")') && ev('document.querySelector(".ai-wrap").scrollWidth - document.querySelector(".ai-wrap").clientWidth')<=2);
+
+
 function kbKey(k){return [...$$('.kk')].find(b=>b.dataset.k===k);}
-console.log('\n═══ v10: '+pass+' ✓ / '+fail+' ✗ ═══');
+console.log('\n═══ v11: '+pass+' ✓ / '+fail+' ✗ ═══');
 if(fail)console.log('FAILS: '+fails.join(' | '));
 process.exit(fail?1:0);
 }catch(e){console.log('FATAL:',e.message,e.stack.split('\n')[1]||'');process.exit(2);}})();

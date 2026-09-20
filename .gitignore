@@ -4,3 +4,8 @@ package-lock.json
 .DS_Store
 node_modules/
 .npm/
+
+# AI backend env
+.env
+backend/node_modules/
+backend/.env

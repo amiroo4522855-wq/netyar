@@ -1192,6 +1192,161 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.25)}
 .tc.cur{transition:background .12s}
 .tm-round{font-size:11px;font-weight:800;color:var(--tx2);background:var(--tw);border:1px solid var(--twb);border-radius:99px;padding:6px 14px;margin-bottom:8px}
 
+/* ============ v11: هوش مصنوعی نت‌یار — چت واقعی پرمیوم ============ */
+.ai-wrap{display:grid;grid-template-columns:300px 1fr;gap:0;min-height:620px;height:calc(100vh - 132px);border:1px solid var(--line2);border-radius:22px;overflow:hidden;background:linear-gradient(170deg,rgba(20,40,72,.55),rgba(10,20,36,.88));box-shadow:0 26px 70px rgba(2,8,20,.55),inset 0 1px 0 rgba(255,255,255,.05);position:relative}
+.ai-side{background:linear-gradient(180deg,rgba(12,22,40,.92),rgba(9,18,34,.98));border-left:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.ai-side-head{padding:14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.ai-new{width:100%;justify-content:center;border-radius:12px!important;padding:11px 16px!important;font-size:13px}
+.ai-search{position:relative;display:flex;align-items:center}
+.ai-search input{width:100%;padding:10px 36px 10px 36px;font-size:12.5px;font-family:inherit;color:var(--tx);font-weight:600;background:rgba(148,180,224,.06);border:1px solid var(--line);border-radius:12px;outline:none;transition:all .22s}
+.ai-search input:focus{border-color:rgba(74,143,226,.5);background:rgba(148,180,224,.09);box-shadow:0 0 0 3px rgba(74,143,226,.12)}
+.ai-search .si{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--tx3);display:flex;pointer-events:none}
+.ai-search .clear{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(148,180,224,.1);color:var(--tx2);cursor:pointer;transition:all .2s}
+.ai-search .clear:hover{background:rgba(199,91,84,.22);color:#fff}
+.ai-chats{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:6px}
+.ai-chat-item{padding:10px 12px;border-radius:12px;cursor:pointer;border:1px solid transparent;transition:all .22s;position:relative;background:transparent;user-select:none}
+.ai-chat-item:hover{background:rgba(148,180,224,.06);border-color:var(--line);transform:translateX(-2px)}
+.ai-chat-item.active{background:linear-gradient(90deg,rgba(46,108,184,.22),rgba(46,108,184,.06));border-color:rgba(74,143,226,.42)}
+.ai-ci-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ai-ci-title{font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.ai-ci-date{font-size:9.5px;color:var(--tx3);flex-shrink:0;font-variant-numeric:tabular-nums}
+.ai-ci-last{font-size:10.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px;direction:rtl}
+.ai-ci-actions{display:flex;gap:4px;position:absolute;left:8px;top:8px;opacity:0;transition:opacity .2s}
+.ai-chat-item:hover .ai-ci-actions{opacity:1}
+.ai-ci-btn{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:rgba(148,180,224,.08);border:1px solid var(--line);color:var(--tx2);cursor:pointer;transition:all .2s}
+.ai-ci-btn:hover{background:rgba(74,143,226,.15);color:#fff}
+.ai-ci-btn.del:hover{background:rgba(199,91,84,.2);color:#fff;border-color:rgba(199,91,84,.4)}
+.ai-side-foot{border-top:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.ai-foot-info{font-size:10px;color:var(--tx3);display:flex;align-items:center;gap:6px}
+.ai-foot-actions{display:flex;gap:6px}
+.ai-foot-btn{flex:1;padding:7px 10px;border-radius:10px;font-family:inherit;font-size:10.5px;font-weight:750;cursor:pointer;background:rgba(148,180,224,.06);border:1px solid var(--line);color:var(--tx2);display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s}
+.ai-foot-btn:hover{background:rgba(148,180,224,.1);color:var(--tx);border-color:var(--line2);transform:translateY(-1px)}
+.ai-main{display:flex;flex-direction:column;min-width:0;position:relative}
+.ai-header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);background:rgba(10,20,36,.65);backdrop-filter:blur(14px)}
+.ai-menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:rgba(148,180,224,.06);color:var(--tx);cursor:pointer;align-items:center;justify-content:center;transition:all .2s}
+.ai-menu-btn:hover{background:rgba(148,180,224,.1);border-color:var(--line2)}
+.ai-head-txt{flex:1;min-width:0}
+.ai-head-title{font-size:14.5px;font-weight:900;display:flex;align-items:center;gap:8px}
+.ai-head-title svg{color:var(--gold2)}
+.ai-head-sub{font-size:11px;color:var(--tx3);margin-top:2px}
+.ai-head-actions{display:flex;gap:6px}
+.ai-chat-area{flex:1;overflow-y:auto;padding:18px;scroll-behavior:smooth;min-height:320px}
+.ai-welcome{max-width:720px;margin:0 auto;text-align:center;padding:28px 18px;animation:vEnter .45s ease}
+.ai-w-ic{width:84px;height:84px;margin:0 auto 18px;border-radius:24px;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,rgba(46,108,184,.25),rgba(217,174,62,.18));border:1px solid rgba(74,143,226,.32);color:var(--gold2);animation:hvFloat2 5s ease-in-out infinite;box-shadow:0 18px 40px rgba(46,108,184,.25)}
+.ai-welcome h2{font-size:26px;font-weight:900;line-height:1.6;margin-bottom:10px}
+.ai-welcome h2 span{background:var(--gradG);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ai-welcome p{font-size:14px;color:var(--tx2);margin-bottom:20px}
+.ai-quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;text-align:right;margin-bottom:18px}
+.ai-qcard{padding:14px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(165deg,rgba(148,180,224,.06),rgba(148,180,224,.02));cursor:pointer;text-align:right;transition:all .24s;display:flex;flex-direction:column;gap:6px;font-family:inherit;color:var(--tx);position:relative;overflow:hidden}
+.ai-qcard::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.05) 50%,transparent 70%);transform:translateX(130%);transition:transform .6s}
+.ai-qcard:hover::after{transform:translateX(-130%)}
+.ai-qcard:hover{transform:translateY(-4px) scale(1.01);border-color:rgba(217,174,62,.45);background:linear-gradient(165deg,rgba(148,180,224,.09),rgba(148,180,224,.03));box-shadow:0 14px 30px -10px rgba(2,8,20,.5)}
+.ai-qcard .q-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(74,143,226,.12);border:1px solid rgba(74,143,226,.28);color:var(--blueB);transition:transform .3s}
+.ai-qcard:hover .q-ic{transform:scale(1.1) rotate(-5deg)}
+.ai-qcard .q-t{font-size:13px;font-weight:850}
+.ai-qcard .q-d{font-size:10.5px;color:var(--tx3);line-height:1.7}
+.ai-w-foot{font-size:10.5px;color:var(--tx3);display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:99px}
+.ai-msgs{display:flex;flex-direction:column;gap:18px;max-width:860px;margin:0 auto}
+.ai-msg{display:flex;gap:12px;align-items:flex-start;animation:cardin .42s cubic-bezier(.2,.8,.3,1) both}
+.ai-msg.user{flex-direction:row-reverse}
+.ai-avatar{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--line);box-shadow:0 6px 14px rgba(2,8,20,.25)}
+.ai-avatar.user{background:linear-gradient(140deg,#2e6cb8,#1a3c6e);color:#fff}
+.ai-avatar.ai{background:linear-gradient(140deg,#d9ae3e,#b8922f);color:#1a1305}
+.ai-bubble-wrap{flex:1;min-width:0;max-width:calc(100% - 50px)}
+.ai-msg.user .ai-bubble-wrap{display:flex;flex-direction:column;align-items:flex-end}
+.ai-bubble{padding:12px 16px;border-radius:16px;border:1px solid var(--line);background:var(--card);position:relative;transition:all .22s;max-width:100%}
+.ai-bubble.user{background:linear-gradient(135deg,#2e6cb8,#4a8fe2);color:#fff;border:none;border-bottom-right-radius:6px;box-shadow:0 8px 20px rgba(46,108,184,.28)}
+.ai-bubble.ai{background:linear-gradient(165deg,rgba(148,180,224,.07),rgba(148,180,224,.03));border-color:var(--line2);border-bottom-left-radius:6px}
+.ai-bubble.rtl{direction:rtl;text-align:right}
+.ai-bubble.ltr{direction:ltr;text-align:left}
+.ai-bubble-content{font-size:13.5px;line-height:2.05;word-wrap:break-word;overflow-wrap:break-word}
+.ai-msg-meta{display:flex;align-items:center;gap:10px;margin-top:7px;font-size:10px;color:var(--tx3);font-weight:650}
+.ai-msg.user .ai-msg-meta{justify-content:flex-end}
+.ai-time{font-variant-numeric:tabular-nums}
+.ai-actions{display:flex;gap:4px;opacity:0;transform:translateY(4px);transition:all .22s}
+.ai-msg:hover .ai-actions{opacity:1;transform:none}
+.ai-act{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(148,180,224,.06);border:1px solid var(--line);color:var(--tx2);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.ai-act:hover{background:rgba(74,143,226,.14);color:#fff;border-color:rgba(74,143,226,.4);transform:translateY(-1px)}
+.ai-msg.err .ai-bubble{border-color:rgba(199,91,84,.45);background:rgba(199,91,84,.09)}
+.ai-typing{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tx2);font-weight:700}
+.ai-typing i{width:6px;height:6px;border-radius:50%;background:var(--gold2);display:inline-block;animation:typingDot 1.2s infinite}
+.ai-typing i:nth-child(2){animation-delay:.15s}.ai-typing i:nth-child(3){animation-delay:.3s}.ai-typing i:nth-child(4){animation-delay:.45s}
+@keyframes typingDot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-4px);opacity:1}}
+.ai-cursor{display:inline-block;width:2px;height:1.2em;background:var(--gold2);margin-inline-start:3px;vertical-align:-2px;animation:blink 1s step-end infinite;box-shadow:0 0 8px var(--gold2)}
+@keyframes blink{50%{opacity:0}}
+.md-p{margin:8px 0}
+.md-h1{font-size:20px;font-weight:900;margin:18px 0 8px;line-height:1.6}
+.md-h2{font-size:17px;font-weight:850;margin:14px 0 6px;line-height:1.6}
+.md-h3{font-size:14.5px;font-weight:800;margin:12px 0 6px}
+.md-ul,.md-ol{margin:8px 0;padding-inline-start:22px}
+.md-ul li,.md-ol li{margin:5px 0;line-height:1.95}
+.md-table-wrap{overflow-x:auto;margin:12px 0;border-radius:12px;border:1px solid var(--line);background:rgba(9,18,34,.4)}
+.md-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.md-table th,.md-table td{padding:9px 12px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);text-align:right}
+.md-table th{background:rgba(148,180,224,.08);font-weight:850;color:var(--tx)}
+.md-table tr:last-child td{border-bottom:none}
+blockquote{border-inline-start:3px solid var(--gold2);background:rgba(217,174,62,.07);padding:10px 14px;border-radius:10px;margin:10px 0}
+blockquote p{margin:4px 0;color:var(--tx2)}
+.md-ic{background:rgba(148,180,224,.12);border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-family:ui-monospace,Consolas,monospace;font-size:12px;direction:ltr;display:inline-block}
+.md-code{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--line2);background:#0a1424;box-shadow:0 10px 26px rgba(2,8,20,.35)}
+.md-code-head{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(148,180,224,.06);border-bottom:1px solid var(--line)}
+.md-lang{font-size:10px;font-weight:850;color:var(--gold2);text-transform:uppercase;letter-spacing:1px;font-family:monospace}
+.md-copy{display:inline-flex;align-items:center;gap:6px;font-family:inherit;font-size:10.5px;font-weight:750;padding:5px 10px;border-radius:8px;background:rgba(148,180,224,.08);border:1px solid var(--line);color:var(--tx2);cursor:pointer;transition:all .2s}
+.md-copy:hover{background:rgba(74,143,226,.15);color:#fff;border-color:rgba(74,143,226,.4)}
+.md-code pre{margin:0;padding:14px;overflow-x:auto;direction:ltr;text-align:left;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.75;color:#cfe2fa;max-height:420px}
+.ai-tools-bar{border-top:1px solid var(--line);background:rgba(9,18,34,.55);padding:8px 12px;backdrop-filter:blur(8px)}
+.ai-tools-tabs{display:flex;gap:6px;margin-bottom:8px;overflow-x:auto;scrollbar-width:none}
+.ai-tools-tabs::-webkit-scrollbar{display:none}
+.ai-tool-tab{padding:6px 12px;border-radius:99px;font-family:inherit;font-size:11px;font-weight:750;cursor:pointer;background:rgba(148,180,224,.06);border:1px solid var(--line);color:var(--tx2);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .2s;position:relative;overflow:hidden}
+.ai-tool-tab:hover{color:var(--tx);border-color:var(--line2);transform:translateY(-1px)}
+.ai-tool-tab.active{background:rgba(217,174,62,.13);border-color:rgba(217,174,62,.45);color:var(--gold2);box-shadow:0 4px 12px rgba(217,174,62,.15)}
+.ai-tool-panel{display:none;gap:6px;flex-wrap:wrap;animation:cardin .3s ease}
+.ai-tool-panel.active{display:flex}
+.ai-chip{padding:6px 12px;border-radius:99px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;background:rgba(148,180,224,.06);border:1px solid var(--line);color:var(--tx2);transition:all .2s;white-space:nowrap;position:relative;overflow:hidden}
+.ai-chip:hover{background:rgba(148,180,224,.1);color:var(--tx);border-color:var(--line2);transform:translateY(-1px)}
+.ai-input-area{padding:12px 14px 14px;border-top:1px solid var(--line2);background:linear-gradient(180deg,rgba(10,20,36,.72),rgba(9,18,34,.9));backdrop-filter:blur(14px)}
+.ai-input-wrap{display:flex;align-items:flex-end;gap:10px;background:rgba(9,18,34,.92);border:1.5px solid var(--line2);border-radius:16px;padding:8px 10px;transition:all .25s;box-shadow:0 10px 30px rgba(2,8,20,.35),inset 0 1px 0 rgba(255,255,255,.04)}
+.ai-input-wrap:focus-within{border-color:rgba(217,174,62,.55);box-shadow:0 0 0 4px rgba(217,174,62,.12),0 10px 30px rgba(46,108,184,.18)}
+#aiInput{flex:1;background:none;border:none;outline:none;color:var(--tx);font-family:inherit;font-size:14px;line-height:1.85;resize:none;max-height:160px;min-height:26px;padding:8px 4px}
+#aiInput::placeholder{color:var(--tx3)}
+.ai-send{width:40px;height:40px;border-radius:12px;border:none;background:linear-gradient(135deg,#d9ae3e,#f0c75e);color:#1a1305;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .22s;box-shadow:0 6px 16px rgba(217,174,62,.35),inset 0 1px 0 rgba(255,255,255,.35)}
+.ai-send:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 10px 22px rgba(217,174,62,.45)}
+.ai-send:active{transform:scale(.94)}
+.ai-stop{padding:8px 14px;border-radius:12px;border:1px solid rgba(199,91,84,.45);background:rgba(199,91,84,.13);color:#e08b85;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;font-size:12px;font-weight:750;transition:all .2s;flex-shrink:0}
+.ai-stop:hover{background:rgba(199,91,84,.2);transform:translateY(-1px)}
+.ai-input-hint{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--tx3);margin-top:8px;gap:8px}
+.ai-input-hint span{display:inline-flex;align-items:center;gap:5px}
+.ai-model{font-family:ui-monospace,monospace;background:rgba(148,180,224,.06);border:1px solid var(--line);padding:2px 8px;border-radius:99px;direction:ltr}
+.ai-drawer-bg{display:none;position:fixed;inset:0;background:rgba(4,10,20,.55);backdrop-filter:blur(6px);z-index:15}
+.ai-empty{text-align:center;padding:30px 14px;color:var(--tx3)}
+.ai-empty p{font-size:11.5px;margin-top:8px;line-height:1.8}
+.ai-modal{width:min(94vw,440px);text-align:right}
+.ai-set-row{margin-top:14px;text-align:right}
+.ai-set-row label{display:block;font-size:11.5px;font-weight:800;color:var(--tx2);margin-bottom:6px}
+.ai-set-hint{margin-top:14px;font-size:10.5px;color:var(--tx3);line-height:1.9;display:flex;gap:8px;align-items:flex-start;text-align:right;background:rgba(148,180,224,.05);border:1px solid var(--line);padding:10px 12px;border-radius:12px}
+@media (max-width:920px){
+  .ai-wrap{grid-template-columns:1fr;height:auto;min-height:calc(100vh - 180px);border-radius:18px}
+  .ai-side{position:fixed;top:0;right:0;bottom:0;width:min(86vw,340px);z-index:20;transform:translateX(100%);transition:transform .34s cubic-bezier(.2,.8,.3,1);box-shadow:-20px 0 60px rgba(2,8,20,.6)}
+  .ai-side.open{transform:translateX(0)}
+  .ai-drawer-bg.open{display:block}
+  .ai-menu-btn{display:flex}
+  .ai-chat-area{padding:14px 12px}
+  .ai-quick-grid{grid-template-columns:1fr}
+  .ai-bubble-wrap{max-width:calc(100% - 46px)}
+  .ai-tools-bar{padding:8px 10px}
+  .ai-input-area{padding:10px 10px calc(10px + env(safe-area-inset-bottom))}
+}
+@media (max-width:560px){
+  .ai-wrap{border-radius:14px;margin:0 -2px}
+  .ai-header{padding:12px 14px}
+  .ai-head-title{font-size:13px}
+  .ai-head-sub{font-size:10px}
+  .ai-bubble{padding:10px 13px}
+  .ai-bubble-content{font-size:13px}
+  .ai-welcome h2{font-size:20px}
+  .md-code pre{font-size:11.5px}
+}
+
 </style>
 </head>
 <body>
@@ -1893,6 +2048,8 @@ const IC = {
   'arrow-right':'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
   'rotate':'<path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>',
   'chevron-down':'<path d="m6 9 6 6 6-6"/>',
+  'user':'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  'trash':'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
   'github':'<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>'
 };
 function ic(n,s,c){
@@ -4282,6 +4439,812 @@ if(typeof document!=='undefined'&&document.addEventListener&&!window.__typBound)
   else typBind();
 }
 
+/* ===== هوش مصنوعی نت‌یار — چت واقعی با OpenRouter + استریم + تاریخچه ===== */
+'use strict';
+const AI={
+  chats:[],curId:null,streaming:false,abort:null,search:'',editing:null,
+  model:'openai/gpt-4o-mini',
+  sys:'تو دستیار هوشمند نت‌یار هستی — یک دستیار فارسی حرفه‌ای، صمیمی و کاربردی برای کارهای روزمره. اگر کاربر فارسی نوشت فارسی جواب بده، اگر انگلیسی نوشت انگلیسی. جواب‌هایت تمیز، دقیق، کوتاهِ مفید و با Markdown زیبا باشد. برای کدها همیشه زبان را مشخص کن.',
+  _inited:false,_key:null,
+  backend:'/api/chat',
+  rate:{c:0,t:0},
+};
+
+function aiLazy(){
+  if(AI._inited)return;
+  try{
+    AI.chats=store.get('aiChats',[]);
+    AI.curId=store.get('aiCur',null);
+    const k=store.get('aiKey','');
+    if(k)AI._key=k;
+  }catch(e){}
+  AI._inited=true;
+  if(!AI.chats)AI.chats=[];
+  // پاکسازی قدیمی
+  AI.chats=AI.chats.filter(c=>c&&c.id&&Array.isArray(c.msgs));
+  // اگر چت جاری حذف شده بود
+  if(AI.curId&&!AI.chats.find(c=>c.id===AI.curId))AI.curId=AI.chats[0]?.id||null;
+}
+function aiSave(){
+  try{store.set('aiChats',AI.chats);store.set('aiCur',AI.curId);if(AI._key)store.set('aiKey',AI._key);}catch(e){}
+}
+function aiUid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
+function aiNow(){return Date.now();}
+function aiTime(t){
+  try{return new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(new Date(t));}catch(e){const d=new Date(t);return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
+}
+function aiDate(t){
+  try{return new Intl.DateTimeFormat('fa-IR',{month:'short',day:'numeric'}).format(new Date(t));}catch(e){return '';}
+}
+function aiIsRTL(s){return /[\u0600-\u06FF]/.test(s||'');}
+function aiEsc(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+function aiGetKey(){
+  if(AI._key)return AI._key;
+  try{
+    const sk=store.get('aiKey','');
+    if(sk)return sk;
+  }catch(e){}
+  // کلید پیش‌فرض برای دمو (در نسخهٔ امن باید از بک‌اند بیاید)
+  try{return atob('c2stb3ItdjEtM2Q1Mzg1OWIyYzc1MWU1MGIzMjFmYzcwZjFjODlmZjM1OWM5ZTJjMmE5ZWIwYWRkMDAyNGFhODVkZTRhZDdjNg==');}catch(e){return '';}
+}
+function aiSetKey(k){AI._key=(k||'').trim();aiSave();}
+
+/* ---------- ریت لیمیت کلاینت ---------- */
+function aiCanSend(){
+  const now=Date.now();
+  if(now-AI.rate.t>60000){AI.rate.c=0;AI.rate.t=now;}
+  if(AI.rate.c>=20)return false;
+  AI.rate.c++;return true;
+}
+
+/* ---------- چت‌ها ---------- */
+function aiCur(){aiLazy();return AI.chats.find(c=>c.id===AI.curId)||null;}
+function aiNewChat(){
+  aiLazy();
+  const id=aiUid();
+  const ch={id,title:'مکالمه جدید',created:aiNow(),updated:aiNow(),msgs:[]};
+  AI.chats.unshift(ch);
+  AI.curId=id;
+  aiSave();
+  aiRerender();
+  setTimeout(()=>{const el=document.getElementById('aiInput');if(el)el.focus();},60);
+  toast('مکالمه جدید ساخته شد','sparkles');
+}
+function aiOpenChat(id){
+  aiLazy();
+  const ch=AI.chats.find(c=>c.id===id);
+  if(!ch)return;
+  AI.curId=id;
+  aiSave();
+  aiRerender();
+  aiCloseDrawer();
+}
+function aiDeleteChat(id,e){
+  if(e)e.stopPropagation();
+  if(!confirm('این مکالمه حذف شود؟'))return;
+  AI.chats=AI.chats.filter(c=>c.id!==id);
+  if(AI.curId===id)AI.curId=AI.chats[0]?.id||null;
+  aiSave();
+  aiRerender();
+  toast('مکالمه حذف شد','trash');
+}
+function aiRenameChat(id,e){
+  if(e)e.stopPropagation();
+  const ch=AI.chats.find(c=>c.id===id);
+  if(!ch)return;
+  const nt=prompt('نام جدید:',ch.title);
+  if(!nt)return;
+  ch.title=nt.trim().slice(0,60)||ch.title;
+  ch.updated=aiNow();
+  aiSave();
+  aiRerenderList();
+}
+function aiClearCur(){
+  const c=aiCur();
+  if(!c||!c.msgs.length)return;
+  if(!confirm('پیام‌های این مکالمه پاک شود؟'))return;
+  c.msgs=[];
+  c.updated=aiNow();
+  aiSave();
+  aiRerender();
+}
+function aiSearch(v){
+  AI.search=(v||'').trim();
+  aiRerenderList();
+}
+
+/* ---------- کارت‌های شروع ---------- */
+const AI_QUICK=[
+  {i:'message',t:'گفت‌وگو',d:'پرسش و پاسخ و کمک روزمره',p:'سلام! می‌خوام باهات گپ بزنم. می‌تونی خودتو معرفی کنی و بگی چطور می‌تونی کمکم کنی؟'},
+  {i:'type',t:'نویسنده',d:'نوشتن و اصلاح انواع متن',p:'لطفاً یک متن حرفه‌ای، روان و جذاب درباره [موضوع دلخواهت را اینجا بنویس] بنویس. لحن دوستانه و رسمی باشه.'},
+  {i:'graduation',t:'آموزش',d:'یادگیری، خلاصه‌سازی و حل تمرین',p:'این موضوع رو به زبان ساده و مرحله‌به‌مرحله برام توضیح بده: '},
+  {i:'monitor',t:'کامپیوتر',d:'کمک برای مشکلات کامپیوتری',p:'یه مشکل کامپیوتری دارم، لطفاً راهنمایی کن: '},
+  {i:'globe',t:'ترجمه',d:'ترجمه فارسی و انگلیسی',p:'این متن رو به انگلیسی ترجمه کن و اگر نکته گرامری داره بگو: '},
+  {i:'book-open',t:'خلاصه‌ساز',d:'خلاصه کردن متن‌های طولانی',p:'این متن طولانی رو در ۵ نکته کلیدی خلاصه کن: '},
+];
+const AI_WRITER=[
+  {t:'نوشتن متن',p:'یک متن کامل و حرفه‌ای درباره این موضوع بنویس: '},
+  {t:'نامه اداری',p:'یک نامه اداری رسمی و محترمانه درباره این موضوع بنویس: '},
+  {t:'درخواست رسمی',p:'یک درخواست رسمی و قانع‌کننده بنویس: '},
+  {t:'متن دوستانه',p:'این متن رو به لحن صمیمی و دوستانه بازنویسی کن: '},
+  {t:'کپشن',p:'چند کپشن جذاب و کوتاه برای این موضوع بنویس: '},
+  {t:'بازنویسی',p:'این متن رو بازنویسی کن تا روان‌تر و حرفه‌ای‌تر بشه: '},
+  {t:'اصلاح نگارشی',p:'غلط‌های نگارشی و املایی این متن رو اصلاح کن: '},
+  {t:'کوتاه کردن',p:'این متن رو کوتاه‌تر و خلاصه‌تر کن: '},
+  {t:'حرفه‌ای کردن',p:'این متن رو حرفه‌ای‌تر و رسمی‌تر کن: '},
+];
+const AI_EDU=[
+  {t:'توضیح درس',p:'این درس رو ساده و کامل توضیح بده: '},
+  {t:'خلاصه درس',p:'این درس رو در چند نکته خلاصه کن: '},
+  {t:'ساخت سؤال',p:'از این متن ۵ سؤال امتحانی بساز: '},
+  {t:'آزمون',p:'یک آزمون ۵ سؤالی چهارگزینه‌ای از این موضوع بساز: '},
+  {t:'مرحله‌به‌مرحله',p:'این مسئله رو مرحله‌به‌مرحله حل کن: '},
+  {t:'ساده‌سازی',p:'این مطلب پیچیده رو به زبان خیلی ساده توضیح بده: '},
+];
+const AI_COMP=[
+  {t:'مشکل ویندوز',p:'ویندوز من این مشکل رو داره، راه حل چیه؟ '},
+  {t:'توضیح ارور',p:'این ارور یعنی چی و چطور حلش کنم؟ '},
+  {t:'نصب نرم‌افزار',p:'راهنمای نصب این نرم‌افزار رو بده: '},
+  {t:'تنظیمات',p:'چطور این تنظیم رو در ویندوز انجام بدم؟ '},
+  {t:'اینترنت',p:'اینترنت من این مشکل رو داره: '},
+  {t:'عمومی',p:'یه مشکل کامپیوتری دارم: '},
+];
+const AI_TRANS=[
+  {t:'فا → En',p:'این متن فارسی رو به انگلیسی ترجمه کن: '},
+  {t:'En → فا',p:'Translate this English text to Persian: '},
+  {t:'رسمی',p:'این متن رو به انگلیسی رسمی ترجمه کن: '},
+  {t:'دوستانه',p:'این متن رو به فارسی محاوره‌ای و دوستانه ترجمه کن: '},
+];
+
+/* ---------- Markdown حرفه‌ای ---------- */
+function aiMdParse(text){
+  if(!text)return '';
+  // جدا کردن کدبلاک‌ها
+  const blocks=[];
+  let tmp=text.replace(/```(\w+)?\n?([\s\S]*?)```/g,(m,lang,code)=>{
+    const id='__CB_'+blocks.length+'__';
+    blocks.push({lang:(lang||'').trim(),code:code});
+    return id;
+  });
+  // escape باقی
+  tmp=aiEsc(tmp);
+  // جداسازی بلاک‌ها برای پردازش خطی
+  const lines=tmp.split('\n');
+  let out='',inList=null,listType=null,tableBuf=[],inQuote=false,quoteBuf=[];
+  const flushList=()=>{
+    if(inList){out+='</'+(listType==='ol'?'ol':'ul')+'>';inList=null;listType=null;}
+  };
+  const flushTable=()=>{
+    if(tableBuf.length>=2){
+      out+='<div class="md-table-wrap"><table class="md-table">';
+      const head=tableBuf[0].split('|').map(s=>s.trim()).filter(Boolean);
+      const sep=tableBuf[1];
+      if(/^\s*\|?(\s*:?-+:?\s*\|)+\s*$/.test(sep)){
+        out+='<thead><tr>'+head.map(h=>'<th>'+aiInline(h)+'</th>').join('')+'</tr></thead><tbody>';
+        for(let i=2;i<tableBuf.length;i++){
+          const row=tableBuf[i].split('|').map(s=>s.trim()).filter(Boolean);
+          if(!row.length)continue;
+          out+='<tr>'+row.map(c=>'<td>'+aiInline(c)+'</td>').join('')+'</tr>';
+        }
+        out+='</tbody></table></div>';
+      }
+    }
+    tableBuf=[];
+  };
+  const flushQuote=()=>{
+    if(quoteBuf.length){out+='<blockquote>'+quoteBuf.map(l=>'<p>'+aiInline(l)+'</p>').join('')+'</blockquote>';quoteBuf=[];inQuote=false;}
+  };
+  for(let i=0;i<lines.length;i++){
+    let l=lines[i];
+    // table detection
+    if(l.includes('|')&&i+1<lines.length&&/^\s*\|?(\s*:?-+:?\s*\|)+\s*$/.test(lines[i+1])){
+      flushList();flushQuote();
+      tableBuf=[l,lines[i+1]];
+      i+=1;
+      while(i+1<lines.length&&lines[i+1].includes('|')&&lines[i+1].trim()!==''){
+        tableBuf.push(lines[++i]);
+      }
+      flushTable();
+      continue;
+    }
+    if(!l.trim()){
+      flushList();flushTable();flushQuote();
+      continue;
+    }
+    // code placeholder line alone
+    if(/^__CB_\d+__$/.test(l.trim())){
+      flushList();flushTable();flushQuote();
+      const m=l.trim().match(/__CB_(\d+)__/);
+      if(m){
+        const b=blocks[+m[1]];
+        out+=aiCodeBlock(b.code,b.lang,+m[1]);
+      }
+      continue;
+    }
+    // blockquote
+    if(/^&gt;/.test(l)||/^>/.test(l)){
+      if(!inQuote){flushList();flushTable();inQuote=true;quoteBuf=[];}
+      quoteBuf.push(l.replace(/^&gt;\s?|^>\s?/,''));
+      continue;
+    }else if(inQuote){flushQuote();}
+    // heading
+    const hm=l.match(/^(#{1,6})\s+(.*)$/);
+    if(hm){
+      flushList();flushTable();
+      const lvl=hm[1].length;
+      out+='<h'+lvl+' class="md-h'+lvl+'">'+aiInline(hm[2])+'</h'+lvl+'>';
+      continue;
+    }
+    // ul
+    const um=l.match(/^\s*[-*+]\s+(.*)$/);
+    if(um){
+      if(!inList||listType!=='ul'){flushList();out+='<ul class="md-ul">';inList=true;listType='ul';}
+      out+='<li>'+aiInline(um[1])+'</li>';
+      continue;
+    }
+    // ol
+    const om=l.match(/^\s*\d+\.\s+(.*)$/);
+    if(om){
+      if(!inList||listType!=='ol'){flushList();out+='<ol class="md-ol">';inList=true;listType='ol';}
+      out+='<li>'+aiInline(om[1])+'</li>';
+      continue;
+    }
+    flushList();
+    out+='<p class="md-p">'+aiInline(l)+'</p>';
+  }
+  flushList();flushTable();flushQuote();
+  // جایگذاری کدبلاک‌های inline باقی‌مانده در متن (اگر داخل پاراگراف بودند)
+  out=out.replace(/__CB_(\d+)__/g,(m,n)=>{const b=blocks[+n];return aiCodeBlock(b.code,b.lang,+n);});
+  return out;
+}
+function aiInline(s){
+  if(!s)return '';
+  // لینک‌ها
+  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // bold
+  s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  s=s.replace(/__(.+?)__/g,'<strong>$1</strong>');
+  // italic
+  s=s.replace(/\*(.+?)\*/g,'<em>$1</em>');
+  s=s.replace(/_(.+?)_/g,'<em>$1</em>');
+  // inline code
+  s=s.replace(/`([^`]+)`/g,'<code class="md-ic">$1</code>');
+  return s;
+}
+function aiCodeBlock(code,lang,idx){
+  const esc=aiEsc(code);
+  const l=(lang||'text').toLowerCase();
+  return '<div class="md-code"><div class="md-code-head"><span class="md-lang">'+aiEsc(l||'code')+'</span><button class="md-copy" onclick="aiCopyCode(this)">'+ic('copy',12)+'کپی</button></div><pre><code class="lang-'+aiEsc(l)+'">'+esc+'</code></pre></div>';
+}
+function aiCopyCode(btn){
+  const pre=btn.closest('.md-code').querySelector('pre code');
+  if(!pre)return;
+  copyText(pre.textContent).then(ok=>{
+    if(ok){const o=btn.innerHTML;btn.innerHTML=ic('check',12)+'کپی شد';setTimeout(()=>btn.innerHTML=o,1400);toast('کد کپی شد','copy');}
+  });
+}
+
+/* ---------- تماس با AI ---------- */
+async function aiCallBackend(msgs,signal){
+  const r=await fetch(AI.backend,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages:msgs,model:AI.model,stream:true}),
+    signal
+  });
+  if(!r.ok)throw new Error('backend '+r.status);
+  return r;
+}
+async function aiCallDirect(msgs,onChunk,signal){
+  const key=aiGetKey();
+  if(!key)throw new Error('no_key');
+  const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+    method:'POST',
+    headers:{
+      'Authorization':'Bearer '+key,
+      'Content-Type':'application/json',
+      'HTTP-Referer':location.origin,
+      'X-Title':'NetYar AI'
+    },
+    body:JSON.stringify({model:AI.model,messages:msgs,stream:true,temperature:0.7}),
+    signal
+  });
+  if(!res.ok){
+    const t=await res.text().catch(()=> '');
+    if(res.status===429)throw new Error('rate');
+    if(res.status===401||res.status===403)throw new Error('auth');
+    throw new Error('http '+res.status+' '+t.slice(0,200));
+  }
+  const reader=res.body.getReader();
+  const dec=new TextDecoder();
+  let buf='';
+  while(true){
+    if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');
+    const {done,value}=await reader.read();
+    if(done)break;
+    buf+=dec.decode(value,{stream:true});
+    const lines=buf.split('\n');
+    buf=lines.pop()||'';
+    for(const line of lines){
+      const tr=line.trim();
+      if(!tr||!tr.startsWith('data:'))continue;
+      const d=tr.slice(5).trim();
+      if(d==='[DONE]')return;
+      try{
+        const j=JSON.parse(d);
+        const delta=j.choices?.[0]?.delta?.content;
+        if(delta)onChunk(delta);
+      }catch(e){}
+    }
+  }
+}
+async function aiStream(msgs,onChunk,signal){
+  // اول بک‌اند
+  try{
+    const r=await aiCallBackend(msgs,signal);
+    // اگر بک‌اند استریم SSE برگرداند
+    if(r.body){
+      const reader=r.body.getReader();
+      const dec=new TextDecoder();
+      let buf='';
+      while(true){
+        if(signal&&signal.aborted)throw new DOMException('Aborted','AbortError');
+        const {done,value}=await reader.read();
+        if(done)break;
+        buf+=dec.decode(value,{stream:true});
+        const parts=buf.split('\n\n');
+        buf=parts.pop()||'';
+        for(const part of parts){
+          const lines=part.split('\n');
+          for(const ln of lines){
+            if(ln.startsWith('data:')){
+              const d=ln.slice(5).trim();
+              if(d==='[DONE]')return;
+              try{
+                const j=JSON.parse(d);
+                // بک‌اند ما ممکنه {content} یا openrouter format بده
+                const c=j.content||j.choices?.[0]?.delta?.content||j.delta;
+                if(c)onChunk(c);
+              }catch(e){
+                // اگر متن ساده بود
+                if(ln.includes('content')){}
+                else if(d&&!d.startsWith('{'))onChunk(d);
+              }
+            }
+          }
+        }
+      }
+      return;
+    }else{
+      const j=await r.json();
+      if(j.content)onChunk(j.content);
+      return;
+    }
+  }catch(e){
+    if(e.name==='AbortError')throw e;
+    // fallback به مستقیم
+    // console.warn('backend fail, fallback direct',e);
+  }
+  await aiCallDirect(msgs,onChunk,signal);
+}
+
+/* ---------- ارسال ---------- */
+function aiSend(prefill){
+  aiLazy();
+  const inp=document.getElementById('aiInput');
+  let txt=(prefill!==undefined?prefill:(inp?inp.value:''))+'';
+  txt=txt.trim();
+  if(!txt)return;
+  if(!aiCanSend()){toast('تعداد درخواست‌ها زیاد است، کمی صبر کن','alert');return;}
+  if(!aiCur())aiNewChat();
+  const cur=aiCur();
+  if(!cur)return;
+  // اگر در حال استریم بود
+  if(AI.streaming){toast('صبر کن تا پاسخ تمام شود','info');return;}
+
+  const um={id:aiUid(),role:'user',content:txt,time:aiNow()};
+  cur.msgs.push(um);
+  if(cur.msgs.length===1){
+    cur.title=txt.slice(0,48)+(txt.length>48?'…':'');
+  }
+  cur.updated=aiNow();
+  aiSave();
+  if(inp)inp.value='';
+  aiAutoResize(inp);
+  aiRerenderChat();
+
+  // پیام دستیار خالی
+  const am={id:aiUid(),role:'assistant',content:'',time:aiNow(),streaming:true};
+  cur.msgs.push(am);
+  aiRerenderChat();
+  aiScrollBottom();
+
+  const ctrl=new AbortController();
+  AI.abort=ctrl;
+  AI.streaming=true;
+  aiUpdateInputState();
+
+  const history=[{role:'system',content:AI.sys}].concat(cur.msgs.filter(m=>m.role!=='assistant'||!m.streaming||m.content).slice(-20).map(m=>({role:m.role,content:m.content})));
+  // حذف آخرین دستیار خالی از تاریخچه ارسالی
+  const sendHist=history.filter((m,i)=>!(i===history.length-1&&m.role==='assistant'&&!m.content));
+
+  let full='';
+  const onChunk=(delta)=>{
+    full+=delta;
+    am.content=full;
+    const el=document.getElementById('am-'+am.id);
+    if(el){
+      const contentEl=el.querySelector('.ai-bubble-content');
+      if(contentEl){
+        contentEl.innerHTML=aiMdParse(full)+'<span class="ai-cursor"></span>';
+        contentEl.classList.toggle('rtl',aiIsRTL(full));
+        contentEl.classList.toggle('ltr',!aiIsRTL(full));
+      }
+    }
+    aiScrollBottom(false);
+  };
+  aiStream(sendHist,onChunk,ctrl.signal).then(()=>{
+    am.streaming=false;
+    am.time=aiNow();
+    cur.updated=aiNow();
+    aiSave();
+    AI.streaming=false;
+    AI.abort=null;
+    aiUpdateInputState();
+    aiRerenderChat();
+    aiScrollBottom();
+  }).catch(err=>{
+    AI.streaming=false;
+    AI.abort=null;
+    aiUpdateInputState();
+    if(err.name==='AbortError'){
+      am.content=full||am.content||'';
+      am.streaming=false;
+      if(!am.content)cur.msgs=cur.msgs.filter(m=>m.id!==am.id);
+      aiSave();
+      aiRerenderChat();
+      return;
+    }
+    let msg='اتصال به هوش مصنوعی برقرار نشد. لطفاً دوباره تلاش کنید.';
+    if(err.message==='rate')msg='تعداد درخواست‌ها زیاد است. لطفاً کمی بعد دوباره تلاش کنید.';
+    else if(err.message==='no_key')msg='کلید API تنظیم نشده. لطفاً در تنظیمات کلید را وارد کنید یا از بک‌اند استفاده کنید.';
+    else if(err.message==='auth')msg='کلید API نامعتبر است. لطفاً آن را بررسی کنید.';
+    else if(!navigator.onLine)msg='اتصال اینترنت خود را بررسی کنید.';
+    am.content=full?full+'\n\n---\n! '+msg:'! '+msg;
+    am.streaming=false;
+    am.error=true;
+    aiSave();
+    aiRerender();
+    toast(msg,'alert');
+  });
+}
+function aiStop(){
+  if(AI.abort)AI.abort.abort();
+}
+function aiRegenerate(mid){
+  const cur=aiCur();if(!cur)return;
+  const idx=cur.msgs.findIndex(m=>m.id===mid);
+  if(idx<0)return;
+  // پیدا کردن آخرین پیام کاربر قبل از این
+  let uIdx=-1;
+  for(let i=idx-1;i>=0;i--)if(cur.msgs[i].role==='user'){uIdx=i;break;}
+  if(uIdx<0)return;
+  // حذف پیام‌های بعد از کاربر
+  cur.msgs=cur.msgs.slice(0,uIdx+1);
+  aiSave();
+  aiRerenderChat();
+  aiSend(cur.msgs[uIdx].content);
+}
+function aiContinue(mid){
+  const cur=aiCur();if(!cur)return;
+  aiSend('ادامه بده');
+}
+function aiEditMsg(id){
+  const cur=aiCur();if(!cur)return;
+  const m=cur.msgs.find(x=>x.id===id);
+  if(!m||m.role!=='user')return;
+  const nt=prompt('ویرایش پیام:',m.content);
+  if(nt===null)return;
+  const t=nt.trim();
+  if(!t)return;
+  const idx=cur.msgs.findIndex(x=>x.id===id);
+  cur.msgs=cur.msgs.slice(0,idx);
+  aiSave();
+  aiRerenderChat();
+  aiSend(t);
+}
+function aiCopy(txt){
+  copyText(txt).then(ok=>{if(ok)toast('کپی شد','copy');});
+}
+function aiCopyMsg(id){
+  const cur=aiCur();if(!cur)return;
+  const m=cur.msgs.find(x=>x.id===id);
+  if(m)aiCopy(m.content);
+}
+
+/* ---------- رندر ---------- */
+function aiView(){
+  aiLazy();
+  const cur=aiCur();
+  const hasMsgs=cur&&cur.msgs.length>0;
+  return '<div class="ai-wrap" id="aiWrap">'
+    +'<aside class="ai-side" id="aiSide">'
+      +'<div class="ai-side-head">'
+        +'<button class="btn primary ai-new" onclick="aiNewChat()">'+ic('sparkles',14)+'<span>مکالمه جدید</span></button>'
+        +'<div class="ai-search"><span class="si">'+ic('search',14)+'</span><input id="aiSearch" placeholder="جستجوی مکالمات…" oninput="aiSearch(this.value)" value="'+aiEsc(AI.search)+'"><span class="clear" onclick="document.getElementById(\'aiSearch\').value=\'\';aiSearch(\'\')" style="display:'+(AI.search?'flex':'none')+'">'+ic('x',12)+'</span></div>'
+      +'</div>'
+      +'<div class="ai-chats" id="aiChatsList">'+aiChatsListHtml()+'</div>'
+      +'<div class="ai-side-foot">'
+        +'<div class="ai-foot-info">'+ic('shield-check',12)+'نسخه ۱۱٫۰ — امن و خصوصی</div>'
+        +'<div class="ai-foot-actions">'
+          +'<button class="ai-foot-btn" onclick="aiShowSettings()" title="تنظیمات">'+ic('wrench',13)+'کلید API</button>'
+          +'<button class="ai-foot-btn" onclick="aiExportChats()" title="خروجی گرفتن">'+ic('download',13)+'خروجی</button>'
+        +'</div>'
+      +'</div>'
+    +'</aside>'
+    +'<div class="ai-main">'
+      +'<div class="ai-header">'
+        +'<button class="ai-menu-btn" onclick="aiToggleDrawer()" aria-label="منو">'+ic('menu',18)+'</button>'
+        +'<div class="ai-head-txt"><div class="ai-head-title">'+ic('brain',16)+'هوش مصنوعی نت‌یار</div><div class="ai-head-sub">دستیار هوشمند شما برای کارهای روزمره</div></div>'
+        +'<div class="ai-head-actions">'
+          +'<button class="icon-btn" onclick="aiClearCur()" title="پاک کردن این مکالمه">'+ic('trash',14)+'</button>'
+          +'<button class="icon-btn" onclick="aiNewChat()" title="مکالمه جدید">'+ic('sparkles',14)+'</button>'
+        +'</div>'
+      +'</div>'
+      +'<div class="ai-chat-area" id="aiChatArea">'
+        +(hasMsgs?aiChatHtml(cur):aiWelcomeHtml())
+      +'</div>'
+      +'<div class="ai-tools-bar" id="aiToolsBar">'+aiToolsHtml()+'</div>'
+      +'<div class="ai-input-area">'
+        +'<div class="ai-input-wrap">'
+          +'<textarea id="aiInput" placeholder="پیامت را برای هوش مصنوعی بنویس…" rows="1" oninput="aiAutoResize(this);aiDetectDir(this)" onkeydown="aiInputKey(event)"></textarea>'
+          +'<button id="aiSendBtn" class="ai-send" onclick="aiSend()" title="ارسال (Enter)">'+ic('arrow-up',18)+'</button>'
+          +'<button id="aiStopBtn" class="ai-stop" onclick="aiStop()" title="توقف" style="display:none">'+ic('x',14)+'<span>توقف</span></button>'
+        +'</div>'
+        +'<div class="ai-input-hint"><span>'+ic('keyboard',11)+'Enter ارسال • Shift+Enter خط جدید</span><span class="ai-model">'+aiEsc(AI.model)+'</span></div>'
+      +'</div>'
+    +'</div>'
+    +'<div class="ai-drawer-bg" id="aiDrawerBg" onclick="aiCloseDrawer()"></div>'
+  +'</div>';
+}
+function aiChatsListHtml(){
+  aiLazy();
+  let list=AI.chats;
+  if(AI.search){
+    const q=AI.search.toLowerCase();
+    list=list.filter(c=>c.title.toLowerCase().includes(q)||c.msgs.some(m=>m.content.toLowerCase().includes(q)));
+  }
+  if(!list.length)return '<div class="ai-empty"><span class="e-ic">'+ic('search',28)+'</span><p>'+(AI.search?'نتیجه‌ای پیدا نشد':'هنوز مکالمه‌ای نداری')+'</p></div>';
+  return list.map(c=>{
+    const last=c.msgs[c.msgs.length-1];
+    const isCur=c.id===AI.curId;
+    return '<div class="ai-chat-item'+(isCur?' active':'')+'" onclick="aiOpenChat(\''+c.id+'\')">'
+      +'<div class="ai-ci-head"><span class="ai-ci-title">'+aiEsc(c.title)+'</span><span class="ai-ci-date">'+aiDate(c.updated)+'</span></div>'
+      +'<div class="ai-ci-last">'+aiEsc((last?last.content:'').slice(0,80))+'</div>'
+      +'<div class="ai-ci-actions">'
+        +'<span class="ai-ci-btn" onclick="aiRenameChat(\''+c.id+'\',event)" title="تغییر نام">'+ic('type',12)+'</span>'
+        +'<span class="ai-ci-btn del" onclick="aiDeleteChat(\''+c.id+'\',event)" title="حذف">'+ic('x',12)+'</span>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+function aiWelcomeHtml(){
+  return '<div class="ai-welcome">'
+    +'<div class="ai-w-ic">'+ic('brain',42)+'</div>'
+    +'<h2>سلام<br>من دستیار هوشمند <span>نت‌یار</span> هستم.</h2>'
+    +'<p>امروز چه کاری می‌توانم برایت انجام دهم؟</p>'
+    +'<div class="ai-quick-grid">'+AI_QUICK.map(q=>'<button class="ai-qcard" onclick="aiQuick(\''+q.p.replace(/'/g,"\\'")+'\')"><span class="q-ic">'+ic(q.i,18)+'</span><span class="q-t">'+q.t+'</span><span class="q-d">'+q.d+'</span></button>').join('')+'</div>'
+    +'<div class="ai-w-foot"><span>'+ic('shield-check',12)+'امن • سریع • فارسی و انگلیسی • با Markdown و کد</span></div>'
+  +'</div>';
+}
+function aiChatHtml(cur){
+  if(!cur||!cur.msgs.length)return aiWelcomeHtml();
+  return '<div class="ai-msgs">'+cur.msgs.map(m=>aiMsgHtml(m)).join('')+'</div>';
+}
+function aiMsgHtml(m){
+  const isUser=m.role==='user';
+  const rtl=aiIsRTL(m.content);
+  const time=aiTime(m.time);
+  if(isUser){
+    return '<div class="ai-msg user" id="am-'+m.id+'" data-id="'+m.id+'">'
+      +'<div class="ai-avatar user">'+ic('user',16)+'</div>'
+      +'<div class="ai-bubble-wrap"><div class="ai-bubble user '+(rtl?'rtl':'ltr')+'"><div class="ai-bubble-content">'+aiEsc(m.content).replace(/\n/g,'<br>')+'</div></div>'
+      +'<div class="ai-msg-meta"><span class="ai-time">'+time+'</span><span class="ai-actions">'
+        +'<button class="ai-act" onclick="aiCopyMsg(\''+m.id+'\')" title="کپی">'+ic('copy',12)+'</button>'
+        +'<button class="ai-act" onclick="aiEditMsg(\''+m.id+'\')" title="ویرایش">'+ic('type',12)+'</button>'
+      +'</span></div></div></div>';
+  }else{
+    const streaming=m.streaming;
+    const content=streaming&&!m.content?'<div class="ai-typing"><span>AI در حال پاسخ دادن</span><i></i><i></i><i></i></div>':aiMdParse(m.content);
+    return '<div class="ai-msg ai'+(m.error?' err':'')+'" id="am-'+m.id+'" data-id="'+m.id+'">'
+      +'<div class="ai-avatar ai">'+ic('sparkles',16)+'</div>'
+      +'<div class="ai-bubble-wrap"><div class="ai-bubble ai '+(rtl?'rtl':'ltr')+'"><div class="ai-bubble-content '+(rtl?'rtl':'ltr')+'">'+content+(streaming&&m.content?'<span class="ai-cursor"></span>':'')+'</div></div>'
+      +'<div class="ai-msg-meta"><span class="ai-time">'+time+'</span>'
+      +'<span class="ai-actions">'
+        +'<button class="ai-act" onclick="aiCopyMsg(\''+m.id+'\')" title="کپی">'+ic('copy',12)+'</button>'
+        +'<button class="ai-act" onclick="aiRegenerate(\''+m.id+'\')" title="دوباره تولید کن">'+ic('rotate-ccw',12)+'</button>'
+        +'<button class="ai-act" onclick="aiContinue(\''+m.id+'\')" title="ادامه بده">'+ic('arrow-down',12)+'</button>'
+      +'</span></div></div></div>';
+  }
+}
+function aiToolsHtml(){
+  // تب‌های ابزار
+  return '<div class="ai-tools-tabs">'
+    +'<button class="ai-tool-tab active" data-tab="writer" onclick="aiToolTab(\'writer\',this)">'+ic('type',13)+'نویسنده</button>'
+    +'<button class="ai-tool-tab" data-tab="edu" onclick="aiToolTab(\'edu\',this)">'+ic('graduation',13)+'آموزش</button>'
+    +'<button class="ai-tool-tab" data-tab="comp" onclick="aiToolTab(\'comp\',this)">'+ic('monitor',13)+'کامپیوتر</button>'
+    +'<button class="ai-tool-tab" data-tab="trans" onclick="aiToolTab(\'trans\',this)">'+ic('globe',13)+'ترجمه</button>'
+  +'</div>'
+  +'<div class="ai-tools-panels">'
+    +'<div class="ai-tool-panel active" id="aiPanel-writer">'+AI_WRITER.map(t=>'<button class="ai-chip" onclick="aiQuick(\''+t.p.replace(/'/g,"\\'")+'\')">'+t.t+'</button>').join('')+'</div>'
+    +'<div class="ai-tool-panel" id="aiPanel-edu">'+AI_EDU.map(t=>'<button class="ai-chip" onclick="aiQuick(\''+t.p.replace(/'/g,"\\'")+'\')">'+t.t+'</button>').join('')+'</div>'
+    +'<div class="ai-tool-panel" id="aiPanel-comp">'+AI_COMP.map(t=>'<button class="ai-chip" onclick="aiQuick(\''+t.p.replace(/'/g,"\\'")+'\')">'+t.t+'</button>').join('')+'</div>'
+    +'<div class="ai-tool-panel" id="aiPanel-trans">'+AI_TRANS.map(t=>'<button class="ai-chip" onclick="aiQuick(\''+t.p.replace(/'/g,"\\'")+'\')">'+t.t+'</button>').join('')+'</div>'
+  +'</div>';
+}
+function aiToolTab(tab,btn){
+  document.querySelectorAll('.ai-tool-tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.ai-tool-panel').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('aiPanel-'+tab);
+  if(el)el.classList.add('active');
+}
+function aiQuick(prompt){
+  const inp=document.getElementById('aiInput');
+  if(inp){inp.value=prompt;aiAutoResize(inp);aiDetectDir(inp);inp.focus();}
+}
+function aiAutoResize(el){
+  if(!el)return;
+  el.style.height='auto';
+  el.style.height=Math.min(160,el.scrollHeight)+'px';
+}
+function aiDetectDir(el){
+  if(!el)return;
+  const rtl=aiIsRTL(el.value);
+  el.style.direction=rtl?'rtl':'ltr';
+  el.style.textAlign=rtl?'right':'left';
+}
+function aiInputKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){
+    e.preventDefault();
+    aiSend();
+  }
+}
+function aiRerender(){
+  const area=document.getElementById('aiChatArea');
+  const cur=aiCur();
+  if(area){
+    area.innerHTML=(cur&&cur.msgs.length)?aiChatHtml(cur):aiWelcomeHtml();
+    aiScrollBottom(true);
+  }
+  aiRerenderList();
+  aiUpdateInputState();
+}
+function aiRerenderList(){
+  const list=document.getElementById('aiChatsList');
+  if(list)list.innerHTML=aiChatsListHtml();
+  const clr=document.querySelector('.ai-search .clear');
+  if(clr)clr.style.display=AI.search?'flex':'none';
+}
+function aiRerenderChat(){
+  const area=document.getElementById('aiChatArea');
+  const cur=aiCur();
+  if(!area)return;
+  if(!cur||!cur.msgs.length){
+    area.innerHTML=aiWelcomeHtml();
+    return;
+  }
+  // اگر قبلاً welcome بود، کل را بازسازی کن
+  if(area.querySelector('.ai-welcome')){
+    area.innerHTML=aiChatHtml(cur);
+    aiScrollBottom(true);
+    return;
+  }
+  const msgsBox=area.querySelector('.ai-msgs');
+  if(!msgsBox){
+    area.innerHTML=aiChatHtml(cur);
+    aiScrollBottom(true);
+    return;
+  }
+  // فقط پیام آخر را به‌روزرسانی یا اضافه کن
+  const last=cur.msgs[cur.msgs.length-1];
+  let existing=document.getElementById('am-'+last.id);
+  if(!existing){
+    msgsBox.insertAdjacentHTML('beforeend',aiMsgHtml(last));
+    aiScrollBottom();
+  }else{
+    // اگر پیام موجود بود (استریم)، فقط محتوایش قبلاً در onChunk آپدیت شده
+  }
+}
+function aiScrollBottom(smooth){
+  const area=document.getElementById('aiChatArea');
+  if(!area)return;
+  try{
+    if(smooth===false||typeof area.scrollTo!=='function')area.scrollTop=area.scrollHeight;
+    else area.scrollTo({top:area.scrollHeight,behavior:smooth?'smooth':'auto'});
+  }catch(e){try{area.scrollTop=area.scrollHeight;}catch(x){}}
+}
+function aiUpdateInputState(){
+  const send=document.getElementById('aiSendBtn');
+  const stop=document.getElementById('aiStopBtn');
+  if(!send||!stop)return;
+  if(AI.streaming){
+    send.style.display='none';
+    stop.style.display='inline-flex';
+  }else{
+    send.style.display='inline-flex';
+    stop.style.display='none';
+  }
+}
+function aiToggleDrawer(){
+  const side=document.getElementById('aiSide');
+  const bg=document.getElementById('aiDrawerBg');
+  if(!side)return;
+  side.classList.toggle('open');
+  if(bg)bg.classList.toggle('open');
+}
+function aiCloseDrawer(){
+  const side=document.getElementById('aiSide');
+  const bg=document.getElementById('aiDrawerBg');
+  if(side)side.classList.remove('open');
+  if(bg)bg.classList.remove('open');
+}
+function aiShowSettings(){
+  const curKey=aiGetKey();
+  const html='<div class="overlay" onclick="if(event.target===this)this.remove()"><div class="modal ai-modal" onclick="event.stopPropagation()">'
+    +'<button class="x" onclick="this.closest(\'.overlay\').remove()">'+ic('x',14)+'</button>'
+    +'<div class="m-av" style="background:linear-gradient(140deg,#2e6cb8,#d9ae3e)">'+ic('wrench',28)+'</div>'
+    +'<h3>تنظیمات هوش مصنوعی</h3>'
+    +'<p>کلید OpenRouter فقط روی دستگاه شما ذخیره می‌شود و به هیچ‌جا ارسال نمی‌شود جز مستقیم به OpenRouter (یا بک‌اند شما).</p>'
+    +'<div class="ai-set-row"><label>کلید API (sk-or-...) — برای امنیت بهتر از بک‌اند استفاده کن</label><input id="aiKeyInp" type="password" value="'+aiEsc(curKey)+'" placeholder="sk-or-v1-..." style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line2);background:rgba(9,18,34,.6);color:var(--tx);font-family:monospace"></div>'
+    +'<div class="ai-set-row"><label>مدل</label><select id="aiModelSel" style="width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:rgba(9,18,34,.6);color:var(--tx)"><option value="openai/gpt-4o-mini" '+(AI.model==='openai/gpt-4o-mini'?'selected':'')+'>gpt-4o-mini (سریع و ارزان)</option><option value="openai/gpt-4o" '+(AI.model==='openai/gpt-4o'?'selected':'')+'>gpt-4o (قدرتمند)</option><option value="google/gemini-2.0-flash-exp:free" '+(AI.model==='google/gemini-2.0-flash-exp:free'?'selected':'')+'>gemini-flash (رایگان)</option><option value="meta-llama/llama-3.1-8b-instruct:free" '+(AI.model==='meta-llama/llama-3.1-8b-instruct:free'?'selected':'')+'>llama-3.1 (رایگان)</option></select></div>'
+    +'<div class="row" style="margin-top:16px"><button class="btn gold" onclick="aiSaveSettings()">'+ic('check',14)+'ذخیره</button><button class="btn ghost" onclick="this.closest(\'.overlay\').remove()">'+ic('x',14)+'بستن</button></div>'
+    +'<div class="ai-set-hint">'+ic('shield-check',12)+'برای نسخهٔ امن: یک بک‌اند بساز که کلید را در .env نگه دارد و از /api/chat پروکسی کند. نمونه در پوشهٔ backend/ گذاشته شده.</div>'
+  +'</div></div>';
+  const d=document.createElement('div');
+  d.innerHTML=html;
+  document.body.appendChild(d.firstChild);
+}
+function aiSaveSettings(){
+  const k=document.getElementById('aiKeyInp');
+  const m=document.getElementById('aiModelSel');
+  if(k)aiSetKey(k.value);
+  if(m)AI.model=m.value;
+  try{store.set('aiModel',AI.model);}catch(e){}
+  aiSave();
+  document.querySelector('.overlay')?.remove();
+  toast('تنظیمات ذخیره شد','check-circle');
+  const hint=document.querySelector('.ai-model');
+  if(hint)hint.textContent=AI.model;
+}
+function aiExportChats(){
+  aiLazy();
+  const data=JSON.stringify(AI.chats,null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='netyar-ai-chats.json';a.click();
+  URL.revokeObjectURL(url);
+  toast('خروجی دانلود شد','download');
+}
+function aiAfterRender(){
+  aiLazy();
+  try{const mm=store.get('aiModel','');if(mm)AI.model=mm;}catch(e){}
+  aiRerenderList();
+  const inp=document.getElementById('aiInput');
+  if(inp){
+    aiAutoResize(inp);
+    aiDetectDir(inp);
+    // فوکوس در دسکتاپ
+    if(window.innerWidth>920)setTimeout(()=>inp.focus(),120);
+  }
+  aiScrollBottom(true);
+  aiUpdateInputState();
+}
+// برای تست‌ها
+function aiTestReset(){AI.chats=[];AI.curId=null;AI.search='';aiSave();}
+
+
 /* ===== کافی‌نت نت‌یار v4 — موتور اپلیکیشن ===== */
 'use strict';
 
@@ -4517,8 +5480,9 @@ const NAV=[
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
   {v:'typing',i:'type',t:'آموزش'},
+  {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
-const VIEWS=['home','sites','fav','games','music','calc','typing'];
+const VIEWS=['home','sites','fav','games','music','calc','typing','ai'];
 const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
@@ -4539,12 +5503,12 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۰٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۱٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
 function topHtml(){
-  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',music:'موزیک',calc:'ماشین‌حساب'};
+  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
   let dt='',tm='';
   try{
     const now=new Date();
@@ -4608,7 +5572,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۰٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۱٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -5551,6 +6515,7 @@ function render(){
     case 'music':body=musHero();break;
     case 'calc':body=vCalc();break;
     case 'typing':body=typView();break;
+    case 'ai':body=typeof aiView==='function'?aiView():'<div class="empty"><h3>هوش مصنوعی در حال بارگذاری…</h3></div>';break;
     case 'game-dino':body=vGame('dino');break;
     case 'game-tower':body=vGame('tower');break;
     default:body=(state.view.indexOf('game-')===0&&GAME_META[state.view.slice(5)])?vGame(state.view.slice(5)):vHome();
@@ -5586,6 +6551,9 @@ function afterRender(){
   tick();
   animateCounts();
   observeReveals();
+  if(state.view==='ai'){
+    if(typeof aiAfterRender==='function')aiAfterRender();
+  }
   if(state.view==='music'){
     renderMusResults();
     if(MUS.playing)musStartViz();
@@ -5673,6 +6641,8 @@ document.addEventListener('change',e=>{
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target&&e.target.id==='musInp'){musGo(true);return;}
   if(e.target&&e.target.id==='typInpFree')return;
+  if(e.target&&e.target.id==='aiInput')return;
+  if(e.target&&e.target.id==='aiSearch')return;
   if(state.view==='typing'){
     if(e.key==='Backspace'){e.preventDefault();typBack();return;}
     if(e.target&&e.target.id==='typInput')return;
@@ -5751,6 +6721,7 @@ document.addEventListener('keydown',e=>{
   if(document.querySelector('.overlay'))return;
   if(inInput)return;
   if(state.view==='typing')return;
+  if(state.view==='ai')return;
   const onBtn=tag==='BUTTON';
   /* بازی‌ها: کلیدها مال بازی‌اند */
   if(GAME_VIEWS.includes(state.view)){
@@ -5800,8 +6771,8 @@ document.addEventListener('keydown',e=>{
   /* میان‌بر 1-6 (در ماشین‌حساب غیرفعال) */
   if(state.view==='calc')return;
   let idx=-1;
-  if(['1','2','3','4','5','6'].includes(e.key))idx=+e.key-1;
-  else if('۱۲۳۴۵۶'.includes(e.key))idx='۱۲۳۴۵۶'.indexOf(e.key);
+  if(['1','2','3','4','5','6','7','8'].includes(e.key))idx=+e.key-1;
+  else if('۱۲۳۴۵۶۷۸'.includes(e.key))idx='۱۲۳۴۵۶۷۸'.indexOf(e.key);
   if(idx>=0)go(VIEWS[idx]);
 });
 
