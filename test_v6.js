@@ -219,6 +219,22 @@ T('شب/روز ۱۳ ثانیه',src.includes('D.t%13000'));
 T('سختی فزاینده',src.includes('dt*0.00027')&&src.includes('D.dist/7000'));
 T('بدون ایموجی',!/(?:[\uD800-\uDBFF][\uDC00-\uDFFF])/.test(src));
 
+console.log('— v8: کاورها و مار موسی —');
+w.go('games');await sleep(320);
+T('کاور SVG روی هر ۱۲ کارت',$$('.game-card.playable .gcov > svg').length===12);
+T('دکمهٔ «بازی کن» روی کاور',$$('.gcov-play').length===12);
+T('بدون کارت بدون کاور',[...$$('.game-card.playable')].every(c=>c.querySelector('.gcov > svg')));
+w.go('game-snake');await sleep(320);
+T('بنر کاور در صفحهٔ بازی',$$('.gcov.page svg').length===1);
+const cvEl=$('#gameCv');
+cvEl.getBoundingClientRect=()=>({left:0,top:0,width:550,height:400,right:550,bottom:400});
+const dirBefore=JSON.stringify(ev('SNK.ndir'));
+cvEl.dispatchEvent(new w.PointerEvent('pointermove',{clientX:100,clientY:60,bubbles:true}));
+T('مار با موس جهت عوض می‌کند',JSON.stringify(ev('SNK.ndir'))!==dirBefore);
+cvEl.dispatchEvent(new w.PointerEvent('pointerdown',{clientX:200,clientY:200,bubbles:true}));
+cvEl.dispatchEvent(new w.PointerEvent('pointerup',{clientX:340,clientY:200,bubbles:true}));
+T('مار با سوایپ',JSON.stringify(ev('SNK.ndir'))==='[1,0]');
+
 console.log('— v7: پخش فوری و خدمات ایرانی —');
 w.go('music');await sleep(320);
 T('ردیف پخش فوری',$$('.qk').length===7);
@@ -231,7 +247,7 @@ T('فیلور هاست اوودیوس در کد',src.includes('raceAny(AUDIUS_HO
 T('فیلور استریم در کد',src.includes('t.stream=AUDIUS_HOSTS[hi]'));
 T('انیمیشن تعویض نما',src.includes('v-leave')&&src.includes('v-enter')&&src.includes('data-view'));
 
-console.log('\n═══ v7: '+pass+' ✓ / '+fail+' ✗ ═══');
+console.log('\n═══ v8: '+pass+' ✓ / '+fail+' ✗ ═══');
 if(fail)console.log('FAILS: '+fails.join(' | '));
 process.exit(fail?1:0);
 }catch(e){console.log('FATAL:',e.message,e.stack.split('\n')[1]||'');process.exit(2);}})();

@@ -989,3 +989,24 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.25)}
 #mSeek::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(240,199,94,.16);transition:box-shadow .2s,transform .2s}
 #mSeek:hover::-webkit-slider-thumb{box-shadow:0 0 0 9px rgba(240,199,94,.26)}
 #mSeek::-moz-range-thumb{box-shadow:0 0 0 5px rgba(240,199,94,.16)}
+
+/* ============ v8: کاورهای سینمایی بازی‌ها ============ */
+.game-card.playable{padding:0;border-radius:18px;text-align:right;background:var(--card)}
+.game-card.playable:hover{transform:translateY(-7px) scale(1.012);box-shadow:0 26px 52px -14px rgba(10,20,40,.75),0 0 0 1px rgba(240,199,94,.22)}
+.gcov{position:relative;aspect-ratio:16/9;overflow:hidden;display:block;border-radius:18px 18px 0 0;background:#0d1626}
+.gcov svg{width:100%;height:100%;display:block;transition:transform .55s cubic-bezier(.2,.8,.3,1)}
+.game-card:hover .gcov svg{transform:scale(1.08)}
+.gcov.page{aspect-ratio:auto;height:120px;border-radius:18px;border:1px solid var(--line2);margin-bottom:16px}
+.gc-index{position:absolute;top:10px;inset-inline-end:10px;z-index:3;font-size:10px;font-weight:900;color:rgba(255,255,255,.85);
+  background:rgba(6,12,24,.55);backdrop-filter:blur(4px);padding:3px 9px;border-radius:99px;border:1px solid rgba(255,255,255,.14)}
+.gcov-shine{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(200deg,rgba(255,255,255,.14),transparent 38%),linear-gradient(0deg,rgba(6,12,24,.5),transparent 46%)}
+.gcov-play{position:absolute;bottom:10px;inset-inline-start:10px;z-index:3;display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:900;color:#1a1305;background:var(--gradG);padding:5px 13px;border-radius:99px;
+  opacity:0;transform:translateY(7px);transition:all .28s;box-shadow:0 8px 18px rgba(217,174,62,.4)}
+.game-card:hover .gcov-play,.game-card:focus .gcov-play{opacity:1;transform:translateY(0)}
+@media (pointer:coarse){.gcov-play{opacity:1;transform:none}}
+.gc-info{padding:12px 14px 14px;display:flex;flex-direction:column;gap:5px}
+.gc-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.game-card.playable .gt{font-size:14.5px;font-weight:900;margin:0}
+.game-card.playable .gd{font-size:10.5px;color:var(--tx3);line-height:1.7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

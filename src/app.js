@@ -522,11 +522,12 @@ function vGames(){
   +'<div class="game-grid">'+['tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       const m=GAME_META[k];
       const rec=m.best?faNum(store.get(m.best[0],0))+' '+m.best[1]:'';
+      const desc=m.d.split('！')[0].split('!')[0].split(' — ')[0];
       return '<div class="game-card playable reveal" style="--gc:'+m.c+';transition-delay:'+Math.min(i*30,400)+'ms" onclick="go(\'game-'+k+'\')">'
-        +'<span class="ge">'+ic(m.i,26)+'</span>'
-        +'<div class="gt">'+m.t+'</div><div class="gd">'+m.d.split('！')[0].split('!')[0]+'</div>'
+        +'<div class="gcov">'+gcov(k)+'<span class="gcov-shine"></span><span class="gcov-play">'+ic('play',12)+'بازی کن</span></div>'
+        +'<div class="gc-info"><div class="gc-row"><span class="gt">'+m.t+'</span>'
         +(rec?'<span class="gc-best">'+ic('trophy',11)+rec+'</span>':'')
-        +'<span class="gc-play">'+ic('play',11)+'بازی کن</span></div>';
+        +'</div><div class="gd">'+desc+'</div></div></div>';
     }).join('')
   +'</div>'+footHtml();
 }
@@ -537,6 +538,7 @@ function vGame(id){
   const btns=(m.btns||[]).map(b=>'<button class="btn '+(b.cls||'ghost')+'" data-gk="'+b.k+'" '+(b.hold?'data-hold="1"':'')+'>'+ic(b.i||'zap',15)+b.t+'</button>').join('');
   const rec=m.best?'<span>'+ic('trophy',13)+'رکورد شما: <b>'+faNum(store.get(m.best[0],0))+'</b> '+m.best[1]+'</span>':'';
   return secHead('gamepad','blue',m.t,'بازی سرویس‌شدهٔ کافی‌نت — رکوردت روی همین دستگاه ذخیره می‌شود')
+  +'<div class="gcov page">'+gcov(id)+'<span class="gcov-shine"></span></div>'
   +'<div class="game-stage">'+area+'</div>'
   +(btns?'<div class="touch-btns">'+btns+'</div>':'')
   +'<div class="game-info-bar"><span>'+ic('keyboard',13)+m.ctrl+'</span>'+rec

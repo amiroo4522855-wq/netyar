@@ -350,8 +350,35 @@ function snkFrame(now){
 const snkEng={
   start(cv){snkInit();SNK.cv=cv;const s=gCanvas(cv,SNK.cols*SNK.cell,SNK.rows*SNK.cell,560);SNK.ctx=s.ctx;
     if(SNK.raf)cancelAnimationFrame(SNK.raf);
-    SNK.on=true;snkReset();SNK.last=0;SNK.raf=requestAnimationFrame(snkFrame);},
-  stop(){SNK.on=false;if(SNK.raf)cancelAnimationFrame(SNK.raf);SNK.raf=0;},
+    SNK.on=true;snkReset();SNK.last=0;SNK.raf=requestAnimationFrame(snkFrame);
+    /* کنترل با موس: مار به سمت نشانگر می‌رود */
+    if(SNK.mm){cv.removeEventListener('pointermove',SNK.mm);cv.removeEventListener('pointerdown',SNK.md);cv.removeEventListener('pointerup',SNK.mu);}
+    SNK.mm=e=>{
+      if(SNK.over)return;
+      const r=cv.getBoundingClientRect();if(!r.width||!r.height)return;
+      const gx=(e.clientX-r.left)/r.width*SNK.cols, gy=(e.clientY-r.top)/r.height*SNK.rows;
+      const dx=gx-(SNK.snake[0].x+.5), dy=gy-(SNK.snake[0].y+.5);
+      if(Math.abs(dx)+Math.abs(dy)<1.5)return;
+      const nd=Math.abs(dx)>Math.abs(dy)?[dx>0?1:-1,0]:[0,dy>0?1:-1];
+      if(nd[0]===-SNK.dir[0]&&nd[1]===-SNK.dir[1])return;
+      SNK.ndir=nd;
+    };
+    /* سوایپ لمسی */
+    SNK.md=e=>{SNK.pt={x:e.clientX,y:e.clientY};};
+    SNK.mu=e=>{
+      if(!SNK.pt)return;
+      const dx=e.clientX-SNK.pt.x,dy=e.clientY-SNK.pt.y;SNK.pt=null;
+      if(Math.abs(dx)+Math.abs(dy)<18)return;
+      const nd=Math.abs(dx)>Math.abs(dy)?[dx>0?1:-1,0]:[0,dy>0?1:-1];
+      if(!(nd[0]===-SNK.dir[0]&&nd[1]===-SNK.dir[1]))SNK.ndir=nd;
+    };
+    cv.addEventListener('pointermove',SNK.mm);
+    cv.addEventListener('pointerdown',SNK.md);
+    cv.addEventListener('pointerup',SNK.mu);},
+  stop(){SNK.on=false;if(SNK.raf)cancelAnimationFrame(SNK.raf);SNK.raf=0;
+    const cv=SNK.cv;
+    if(cv&&SNK.mm){cv.removeEventListener('pointermove',SNK.mm);cv.removeEventListener('pointerdown',SNK.md);cv.removeEventListener('pointerup',SNK.mu);}
+    SNK.mm=null;},
   key(e){
     const d=SNK.ndir;
     const set=(x,y)=>{if(!(d[0]===-x&&d[1]===-y))SNK.ndir=[x,y];};
