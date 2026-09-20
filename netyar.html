@@ -1714,9 +1714,15 @@ function searchBox(id){
 function secHead(icon,iconCls,title,mini){
   return '<div class="sec-head reveal"><span class="sq '+iconCls+'">'+ic(icon,16)+'</span><h2>'+title+'</h2><span class="mini">'+mini+'</span><span class="ln"></span></div>';
 }
+/* ---------- لینک پروژه در گیت‌هاب ---------- */
+const GH={user:'USERNAME',repo:'netyar'};
+function ghUrl(){return 'https://github.com/'+GH.user+'/'+GH.repo;}
+function ghPage(){return 'https://'+GH.user+'.github.io/'+GH.repo+'/';}
 function footHtml(){
   return '<footer class="foot"><div class="f1">'+ic('coffee',14)+'کافی‌نت <b>نت‌یار</b> — '+faNum(SITES.length)+' سایت کاربردی در '+faNum(Object.keys(CATS).length)+' دسته، همه‌جا یک‌جا</div>'
-  +'<div class="f2"><span>'+ic('zap',12)+'ورود آنی</span><span>'+ic('shield',12)+'بدون تبلیغ</span><span>'+ic('check-circle',12)+'۱۰۰٪ رایگان</span></div></footer>';
+  +'<div class="f2"><span>'+ic('zap',12)+'ورود آنی</span><span>'+ic('shield',12)+'بدون تبلیغ</span><span>'+ic('check-circle',12)+'۱۰۰٪ رایگان</span>'
+  +'<a class="gh-link" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب — ستاره بدی!">'+ic('github',14)+'گیت‌هاب</a>'
+  +'<a class="gh-link gold" href="'+ghPage()+'" target="_blank" rel="noopener" title="نسخهٔ آنلاین">'+ic('external',13)+'لینک نسخهٔ آنلاین</a></div></footer>';
 }
 
 /* ---------- خانه ---------- */
