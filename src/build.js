@@ -20,11 +20,12 @@ const DATA = dataFiles.map(read).join('\n')
 const CSS = read('style.css');
 const ICONS = read('icons.js');
 const GAMEJS = read('game.js');
+const GAME2JS = read('game2.js');
 const APPJS = read('app.js');
 const SHELL = read('shell.html');
 
 let out = SHELL;
-for (const [k, v] of [['{{FONTS}}', FONTS], ['{{CSS}}', CSS], ['{{DATA}}', DATA], ['{{ICONS}}', ICONS], ['{{GAMEJS}}', GAMEJS], ['{{APPJS}}', APPJS]]) {
+for (const [k, v] of [['{{FONTS}}', FONTS], ['{{CSS}}', CSS], ['{{DATA}}', DATA], ['{{ICONS}}', ICONS], ['{{GAMEJS}}', GAMEJS], ['{{GAME2JS}}', GAME2JS], ['{{APPJS}}', APPJS]]) {
   out = out.split(k).join(v);
 }
 

@@ -67,7 +67,7 @@ function dinoActionUp(){DINO.duck=false;}
 function dinoSpawn(){
   const D=DINO,b=BIOMES[D.biome],g=D.h*0.8;
   const r=Math.random();
-  const hard=Math.min(1,D.dist/9000);
+  const hard=Math.min(1,D.dist/7000);
   if(r<0.14&&D.dist>1600){
     D.obs.push({fly:true,x:D.w+40,w:44,h:26,y:g-(D.duck?46:66),ph:Math.random()*6});
   }else if(b.deco==='river'&&r<0.55){
@@ -81,7 +81,7 @@ function dinoSpawn(){
   }else{
     D.obs.push({type:'rock',x:D.w+40,w:30+Math.random()*22,h:20+Math.random()*12,y:g});
   }
-  D.nextIn=(330+Math.random()*430)*(1-hard*0.28);
+  D.nextIn=(330+Math.random()*430)*(1-hard*0.35);
 }
 function dinoSpawnDeco(){
   const D=DINO,b=BIOMES[D.biome];
@@ -93,7 +93,7 @@ function dinoUpdate(dt){
   const D=DINO,g=D.h*0.8;
   D.t+=dt;
   if(!D.over){
-    D.speed+=dt*0.00022;
+    D.speed+=dt*0.00027;
     const mv=D.speed*dt*0.06;
     D.dist+=mv;
     D.score=Math.floor(D.dist/12);
@@ -145,7 +145,7 @@ function dinoUpdate(dt){
 }
 function dinoDraw(){
   const D=DINO,c=D.ctx,W=D.w,H=D.h,g=H*0.8;
-  const cyc=(D.t%9000)/9000;
+  const cyc=(D.t%13000)/13000;
   const nightAmt=0.5-0.5*Math.cos(cyc*6.28318);
   const b=BIOMES[D.biome],bp=BIOMES[D.prevBiome],mx=D.mix;
   c.save();
@@ -667,13 +667,22 @@ function twrStop(){const T=TWR;T.on=false;if(T.raf)cancelAnimationFrame(T.raf);T
 
 /* ---------- API مشترک ---------- */
 const GAME_ENG={
-  'dino':{start:dinoStart,stop:dinoStop,action:dinoJump,down:dinoActionDown,up:dinoActionUp},
-  'tower':{start:twrStart,stop:twrStop,action:twrDrop},
+  'dino':{start:dinoStart,stop:dinoStop,action:dinoJump,down:dinoActionDown,up:dinoActionUp,
+    key(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();dinoJump();return true;}
+      if(e.key==='ArrowDown'){e.preventDefault();dinoActionDown();return true;}
+      return false;
+    }},
+  'tower':{start:twrStart,stop:twrStop,action:twrDrop,
+    key(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();twrDrop();return true;}return false;}},
 };
 function gameStart(id){
   gameStopAll();
+  const eng=GAME_ENG[id];
+  if(!eng)return;
   const cv=document.getElementById('gameCv');
-  if(cv&&GAME_ENG[id])GAME_ENG[id].start(cv);
+  const dom=document.getElementById('gameDom');
+  eng.start(cv||dom);
 }
 function gameStopAll(){
   for(const k in GAME_ENG)GAME_ENG[k].stop();
