@@ -1150,6 +1150,48 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.25)}
   .tm-grid{grid-template-columns:repeat(2,1fr)}
 }
 
+/* ============ v10: جزئیات بازی‌ها ============ */
+.g48-top{position:relative}
+.g48-tile.pop{animation:pop .22s ease}
+.g48-tile.born{animation:born .28s both}
+@keyframes pop{40%{transform:scale(1.18)}}
+@keyframes born{from{transform:scale(.3);opacity:0}}
+.g48-float{position:absolute;top:-8px;inset-inline-end:6px;font-size:16px;font-weight:900;color:#7ee2a8;
+  animation:floatUp .9s both;pointer-events:none;text-shadow:0 2px 10px rgba(63,174,125,.4)}
+@keyframes floatUp{from{opacity:0;transform:translateY(10px)}25%{opacity:1}to{opacity:0;transform:translateY(-20px)}}
+.rps-hand.shake{animation:rpsShake .32s ease-in-out 2}
+@keyframes rpsShake{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.mem-c{animation:dealIn .5s both}
+.mem-c:nth-child(1){animation-delay:.02s}.mem-c:nth-child(2){animation-delay:.05s}.mem-c:nth-child(3){animation-delay:.08s}
+.mem-c:nth-child(4){animation-delay:.11s}.mem-c:nth-child(5){animation-delay:.14s}.mem-c:nth-child(6){animation-delay:.17s}
+.mem-c:nth-child(7){animation-delay:.2s}.mem-c:nth-child(8){animation-delay:.23s}.mem-c:nth-child(9){animation-delay:.26s}
+.mem-c:nth-child(10){animation-delay:.29s}.mem-c:nth-child(11){animation-delay:.32s}.mem-c:nth-child(12){animation-delay:.35s}
+.mem-c:nth-child(13){animation-delay:.38s}.mem-c:nth-child(14){animation-delay:.41s}.mem-c:nth-child(15){animation-delay:.44s}
+.mem-c:nth-child(16){animation-delay:.47s}
+@keyframes dealIn{from{transform:scale(.4) rotate(-9deg);opacity:0}}
+.ttt-c.inline{animation:winPulse 1.15s ease-in-out infinite}
+@keyframes winPulse{50%{box-shadow:0 0 0 4px rgba(217,174,62,.4);transform:scale(1.07)}}
+.chs-c.last{box-shadow:inset 0 0 0 3px rgba(240,199,94,.6)}
+.chs-c.chk{animation:chkPulse .9s ease-in-out infinite}
+@keyframes chkPulse{50%{box-shadow:inset 0 0 0 4px rgba(224,106,117,.8)}}
+.coin-msg{animation:msgPop .45s ease}
+@keyframes msgPop{40%{transform:scale(1.15)}}
+.wrd-pbar{height:7px;border-radius:99px;background:rgba(148,180,224,.1);overflow:hidden;margin:13px auto 0;max-width:420px}
+.wrd-pbar i{display:block;height:100%;background:var(--gradG);border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.3,1)}
+.gi-sfx{cursor:pointer;display:inline-flex;align-items:center;gap:4px;color:var(--tx3);transition:color .2s}
+.gi-sfx:hover{color:var(--gold2)}
+
+/* ============ v10: تایپ — دورها و نرمی ============ */
+.typ-round{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:850;color:var(--tx3)}
+.typ-round b{color:var(--gold2);font-size:13px}
+.tdots,.tls-r{display:inline-flex;gap:4px;align-items:center}
+.tdot{width:8px;height:8px;border-radius:50%;background:rgba(148,180,224,.18);display:inline-block;transition:all .3s}
+.tdot.on{background:var(--gradG);box-shadow:0 0 8px rgba(217,174,62,.4)}
+.tls-r{margin-top:5px}
+.tls-r .tdot{width:7px;height:7px}
+.tc.cur{transition:background .12s}
+.tm-round{font-size:11px;font-weight:800;color:var(--tx2);background:var(--tw);border:1px solid var(--twb);border-radius:99px;padding:6px 14px;margin-bottom:8px}
+
 </style>
 </head>
 <body>
@@ -2560,6 +2602,26 @@ function gCanvas(cv,lw,lh,maxW){
   ctx.setTransform(dpr,0,0,dpr,0,0);
   return{ctx:ctx,w:lw,h:lh};
 }
+let GSFX=null,GSCTX=null;
+function gSfxOn(){if(GSFX===null)GSFX=store.get('gSfx',true);return GSFX;}
+function gSfxToggle(){GSFX=!gSfxOn();store.set('gSfx',GSFX);return GSFX;}
+function gSfx(type){
+  if(!gSfxOn())return;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    GSCTX=GSCTX||new AC();
+    if(GSCTX.state==='suspended')GSCTX.resume();
+    const F={eat:560,line:700,merge:460,match:760,go:900,click:320,win:800,bad:170,move:400};
+    const o=GSCTX.createOscillator(),g=GSCTX.createGain();
+    o.type=type==='bad'?'sawtooth':'sine';
+    o.frequency.value=F[type]||440;
+    g.gain.setValueAtTime(.05,GSCTX.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,GSCTX.currentTime+.13);
+    o.connect(g);g.connect(GSCTX.destination);
+    o.start();o.stop(GSCTX.currentTime+.14);
+  }catch(e){}
+}
 function gOver(el,title,sub){
   const ov=document.createElement('div');
   ov.className='gv-over';
@@ -2573,7 +2635,7 @@ function gOver(el,title,sub){
    تتریس
    ================================================================ */
 const TET={cv:null,ctx:null,w:320,h:480,on:false,over:false,raf:0,last:0,drop:0,
-  grid:null,cur:null,next:null,score:0,lines:0,level:0,best:0,cells:26};
+  grid:null,cur:null,next:null,score:0,lines:0,level:0,best:0,cells:26,flash:0,llast:0,plast:0};
 const T_SHAPES=[
   [[1,1,1,1]],
   [[1,1],[1,1]],
@@ -2638,6 +2700,11 @@ function tetDrop(soft){
 function tetHard(){while(!tetCollide(TET.cur.m,TET.cur.x,TET.cur.y+1)){TET.cur.y++;TET.score+=2;}tetMerge();}
 function tetUpdate(dt){
   if(TET.over)return;
+  if(TET.flash>0)TET.flash-=dt;
+  if(TET.lines>(TET.llast||0)){TET.flash=170;gSfx('line');}
+  TET.llast=TET.lines;
+  if(TET.level>(TET.plast||0)){toast('مرحله '+gNum(TET.level+1)+'!','sparkles');gSfx('go');}
+  TET.plast=TET.level;
   TET.drop+=dt;
   const iv=Math.max(90,650-TET.level*55);
   if(TET.drop>=iv){TET.drop=0;tetDrop(false);}
@@ -2660,7 +2727,16 @@ function tetDraw(){
     c.globalAlpha=1;
   };
   for(let y=0;y<20;y++)for(let x=0;x<10;x++)if(TET.grid[y][x]>=0)cell(x,y,T_COLORS[TET.grid[y][x]]);
-  if(TET.cur&&!TET.over)TET.cur.m.forEach((row,y)=>row.forEach((v,x)=>{if(v&&TET.cur.y+y>=0)cell(TET.cur.x+x,TET.cur.y+y,T_COLORS[TET.cur.c]);}));
+  if(TET.cur&&!TET.over){
+    /* روحِ محل فرود */
+    let gy=TET.cur.y;
+    while(!tetCollide(TET.cur.m,TET.cur.x,gy+1))gy++;
+    if(gy>TET.cur.y)TET.cur.m.forEach((row,y)=>row.forEach((v,x)=>{
+      if(v&&gy+y>=0){c.globalAlpha=.22;c.fillStyle=T_COLORS[TET.cur.c];c.beginPath();c.roundRect((TET.cur.x+x)*cs+2.5,(gy+y)*cs+2.5,cs-5,cs-5,5);c.fill();c.globalAlpha=1;}
+    }));
+    TET.cur.m.forEach((row,y)=>row.forEach((v,x)=>{if(v&&TET.cur.y+y>=0)cell(TET.cur.x+x,TET.cur.y+y,T_COLORS[TET.cur.c]);}));
+  }
+  if(TET.flash>0){c.fillStyle='rgba(255,235,170,'+(TET.flash/170*.25)+')';c.fillRect(0,0,260,480);}
   /* پنل */
   c.fillStyle='rgba(148,180,224,.05)';c.beginPath();c.roundRect(266,10,46,460,10);c.fill();
   c.fillStyle='#eaf1fb';c.font='800 13px Vazirmatn';c.textAlign='center';
@@ -2712,7 +2788,7 @@ const tetEng={
 /* ================================================================
    ۲۰۴۸
    ================================================================ */
-const G48={el:null,score:0,best:0,board:null,won:false,over:false};
+const G48={el:null,score:0,best:0,board:null,won:false,over:false,gainFx:0,fx:{m:[],born:-1}};
 function g48Init(){G48.best=store.get('g2048Best',0);}
 function g48Add(){
   const b=G48.board;
@@ -2736,20 +2812,21 @@ function g48Row(idx){
 function g48Slide(line){
   let arr=line.filter(v=>v);
   let moved=false,gain=0;
-  const out=[];
+  const out=[],merged=[];
   for(let i=0;i<arr.length;i++){
-    if(arr[i]===arr[i+1]){out.push(arr[i]*2);gain+=arr[i]*2;if(arr[i]*2===2048)G48.won=true;i++;}
+    if(arr[i]===arr[i+1]){out.push(arr[i]*2);merged.push(out.length-1);gain+=arr[i]*2;if(arr[i]*2===2048)G48.won=true;i++;}
     else out.push(arr[i]);
   }
   while(out.length<4)out.push(0);
   for(let i=0;i<4;i++)if(out[i]!==line[i])moved=true;
-  return{out:out,moved:moved,gain:gain};
+  return{out:out,moved:moved,gain:gain,merged:merged};
 }
 function g48Move(dir){
   /* dir: 0=چپ 1=راست 2=بالا 3=پایین */
   if(G48.over)return;
   const b=G48.board;
-  let moved=false;
+  const prev=b.slice();
+  let moved=false,gain=0;const mergedCells=[];
   for(let l=0;l<4;l++){
     let idxs;
     if(dir<2)idxs=[0,1,2,3].map(i=>l*4+(dir===0?i:3-i));
@@ -2758,12 +2835,18 @@ function g48Move(dir){
     const r=g48Slide(line);
     if(r.moved){
       moved=true;
-      G48.score+=r.gain;
+      G48.score+=r.gain;gain+=r.gain;
+      mergedCells.push(...r.merged.map(k=>idxs[k]));
       idxs.forEach((bi,i)=>b[bi]=r.out[i]);
     }
   }
   if(moved){
+    if(gain>0)gSfx('merge');
     g48Add();
+    let born=-1;
+    prev.forEach((v,i)=>{if(v===0&&b[i]>0)born=i;});
+    G48.fx={m:mergedCells,born:born};
+    G48.gainFx=gain;
     if(G48.score>G48.best){G48.best=G48.score;store.set('g2048Best',G48.best);}
     if(!g48Can()){G48.over=true;store.set('g2048Best',G48.best);}
     g48Render();
@@ -2783,15 +2866,18 @@ function g48Render(win){
   const el=G48.el;if(!el)return;
   const C={2:'#7ec8f0',4:'#6ea8f0',8:'#8b7bd8',16:'#b58ad8',32:'#d97fb0',64:'#e07a7a',
     128:'#e09a6a',256:'#e0b45f',512:'#d9c34e',1024:'#a8d05a',2048:'#5ec9a0'};
-  let h='<div class="g48-top"><span class="g48-sc">امتیاز <b>'+gNum(G48.score)+'</b></span><span class="g48-sc">رکورد <b>'+gNum(G48.best)+'</b></span></div><div class="g48-grid'+(G48.over?' done':'')+'">';
-  G48.board.forEach(v=>{
-    if(v)h+='<div class="g48-tile v'+Math.min(v,2048)+'">'+gNum(v)+'</div>';
+  let h='<div class="g48-top"><span class="g48-sc">امتیاز <b>'+gNum(G48.score)+'</b></span><span class="g48-sc">رکورد <b>'+gNum(G48.best)+'</b></span>'
+    +(G48.gainFx>0?'<span class="g48-float">+'+gNum(G48.gainFx)+'</span>':'')+'</div><div class="g48-grid'+(G48.over?' done':'')+'">';
+  G48.board.forEach((v,i)=>{
+    const fx=(G48.fx&&G48.fx.m.includes(i)?' pop':'')+(G48.fx&&i===G48.fx.born?' born':'');
+    if(v)h+='<div class="g48-tile v'+Math.min(v,2048)+fx+'">'+gNum(v)+'</div>';
     else h+='<div class="g48-tile empty"></div>';
   });
   h+='</div>';
   if(win&&!G48.over)h+='<div class="g48-msg win">۲۰۴۸ ساختی! ادامه بده…</div>';
   if(G48.over)h+='<div class="g48-msg lose">جای خالی نماند! — Enter = از نو</div>';
   el.innerHTML=h;
+  G48.gainFx=0;G48.fx={m:[],born:-1};
 }
 const g48Eng={
   start(el){g48Init();G48.el=el;G48.best=store.get('g2048Best',0);g48Reset();
@@ -2816,12 +2902,12 @@ const g48Eng={
    مار
    ================================================================ */
 const SNK={cv:null,ctx:null,on:false,over:false,raf:0,last:0,acc:0,
-  snake:[],dir:[1,0],ndir:[1,0],food:null,score:0,best:0,cell:25,cols:22,rows:16,t:0};
+  snake:[],dir:[1,0],ndir:[1,0],prev:null,pop:0,food:null,score:0,best:0,cell:25,cols:22,rows:16,t:0};
 function snkInit(){SNK.best=store.get('snakeBest',0);}
 function snkReset(){
   snkInit();
   SNK.snake=[{x:5,y:8},{x:4,y:8},{x:3,y:8}];
-  SNK.dir=[1,0];SNK.ndir=[1,0];SNK.score=0;SNK.over=false;SNK.acc=0;SNK.t=0;
+  SNK.dir=[1,0];SNK.ndir=[1,0];SNK.score=0;SNK.over=false;SNK.acc=0;SNK.t=0;SNK.prev=null;SNK.pop=0;
   snkFood();
 }
 function snkFood(){
@@ -2833,19 +2919,22 @@ function snkFood(){
 function snkUpdate(dt){
   if(SNK.over)return;
   SNK.t+=dt;
+  if(SNK.pop)SNK.pop=Math.max(0,SNK.pop-dt/200);
   SNK.acc+=dt;
   const iv=Math.max(80,160-Math.floor(SNK.score/4)*8);
   if(SNK.acc<iv)return;
   SNK.acc=0;
+  SNK.prev=SNK.snake.map(s=>({x:s.x,y:s.y}));
   SNK.dir=SNK.ndir;
   const h={x:SNK.snake[0].x+SNK.dir[0],y:SNK.snake[0].y+SNK.dir[1]};
   if(h.x<0||h.x>=SNK.cols||h.y<0||h.y>=SNK.rows||SNK.snake.some(s=>s.x===h.x&&s.y===h.y)){
     SNK.over=true;
+    gSfx('bad');
     if(SNK.score>SNK.best){SNK.best=SNK.score;store.set('snakeBest',SNK.best);}
     return;
   }
   SNK.snake.unshift(h);
-  if(h.x===SNK.food.x&&h.y===SNK.food.y){SNK.score++;snkFood();}
+  if(h.x===SNK.food.x&&h.y===SNK.food.y){SNK.score++;SNK.pop=1;gSfx('eat');snkFood();}
   else SNK.snake.pop();
 }
 function snkDraw(){
@@ -2856,26 +2945,40 @@ function snkDraw(){
   c.strokeStyle='rgba(148,180,224,.06)';
   for(let x=0;x<=SNK.cols;x++){c.beginPath();c.moveTo(x*cs,0);c.lineTo(x*cs,H);c.stroke();}
   for(let y=0;y<=SNK.rows;y++){c.beginPath();c.moveTo(0,y*cs);c.lineTo(W,y*cs);c.stroke();}
-  /* غذا: قهوه! */
-  const f=SNK.food,pulse=1+Math.sin(SNK.t*0.006)*0.12;
+  /* غذا: قهوهٔ درخشان */
+  const f=SNK.food,pulse=(1+Math.sin(SNK.t*0.006)*0.12)*(1+(SNK.pop||0)*.55);
+  c.save();
+  c.shadowColor='rgba(240,199,94,.8)';c.shadowBlur=12+Math.sin(SNK.t*0.008)*7;
   c.fillStyle='#f0c75e';
   c.beginPath();c.roundRect(f.x*cs+6,f.y*cs+6,(cs-12)*pulse,(cs-12)*pulse,6);c.fill();
+  c.restore();
   c.fillStyle='#8b5a2b';
   c.beginPath();c.arc(f.x*cs+cs/2,f.y*cs+cs/2,4,0,7);c.fill();
-  /* مار */
+  /* مار — حرکت نرم بین خانه‌ها */
+  const ivc=Math.max(80,160-Math.floor(SNK.score/4)*8);
+  const tt=Math.min(1,SNK.acc/ivc);
+  c.save();
+  c.shadowColor='rgba(126,224,150,.3)';c.shadowBlur=9;
   SNK.snake.forEach((s,i)=>{
-    const r=15+i/Math.max(1,SNK.snake.length)*25;
+    const pv=(SNK.prev&&SNK.prev[i])||s;
+    const x=(pv.x+(s.x-pv.x)*tt)*cs, y=(pv.y+(s.y-pv.y)*tt)*cs;
     c.fillStyle='hsl(150 55% '+Math.max(30,52-i*1.4)+'%)';
-    c.beginPath();c.roundRect(s.x*cs+2,s.y*cs+2,cs-4,cs-4,i===0?9:6);c.fill();
+    c.beginPath();c.roundRect(x+2,y+2,cs-4,cs-4,i===0?11:7);c.fill();
     if(i===0){
-      c.fillStyle='#fff';
-      c.beginPath();c.arc(s.x*cs+cs*0.62,s.y*cs+cs*0.36,3,0,7);c.fill();
-      c.beginPath();c.arc(s.x*cs+cs*0.62,s.y*cs+cs*0.64,3,0,7);c.fill();
-      c.fillStyle='#111';
-      c.beginPath();c.arc(s.x*cs+cs*0.68,s.y*cs+cs*0.36,1.4,0,7);c.fill();
-      c.beginPath();c.arc(s.x*cs+cs*0.68,s.y*cs+cs*0.64,1.4,0,7);c.fill();
+      c.restore();
+      const dx=SNK.dir[0],dy=SNK.dir[1],px=-dy,py=dx;
+      const hx=x+cs/2+dx*3,hy=y+cs/2+dy*3;
+      const eye=off=>{
+        c.fillStyle='#fff';c.beginPath();c.arc(hx+px*off,hy+py*off,3.2,0,7);c.fill();
+        c.fillStyle='#0f2018';c.beginPath();c.arc(hx+px*off+dx*1.4,hy+py*off+dy*1.4,1.6,0,7);c.fill();
+      };
+      eye(4.6);eye(-4.6);
+      c.strokeStyle='#e06666';c.lineWidth=1.8;c.lineCap='round';
+      c.beginPath();c.moveTo(hx+dx*8,hy+dy*8);c.lineTo(hx+dx*13,hy+dy*13);c.stroke();
+      c.save();c.shadowColor='rgba(126,224,150,.3)';c.shadowBlur=9;
     }
   });
+  c.restore();
   /* امتیاز */
   c.fillStyle='#eaf1fb';c.font='800 16px Vazirmatn';c.textAlign='left';
   c.fillText('قهوه‌ها: '+gNum(SNK.score),14,28);
@@ -3003,7 +3106,7 @@ function tttRender(){
   h+='<div class="ttt-grid'+(TTT.over?' done':'')+'">';
   TTT.b.forEach((v,i)=>{
     const inLine=w&&w.line.includes(i);
-    h+='<button class="ttt-c '+(v==='X'?'x':'o')+' '+(inLine?'inline':'')+'" data-i="'+i+'">'+(v?(v==='X'?'✕':'◯'):'')+'</button>';
+    h+='<button class="ttt-c '+(v==='X'?'x':'o')+' '+(inLine?'inline win':'')+'" data-i="'+i+'">'+(v?(v==='X'?'✕':'◯'):'')+'</button>';
   });
   h+='</div>';
   if(w)h+='<div class="g48-msg '+(w.p==='X'?'win':w.p==='O'?'lose':'')+'">'+(w.p==='X'?'بردی!':w.p==='O'?'ربات برد!':'مساوی شد')+' — Enter = از نو</div>';
@@ -3082,19 +3185,22 @@ function rpsPlay(m){
   if(m===p)res=-1;
   else if((m-p+3)%3===1)res=1;
   else res=0;
+  gSfx('click');
+  rpsRender(m,null,-1,true);
   setTimeout(()=>{
     if(res===1)RPS.me++;else if(res===0)RPS.pc++;else RPS.draw++;
     rpsRender(m,p,res);
+    gSfx(res===1?'win':res===0?'bad':'click');
     RPS.lock=false;
-  },450);
+  },680);
 }
-function rpsRender(m,p,res){
+function rpsRender(m,p,res,cd){
   const el=RPS.el;if(!el)return;
   let h='<div class="rps-top"><span class="ttt-sc win">تو '+gNum(RPS.me)+'</span><span class="ttt-sc">مساوی '+gNum(RPS.draw)+'</span><span class="ttt-sc lose">ربات '+gNum(RPS.pc)+'</span></div>';
   h+='<div class="rps-arena">'
-    +'<div class="rps-hand me">'+(m!==null?RPS_ITEMS[m].svg:'<span class="rps-q">؟</span>')+'</div>'
+    +'<div class="rps-hand me'+(cd?' shake':'')+'">'+(m!==null?RPS_ITEMS[m].svg:'<span class="rps-q">؟</span>')+'</div>'
     +'<div class="rps-vs">'+(res===-1?'مساوی!':res===1?'بردی!':res===0?'ربات برد!':'VS')+'</div>'
-    +'<div class="rps-hand pc'+(p!==null?' show':'')+'">'+(p!==null?RPS_ITEMS[p].svg:'<span class="rps-q">؟</span>')+'</div>'
+    +'<div class="rps-hand pc'+(p!==null?' show':'')+(cd?' shake':'')+'">'+(p!==null?RPS_ITEMS[p].svg:'<span class="rps-q">؟</span>')+'</div>'
   +'</div>';
   h+='<div class="rps-btns">'+RPS_ITEMS.map((it,i)=>'<button class="rps-b" data-i="'+i+'" title="'+it.n+'">'+it.svg+'<span>'+it.n+'</span></button>').join('')+'</div>';
   el.innerHTML=h;
@@ -3346,6 +3452,13 @@ function wrdRender(){
   }));
   h+='</div><div class="wrd-words">'+WRD.words.map(w=>'<span class="'+(WRD.found.includes(w.w)?'fd':'')+'">'+w.w+'</span>').join('')+'</div>';
   el.innerHTML=h;
+  const wb=el.querySelector('.wrd-words');
+  if(wb){
+    const bar=document.createElement('div');
+    bar.className='wrd-pbar';
+    bar.innerHTML='<i style="width:'+Math.round(WRD.found.length/Math.max(1,WRD.words.length)*100)+'%"></i>';
+    wb.parentNode.insertBefore(bar,wb);
+  }
   el.querySelectorAll('.wrd-c').forEach(b=>{
     b.onclick=()=>{
       const k=b.dataset.k;
@@ -3368,7 +3481,7 @@ const wrdEng={
 /* ================================================================
    شطرنج
    ================================================================ */
-const CHS={el:null,b:null,sel:null,turn:'w',over:'',moves:0};
+const CHS={el:null,b:null,sel:null,turn:'w',over:'',moves:0,last:null};
 const CH_GLYPH={w:{k:'♔',q:'♕',r:'♖',b:'♗',n:'♘',p:'♙'},b:{k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'}};
 const CH_VAL={p:1,n:3,b:3,r:5,q:9,k:100};
 function chsReset(){
@@ -3453,6 +3566,7 @@ function chsAllLegal(col){
   return out;
 }
 function chsMove(r,c,rr,cc){
+  CHS.last=[r,c,rr,cc];
   const p=CHS.b[r][c];
   const captured=CHS.b[rr][cc];
   CHS.b[rr][cc]=p;CHS.b[r][c]=null;
@@ -3486,6 +3600,7 @@ function chsAI(){
     if(sc>bestSc){bestSc=sc;best=m;}
   }
   chsMove(best.from[0],best.from[1],best.to[0],best.to[1]);
+  gSfx('move');
   chsRender();
 }
 function chsClick(r,c){
@@ -3496,6 +3611,7 @@ function chsClick(r,c){
     if(legal.some(m=>m[0]===r&&m[1]===c)){
       const res=chsMove(CHS.sel[0],CHS.sel[1],r,c);
       CHS.sel=null;
+      gSfx('move');
       chsRender();
       if(res===true)toast('کیش!','alert');
       if(!CHS.over)setTimeout(chsAI,450);
@@ -3524,6 +3640,12 @@ function chsRender(){
   h+='</div>';
   if(CHS.over)h+='<div class="g48-msg '+(CHS.over.includes('بردی')?'win':CHS.over.includes('ربات')?'lose':'')+'">'+CHS.over+' — Enter = از نو</div>';
   el.innerHTML=h;
+  el.querySelectorAll('.chs-c').forEach((cell,k)=>{
+    const r=Math.floor(k/8),c2=k%8;
+    if(CHS.last&&((CHS.last[0]===r&&CHS.last[1]===c2)||(CHS.last[2]===r&&CHS.last[3]===c2)))cell.classList.add('last');
+    const pcv=CHS.b[r][c2];
+    if(pcv&&pcv.t==='k'&&chsAttacked(CHS.b,r,c2,pcv.col==='w'?'b':'w'))cell.classList.add('chk');
+  });
   el.querySelectorAll('.chs-c').forEach(b=>b.onclick=()=>chsClick(+b.dataset.r,+b.dataset.c));
 }
 const chsEng={
@@ -3651,10 +3773,26 @@ function typLazy(){
 function typProg(){return store.get('typLab',{});}
 function typSaveProg(p){store.set('typLab',p);}
 function typStats(){
-  const p=typProg();const s=p[TYP.lang]||{done:{},n:0,w:0,a:0,best:{}};
+  const p=typProg();const s=p[TYP.lang]||{done:{},rnd:{},n:0,w:0,a:0,best:{}};
+  s.rnd=s.rnd||{};s.done=s.done||{};
   return s;
 }
 function typNorm(c){return c==='ي'?'ی':c==='ك'?'ک':c;}
+let TYPC=null;
+function typSndOn(){return store.get('typSnd',true);}
+function typSndToggle(){store.set('typSnd',!typSndOn());typRerender();}
+function typSfx(ok){
+  if(!typSndOn())return;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    TYPC=TYPC||new AC();if(TYPC.state==='suspended')TYPC.resume();
+    const o=TYPC.createOscillator(),g=TYPC.createGain();
+    o.type=ok?'sine':'triangle';o.frequency.value=ok?600+Math.min(500,(TYP.log.length%10)*18):170;
+    g.gain.setValueAtTime(.035,TYPC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,TYPC.currentTime+.09);
+    o.connect(g);g.connect(TYPC.destination);o.start();o.stop(TYPC.currentTime+.1);
+  }catch(e){}
+}
 
 /* ---------- چیدمان و انگشت‌ها ---------- */
 const TYP_ROWS={
@@ -3688,26 +3826,42 @@ const TYP_FINGER={
 /* ---------- درس‌ها ---------- */
 const TYP_LESSONS={
   fa:[
-    {t:'آشنایی با ردیف اصلی',d:'خانهٔ انگشت‌ها: ش س ی ب ل ا ت ن م ک',x:'شش سس یی بب لل اا تن نن مم کک شسیبلاتنمک لاتن ممک شسی بلات نمکا تنمک شسیب '},
-    {t:'انگشت‌های چپ و راست',d:'یک در میان: چپ… راست… چپ…',x:'شل سا یت بک لن ام تا نم کی شا سل با تنک ملا کست شب نات ملک سیب تار '},
-    {t:'حروف تکی',d:'هر حرف، جای خودش روی کیبورد',x:'گ ح ج چ پ و ر ذ د ط ظ م ن ت ا ل ب ی س ش ک ف ق ص ض ه ع غ خ '},
-    {t:'ترکیب دو حرف',d:'جفت‌جفت تند و روان',x:'شس سی یب بل لا ات تن نم مم کگ گح حج چپ پو ور رذ ذد دط طظ ظم منت الب یس شک فق قص صض ضه هع عغ غخ خش '},
-    {t:'کلمات کوتاه',d:'سه‌چهار حرفی‌های پرکاربرد',x:'آب آی ابر بد دست شب ما تو نان نمک کتاب کافه مادر باران پنجره دوست سلام شب آب پنیر نان تاب سیر دیر باز '},
-    {t:'کلمات سخت‌تر',d:'بلندها و نیم‌فاصله‌دارها',x:'خوش‌حال ستاره کلیدها صندوقچه شترمرغ بلندپرواز خانواده ماهواره دست‌فروش پنجره‌ها مهربان‌تر آسمان‌ها کتاب‌خانه '},
-    {t:'جمله',d:'با علامت‌ها و فاصلهٔ درست',x:'شب که شد، ستاره‌ها آمدند و ماه از پنجرهٔ ما سلام کرد. توپ جدید را به خانه بردیم و با هم بازی کردیم. '},
-    {t:'پاراگراف',d:'تایپ روانِ متن پیوسته',x:'در کافهٔ کوچکی وسط شهر، بوی قهوهٔ تازه پیچیده بود. پشت پنجره، باران آرام می‌بارید و مردم با چترهای رنگی عجله داشتند. من پشت میزم نشستم و کتابم را باز کردم؛ دنیا انگار همان لحظه آرام شده بود. '},
-    {t:'تایپ آزاد',d:'هر چه دوست داری بنویس',x:''},
+    {t:'آشنایی با ردیف اصلی',d:'خانهٔ انگشت‌ها: ش س ی ب ل ا ت ن م ک',x:'شش سس یی بب لل اا تن نن مم کک شسیبلاتنمک لاتن ممک شسی بلات نمک تنمک شسیب ',
+     pool:['شسیبلاتنمک کمنتالیبشس تنمالیبشس کمنتالیبشس لاتنمکشسیب ','شب لت کمان سیل بنت مشک تاس نمک لپا شبی سیل بنت کمان ','سیب شات لنت ممکن تبس کلال منت شسا یبلن کامک تنبل ','شسیب لاتن منت الک بلی سناک تنا ملک شبن کام سیل بنت ','بلاتنمکشسی شسیبلاتنمک لاتنمکشسیب منتالیبشسک کمنتالیبشس تنمالیکشس ']},
+    {t:'انگشت‌های چپ و راست',d:'یک در میان: چپ… راست… چپ…',x:'شل سا یت بک لن ام تا نم کی شا سل با تنک ملا کست شب نات ملک سیب تار ',
+     pool:['ناب کست شب لپا مار تن سیب کاه گم نامک بست کلف شب ماک ','شلن سابت یکمان پرک توله گم ذرفا طن ظبل شجی چخا پحو ','تاش بکل نسم یقا لخه امج چپو رذگ دخن طسا ظبل شیق ','سالن تیک بشر نامک گلپ حوله فراذ زخد میدان کپچ خواج ','تاشک بلم نسی یقن لخا مجو چپر رذگ خدن ستا بظل شیق ']},
+    {t:'حروف تکی',d:'هر حرف، جای خودش روی کیبورد',x:'گ ح ج چ پ و ر ذ د ط ظ م ن ت ا ل ب ی س ش ک ف ق ص ض ه ع غ خ ',
+     pool:['ق ف غ ع ه خ ح ج چ پ و ر ذ د ط ظ م ن ت ا ل ب ی س ش ک گ ض ص ث ','گ ک م ن ت ا ل ب ی س ش ض ص ث ق ف غ ع ه خ ح ج چ پ و ر ذ د ط ظ ','ب ا ل ک م ن ت س ی ش ج چ ح خ ه ع غ ق ف ض ث ص پ و ر ز ژ د ذ ط ظ ','ژ ژ ز ز ر ر ذ ذ د د ط ط ظ ظ م م ن ن ت ت ا ا ل ل ب ب ی ی س س ش ش ','پ و ج چ ح خ ه ع غ ق ف ض ص ث گ ک م ل ت ن ا ب ی س ش ر ذ د ط ظ ']},
+    {t:'ترکیب دو حرف',d:'جفت‌جفت تند و روان',x:'شس سی یب بل لا ات تن نم مم کگ گح حج چپ پو ور رذ ذد دط طظ ظم منت الب یس شک فق قص صض ضه هع عغ غخ خش ',
+     pool:['شس سیس یبل بلا لات اتت تنن نمم ممک کگ گح حجج جچ پو ورر رذ دط ظم منت الب یس شک فق قص ضه هع عغ غخ خش ','بلا پتو گر خو چی در مژ نم تی سا حل عم اب عن بخ ود زخ رب ست نچ ','شسی بل اتن ممک گح جچ پو رذ دط ظم نتا لیب سش کف قغ عه خح ','کلا شبا تنی مگر پوک درس بیژ وژن ژال گلت حسر چم خش عقل غف ','تنمک شسیب لانت کسم یبل اشن متک گبلا شهق عضو ثعب رکب ذرت طما ظل ']},
+    {t:'کلمات کوتاه',d:'سه‌چهار حرفی‌های پرکاربرد',x:'آب آی ابر بد دست شب ما تو نان نمک کتاب کافه مادر باران پنجره دوست سلام شب آب پنیر نان تاب سیر دیر باز ',
+     pool:['سلام دوست پنجره ستاره کلید مهتاب سیب دیر باز خانه مدرسه چتر گل ','سیر تاب درخت قهوه چای شیرینی خورشید روز مبل تاب قال ایوان دیز ','باران کوچک شب تاب نان نمک دست دستمال آب آبشار ما مادر تو توت ','کافه کتابخانه ستاره باران پنجره دوستان خورشید شیرینی مدرسه مهتاب سرا ','آب ابر بد دست شب نان نمک کتاب کافه مادر باران پنیر تاب دیر ']},
+    {t:'کلمات سخت‌تر',d:'بلندها و نیم‌فاصله‌دارها',x:'خوش‌حال ستاره کلیدها صندوقچه شترمرغ بلندپرواز خانواده ماهواره دست‌فروش پنجره‌ها مهربان‌تر آسمان‌ها کتاب‌خانه ',
+     pool:['سپیدار سرانجام پژواک آسایش پرستو کاروان‌سرا چشم‌انداز مهربان‌تر آسمان‌ها ','بی‌نظیر دل‌پذیر شگفت‌انگیز همان‌طور خوشبختانه ناگهان بین‌المللی نرم‌افزار سخت‌کوش گل‌فروش ','کهکشان میلی‌متر بالکن به‌طور مدیران داده‌ها شبکه‌ها رایانه‌ها اینترنت پردازه ','پنجره‌ها خانه‌ها کتاب‌ها ستاره‌ها ابرها باران‌ها کافه‌ها دوست‌ها خاطره‌ها لحظه‌ها ','خوش‌حال ستاره صندوقچه شترمرغ بلندپرواز خانواده ماهواره دست‌فروش مهربان‌تر ']},
+    {t:'جمله',d:'با علامت‌ها و فاصلهٔ درست',x:'شب که شد، ستاره‌ها آمدند و ماه از پنجرهٔ ما سلام کرد. توپ جدید را به خانه بردیم و با هم بازی کردیم. ',
+     pool:['امروز صبح زود بیدار شدم و رفتم توی آشپزخانه؛ مادرم چای تازه دم کرده بود. ','برای یادگیری تایپ ده‌انگشتی، هر روز باید تمرین کنی و صبور باشی. ','دوستانم به کافه آمدند و ما درباره کتاب‌ها و فیلم‌های جدید حرف زدیم. ','پشت پنجره، باران آرام می‌بارید و بچه‌ها با چترهای رنگی به مدرسه می‌رفتند. ','کافی‌نت نت‌یار همه‌چیز را یک‌جا دارد: سایت، بازی، موزیک، ماشین‌حساب و آموزش تایپ! ']},
+    {t:'پاراگراف',d:'تایپ روانِ متن پیوسته',x:'در کافهٔ کوچکی وسط شهر، بوی قهوهٔ تازه پیچیده بود. پشت پنجره، باران آرام می‌بارید و مردم با چترهای رنگی عجله داشتند. من پشت میزم نشستم و کتابم را باز کردم؛ دنیا انگار همان لحظه آرام شده بود. ',
+     pool:['کتاب‌خوانی یکی از بهترین سرگرمی‌های دنیاست. وقتی کتابی را باز می‌کنی، مثل این است که به دنیایی تازه سفر کرده‌ای؛ دنیایی پر از حرف‌های آدم‌ها و اتفاق‌های تازه. ','در هر کافی‌نت یک بوی خاصی در جریان است: بوی قهوهٔ تازه، صدای برشته‌کاری و زمزمهٔ آدم‌ها. پشت میزم نشستم، لپ‌تاپم را باز کردم و شروع به نوشتن کردم. ','شب که می‌شد، همهٔ ستاره‌ها بیرون می‌آمدند. ما روی پشت‌بام می‌نشستیم و نام ستاره‌ها را از پدربزرگ می‌پرسیدیم؛ او همیشه می‌خندید و داستانی تازه تعریف می‌کرد. ']},
+    {t:'تایپ آزاد',d:'هر چه دوست داری بنویس',x:'',pool:[]},
   ],
   en:[
-    {t:'Home row basics',d:'Finger home: a s d f — j k l ;',x:'ff jj dd kk ss aa ll ;; ffjj ddkk ssll aa;; asdf jkl; asdf jkl; fjfj dkdk slsl ajaj '},
-    {t:'Left & right fingers',d:'Alternate: left… right… left…',x:'fj fj dk dk sl sl aj aj gf gf hj hj asdf jkl; lad; flask salad dad asks jak fads gala '},
-    {t:'Single letters',d:'Every key, its own home',x:'q w e r t y u i o p z x c v b n m , . / ; a s d f g h j k l '},
-    {t:'Letter combos',d:'Two by two, fast and smooth',x:'qw we er rt ty yu ui io op za xs dc fv gb hn jm ,k .l /; qaz wsx edc rfv tgb yhn ujm '},
-    {t:'Short words',d:'Common three-four letters',x:'dad sad fall glass flask salad adds lad ask fad jak gala half hall gas sad lass flag '},
-    {t:'Harder words',d:'Longer and trickier',x:'keyboard handwriting journeys electricity straightforward neighborhood extraordinary vocabulary typefast '},
-    {t:'Sentence',d:'Punctuation and spacing',x:'The quick brown fox jumps over the lazy dog. Practice every day and your speed will grow fast. '},
-    {t:'Paragraph',d:'Smooth continuous typing',x:'In a small cafe at the corner of the street, fresh coffee filled the air. Rain tapped softly on the window while people hurried by with colorful umbrellas. I opened my laptop and began to type; the world, for a moment, felt calm. '},
-    {t:'Free typing',d:'Type anything you like',x:''},
+    {t:'Home row basics',d:'Finger home: a s d f — j k l ;',x:'ff jj dd kk ss aa ll ;; ffjj ddkk ssll aa;; asdf jkl; asdf jkl; fjfj dkdk slsl ajaj ',
+     pool:['asdf jkl; aa ss dd ff jj kk ll ;; ffjj dkdk slsl aja; asdf jkl; ','asdfg ;lkjh asdfg ;lkjh ffjj ddkk ssll aa;; jjkk ll;; as;; ','a s d f j k l ; asdf jkl; sad lad add fall flask jsjs ','fjfj dkdk slsl ajaj ghgh hjhj asdf jkl; ffdd ssjj aall ','jjff kkdd llss ;;aa djdk flsk ghaj asdf jkl; fjfj dkdk ']},
+    {t:'Left & right fingers',d:'Alternate: left… right… left…',x:'fj fj dk dk sl sl aj aj gf gf hj hj asdf jkl; lad; flask salad dad asks jak fads gala ',
+     pool:['dk sl fj aj gm hm fr ju de ki sw lo asdf jkl; a lie; ','gas has fall glass dash flash salad lad asks fads gala half ','flask salad glass dad sad lad fall hall gash dish fjfj ','aj aj sl sl dk dk fj fj hf hf jg jg kd ls la js dj ','gf hj dj kl sa ;l aj fm gj hk asdf jkl; salad flask ']},
+    {t:'Single letters',d:'Every key, its own home',x:'q w e r t y u i o p z x c v b n m , . / ; a s d f g h j k l ',
+     pool:['q q w w e e r r t t y y u u i i o o p p a a s s d d f f g g h h j j k k l l ','z z x x c c v v b b n n m m , , . . / / ; ; l l k k j j h h g g ','p o i u y t r e w q ; l k j h g f d s a / . , m n b v c x z ','qaz wsx edc rfv tgb yhn ujm ,ok .il /;p zaq xsw cde vft bgy ','q w e r t y u i o p / . , m n b v c x z ; l k j h g f d s a ']},
+    {t:'Letter combos',d:'Two by two, fast and smooth',x:'qw we er rt ty yu ui io op za xs dc fv gb hn jm ,k .l /; qaz wsx edc rfv tgb yhn ujm ',
+     pool:['we rt yu io op sd fg hj kl qw er ty ui as df jk ;l ','qaz wsx edc rfv tgb yhn ujm ,ok .il /;p lok ;pi o lum ','za xs cd vf gb hn jm k, l. ;/ pq wo ei ru ty as df ','de fr gt hy ju ki lo ;p sw xa zc vb nm ,. /. qw er ','ty ui op as df gh jk l; er ty ui op we rt yu io pz ']},
+    {t:'Short words',d:'Common three-four letters',x:'dad sad fall glass flask salad adds lad ask fad jak gala half hall gas sad lass flag ',
+     pool:['task dash flash grass land hand sand jak fad lass gash dish fish wish ','dark darn hard harsh shake shape snake snack trade grade glad plan plant ','grant stand brand crash trask flash grand glass grass grasp shall slash ','half hall gas sad lass flag task dash hand sand land glad plan asks ','fall glass salad dad sad lad add ask jak gala fads gash lass flag ']},
+    {t:'Harder words',d:'Longer and trickier',x:'keyboard handwriting journeys electricity straightforward neighborhood extraordinary vocabulary typefast ',
+     pool:['everything traditional understand keyboard shortcuts practice together throughout ','wonderful afternoon breakfast chocolate instrument mountains holidays language ','straightforward handwriting neighborhood extraordinary journey keyboard typical ','knowledge celebrate generate organize deliver deliver standards reference delegate ','broadcast download upload keyboard notebook software hardware network laptop ']},
+    {t:'Sentence',d:'Punctuation and spacing',x:'The quick brown fox jumps over the lazy dog. Practice every day and your speed will grow fast. ',
+     pool:['Type fast but stay accurate. Speed will come with practice and patience. ','A good typist looks at the screen, not at the keyboard, every time. ','Practice makes perfect; type a little every single day and enjoy it. ','Coffee first, then typing: the digital cafe is open all night long. ','Set a small goal today: five more words per minute than yesterday. ']},
+    {t:'Paragraph',d:'Smooth continuous typing',x:'In a small cafe at the corner of the street, fresh coffee filled the air. Rain tapped softly on the window while people hurried by with colorful umbrellas. I opened my laptop and began to type; the world, for a moment, felt calm. ',
+     pool:['Typing is a superpower you can learn. Every day you practice, your fingers find the keys faster, your eyes stop searching, and your thoughts flow straight onto the screen like water. ','The cafe was quiet that morning. Steam rose from the cups, the machines hummed, and somewhere behind the counter a radio played an old song. I typed page after page, losing track of time. ']},
+    {t:'Free typing',d:'Type anything you like',x:'',pool:[]},
   ],
 };
 const TYP_WORDS={
@@ -3765,9 +3919,11 @@ function typBodyHtml(){
       const dn=s.done&&s.done[i];
       const lock=i>0&&!(s.done&&s.done[i-1]);
       const cur=TYP.lesson===i&&!TYP.fin;
+      const rr=s.rnd[i]||0;
       return '<button class="tls'+(dn?' done':'')+(cur?' cur':'')+(lock?' lock':'')+'" onclick="typClickLesson('+i+')">'
         +'<span class="tls-n">'+(dn?'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>':faNum(i+1))+'</span>'
         +'<span class="tls-t">'+ls.t+'</span><span class="tls-d">'+ls.d+'</span>'
+        +'<span class="tls-r">'+[0,1,2].map(k=>'<i class="tdot'+(rr>k?' on':'')+'"></i>').join('')+'</span>'
         +(lock?'<span class="tls-lock">'+ic('shield-check',12)+'</span>':'')
       +'</button>';
     }).join('')+'</div>'
@@ -3794,7 +3950,10 @@ function typPracticeHtml(){
   const ls=TYP.mode==='learn'?TYP_LESSONS[L][TYP.lesson]:null;
   return '<div class="typ-practice'+(TYP.fin?' fin':'')+'">'
     +'<div class="typ-phead"><span class="typ-pttl">'+(ls?ls.t:(L==='fa'?'آزمون سرعت':'Speed test'))+'</span>'
+      +(TYP.mode==='learn'?'<span class="typ-round">'+(L==='fa'?'دور':'Round')+' <b>'+faNum((typStats().rnd[TYP.lesson]||0)+1)+'</b>'+(L==='fa'?' از ۳':' of 3')
+        +'<span class="tdots">'+[0,1,2].map(k=>'<i class="tdot'+((typStats().rnd[TYP.lesson]||0)>k?' on':'')+'"></i>').join('')+'</span></span>':'')
       +'<div class="typ-pctl">'
+        +'<button class="tl-btn sm'+(typSndOn()?' on':'')+'" onclick="typSndToggle()" title="صدا">'+ic(typSndOn()?'volume':'volume-x',12)+'</button>'
         +(TYP.mode==='learn'?'<button class="tl-btn sm'+(TYP.block?' on':'')+'" onclick="typBlock()">'+ic('shield-check',12)+(L==='fa'?'حالت آموزشی':'Strict')+'</button>':'')
         +'<button class="tl-btn sm" onclick="typRestart()">'+ic('rotate-ccw',12)+(L==='fa'?'از نو':'Restart')+'</button>'
         +(TYP.mode==='learn'?'<button class="tl-btn sm" onclick="typQuit()">'+ic('x',12)+(L==='fa'?'بستن':'Close')+'</button>':'')
@@ -3899,7 +4058,9 @@ function typClickLesson(i){
 function typStartLesson(i){
   TYP.lesson=i;TYP.fin=false;TYP.log=[];TYP.errs=0;TYP.startT=0;TYP.charT=0;TYP.reactSum=0;TYP.reactN=0;TYP.res=null;
   const ls=TYP_LESSONS[TYP.lang][i];
-  TYP.text=ls.x||'';
+  const st=typStats();
+  const pool=(ls.pool&&ls.pool.length)?ls.pool:[ls.x];
+  TYP.text=pool[(st.rnd[i]||0)%pool.length]||'';
   if(!TYP.text){TYP.mode='free';typRerender();return;}
   TYP.running=true;typStopInt();
   typRerender();
@@ -3962,12 +4123,14 @@ function typChar(ch){
   TYP.charT=now;
   if(!ok){
     TYP.errs++;
+    typSfx(false);
     typKbHit(ch,false);
     const cur=document.querySelector('.tc.cur');
     if(cur){cur.classList.add('no');setTimeout(()=>cur&&cur.classList.remove('no'),260);}
     if(TYP.block){typPaintStats();return;}
     TYP.log.push({c:ch,ok:false});
   }else{
+    typSfx(true);
     typKbHit(ch,true);
     TYP.log.push({c:ch,ok:true});
   }
@@ -4017,7 +4180,19 @@ function typFreeStats(){
 }
 function typPaint(){
   const t=document.getElementById('typText');
-  if(t)t.innerHTML=typTextHtml();
+  if(t){
+    if(t.dataset.txt!==TYP.text){t.innerHTML=typTextHtml();t.dataset.txt=TYP.text;t.dataset.li='0';}
+    const sp=t.children,i=TYP.log.length,li=+(t.dataset.li||0);
+    if(i!==li&&sp.length){
+      const a=Math.min(i,li),b=Math.max(i,li);
+      for(let k=a;k<b;k++){
+        const lg=TYP.log[k];
+        if(sp[k])sp[k].className='tc '+(lg?(lg.ok?'ok':'bad'):'')+(TYP.text[k]===' '?' sp':'');
+      }
+    }
+    if(sp[i])sp[i].className='tc cur'+(TYP.text[i]===' '?' sp':'');
+    t.dataset.li=i;
+  }
   typKbNext();
 }
 function typRerender(){
@@ -4036,16 +4211,21 @@ function typFinishLesson(){
   const acc=okc+bad?Math.round(okc/(okc+bad)*100):100;
   const react=TYP.reactN?Math.round(TYP.reactSum/TYP.reactN):0;
   const p=typProg();
-  const s=p[TYP.lang]=p[TYP.lang]||{done:{},n:0,w:0,a:0,best:{}};
-  const first=!s.done[TYP.lesson];
-  s.done[TYP.lesson]={w:wpm,a:acc};
+  const s=p[TYP.lang]=p[TYP.lang]||{done:{},rnd:{},n:0,w:0,a:0,best:{}};
+  s.rnd=s.rnd||{};s.done=s.done||{};
+  const rounds=(s.rnd[TYP.lesson]||0)+1;
+  s.rnd[TYP.lesson]=rounds;
+  const complete=rounds>=3;
+  if(complete&&!s.done[TYP.lesson])s.done[TYP.lesson]={w:wpm,a:acc};
   s.n++;s.w+=wpm;s.a+=acc;
   typSaveProg(p);
-  TYP.res={wpm,acc,errs:bad,react,first};
+  TYP.res={wpm,acc,errs:bad,react,rounds,complete};
+  typSfx(true);
   typRerender();
   const pr=document.getElementById('typPractice');
-  if(pr)pr.insertAdjacentHTML('beforeend',typResultHtml(TYP.lang==='fa'?'درس تمام شد!':'Lesson complete!',true));
-  toast(TYP.lang==='fa'?'درس '+faNum(TYP.lesson+1)+' تمام شد — '+faNum(wpm)+' کلمه در دقیقه':'Lesson done — '+wpm+' WPM','trophy');
+  const ttl=complete?(TYP.lang==='fa'?'درس تمام شد!':'Lesson complete!'):(TYP.lang==='fa'?'دور '+faNum(rounds)+' از ۳':'Round '+rounds+' of 3');
+  if(pr)pr.insertAdjacentHTML('beforeend',typResultHtml(ttl,true));
+  toast((complete?(TYP.lang==='fa'?'درس ':'Lesson '):(TYP.lang==='fa'?'دور ':'Round '))+faNum(TYP.lesson+1)+' — '+faNum(wpm)+' WPM','trophy');
 }
 function typFinishTest(){
   TYP.fin=true;TYP.running=false;typStopInt();
@@ -4082,8 +4262,9 @@ function typResultHtml(title,isLesson){
         +'<div class="tm-c"><b>'+faNum(r.errs)+'</b><span>'+(L==='fa'?'خطا':'Errors')+'</span></div>'
         +'<div class="tm-c"><b>'+(isLesson?faNum(Math.round((r.react||0)))+'ms':faNum(r.okc))+'</b><span>'+(isLesson?(L==='fa'?'واکنش':'Reaction'):(L==='fa'?'صحیح':'Correct'))+'</span></div>'
       +'</div>'
+      +(isLesson&&!r.complete?'<div class="tm-round">'+(L==='fa'?'این درس '+faNum(3)+' دور دارد — خط بعدی را تمرین کن!':'This lesson has 3 rounds — next line!')+'</div>':'')
       +'<div class="row">'
-        +'<button class="btn gold" onclick="this.closest(\'.overlay\').remove();typRestart()">'+ic('rotate-ccw',14)+(L==='fa'?'دوباره':'Again')+'</button>'
+        +'<button class="btn gold" onclick="this.closest(\'.overlay\').remove();typRestart()">'+ic('rotate-ccw',14)+(isLesson&&!r.complete?(L==='fa'?'دور بعد':'Next round'):(L==='fa'?'دوباره':'Again'))+'</button>'
         +'<button class="btn ghost" onclick="this.closest(\'.overlay\').remove()">'+ic('check',14)+(L==='fa'?'باشه':'OK')+'</button>'
       +'</div>'
     +'</div></div>';
@@ -4358,7 +4539,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۹٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۰٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -4427,7 +4608,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۹٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۰٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -4646,6 +4827,7 @@ function vGame(id){
   +'<div class="game-stage">'+area+'</div>'
   +(btns?'<div class="touch-btns">'+btns+'</div>':'')
   +'<div class="game-info-bar"><span>'+ic('keyboard',13)+m.ctrl+'</span>'+rec
+    +'<span class="gi-sfx" onclick="gSfxToggle()" title="صدای بازی">'+ic((typeof gSfxOn==='function'&&gSfxOn())?'volume':'volume-x',13)+'</span>'
     +'<span class="gi-back" onclick="go(\'games\')">'+ic('arrow-left',13)+'بازی‌خانه</span></div>'
   +'<p class="game-desc">'+m.d+'</p>'
   +footHtml();

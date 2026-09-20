@@ -10,6 +10,26 @@ function gCanvas(cv,lw,lh,maxW){
   ctx.setTransform(dpr,0,0,dpr,0,0);
   return{ctx:ctx,w:lw,h:lh};
 }
+let GSFX=null,GSCTX=null;
+function gSfxOn(){if(GSFX===null)GSFX=store.get('gSfx',true);return GSFX;}
+function gSfxToggle(){GSFX=!gSfxOn();store.set('gSfx',GSFX);return GSFX;}
+function gSfx(type){
+  if(!gSfxOn())return;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    GSCTX=GSCTX||new AC();
+    if(GSCTX.state==='suspended')GSCTX.resume();
+    const F={eat:560,line:700,merge:460,match:760,go:900,click:320,win:800,bad:170,move:400};
+    const o=GSCTX.createOscillator(),g=GSCTX.createGain();
+    o.type=type==='bad'?'sawtooth':'sine';
+    o.frequency.value=F[type]||440;
+    g.gain.setValueAtTime(.05,GSCTX.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,GSCTX.currentTime+.13);
+    o.connect(g);g.connect(GSCTX.destination);
+    o.start();o.stop(GSCTX.currentTime+.14);
+  }catch(e){}
+}
 function gOver(el,title,sub){
   const ov=document.createElement('div');
   ov.className='gv-over';
@@ -23,7 +43,7 @@ function gOver(el,title,sub){
    تتریس
    ================================================================ */
 const TET={cv:null,ctx:null,w:320,h:480,on:false,over:false,raf:0,last:0,drop:0,
-  grid:null,cur:null,next:null,score:0,lines:0,level:0,best:0,cells:26};
+  grid:null,cur:null,next:null,score:0,lines:0,level:0,best:0,cells:26,flash:0,llast:0,plast:0};
 const T_SHAPES=[
   [[1,1,1,1]],
   [[1,1],[1,1]],
@@ -88,6 +108,11 @@ function tetDrop(soft){
 function tetHard(){while(!tetCollide(TET.cur.m,TET.cur.x,TET.cur.y+1)){TET.cur.y++;TET.score+=2;}tetMerge();}
 function tetUpdate(dt){
   if(TET.over)return;
+  if(TET.flash>0)TET.flash-=dt;
+  if(TET.lines>(TET.llast||0)){TET.flash=170;gSfx('line');}
+  TET.llast=TET.lines;
+  if(TET.level>(TET.plast||0)){toast('مرحله '+gNum(TET.level+1)+'!','sparkles');gSfx('go');}
+  TET.plast=TET.level;
   TET.drop+=dt;
   const iv=Math.max(90,650-TET.level*55);
   if(TET.drop>=iv){TET.drop=0;tetDrop(false);}
@@ -110,7 +135,16 @@ function tetDraw(){
     c.globalAlpha=1;
   };
   for(let y=0;y<20;y++)for(let x=0;x<10;x++)if(TET.grid[y][x]>=0)cell(x,y,T_COLORS[TET.grid[y][x]]);
-  if(TET.cur&&!TET.over)TET.cur.m.forEach((row,y)=>row.forEach((v,x)=>{if(v&&TET.cur.y+y>=0)cell(TET.cur.x+x,TET.cur.y+y,T_COLORS[TET.cur.c]);}));
+  if(TET.cur&&!TET.over){
+    /* روحِ محل فرود */
+    let gy=TET.cur.y;
+    while(!tetCollide(TET.cur.m,TET.cur.x,gy+1))gy++;
+    if(gy>TET.cur.y)TET.cur.m.forEach((row,y)=>row.forEach((v,x)=>{
+      if(v&&gy+y>=0){c.globalAlpha=.22;c.fillStyle=T_COLORS[TET.cur.c];c.beginPath();c.roundRect((TET.cur.x+x)*cs+2.5,(gy+y)*cs+2.5,cs-5,cs-5,5);c.fill();c.globalAlpha=1;}
+    }));
+    TET.cur.m.forEach((row,y)=>row.forEach((v,x)=>{if(v&&TET.cur.y+y>=0)cell(TET.cur.x+x,TET.cur.y+y,T_COLORS[TET.cur.c]);}));
+  }
+  if(TET.flash>0){c.fillStyle='rgba(255,235,170,'+(TET.flash/170*.25)+')';c.fillRect(0,0,260,480);}
   /* پنل */
   c.fillStyle='rgba(148,180,224,.05)';c.beginPath();c.roundRect(266,10,46,460,10);c.fill();
   c.fillStyle='#eaf1fb';c.font='800 13px Vazirmatn';c.textAlign='center';
@@ -162,7 +196,7 @@ const tetEng={
 /* ================================================================
    ۲۰۴۸
    ================================================================ */
-const G48={el:null,score:0,best:0,board:null,won:false,over:false};
+const G48={el:null,score:0,best:0,board:null,won:false,over:false,gainFx:0,fx:{m:[],born:-1}};
 function g48Init(){G48.best=store.get('g2048Best',0);}
 function g48Add(){
   const b=G48.board;
@@ -186,20 +220,21 @@ function g48Row(idx){
 function g48Slide(line){
   let arr=line.filter(v=>v);
   let moved=false,gain=0;
-  const out=[];
+  const out=[],merged=[];
   for(let i=0;i<arr.length;i++){
-    if(arr[i]===arr[i+1]){out.push(arr[i]*2);gain+=arr[i]*2;if(arr[i]*2===2048)G48.won=true;i++;}
+    if(arr[i]===arr[i+1]){out.push(arr[i]*2);merged.push(out.length-1);gain+=arr[i]*2;if(arr[i]*2===2048)G48.won=true;i++;}
     else out.push(arr[i]);
   }
   while(out.length<4)out.push(0);
   for(let i=0;i<4;i++)if(out[i]!==line[i])moved=true;
-  return{out:out,moved:moved,gain:gain};
+  return{out:out,moved:moved,gain:gain,merged:merged};
 }
 function g48Move(dir){
   /* dir: 0=چپ 1=راست 2=بالا 3=پایین */
   if(G48.over)return;
   const b=G48.board;
-  let moved=false;
+  const prev=b.slice();
+  let moved=false,gain=0;const mergedCells=[];
   for(let l=0;l<4;l++){
     let idxs;
     if(dir<2)idxs=[0,1,2,3].map(i=>l*4+(dir===0?i:3-i));
@@ -208,12 +243,18 @@ function g48Move(dir){
     const r=g48Slide(line);
     if(r.moved){
       moved=true;
-      G48.score+=r.gain;
+      G48.score+=r.gain;gain+=r.gain;
+      mergedCells.push(...r.merged.map(k=>idxs[k]));
       idxs.forEach((bi,i)=>b[bi]=r.out[i]);
     }
   }
   if(moved){
+    if(gain>0)gSfx('merge');
     g48Add();
+    let born=-1;
+    prev.forEach((v,i)=>{if(v===0&&b[i]>0)born=i;});
+    G48.fx={m:mergedCells,born:born};
+    G48.gainFx=gain;
     if(G48.score>G48.best){G48.best=G48.score;store.set('g2048Best',G48.best);}
     if(!g48Can()){G48.over=true;store.set('g2048Best',G48.best);}
     g48Render();
@@ -233,15 +274,18 @@ function g48Render(win){
   const el=G48.el;if(!el)return;
   const C={2:'#7ec8f0',4:'#6ea8f0',8:'#8b7bd8',16:'#b58ad8',32:'#d97fb0',64:'#e07a7a',
     128:'#e09a6a',256:'#e0b45f',512:'#d9c34e',1024:'#a8d05a',2048:'#5ec9a0'};
-  let h='<div class="g48-top"><span class="g48-sc">امتیاز <b>'+gNum(G48.score)+'</b></span><span class="g48-sc">رکورد <b>'+gNum(G48.best)+'</b></span></div><div class="g48-grid'+(G48.over?' done':'')+'">';
-  G48.board.forEach(v=>{
-    if(v)h+='<div class="g48-tile v'+Math.min(v,2048)+'">'+gNum(v)+'</div>';
+  let h='<div class="g48-top"><span class="g48-sc">امتیاز <b>'+gNum(G48.score)+'</b></span><span class="g48-sc">رکورد <b>'+gNum(G48.best)+'</b></span>'
+    +(G48.gainFx>0?'<span class="g48-float">+'+gNum(G48.gainFx)+'</span>':'')+'</div><div class="g48-grid'+(G48.over?' done':'')+'">';
+  G48.board.forEach((v,i)=>{
+    const fx=(G48.fx&&G48.fx.m.includes(i)?' pop':'')+(G48.fx&&i===G48.fx.born?' born':'');
+    if(v)h+='<div class="g48-tile v'+Math.min(v,2048)+fx+'">'+gNum(v)+'</div>';
     else h+='<div class="g48-tile empty"></div>';
   });
   h+='</div>';
   if(win&&!G48.over)h+='<div class="g48-msg win">۲۰۴۸ ساختی! ادامه بده…</div>';
   if(G48.over)h+='<div class="g48-msg lose">جای خالی نماند! — Enter = از نو</div>';
   el.innerHTML=h;
+  G48.gainFx=0;G48.fx={m:[],born:-1};
 }
 const g48Eng={
   start(el){g48Init();G48.el=el;G48.best=store.get('g2048Best',0);g48Reset();
@@ -266,12 +310,12 @@ const g48Eng={
    مار
    ================================================================ */
 const SNK={cv:null,ctx:null,on:false,over:false,raf:0,last:0,acc:0,
-  snake:[],dir:[1,0],ndir:[1,0],food:null,score:0,best:0,cell:25,cols:22,rows:16,t:0};
+  snake:[],dir:[1,0],ndir:[1,0],prev:null,pop:0,food:null,score:0,best:0,cell:25,cols:22,rows:16,t:0};
 function snkInit(){SNK.best=store.get('snakeBest',0);}
 function snkReset(){
   snkInit();
   SNK.snake=[{x:5,y:8},{x:4,y:8},{x:3,y:8}];
-  SNK.dir=[1,0];SNK.ndir=[1,0];SNK.score=0;SNK.over=false;SNK.acc=0;SNK.t=0;
+  SNK.dir=[1,0];SNK.ndir=[1,0];SNK.score=0;SNK.over=false;SNK.acc=0;SNK.t=0;SNK.prev=null;SNK.pop=0;
   snkFood();
 }
 function snkFood(){
@@ -283,19 +327,22 @@ function snkFood(){
 function snkUpdate(dt){
   if(SNK.over)return;
   SNK.t+=dt;
+  if(SNK.pop)SNK.pop=Math.max(0,SNK.pop-dt/200);
   SNK.acc+=dt;
   const iv=Math.max(80,160-Math.floor(SNK.score/4)*8);
   if(SNK.acc<iv)return;
   SNK.acc=0;
+  SNK.prev=SNK.snake.map(s=>({x:s.x,y:s.y}));
   SNK.dir=SNK.ndir;
   const h={x:SNK.snake[0].x+SNK.dir[0],y:SNK.snake[0].y+SNK.dir[1]};
   if(h.x<0||h.x>=SNK.cols||h.y<0||h.y>=SNK.rows||SNK.snake.some(s=>s.x===h.x&&s.y===h.y)){
     SNK.over=true;
+    gSfx('bad');
     if(SNK.score>SNK.best){SNK.best=SNK.score;store.set('snakeBest',SNK.best);}
     return;
   }
   SNK.snake.unshift(h);
-  if(h.x===SNK.food.x&&h.y===SNK.food.y){SNK.score++;snkFood();}
+  if(h.x===SNK.food.x&&h.y===SNK.food.y){SNK.score++;SNK.pop=1;gSfx('eat');snkFood();}
   else SNK.snake.pop();
 }
 function snkDraw(){
@@ -306,26 +353,40 @@ function snkDraw(){
   c.strokeStyle='rgba(148,180,224,.06)';
   for(let x=0;x<=SNK.cols;x++){c.beginPath();c.moveTo(x*cs,0);c.lineTo(x*cs,H);c.stroke();}
   for(let y=0;y<=SNK.rows;y++){c.beginPath();c.moveTo(0,y*cs);c.lineTo(W,y*cs);c.stroke();}
-  /* غذا: قهوه! */
-  const f=SNK.food,pulse=1+Math.sin(SNK.t*0.006)*0.12;
+  /* غذا: قهوهٔ درخشان */
+  const f=SNK.food,pulse=(1+Math.sin(SNK.t*0.006)*0.12)*(1+(SNK.pop||0)*.55);
+  c.save();
+  c.shadowColor='rgba(240,199,94,.8)';c.shadowBlur=12+Math.sin(SNK.t*0.008)*7;
   c.fillStyle='#f0c75e';
   c.beginPath();c.roundRect(f.x*cs+6,f.y*cs+6,(cs-12)*pulse,(cs-12)*pulse,6);c.fill();
+  c.restore();
   c.fillStyle='#8b5a2b';
   c.beginPath();c.arc(f.x*cs+cs/2,f.y*cs+cs/2,4,0,7);c.fill();
-  /* مار */
+  /* مار — حرکت نرم بین خانه‌ها */
+  const ivc=Math.max(80,160-Math.floor(SNK.score/4)*8);
+  const tt=Math.min(1,SNK.acc/ivc);
+  c.save();
+  c.shadowColor='rgba(126,224,150,.3)';c.shadowBlur=9;
   SNK.snake.forEach((s,i)=>{
-    const r=15+i/Math.max(1,SNK.snake.length)*25;
+    const pv=(SNK.prev&&SNK.prev[i])||s;
+    const x=(pv.x+(s.x-pv.x)*tt)*cs, y=(pv.y+(s.y-pv.y)*tt)*cs;
     c.fillStyle='hsl(150 55% '+Math.max(30,52-i*1.4)+'%)';
-    c.beginPath();c.roundRect(s.x*cs+2,s.y*cs+2,cs-4,cs-4,i===0?9:6);c.fill();
+    c.beginPath();c.roundRect(x+2,y+2,cs-4,cs-4,i===0?11:7);c.fill();
     if(i===0){
-      c.fillStyle='#fff';
-      c.beginPath();c.arc(s.x*cs+cs*0.62,s.y*cs+cs*0.36,3,0,7);c.fill();
-      c.beginPath();c.arc(s.x*cs+cs*0.62,s.y*cs+cs*0.64,3,0,7);c.fill();
-      c.fillStyle='#111';
-      c.beginPath();c.arc(s.x*cs+cs*0.68,s.y*cs+cs*0.36,1.4,0,7);c.fill();
-      c.beginPath();c.arc(s.x*cs+cs*0.68,s.y*cs+cs*0.64,1.4,0,7);c.fill();
+      c.restore();
+      const dx=SNK.dir[0],dy=SNK.dir[1],px=-dy,py=dx;
+      const hx=x+cs/2+dx*3,hy=y+cs/2+dy*3;
+      const eye=off=>{
+        c.fillStyle='#fff';c.beginPath();c.arc(hx+px*off,hy+py*off,3.2,0,7);c.fill();
+        c.fillStyle='#0f2018';c.beginPath();c.arc(hx+px*off+dx*1.4,hy+py*off+dy*1.4,1.6,0,7);c.fill();
+      };
+      eye(4.6);eye(-4.6);
+      c.strokeStyle='#e06666';c.lineWidth=1.8;c.lineCap='round';
+      c.beginPath();c.moveTo(hx+dx*8,hy+dy*8);c.lineTo(hx+dx*13,hy+dy*13);c.stroke();
+      c.save();c.shadowColor='rgba(126,224,150,.3)';c.shadowBlur=9;
     }
   });
+  c.restore();
   /* امتیاز */
   c.fillStyle='#eaf1fb';c.font='800 16px Vazirmatn';c.textAlign='left';
   c.fillText('قهوه‌ها: '+gNum(SNK.score),14,28);
@@ -453,7 +514,7 @@ function tttRender(){
   h+='<div class="ttt-grid'+(TTT.over?' done':'')+'">';
   TTT.b.forEach((v,i)=>{
     const inLine=w&&w.line.includes(i);
-    h+='<button class="ttt-c '+(v==='X'?'x':'o')+' '+(inLine?'inline':'')+'" data-i="'+i+'">'+(v?(v==='X'?'✕':'◯'):'')+'</button>';
+    h+='<button class="ttt-c '+(v==='X'?'x':'o')+' '+(inLine?'inline win':'')+'" data-i="'+i+'">'+(v?(v==='X'?'✕':'◯'):'')+'</button>';
   });
   h+='</div>';
   if(w)h+='<div class="g48-msg '+(w.p==='X'?'win':w.p==='O'?'lose':'')+'">'+(w.p==='X'?'بردی!':w.p==='O'?'ربات برد!':'مساوی شد')+' — Enter = از نو</div>';
@@ -532,19 +593,22 @@ function rpsPlay(m){
   if(m===p)res=-1;
   else if((m-p+3)%3===1)res=1;
   else res=0;
+  gSfx('click');
+  rpsRender(m,null,-1,true);
   setTimeout(()=>{
     if(res===1)RPS.me++;else if(res===0)RPS.pc++;else RPS.draw++;
     rpsRender(m,p,res);
+    gSfx(res===1?'win':res===0?'bad':'click');
     RPS.lock=false;
-  },450);
+  },680);
 }
-function rpsRender(m,p,res){
+function rpsRender(m,p,res,cd){
   const el=RPS.el;if(!el)return;
   let h='<div class="rps-top"><span class="ttt-sc win">تو '+gNum(RPS.me)+'</span><span class="ttt-sc">مساوی '+gNum(RPS.draw)+'</span><span class="ttt-sc lose">ربات '+gNum(RPS.pc)+'</span></div>';
   h+='<div class="rps-arena">'
-    +'<div class="rps-hand me">'+(m!==null?RPS_ITEMS[m].svg:'<span class="rps-q">؟</span>')+'</div>'
+    +'<div class="rps-hand me'+(cd?' shake':'')+'">'+(m!==null?RPS_ITEMS[m].svg:'<span class="rps-q">؟</span>')+'</div>'
     +'<div class="rps-vs">'+(res===-1?'مساوی!':res===1?'بردی!':res===0?'ربات برد!':'VS')+'</div>'
-    +'<div class="rps-hand pc'+(p!==null?' show':'')+'">'+(p!==null?RPS_ITEMS[p].svg:'<span class="rps-q">؟</span>')+'</div>'
+    +'<div class="rps-hand pc'+(p!==null?' show':'')+(cd?' shake':'')+'">'+(p!==null?RPS_ITEMS[p].svg:'<span class="rps-q">؟</span>')+'</div>'
   +'</div>';
   h+='<div class="rps-btns">'+RPS_ITEMS.map((it,i)=>'<button class="rps-b" data-i="'+i+'" title="'+it.n+'">'+it.svg+'<span>'+it.n+'</span></button>').join('')+'</div>';
   el.innerHTML=h;
@@ -796,6 +860,13 @@ function wrdRender(){
   }));
   h+='</div><div class="wrd-words">'+WRD.words.map(w=>'<span class="'+(WRD.found.includes(w.w)?'fd':'')+'">'+w.w+'</span>').join('')+'</div>';
   el.innerHTML=h;
+  const wb=el.querySelector('.wrd-words');
+  if(wb){
+    const bar=document.createElement('div');
+    bar.className='wrd-pbar';
+    bar.innerHTML='<i style="width:'+Math.round(WRD.found.length/Math.max(1,WRD.words.length)*100)+'%"></i>';
+    wb.parentNode.insertBefore(bar,wb);
+  }
   el.querySelectorAll('.wrd-c').forEach(b=>{
     b.onclick=()=>{
       const k=b.dataset.k;
@@ -818,7 +889,7 @@ const wrdEng={
 /* ================================================================
    شطرنج
    ================================================================ */
-const CHS={el:null,b:null,sel:null,turn:'w',over:'',moves:0};
+const CHS={el:null,b:null,sel:null,turn:'w',over:'',moves:0,last:null};
 const CH_GLYPH={w:{k:'♔',q:'♕',r:'♖',b:'♗',n:'♘',p:'♙'},b:{k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'}};
 const CH_VAL={p:1,n:3,b:3,r:5,q:9,k:100};
 function chsReset(){
@@ -903,6 +974,7 @@ function chsAllLegal(col){
   return out;
 }
 function chsMove(r,c,rr,cc){
+  CHS.last=[r,c,rr,cc];
   const p=CHS.b[r][c];
   const captured=CHS.b[rr][cc];
   CHS.b[rr][cc]=p;CHS.b[r][c]=null;
@@ -936,6 +1008,7 @@ function chsAI(){
     if(sc>bestSc){bestSc=sc;best=m;}
   }
   chsMove(best.from[0],best.from[1],best.to[0],best.to[1]);
+  gSfx('move');
   chsRender();
 }
 function chsClick(r,c){
@@ -946,6 +1019,7 @@ function chsClick(r,c){
     if(legal.some(m=>m[0]===r&&m[1]===c)){
       const res=chsMove(CHS.sel[0],CHS.sel[1],r,c);
       CHS.sel=null;
+      gSfx('move');
       chsRender();
       if(res===true)toast('کیش!','alert');
       if(!CHS.over)setTimeout(chsAI,450);
@@ -974,6 +1048,12 @@ function chsRender(){
   h+='</div>';
   if(CHS.over)h+='<div class="g48-msg '+(CHS.over.includes('بردی')?'win':CHS.over.includes('ربات')?'lose':'')+'">'+CHS.over+' — Enter = از نو</div>';
   el.innerHTML=h;
+  el.querySelectorAll('.chs-c').forEach((cell,k)=>{
+    const r=Math.floor(k/8),c2=k%8;
+    if(CHS.last&&((CHS.last[0]===r&&CHS.last[1]===c2)||(CHS.last[2]===r&&CHS.last[3]===c2)))cell.classList.add('last');
+    const pcv=CHS.b[r][c2];
+    if(pcv&&pcv.t==='k'&&chsAttacked(CHS.b,r,c2,pcv.col==='w'?'b':'w'))cell.classList.add('chk');
+  });
   el.querySelectorAll('.chs-c').forEach(b=>b.onclick=()=>chsClick(+b.dataset.r,+b.dataset.c));
 }
 const chsEng={

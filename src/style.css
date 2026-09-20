@@ -1135,3 +1135,45 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.25)}
   .typ-text{font-size:17px;min-height:84px}
   .tm-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ============ v10: جزئیات بازی‌ها ============ */
+.g48-top{position:relative}
+.g48-tile.pop{animation:pop .22s ease}
+.g48-tile.born{animation:born .28s both}
+@keyframes pop{40%{transform:scale(1.18)}}
+@keyframes born{from{transform:scale(.3);opacity:0}}
+.g48-float{position:absolute;top:-8px;inset-inline-end:6px;font-size:16px;font-weight:900;color:#7ee2a8;
+  animation:floatUp .9s both;pointer-events:none;text-shadow:0 2px 10px rgba(63,174,125,.4)}
+@keyframes floatUp{from{opacity:0;transform:translateY(10px)}25%{opacity:1}to{opacity:0;transform:translateY(-20px)}}
+.rps-hand.shake{animation:rpsShake .32s ease-in-out 2}
+@keyframes rpsShake{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.mem-c{animation:dealIn .5s both}
+.mem-c:nth-child(1){animation-delay:.02s}.mem-c:nth-child(2){animation-delay:.05s}.mem-c:nth-child(3){animation-delay:.08s}
+.mem-c:nth-child(4){animation-delay:.11s}.mem-c:nth-child(5){animation-delay:.14s}.mem-c:nth-child(6){animation-delay:.17s}
+.mem-c:nth-child(7){animation-delay:.2s}.mem-c:nth-child(8){animation-delay:.23s}.mem-c:nth-child(9){animation-delay:.26s}
+.mem-c:nth-child(10){animation-delay:.29s}.mem-c:nth-child(11){animation-delay:.32s}.mem-c:nth-child(12){animation-delay:.35s}
+.mem-c:nth-child(13){animation-delay:.38s}.mem-c:nth-child(14){animation-delay:.41s}.mem-c:nth-child(15){animation-delay:.44s}
+.mem-c:nth-child(16){animation-delay:.47s}
+@keyframes dealIn{from{transform:scale(.4) rotate(-9deg);opacity:0}}
+.ttt-c.inline{animation:winPulse 1.15s ease-in-out infinite}
+@keyframes winPulse{50%{box-shadow:0 0 0 4px rgba(217,174,62,.4);transform:scale(1.07)}}
+.chs-c.last{box-shadow:inset 0 0 0 3px rgba(240,199,94,.6)}
+.chs-c.chk{animation:chkPulse .9s ease-in-out infinite}
+@keyframes chkPulse{50%{box-shadow:inset 0 0 0 4px rgba(224,106,117,.8)}}
+.coin-msg{animation:msgPop .45s ease}
+@keyframes msgPop{40%{transform:scale(1.15)}}
+.wrd-pbar{height:7px;border-radius:99px;background:rgba(148,180,224,.1);overflow:hidden;margin:13px auto 0;max-width:420px}
+.wrd-pbar i{display:block;height:100%;background:var(--gradG);border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.3,1)}
+.gi-sfx{cursor:pointer;display:inline-flex;align-items:center;gap:4px;color:var(--tx3);transition:color .2s}
+.gi-sfx:hover{color:var(--gold2)}
+
+/* ============ v10: تایپ — دورها و نرمی ============ */
+.typ-round{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:850;color:var(--tx3)}
+.typ-round b{color:var(--gold2);font-size:13px}
+.tdots,.tls-r{display:inline-flex;gap:4px;align-items:center}
+.tdot{width:8px;height:8px;border-radius:50%;background:rgba(148,180,224,.18);display:inline-block;transition:all .3s}
+.tdot.on{background:var(--gradG);box-shadow:0 0 8px rgba(217,174,62,.4)}
+.tls-r{margin-top:5px}
+.tls-r .tdot{width:7px;height:7px}
+.tc.cur{transition:background .12s}
+.tm-round{font-size:11px;font-weight:800;color:var(--tx2);background:var(--tw);border:1px solid var(--twb);border-radius:99px;padding:6px 14px;margin-bottom:8px}

@@ -255,7 +255,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۹٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۰٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -324,7 +324,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۹٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۰٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -543,6 +543,7 @@ function vGame(id){
   +'<div class="game-stage">'+area+'</div>'
   +(btns?'<div class="touch-btns">'+btns+'</div>':'')
   +'<div class="game-info-bar"><span>'+ic('keyboard',13)+m.ctrl+'</span>'+rec
+    +'<span class="gi-sfx" onclick="gSfxToggle()" title="صدای بازی">'+ic((typeof gSfxOn==='function'&&gSfxOn())?'volume':'volume-x',13)+'</span>'
     +'<span class="gi-back" onclick="go(\'games\')">'+ic('arrow-left',13)+'بازی‌خانه</span></div>'
   +'<p class="game-desc">'+m.d+'</p>'
   +footHtml();

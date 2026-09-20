@@ -16,10 +16,26 @@ function typLazy(){
 function typProg(){return store.get('typLab',{});}
 function typSaveProg(p){store.set('typLab',p);}
 function typStats(){
-  const p=typProg();const s=p[TYP.lang]||{done:{},n:0,w:0,a:0,best:{}};
+  const p=typProg();const s=p[TYP.lang]||{done:{},rnd:{},n:0,w:0,a:0,best:{}};
+  s.rnd=s.rnd||{};s.done=s.done||{};
   return s;
 }
 function typNorm(c){return c==='ي'?'ی':c==='ك'?'ک':c;}
+let TYPC=null;
+function typSndOn(){return store.get('typSnd',true);}
+function typSndToggle(){store.set('typSnd',!typSndOn());typRerender();}
+function typSfx(ok){
+  if(!typSndOn())return;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    TYPC=TYPC||new AC();if(TYPC.state==='suspended')TYPC.resume();
+    const o=TYPC.createOscillator(),g=TYPC.createGain();
+    o.type=ok?'sine':'triangle';o.frequency.value=ok?600+Math.min(500,(TYP.log.length%10)*18):170;
+    g.gain.setValueAtTime(.035,TYPC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,TYPC.currentTime+.09);
+    o.connect(g);g.connect(TYPC.destination);o.start();o.stop(TYPC.currentTime+.1);
+  }catch(e){}
+}
 
 /* ---------- چیدمان و انگشت‌ها ---------- */
 const TYP_ROWS={
@@ -53,26 +69,42 @@ const TYP_FINGER={
 /* ---------- درس‌ها ---------- */
 const TYP_LESSONS={
   fa:[
-    {t:'آشنایی با ردیف اصلی',d:'خانهٔ انگشت‌ها: ش س ی ب ل ا ت ن م ک',x:'شش سس یی بب لل اا تن نن مم کک شسیبلاتنمک لاتن ممک شسی بلات نمکا تنمک شسیب '},
-    {t:'انگشت‌های چپ و راست',d:'یک در میان: چپ… راست… چپ…',x:'شل سا یت بک لن ام تا نم کی شا سل با تنک ملا کست شب نات ملک سیب تار '},
-    {t:'حروف تکی',d:'هر حرف، جای خودش روی کیبورد',x:'گ ح ج چ پ و ر ذ د ط ظ م ن ت ا ل ب ی س ش ک ف ق ص ض ه ع غ خ '},
-    {t:'ترکیب دو حرف',d:'جفت‌جفت تند و روان',x:'شس سی یب بل لا ات تن نم مم کگ گح حج چپ پو ور رذ ذد دط طظ ظم منت الب یس شک فق قص صض ضه هع عغ غخ خش '},
-    {t:'کلمات کوتاه',d:'سه‌چهار حرفی‌های پرکاربرد',x:'آب آی ابر بد دست شب ما تو نان نمک کتاب کافه مادر باران پنجره دوست سلام شب آب پنیر نان تاب سیر دیر باز '},
-    {t:'کلمات سخت‌تر',d:'بلندها و نیم‌فاصله‌دارها',x:'خوش‌حال ستاره کلیدها صندوقچه شترمرغ بلندپرواز خانواده ماهواره دست‌فروش پنجره‌ها مهربان‌تر آسمان‌ها کتاب‌خانه '},
-    {t:'جمله',d:'با علامت‌ها و فاصلهٔ درست',x:'شب که شد، ستاره‌ها آمدند و ماه از پنجرهٔ ما سلام کرد. توپ جدید را به خانه بردیم و با هم بازی کردیم. '},
-    {t:'پاراگراف',d:'تایپ روانِ متن پیوسته',x:'در کافهٔ کوچکی وسط شهر، بوی قهوهٔ تازه پیچیده بود. پشت پنجره، باران آرام می‌بارید و مردم با چترهای رنگی عجله داشتند. من پشت میزم نشستم و کتابم را باز کردم؛ دنیا انگار همان لحظه آرام شده بود. '},
-    {t:'تایپ آزاد',d:'هر چه دوست داری بنویس',x:''},
+    {t:'آشنایی با ردیف اصلی',d:'خانهٔ انگشت‌ها: ش س ی ب ل ا ت ن م ک',x:'شش سس یی بب لل اا تن نن مم کک شسیبلاتنمک لاتن ممک شسی بلات نمک تنمک شسیب ',
+     pool:['شسیبلاتنمک کمنتالیبشس تنمالیبشس کمنتالیبشس لاتنمکشسیب ','شب لت کمان سیل بنت مشک تاس نمک لپا شبی سیل بنت کمان ','سیب شات لنت ممکن تبس کلال منت شسا یبلن کامک تنبل ','شسیب لاتن منت الک بلی سناک تنا ملک شبن کام سیل بنت ','بلاتنمکشسی شسیبلاتنمک لاتنمکشسیب منتالیبشسک کمنتالیبشس تنمالیکشس ']},
+    {t:'انگشت‌های چپ و راست',d:'یک در میان: چپ… راست… چپ…',x:'شل سا یت بک لن ام تا نم کی شا سل با تنک ملا کست شب نات ملک سیب تار ',
+     pool:['ناب کست شب لپا مار تن سیب کاه گم نامک بست کلف شب ماک ','شلن سابت یکمان پرک توله گم ذرفا طن ظبل شجی چخا پحو ','تاش بکل نسم یقا لخه امج چپو رذگ دخن طسا ظبل شیق ','سالن تیک بشر نامک گلپ حوله فراذ زخد میدان کپچ خواج ','تاشک بلم نسی یقن لخا مجو چپر رذگ خدن ستا بظل شیق ']},
+    {t:'حروف تکی',d:'هر حرف، جای خودش روی کیبورد',x:'گ ح ج چ پ و ر ذ د ط ظ م ن ت ا ل ب ی س ش ک ف ق ص ض ه ع غ خ ',
+     pool:['ق ف غ ع ه خ ح ج چ پ و ر ذ د ط ظ م ن ت ا ل ب ی س ش ک گ ض ص ث ','گ ک م ن ت ا ل ب ی س ش ض ص ث ق ف غ ع ه خ ح ج چ پ و ر ذ د ط ظ ','ب ا ل ک م ن ت س ی ش ج چ ح خ ه ع غ ق ف ض ث ص پ و ر ز ژ د ذ ط ظ ','ژ ژ ز ز ر ر ذ ذ د د ط ط ظ ظ م م ن ن ت ت ا ا ل ل ب ب ی ی س س ش ش ','پ و ج چ ح خ ه ع غ ق ف ض ص ث گ ک م ل ت ن ا ب ی س ش ر ذ د ط ظ ']},
+    {t:'ترکیب دو حرف',d:'جفت‌جفت تند و روان',x:'شس سی یب بل لا ات تن نم مم کگ گح حج چپ پو ور رذ ذد دط طظ ظم منت الب یس شک فق قص صض ضه هع عغ غخ خش ',
+     pool:['شس سیس یبل بلا لات اتت تنن نمم ممک کگ گح حجج جچ پو ورر رذ دط ظم منت الب یس شک فق قص ضه هع عغ غخ خش ','بلا پتو گر خو چی در مژ نم تی سا حل عم اب عن بخ ود زخ رب ست نچ ','شسی بل اتن ممک گح جچ پو رذ دط ظم نتا لیب سش کف قغ عه خح ','کلا شبا تنی مگر پوک درس بیژ وژن ژال گلت حسر چم خش عقل غف ','تنمک شسیب لانت کسم یبل اشن متک گبلا شهق عضو ثعب رکب ذرت طما ظل ']},
+    {t:'کلمات کوتاه',d:'سه‌چهار حرفی‌های پرکاربرد',x:'آب آی ابر بد دست شب ما تو نان نمک کتاب کافه مادر باران پنجره دوست سلام شب آب پنیر نان تاب سیر دیر باز ',
+     pool:['سلام دوست پنجره ستاره کلید مهتاب سیب دیر باز خانه مدرسه چتر گل ','سیر تاب درخت قهوه چای شیرینی خورشید روز مبل تاب قال ایوان دیز ','باران کوچک شب تاب نان نمک دست دستمال آب آبشار ما مادر تو توت ','کافه کتابخانه ستاره باران پنجره دوستان خورشید شیرینی مدرسه مهتاب سرا ','آب ابر بد دست شب نان نمک کتاب کافه مادر باران پنیر تاب دیر ']},
+    {t:'کلمات سخت‌تر',d:'بلندها و نیم‌فاصله‌دارها',x:'خوش‌حال ستاره کلیدها صندوقچه شترمرغ بلندپرواز خانواده ماهواره دست‌فروش پنجره‌ها مهربان‌تر آسمان‌ها کتاب‌خانه ',
+     pool:['سپیدار سرانجام پژواک آسایش پرستو کاروان‌سرا چشم‌انداز مهربان‌تر آسمان‌ها ','بی‌نظیر دل‌پذیر شگفت‌انگیز همان‌طور خوشبختانه ناگهان بین‌المللی نرم‌افزار سخت‌کوش گل‌فروش ','کهکشان میلی‌متر بالکن به‌طور مدیران داده‌ها شبکه‌ها رایانه‌ها اینترنت پردازه ','پنجره‌ها خانه‌ها کتاب‌ها ستاره‌ها ابرها باران‌ها کافه‌ها دوست‌ها خاطره‌ها لحظه‌ها ','خوش‌حال ستاره صندوقچه شترمرغ بلندپرواز خانواده ماهواره دست‌فروش مهربان‌تر ']},
+    {t:'جمله',d:'با علامت‌ها و فاصلهٔ درست',x:'شب که شد، ستاره‌ها آمدند و ماه از پنجرهٔ ما سلام کرد. توپ جدید را به خانه بردیم و با هم بازی کردیم. ',
+     pool:['امروز صبح زود بیدار شدم و رفتم توی آشپزخانه؛ مادرم چای تازه دم کرده بود. ','برای یادگیری تایپ ده‌انگشتی، هر روز باید تمرین کنی و صبور باشی. ','دوستانم به کافه آمدند و ما درباره کتاب‌ها و فیلم‌های جدید حرف زدیم. ','پشت پنجره، باران آرام می‌بارید و بچه‌ها با چترهای رنگی به مدرسه می‌رفتند. ','کافی‌نت نت‌یار همه‌چیز را یک‌جا دارد: سایت، بازی، موزیک، ماشین‌حساب و آموزش تایپ! ']},
+    {t:'پاراگراف',d:'تایپ روانِ متن پیوسته',x:'در کافهٔ کوچکی وسط شهر، بوی قهوهٔ تازه پیچیده بود. پشت پنجره، باران آرام می‌بارید و مردم با چترهای رنگی عجله داشتند. من پشت میزم نشستم و کتابم را باز کردم؛ دنیا انگار همان لحظه آرام شده بود. ',
+     pool:['کتاب‌خوانی یکی از بهترین سرگرمی‌های دنیاست. وقتی کتابی را باز می‌کنی، مثل این است که به دنیایی تازه سفر کرده‌ای؛ دنیایی پر از حرف‌های آدم‌ها و اتفاق‌های تازه. ','در هر کافی‌نت یک بوی خاصی در جریان است: بوی قهوهٔ تازه، صدای برشته‌کاری و زمزمهٔ آدم‌ها. پشت میزم نشستم، لپ‌تاپم را باز کردم و شروع به نوشتن کردم. ','شب که می‌شد، همهٔ ستاره‌ها بیرون می‌آمدند. ما روی پشت‌بام می‌نشستیم و نام ستاره‌ها را از پدربزرگ می‌پرسیدیم؛ او همیشه می‌خندید و داستانی تازه تعریف می‌کرد. ']},
+    {t:'تایپ آزاد',d:'هر چه دوست داری بنویس',x:'',pool:[]},
   ],
   en:[
-    {t:'Home row basics',d:'Finger home: a s d f — j k l ;',x:'ff jj dd kk ss aa ll ;; ffjj ddkk ssll aa;; asdf jkl; asdf jkl; fjfj dkdk slsl ajaj '},
-    {t:'Left & right fingers',d:'Alternate: left… right… left…',x:'fj fj dk dk sl sl aj aj gf gf hj hj asdf jkl; lad; flask salad dad asks jak fads gala '},
-    {t:'Single letters',d:'Every key, its own home',x:'q w e r t y u i o p z x c v b n m , . / ; a s d f g h j k l '},
-    {t:'Letter combos',d:'Two by two, fast and smooth',x:'qw we er rt ty yu ui io op za xs dc fv gb hn jm ,k .l /; qaz wsx edc rfv tgb yhn ujm '},
-    {t:'Short words',d:'Common three-four letters',x:'dad sad fall glass flask salad adds lad ask fad jak gala half hall gas sad lass flag '},
-    {t:'Harder words',d:'Longer and trickier',x:'keyboard handwriting journeys electricity straightforward neighborhood extraordinary vocabulary typefast '},
-    {t:'Sentence',d:'Punctuation and spacing',x:'The quick brown fox jumps over the lazy dog. Practice every day and your speed will grow fast. '},
-    {t:'Paragraph',d:'Smooth continuous typing',x:'In a small cafe at the corner of the street, fresh coffee filled the air. Rain tapped softly on the window while people hurried by with colorful umbrellas. I opened my laptop and began to type; the world, for a moment, felt calm. '},
-    {t:'Free typing',d:'Type anything you like',x:''},
+    {t:'Home row basics',d:'Finger home: a s d f — j k l ;',x:'ff jj dd kk ss aa ll ;; ffjj ddkk ssll aa;; asdf jkl; asdf jkl; fjfj dkdk slsl ajaj ',
+     pool:['asdf jkl; aa ss dd ff jj kk ll ;; ffjj dkdk slsl aja; asdf jkl; ','asdfg ;lkjh asdfg ;lkjh ffjj ddkk ssll aa;; jjkk ll;; as;; ','a s d f j k l ; asdf jkl; sad lad add fall flask jsjs ','fjfj dkdk slsl ajaj ghgh hjhj asdf jkl; ffdd ssjj aall ','jjff kkdd llss ;;aa djdk flsk ghaj asdf jkl; fjfj dkdk ']},
+    {t:'Left & right fingers',d:'Alternate: left… right… left…',x:'fj fj dk dk sl sl aj aj gf gf hj hj asdf jkl; lad; flask salad dad asks jak fads gala ',
+     pool:['dk sl fj aj gm hm fr ju de ki sw lo asdf jkl; a lie; ','gas has fall glass dash flash salad lad asks fads gala half ','flask salad glass dad sad lad fall hall gash dish fjfj ','aj aj sl sl dk dk fj fj hf hf jg jg kd ls la js dj ','gf hj dj kl sa ;l aj fm gj hk asdf jkl; salad flask ']},
+    {t:'Single letters',d:'Every key, its own home',x:'q w e r t y u i o p z x c v b n m , . / ; a s d f g h j k l ',
+     pool:['q q w w e e r r t t y y u u i i o o p p a a s s d d f f g g h h j j k k l l ','z z x x c c v v b b n n m m , , . . / / ; ; l l k k j j h h g g ','p o i u y t r e w q ; l k j h g f d s a / . , m n b v c x z ','qaz wsx edc rfv tgb yhn ujm ,ok .il /;p zaq xsw cde vft bgy ','q w e r t y u i o p / . , m n b v c x z ; l k j h g f d s a ']},
+    {t:'Letter combos',d:'Two by two, fast and smooth',x:'qw we er rt ty yu ui io op za xs dc fv gb hn jm ,k .l /; qaz wsx edc rfv tgb yhn ujm ',
+     pool:['we rt yu io op sd fg hj kl qw er ty ui as df jk ;l ','qaz wsx edc rfv tgb yhn ujm ,ok .il /;p lok ;pi o lum ','za xs cd vf gb hn jm k, l. ;/ pq wo ei ru ty as df ','de fr gt hy ju ki lo ;p sw xa zc vb nm ,. /. qw er ','ty ui op as df gh jk l; er ty ui op we rt yu io pz ']},
+    {t:'Short words',d:'Common three-four letters',x:'dad sad fall glass flask salad adds lad ask fad jak gala half hall gas sad lass flag ',
+     pool:['task dash flash grass land hand sand jak fad lass gash dish fish wish ','dark darn hard harsh shake shape snake snack trade grade glad plan plant ','grant stand brand crash trask flash grand glass grass grasp shall slash ','half hall gas sad lass flag task dash hand sand land glad plan asks ','fall glass salad dad sad lad add ask jak gala fads gash lass flag ']},
+    {t:'Harder words',d:'Longer and trickier',x:'keyboard handwriting journeys electricity straightforward neighborhood extraordinary vocabulary typefast ',
+     pool:['everything traditional understand keyboard shortcuts practice together throughout ','wonderful afternoon breakfast chocolate instrument mountains holidays language ','straightforward handwriting neighborhood extraordinary journey keyboard typical ','knowledge celebrate generate organize deliver deliver standards reference delegate ','broadcast download upload keyboard notebook software hardware network laptop ']},
+    {t:'Sentence',d:'Punctuation and spacing',x:'The quick brown fox jumps over the lazy dog. Practice every day and your speed will grow fast. ',
+     pool:['Type fast but stay accurate. Speed will come with practice and patience. ','A good typist looks at the screen, not at the keyboard, every time. ','Practice makes perfect; type a little every single day and enjoy it. ','Coffee first, then typing: the digital cafe is open all night long. ','Set a small goal today: five more words per minute than yesterday. ']},
+    {t:'Paragraph',d:'Smooth continuous typing',x:'In a small cafe at the corner of the street, fresh coffee filled the air. Rain tapped softly on the window while people hurried by with colorful umbrellas. I opened my laptop and began to type; the world, for a moment, felt calm. ',
+     pool:['Typing is a superpower you can learn. Every day you practice, your fingers find the keys faster, your eyes stop searching, and your thoughts flow straight onto the screen like water. ','The cafe was quiet that morning. Steam rose from the cups, the machines hummed, and somewhere behind the counter a radio played an old song. I typed page after page, losing track of time. ']},
+    {t:'Free typing',d:'Type anything you like',x:'',pool:[]},
   ],
 };
 const TYP_WORDS={
@@ -130,9 +162,11 @@ function typBodyHtml(){
       const dn=s.done&&s.done[i];
       const lock=i>0&&!(s.done&&s.done[i-1]);
       const cur=TYP.lesson===i&&!TYP.fin;
+      const rr=s.rnd[i]||0;
       return '<button class="tls'+(dn?' done':'')+(cur?' cur':'')+(lock?' lock':'')+'" onclick="typClickLesson('+i+')">'
         +'<span class="tls-n">'+(dn?'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>':faNum(i+1))+'</span>'
         +'<span class="tls-t">'+ls.t+'</span><span class="tls-d">'+ls.d+'</span>'
+        +'<span class="tls-r">'+[0,1,2].map(k=>'<i class="tdot'+(rr>k?' on':'')+'"></i>').join('')+'</span>'
         +(lock?'<span class="tls-lock">'+ic('shield-check',12)+'</span>':'')
       +'</button>';
     }).join('')+'</div>'
@@ -159,7 +193,10 @@ function typPracticeHtml(){
   const ls=TYP.mode==='learn'?TYP_LESSONS[L][TYP.lesson]:null;
   return '<div class="typ-practice'+(TYP.fin?' fin':'')+'">'
     +'<div class="typ-phead"><span class="typ-pttl">'+(ls?ls.t:(L==='fa'?'آزمون سرعت':'Speed test'))+'</span>'
+      +(TYP.mode==='learn'?'<span class="typ-round">'+(L==='fa'?'دور':'Round')+' <b>'+faNum((typStats().rnd[TYP.lesson]||0)+1)+'</b>'+(L==='fa'?' از ۳':' of 3')
+        +'<span class="tdots">'+[0,1,2].map(k=>'<i class="tdot'+((typStats().rnd[TYP.lesson]||0)>k?' on':'')+'"></i>').join('')+'</span></span>':'')
       +'<div class="typ-pctl">'
+        +'<button class="tl-btn sm'+(typSndOn()?' on':'')+'" onclick="typSndToggle()" title="صدا">'+ic(typSndOn()?'volume':'volume-x',12)+'</button>'
         +(TYP.mode==='learn'?'<button class="tl-btn sm'+(TYP.block?' on':'')+'" onclick="typBlock()">'+ic('shield-check',12)+(L==='fa'?'حالت آموزشی':'Strict')+'</button>':'')
         +'<button class="tl-btn sm" onclick="typRestart()">'+ic('rotate-ccw',12)+(L==='fa'?'از نو':'Restart')+'</button>'
         +(TYP.mode==='learn'?'<button class="tl-btn sm" onclick="typQuit()">'+ic('x',12)+(L==='fa'?'بستن':'Close')+'</button>':'')
@@ -264,7 +301,9 @@ function typClickLesson(i){
 function typStartLesson(i){
   TYP.lesson=i;TYP.fin=false;TYP.log=[];TYP.errs=0;TYP.startT=0;TYP.charT=0;TYP.reactSum=0;TYP.reactN=0;TYP.res=null;
   const ls=TYP_LESSONS[TYP.lang][i];
-  TYP.text=ls.x||'';
+  const st=typStats();
+  const pool=(ls.pool&&ls.pool.length)?ls.pool:[ls.x];
+  TYP.text=pool[(st.rnd[i]||0)%pool.length]||'';
   if(!TYP.text){TYP.mode='free';typRerender();return;}
   TYP.running=true;typStopInt();
   typRerender();
@@ -327,12 +366,14 @@ function typChar(ch){
   TYP.charT=now;
   if(!ok){
     TYP.errs++;
+    typSfx(false);
     typKbHit(ch,false);
     const cur=document.querySelector('.tc.cur');
     if(cur){cur.classList.add('no');setTimeout(()=>cur&&cur.classList.remove('no'),260);}
     if(TYP.block){typPaintStats();return;}
     TYP.log.push({c:ch,ok:false});
   }else{
+    typSfx(true);
     typKbHit(ch,true);
     TYP.log.push({c:ch,ok:true});
   }
@@ -382,7 +423,19 @@ function typFreeStats(){
 }
 function typPaint(){
   const t=document.getElementById('typText');
-  if(t)t.innerHTML=typTextHtml();
+  if(t){
+    if(t.dataset.txt!==TYP.text){t.innerHTML=typTextHtml();t.dataset.txt=TYP.text;t.dataset.li='0';}
+    const sp=t.children,i=TYP.log.length,li=+(t.dataset.li||0);
+    if(i!==li&&sp.length){
+      const a=Math.min(i,li),b=Math.max(i,li);
+      for(let k=a;k<b;k++){
+        const lg=TYP.log[k];
+        if(sp[k])sp[k].className='tc '+(lg?(lg.ok?'ok':'bad'):'')+(TYP.text[k]===' '?' sp':'');
+      }
+    }
+    if(sp[i])sp[i].className='tc cur'+(TYP.text[i]===' '?' sp':'');
+    t.dataset.li=i;
+  }
   typKbNext();
 }
 function typRerender(){
@@ -401,16 +454,21 @@ function typFinishLesson(){
   const acc=okc+bad?Math.round(okc/(okc+bad)*100):100;
   const react=TYP.reactN?Math.round(TYP.reactSum/TYP.reactN):0;
   const p=typProg();
-  const s=p[TYP.lang]=p[TYP.lang]||{done:{},n:0,w:0,a:0,best:{}};
-  const first=!s.done[TYP.lesson];
-  s.done[TYP.lesson]={w:wpm,a:acc};
+  const s=p[TYP.lang]=p[TYP.lang]||{done:{},rnd:{},n:0,w:0,a:0,best:{}};
+  s.rnd=s.rnd||{};s.done=s.done||{};
+  const rounds=(s.rnd[TYP.lesson]||0)+1;
+  s.rnd[TYP.lesson]=rounds;
+  const complete=rounds>=3;
+  if(complete&&!s.done[TYP.lesson])s.done[TYP.lesson]={w:wpm,a:acc};
   s.n++;s.w+=wpm;s.a+=acc;
   typSaveProg(p);
-  TYP.res={wpm,acc,errs:bad,react,first};
+  TYP.res={wpm,acc,errs:bad,react,rounds,complete};
+  typSfx(true);
   typRerender();
   const pr=document.getElementById('typPractice');
-  if(pr)pr.insertAdjacentHTML('beforeend',typResultHtml(TYP.lang==='fa'?'درس تمام شد!':'Lesson complete!',true));
-  toast(TYP.lang==='fa'?'درس '+faNum(TYP.lesson+1)+' تمام شد — '+faNum(wpm)+' کلمه در دقیقه':'Lesson done — '+wpm+' WPM','trophy');
+  const ttl=complete?(TYP.lang==='fa'?'درس تمام شد!':'Lesson complete!'):(TYP.lang==='fa'?'دور '+faNum(rounds)+' از ۳':'Round '+rounds+' of 3');
+  if(pr)pr.insertAdjacentHTML('beforeend',typResultHtml(ttl,true));
+  toast((complete?(TYP.lang==='fa'?'درس ':'Lesson '):(TYP.lang==='fa'?'دور ':'Round '))+faNum(TYP.lesson+1)+' — '+faNum(wpm)+' WPM','trophy');
 }
 function typFinishTest(){
   TYP.fin=true;TYP.running=false;typStopInt();
@@ -447,8 +505,9 @@ function typResultHtml(title,isLesson){
         +'<div class="tm-c"><b>'+faNum(r.errs)+'</b><span>'+(L==='fa'?'خطا':'Errors')+'</span></div>'
         +'<div class="tm-c"><b>'+(isLesson?faNum(Math.round((r.react||0)))+'ms':faNum(r.okc))+'</b><span>'+(isLesson?(L==='fa'?'واکنش':'Reaction'):(L==='fa'?'صحیح':'Correct'))+'</span></div>'
       +'</div>'
+      +(isLesson&&!r.complete?'<div class="tm-round">'+(L==='fa'?'این درس '+faNum(3)+' دور دارد — خط بعدی را تمرین کن!':'This lesson has 3 rounds — next line!')+'</div>':'')
       +'<div class="row">'
-        +'<button class="btn gold" onclick="this.closest(\'.overlay\').remove();typRestart()">'+ic('rotate-ccw',14)+(L==='fa'?'دوباره':'Again')+'</button>'
+        +'<button class="btn gold" onclick="this.closest(\'.overlay\').remove();typRestart()">'+ic('rotate-ccw',14)+(isLesson&&!r.complete?(L==='fa'?'دور بعد':'Next round'):(L==='fa'?'دوباره':'Again'))+'</button>'
         +'<button class="btn ghost" onclick="this.closest(\'.overlay\').remove()">'+ic('check',14)+(L==='fa'?'باشه':'OK')+'</button>'
       +'</div>'
     +'</div></div>';

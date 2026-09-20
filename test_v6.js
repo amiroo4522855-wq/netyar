@@ -48,12 +48,16 @@ keys('Enter');
 T('Enter=ری‌استارت',ev('TET.score')===0&&ev('TET.lines')===0&&ev('TET.over')===false);
 T('۵ دکمه لمسی',$$('.touch-btns .btn').length===5);
 
+w.eval('TET.lines=5');w.eval('tetUpdate(16)');
+T('فلاش پاک‌شدن خط تتریس',ev('TET.flash')>0);
+
 console.log('— ۲۰۴۸ —');
 w.go('game-2048');await sleep(300);
 T('دو خانه اولیه',ev('G48.board.filter(x=>x).length')===2);
 ev('G48.board=[2,2,4,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];G48.score=0;g48Render()');
 keys('ArrowLeft');
 T('ادغام ۲+۲ و امتیاز',ev('G48.board[0]')===4&&ev('G48.score')>=4);
+T('امتیاز شناور + پاپ ادغام',!!$('.g48-float')&&$$('.g48-tile.pop').length>=1);
 
 console.log('— مار —');
 w.go('game-snake');await sleep(300);
@@ -64,6 +68,8 @@ ev('SNK.over=true');
 keys('Enter');
 T('ری‌استارت',ev('SNK.snake.length')===3&&ev('SNK.score')===0);
 T('۴ دکمه لمسی',$$('.touch-btns .btn').length===4);
+w.eval('SNK.acc=9999;snkUpdate(16)');
+T('اینترپولیشن نرم مار',Array.isArray(ev('SNK.prev'))&&ev('SNK.prev.length')===3);
 
 console.log('— دوز —');
 w.go('game-ttt');await sleep(300);
@@ -115,6 +121,8 @@ T('حرکت کاشی',ev('PZL.moves')===mv0+1);
 keys('ArrowUp');
 T('فلش پازل',ev('PZL.moves')>=mv0+1);
 
+T('دکمهٔ صدا در نوار بازی',$$('.gi-sfx').length===1);
+
 console.log('— واژه‌یاب —');
 w.go('game-word');await sleep(300);
 T('۸۱ خانه',$$('.wrd-c').length===81);
@@ -127,6 +135,7 @@ $$('.wrd-c')[widx(w0.cells[w0.cells.length-1])].click();
 T('پیدا شدن کلمه',ev('WRD.found.length')===1);
 T('کلمه نشان‌دار',$$('.wrd-c.fd').length===w0.cells.length);
 T('تایمر',$$('.wrd-time').length>=1);
+T('نوار پیشرفت واژه‌یاب',$$('.wrd-pbar').length===1);
 
 console.log('— شطرنج —');
 w.go('game-chess');await sleep(300);
@@ -139,6 +148,7 @@ T('دو حرکت قانونی',$$('.chs-dot').length===2);
 $$('.chs-c')[(pr-2)*8+pc].click();
 T('حرکت انجام شد',ev('CHS.b['+pr+']['+pc+']')===null);
 T('نوبت ربات',ev('CHS.turn')==='b');
+T('نشانه‌گذاری حرکت آخر',Array.isArray(ev('CHS.last'))&&ev('CHS.last.length')===4);
 await sleep(700);
 T('پاسخ ربات',ev('CHS.turn')==='w');
 
@@ -209,7 +219,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-T('نسخه ۹٫۰',bodyTxt().includes('نسخه ۹٫۰'));
+T('نسخه ۱۰٫۰',bodyTxt().includes('نسخه ۱۰٫۰'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);
@@ -228,6 +238,7 @@ T('هایلایت انگشت‌ها',$$('.kk.z-li').length>=6);
 w.eval('typSetLang("en")');await sleep(320);
 T('سوییچ انگلیسی: کیبورد QWERTY',!!kbKey('q')&&!!kbKey(';'));
 T('درس‌های انگلیسی',d.body.textContent.includes('Home row basics'));
+T('استخر چندخطی هر درس',ev('TYP_LESSONS.fa[0].pool.length')===5&&ev('TYP_LESSONS.en[7].pool.length')===2);
 w.eval('typSetLang("fa")');await sleep(320);
 w.eval('typClickLesson(0)');await sleep(320);
 T('تمرین شروع شد',ev('TYP.text.length')>50&&!!$('.typ-text'));
@@ -238,12 +249,18 @@ T('حرف درست جلو می‌رود',ev('TYP.log.length')===1);
 T('کلید بعدی روی کیبورد روشن',!!$('.kk.next'));
 w.eval('typChar('+JSON.stringify(wrong)+')');
 T('حرف اشتباه بلاک می‌شود',ev('TYP.log.length')===1&&ev('TYP.errs')===1);
-w.eval('TYP.text="اب";TYP.log=[];TYP.fin=false');
-w.eval('typChar("ا")');w.eval('typChar("ب")');
-await sleep(120);
-T('درس تمام شد و ذخیره',ev('TYP.fin')===true&&ev('Object.keys(typStats().done||{}).length')===1);
-T('کارنامهٔ درس',!!$('.typ-modal')&&d.body.textContent.includes('WPM'));
+const round1=async()=>{w.eval('TYP.text="اب";TYP.log=[];TYP.fin=false');w.eval('typChar("ا")');w.eval('typChar("ب")');await sleep(120);};
+await round1();
+T('دور ۱ ثبت شد (هنوز کامل نیست)',ev('typStats().rnd[0]')===1&&!ev('typStats().done[0]'));
+T('کارنامهٔ دور',!!$('.typ-modal')&&bodyTxt().includes('از ۳'));
 $('.typ-modal .x').click();
+await round1();
+await round1();
+T('بعد از ۳ دور: درس کامل',ev('typStats().done[0]')!==undefined);
+T('دکمهٔ صدا در تمرین',!!$('.typ-pctl .tl-btn.sm'));
+w.eval('typSndToggle()');
+T('سوییچ صدای تایپ',ev('typSndOn()')===false);
+w.eval('typSndToggle()');
 w.eval('typDur(30)');w.eval('typStartTest()');await sleep(320);
 T('آزمون زمان‌دار شروع شد',ev('TYP.mode')==='test'&&ev('TYP.testLeft')<=30);
 for(const ch of ev('TYP.text.slice(0,8).split("")'))w.eval('typChar('+JSON.stringify(ch)+')');
@@ -293,7 +310,7 @@ T('فیلور استریم در کد',src.includes('t.stream=AUDIUS_HOSTS[hi]'))
 T('انیمیشن تعویض نما',src.includes('v-leave')&&src.includes('v-enter')&&src.includes('data-view'));
 
 function kbKey(k){return [...$$('.kk')].find(b=>b.dataset.k===k);}
-console.log('\n═══ v9: '+pass+' ✓ / '+fail+' ✗ ═══');
+console.log('\n═══ v10: '+pass+' ✓ / '+fail+' ✗ ═══');
 if(fail)console.log('FAILS: '+fails.join(' | '));
 process.exit(fail?1:0);
 }catch(e){console.log('FATAL:',e.message,e.stack.split('\n')[1]||'');process.exit(2);}})();
