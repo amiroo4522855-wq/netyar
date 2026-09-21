@@ -1647,3 +1647,33 @@ blockquote p{margin:4px 0;color:var(--tx2)}
     animation:none!important;transition:none!important;transform:none!important;
   }
 }
+
+/* ============ v13: بازی‌های جدید پرمیوم + کیفیت بالا ============ */
+/* ---- مین‌یاب ---- */
+.mines-top{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.mines-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;max-width:400px;margin:0 auto}
+.mines-c{aspect-ratio:1;border-radius:10px;border:1px solid var(--line);background:linear-gradient(165deg,#1c2a4d,#0f1d38);color:var(--tx);font-family:inherit;font-size:clamp(12px,3vw,16px);font-weight:900;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
+.mines-c::before{content:"";position:absolute;top:2px;left:3px;right:3px;height:4px;border-radius:2px;background:rgba(255,255,255,.12);opacity:.6}
+.mines-c:hover{transform:scale(1.06) translateY(-1px);border-color:rgba(74,143,226,.5);box-shadow:0 8px 18px rgba(2,8,20,.35)}
+.mines-c:active{transform:scale(.94)}
+.mines-c.open{background:rgba(148,180,224,.06);border-color:rgba(148,180,224,.15);cursor:default}
+.mines-c.flag{background:linear-gradient(165deg,#2a3f6e,#1c2a4d);border-color:#4a6fb0}
+.mines-c.mine{background:linear-gradient(165deg,rgba(199,91,84,.3),rgba(199,91,84,.12));border-color:rgba(199,91,84,.6);animation:minePop .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes minePop{40%{transform:scale(1.2)}}
+/* ---- کیفیت بازی‌ها — کنواس‌ها ---- */
+.game-stage{border-radius:24px;overflow:hidden;border:1px solid rgba(148,180,224,.16);position:relative;box-shadow:0 22px 52px -12px rgba(2,8,20,.55),inset 0 1px 0 rgba(255,255,255,.06);background:#0a1030;backdrop-filter:blur(8px)}
+.game-stage canvas{display:block;width:100%;cursor:pointer;touch-action:manipulation;image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
+.game-stage canvas{filter:contrast(1.04) saturate(1.08)}
+.game-stage::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:24px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.06)}
+/* دکمه‌های لمسی پرمیوم */
+.touch-btns .btn{backdrop-filter:blur(10px);box-shadow:0 8px 20px rgba(2,8,20,.35),inset 0 1px 0 rgba(255,255,255,.08);transition:all .28s cubic-bezier(.16,1,.3,1)}
+.touch-btns .btn:hover{transform:translateY(-2px) scale(1.02)}
+.touch-btns .btn:active{transform:scale(.95)}
+/* بهبود گیم‌گرید برای 16 بازی */
+.game-grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+@media (min-width:1400px){.game-grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:560px){.game-grid{grid-template-columns:1fr 1fr;gap:12px}.mines-grid{gap:4px;max-width:320px}.mines-c{border-radius:8px}}
+/* ---- پرمیوم افکت برای کاورهای جدید ---- */
+.game-card.playable[data-new]{border-color:rgba(240,199,94,.22)}
+.game-card.playable[data-new]::before{content:"جدید";position:absolute;top:10px;left:10px;z-index:5;font-size:9px;font-weight:900;color:#1a1305;background:linear-gradient(135deg,#f0c75e,#d9ae3e);padding:3px 9px;border-radius:99px;box-shadow:0 4px 12px rgba(217,174,62,.35)}
+

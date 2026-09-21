@@ -236,7 +236,7 @@ const NAV=[
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
 const VIEWS=['home','sites','fav','games','music','calc','typing','ai'];
-const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess'];
+const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 function sideHtml(){
@@ -256,7 +256,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۲٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۳٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -325,7 +325,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۲٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۳٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -460,6 +460,20 @@ const GAME_META={
   'chess':{t:'شطرنج',i:'crown',c:'#d9ae3e',type:'dom',
     d:'مقابل رباتِ کافی‌نت بازی کن؛ ربات حرکت‌های قانونی می‌داند و مهره‌هایش را محکم نگه می‌دارد. کیش و ماتش کن!',
     ctrl:'کلیک روی مهره و خانهٔ مقصد · Enter = از نو'},
+  'flappy':{t:'فلپی کافی',i:'coffee',c:'#5fbf6f',type:'canvas',best:['flapBest','امتیاز'],
+    d:'فنجان قهوهٔ پرنده! با Space یا کلیک بپر و از بین لوله‌های سبز رد شو. هر لوله = یک امتیاز؛ سرعت هر ۱۰ امتیاز بیشتر!',
+    ctrl:'Space یا کلیک = پرش · Enter = دوباره · Esc = خروج',
+    btns:[{t:'پرش!',k:' ',i:'zap',cls:'primary',hold:true}]},
+  'breakout':{t:'بریک‌اوت',i:'layout-grid',c:'#4fc3f7',type:'canvas',best:['brkBest','امتیاز'],
+    d:'آجرها را با توپ بشکن! موس یا فلش برای حرکت راکت، هر آجر ۱۰ امتیاز. با دقت نشانه بگیر — توپ با زاویهٔ برخورد تغییر می‌کند!',
+    ctrl:'موس یا فلش چپ/راست = حرکت · Enter = دوباره',
+    btns:[{t:'◀',k:'ArrowLeft',hold:true},{t:'▶',k:'ArrowRight',hold:true}]},
+  'mines':{t:'مین‌یاب',i:'bomb',c:'#e08b85',type:'dom',best:['minesBest','ثانیه'],
+    d:'مین‌ها را پیدا کن بدون انفجار! عدد = تعداد مین‌های اطراف. کلیک راست یا لمس طولانی = پرچم. ۹×۹ با ۱۲ مین — سریع‌ترین زمان را ثبت کن!',
+    ctrl:'کلیک = باز کردن · راست‌کلیک/لمس طولانی = پرچم · Enter = دوباره'},
+  'bubble':{t:'حباب‌پاپ',i:'sparkles',c:'#8b7bd8',type:'canvas',best:['bubBest','امتیاز'],
+    d:'حباب‌های رنگی را قبل از فرار بترکان! هر حباب = امتیاز، کمبو پشت سر هم = امتیاز بیشتر. ۳۰ ثانیه فرصت داری — سریع باش!',
+    ctrl:'کلیک روی حباب‌ها · Enter = دوباره'},
 };
 function bannerDino(){
   return '<div class="g-banner" onclick="go(\'game-dino\')" role="button" title="بازی دایی ناصر">'
@@ -521,7 +535,7 @@ function vGames(){
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
   +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
   +secHead('gamepad','blue','بقیهٔ بازی‌ها','همگی کامل و قابل بازی')
-  +'<div class="game-grid">'+['tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+  +'<div class="game-grid">'+['flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       const m=GAME_META[k];
       const rec=m.best?faNum(store.get(m.best[0],0))+' '+m.best[1]:'';
       const desc=m.d.split('！')[0].split('!')[0].split(' — ')[0];

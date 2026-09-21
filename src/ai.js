@@ -534,7 +534,7 @@ function aiView(){
       +'</div>'
       +'<div class="ai-chats" id="aiChatsList">'+aiChatsListHtml()+'</div>'
       +'<div class="ai-side-foot">'
-        +'<div class="ai-foot-info">'+ic('shield-check',12)+'نسخه ۱۱٫۰ — امن و خصوصی</div>'
+        +'<div class="ai-foot-info">'+ic('shield-check',12)+'نسخه ۱۲٫۰ — امن و خصوصی</div>'
         +'<div class="ai-foot-actions">'
           +'<button class="ai-foot-btn" onclick="aiShowSettings()" title="تنظیمات">'+ic('wrench',13)+'کلید API</button>'
           +'<button class="ai-foot-btn" onclick="aiExportChats()" title="خروجی گرفتن">'+ic('download',13)+'خروجی</button>'

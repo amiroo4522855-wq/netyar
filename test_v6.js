@@ -21,21 +21,21 @@ console.log('— بوت و ناوبری —');
 w.__finishLoader();
 await sleep(450);
 T('لودر تمام شد',w.eval('document.body').classList.contains('ready'));
-const views=['music','sites','games','calc','fav','ai','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess'];
+const views=['music','sites','games','calc','fav','ai','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble'];
 let navOK=0;const navBad=[];
 for(const v of views){
   try{w.go(v);await sleep(300);if(bodyTxt().length>100)navOK++;else navBad.push(v);}
   catch(e){navBad.push(v+'('+e.message.slice(0,40)+')');}
 }
-T('همه ۲۰ نما بدون خطا رندر شدند ('+navOK+'/'+views.length+')',navOK===views.length);
+T('همه ۲۴ نما بدون خطا رندر شدند ('+navOK+'/'+views.length+')',navOK===views.length);
 if(navBad.length)console.log('   nav bad:',navBad.join(' | '));
-T('۱۴ بازی در متادیتا',ev('Object.keys(GAME_META).length')===14);
+T('۱۸ بازی در متادیتا',ev('Object.keys(GAME_META).length')===18);
 
 console.log('— بازی‌خانه —');
 w.go('games');await sleep(300);
 T('بنر دایی ناصر',bodyTxt().includes('دایی ناصر'));
 T('بنر برج‌سازی',bodyTxt().includes('برج‌سازی'));
-T('۱۲ کارت بازی جدید',$$('.game-card.playable').length===12);
+T('۱۶ کارت بازی جدید',$$('.game-card.playable').length===16);
 T('بدون «به‌زودی» در صفحه',!bodyTxt().includes('به‌زودی'));
 
 console.log('— تتریس —');
@@ -219,7 +219,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-T('نسخه ۱۲٫۰',bodyTxt().includes('نسخه ۱۲٫۰'));
+T('نسخه ۱۳٫۰',bodyTxt().includes('نسخه ۱۳٫۰'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);
@@ -283,8 +283,8 @@ T('بازگشت به تایپ بدون خطا',!!$('.typ-wrap'));
 
 console.log('— v8: کاورها و مار موسی —');
 w.go('games');await sleep(320);
-T('کاور SVG روی هر ۱۲ کارت',$$('.game-card.playable .gcov > svg').length===12);
-T('دکمهٔ «بازی کن» روی کاور',$$('.gcov-play').length===12);
+T('کاور SVG روی هر ۱۶ کارت',$$('.game-card.playable .gcov > svg').length===16);
+T('دکمهٔ «بازی کن» روی کاور',$$('.gcov-play').length===16);
 T('بدون کارت بدون کاور',[...$$('.game-card.playable')].every(c=>c.querySelector('.gcov > svg')));
 w.go('game-snake');await sleep(320);
 T('بنر کاور در صفحهٔ بازی',$$('.gcov.page svg').length===1);
