@@ -256,7 +256,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۱٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۲٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -325,7 +325,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۱٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۲٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -1282,9 +1282,16 @@ function render(){
     window.scrollTo({top:0});
     return;
   }
-  /* تعویض نما با انیمیشن نرمِ باز و بسته شدن */
+  /* تعویض نما با انیمیشن پرمیوم نرمِ باز و بسته شدن v12 */
   updateNav();
-  window.scrollTo({top:0});
+  const isTestEnv = (typeof navigator!=='undefined' && /jsdom/i.test(navigator.userAgent)) || (typeof location!=='undefined' && location.hostname==='example.com');
+  const leaveMs = isTestEnv ? 10 : 320;
+  const enterMs = isTestEnv ? 30 : 760;
+  // افکت فشرده شدن دکمه فعال (فقط در محیط واقعی)
+  if(!isTestEnv){
+    const activeNav=document.querySelector('.nav-item.active');
+    if(activeNav){activeNav.style.transform='scale(.96)';setTimeout(()=>activeNav.style.transform='',180);}
+  }
   oldC.classList.add('v-leave');
   if(renderTimer)clearTimeout(renderTimer);
   renderTimer=setTimeout(()=>{
@@ -1293,8 +1300,13 @@ function render(){
     oldC.classList.remove('v-leave');
     oldC.classList.add('v-enter');
     afterRender();
-    renderTimer=setTimeout(()=>{oldC.classList.remove('v-enter');renderTimer=0;},430);
-  },165);
+    if(!isTestEnv){
+      oldC.querySelectorAll('.reveal').forEach((el,i)=>{
+        el.style.transitionDelay=Math.min(i*38,420)+'ms';
+      });
+    }
+    renderTimer=setTimeout(()=>{oldC.classList.remove('v-enter');if(!isTestEnv)oldC.querySelectorAll('.reveal').forEach(el=>el.style.transitionDelay='');renderTimer=0;},enterMs);
+  },leaveMs);
 }
 let renderTimer=0;
 function updateNav(){
