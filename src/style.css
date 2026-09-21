@@ -1899,3 +1899,10 @@ body.sb-open .main{margin-inline-end:var(--side)}
 .shop-shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.12) 45%,transparent 70%);transform:translateX(-120%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
 .shop-card:hover .shop-shine{transform:translateX(0)}
 @media (max-width:860px){.shop-hero{grid-template-columns:1fr;padding:28px 22px}.shop-visual{display:none}.shop-grid{grid-template-columns:1fr}}
+
+/* v17: انگری بردز پرمیوم دسکتاپ */
+.gover-stars{display:flex;gap:6px;justify-content:center;margin:8px 0 10px}
+.gover-stars .gs{font-size:22px;color:rgba(255,255,255,.18);transition:all .4s cubic-bezier(.16,1,.3,1);text-shadow:0 2px 8px rgba(0,0,0,.3)}
+.gover-stars .gs.on{color:#f4d03f;text-shadow:0 0 14px rgba(244,208,63,.65),0 2px 6px rgba(0,0,0,.4);transform:scale(1.15)}
+.gover-stars .gs.on:nth-child(2){transition-delay:.08s}
+.gover-stars .gs.on:nth-child(3){transition-delay:.16s}
