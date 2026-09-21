@@ -1823,3 +1823,10 @@ body.sb-open .main{margin-inline-end:var(--side)}
 /* گیم کارت انگری بردز جدید نشان */
 .game-card.playable[data-k="angry"]{border-color:rgba(231,76,60,.22)}
 .game-card.playable[data-k="angry"]::before{content:"جدید";position:absolute;top:10px;left:10px;z-index:5;font-size:9.5px;font-weight:900;color:#fff;background:linear-gradient(135deg,#e74c3c,#c0392b);padding:4px 10px;border-radius:99px;box-shadow:0 6px 16px rgba(231,76,60,.4);animation:beatp 2s infinite}
+
+/* ============ v15.1: انگری بردز موتور شیک — بدون باگ، پرتاب واقعی، انیمیشن 60fps ============ */
+.gover-premium .gover-ring{position:absolute;inset:-6px;border-radius:22px;border:1px dashed rgba(240,199,94,.22);opacity:.6;animation:mbSpin 8s linear infinite}
+.gover-premium.win .gover-ring{border-color:rgba(126,200,111,.32)}
+.gover-card::before{content:"";position:absolute;top:0;right:12%;left:12%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
+.gover-btn.next{background:linear-gradient(135deg,#7ee2a0,#5ec9a0);color:#0a1f14;box-shadow:0 10px 26px rgba(126,226,160,.35),inset 0 1px 0 rgba(255,255,255,.5)}
+.gover-btn.next:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 16px 36px rgba(126,226,160,.5)}
