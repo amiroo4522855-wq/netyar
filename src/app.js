@@ -63,7 +63,7 @@ const store=(()=>{let mem={};let ok=false;
 
 /* ---------- وضعیت ---------- */
 const SITES=RAW.map((r,i)=>({id:i,n:r[0],u:r[1],c:r[2],d:r[3]}));
-const state={view:'home',q:'',cat:null,favs:store.get('favs',[]),mode:store.get('mode','grid')};
+const state={view:'home',q:'',cat:null,favs:store.get('favs',[]),mode:store.get('mode','grid'),sbOpen:(typeof window!=='undefined'&&window.innerWidth>=921)};
 const HIST=[];
 const $=s=>document.querySelector(s);
 const app=$('#app');
@@ -120,6 +120,7 @@ function go(v){
   state.view=v;state.cat=null;
   if(location.hash!=='#'+v)location.hash=v;
   render();
+  if(isMobile()&&state.sbOpen)closeSidebar();
 }
 function goBack(){
   if(!HIST.length)return;
@@ -128,9 +129,35 @@ function goBack(){
   if(location.hash!=='#'+v)location.hash=v;
   render();
 }
+function isMobile(){try{return window.innerWidth<921;}catch(e){return false;}}
+function openSidebar(){
+  state.sbOpen=true;
+  const sb=document.querySelector('.sidebar');
+  const ov=document.querySelector('.sb-overlay');
+  const mb=document.querySelector('.menu-btn');
+  if(sb){sb.classList.remove('closed');sb.classList.add('open');}
+  if(ov){ov.classList.add('open');}
+  if(mb){mb.classList.add('open');}
+  try{document.body.classList.add('sb-open');}catch(e){}
+}
+function closeSidebar(){
+  state.sbOpen=false;
+  const sb=document.querySelector('.sidebar');
+  const ov=document.querySelector('.sb-overlay');
+  const mb=document.querySelector('.menu-btn');
+  if(sb){sb.classList.remove('open');sb.classList.add('closed');}
+  if(ov){ov.classList.remove('open');}
+  if(mb){mb.classList.remove('open');}
+  try{document.body.classList.remove('sb-open');}catch(e){}
+}
+function toggleSidebar(){
+  if(state.sbOpen)closeSidebar();else openSidebar();
+  try{gSfx('click');}catch(e){}
+}
 function openCat(k){
   if(state.view!=='sites')go('sites');
   state.cat=k;render();
+  if(isMobile())closeSidebar();
 }
 function setCat(k){state.cat=k;render();}
 function setQ(q){state.q=q;render();}
@@ -241,25 +268,30 @@ const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 function sideHtml(){
   const catKeys=Object.keys(CATS);
-  return '<aside class="sidebar">'
-    +'<div class="logo" onclick="go(\'home\')">'
+  const openCls=state.sbOpen?' open':' closed';
+  return '<div class="sb-overlay'+(state.sbOpen?' open':'')+'" onclick="closeSidebar()"></div>'
+    +'<aside class="sidebar'+openCls+'">'
+    +'<div class="sb-glow"></div>'
+    +'<div class="logo" onclick="go(\'home\');if(isMobile())closeSidebar()">'
       +'<div class="logo-mark">'+ic('coffee',24)+'</div>'
       +'<div class="logo-txt"><div class="t1">کافی‌نتِ <b>نت‌یار</b></div><div class="t2">کافه اینترنتِ دیجیتال تو</div></div>'
+      +'<button class="sb-close" onclick="event.stopPropagation();closeSidebar()" title="بستن منو">'+ic('x',16)+'</button>'
     +'</div>'
     +'<nav class="nav no-sb">'
       +NAV.map(item=>item.sec
         ?'<div class="nav-sec">'+item.sec+'</div>'
-        :'<div class="nav-item'+(state.view===item.v?' active':'')+'" data-v="'+item.v+'" onclick="go(\''+item.v+'\')"><span class="nico">'+ic(item.i,17)+'</span><span>'+item.t+'</span>'+(item.v==='sites'?'<span class="cnt">'+faNum(SITES.length)+'</span>':'')+(item.v==='fav'?'<span class="cnt" style="display:'+(state.favs.length?'':'none')+'">'+faNum(state.favs.length)+'</span>':'')+'</div>'
+        :'<div class="nav-item'+(state.view===item.v?' active':'')+'" data-v="'+item.v+'" onclick="go(\''+item.v+'\');if(isMobile())closeSidebar()"><span class="nico">'+ic(item.i,17)+'</span><span>'+item.t+'</span>'+(item.v==='sites'?'<span class="cnt">'+faNum(SITES.length)+'</span>':'')+(item.v==='fav'?'<span class="cnt" style="display:'+(state.favs.length?'':'none')+'">'+faNum(state.favs.length)+'</span>':'')+'</div>'
       ).join('')
       +'<div class="nav-sec">دسته‌بندی‌ها</div>'
       +'<div class="nav-cats">'
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۳٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۴٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
+
 function topHtml(){
   const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
   let dt='',tm='';
@@ -269,6 +301,7 @@ function topHtml(){
     tm=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(now);
   }catch(e){}
   return '<header class="topbar">'
+    +'<button class="menu-btn'+(state.sbOpen?' open':'')+'" id="menuBtn" onclick="toggleSidebar()" title="باز/بستن منو"><span class="mb-box"><i class="mb-line l1"></i><i class="mb-line l2"></i><i class="mb-line l3"></i></span><span class="mb-glow"></span></button>'
     +'<button class="back-btn'+(HIST.length?'':' hide')+'" onclick="goBack()" title="بازگشت به صفحهٔ قبل">'+ic('arrow-left',17)+'</button>'
     +'<div class="top-logo" onclick="go(\'home\')"><span class="logo-mark">'+ic('coffee',18)+'</span>کافی‌نتِ <b>نت‌یار</b></div>'
     +'<div class="pg-ttl">'+(titles[state.view]||'')+'<span class="bdg">'+ic('shield-check',10)+'نت‌یار</span></div>'
@@ -277,6 +310,7 @@ function topHtml(){
     +'<div class="clock">'+ic('clock',15)+'<div><div class="tm">'+tm+'</div><div class="dt">'+dt+'</div></div></div>'
   +'</header>';
 }
+
 function searchBox(id){
   return '<div class="searchbox" id="'+id+'">'
     +'<input type="text" id="inp-'+id+'" placeholder="جستجو بین '+faNum(SITES.length)+' سایت… (نام، توضیح یا آدرس)" value="'+esc(state.q)+'" autocomplete="off">'
@@ -325,7 +359,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۳٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۴٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -1327,6 +1361,8 @@ function updateNav(){
   document.querySelectorAll('[data-v]').forEach(el=>el.classList.toggle('active',el.dataset.v===state.view));
 }
 function afterRender(){
+  try{if(state.sbOpen)document.body.classList.add('sb-open');else document.body.classList.remove('sb-open');}catch(e){}
+
   tick();
   animateCounts();
   observeReveals();
@@ -1491,6 +1527,7 @@ document.addEventListener('keydown',e=>{
   const tag=(ae&&ae.tagName)||'';
   const inInput=tag==='INPUT'||tag==='TEXTAREA';
   if(e.key==='Escape'){
+    if(state.sbOpen){closeSidebar();return;}
     if(document.querySelector('.overlay')){document.querySelector('.overlay').remove();return;}
     if(GAME_VIEWS.includes(state.view)&&!inInput){go('games');return;}
     if(state.view==='calc'&&!inInput){calcKey('AC');return;}
@@ -1612,6 +1649,7 @@ function start(){
   if(ALL_VIEWS.includes(h))state.view=h;
   render();
 }
+window.addEventListener('resize',()=>{try{if(window.innerWidth>=921&&!state.sbOpen)openSidebar();}catch(e){}});
 window.addEventListener('hashchange',()=>{
   const h=(location.hash||'').replace('#','');
   if(ALL_VIEWS.includes(h)&&h!==state.view){state.view=h;state.cat=null;render();}

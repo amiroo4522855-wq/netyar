@@ -219,7 +219,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-T('نسخه ۱۳٫۰',bodyTxt().includes('نسخه ۱۳٫۰'));
+  T('نسخه ۱۴٫۰',bodyTxt().includes('نسخه ۱۴٫۰'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);

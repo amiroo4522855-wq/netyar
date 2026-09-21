@@ -1677,3 +1677,106 @@ blockquote p{margin:4px 0;color:var(--tx2)}
 .game-card.playable[data-new]{border-color:rgba(240,199,94,.22)}
 .game-card.playable[data-new]::before{content:"جدید";position:absolute;top:10px;left:10px;z-index:5;font-size:9px;font-weight:900;color:#1a1305;background:linear-gradient(135deg,#f0c75e,#d9ae3e);padding:3px 9px;border-radius:99px;box-shadow:0 4px 12px rgba(217,174,62,.35)}
 
+
+/* ============ v14: دکمه پرمیوم منو + باز/بسته نرم و شیک ============ */
+.menu-btn{
+  position:relative;width:44px;height:44px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:linear-gradient(165deg,rgba(20,40,72,.92),rgba(12,22,40,.98));
+  border:1px solid rgba(148,180,224,.18);
+  box-shadow:0 8px 22px rgba(2,8,20,.38),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(148,180,224,.06);
+  transition:all .52s cubic-bezier(.16,1,.3,1);
+  overflow:hidden;isolation:isolate;
+}
+.menu-btn::before{
+  content:"";position:absolute;inset:0;border-radius:14px;opacity:0;
+  background:radial-gradient(120% 120% at 30% 20%,rgba(240,199,94,.22),transparent 60%);
+  transition:opacity .45s ease;
+}
+.menu-btn:hover{transform:translateY(-1px) scale(1.03);border-color:rgba(240,199,94,.42);box-shadow:0 14px 32px rgba(2,8,20,.5),0 0 0 1px rgba(240,199,94,.18),0 0 24px -6px rgba(240,199,94,.35),inset 0 1px 0 rgba(255,255,255,.12)}
+.menu-btn:hover::before{opacity:1}
+.menu-btn:active{transform:scale(.92);transition-duration:.14s}
+.menu-btn.open{border-color:rgba(240,199,94,.55);background:linear-gradient(165deg,rgba(32,52,92,.95),rgba(18,30,54,.98));box-shadow:0 12px 30px rgba(2,8,20,.5),0 0 0 1px rgba(240,199,94,.22),0 0 32px -8px rgba(240,199,94,.45)}
+.mb-box{position:relative;width:20px;height:14px;display:flex;flex-direction:column;justify-content:space-between;z-index:1}
+.mb-line{display:block;height:2.5px;border-radius:99px;background:linear-gradient(90deg,#eaf1fb,#c9d6ea);box-shadow:0 1px 0 rgba(0,0,0,.3);transition:all .55s cubic-bezier(.16,1,.3,1);transform-origin:center}
+.mb-line.l1{width:20px}
+.mb-line.l2{width:14px;margin-inline-start:auto;transition-delay:.04s}
+.mb-line.l3{width:20px;transition-delay:.08s}
+.menu-btn:hover .mb-line{background:linear-gradient(90deg,#ffe9a8,#f0c75e)}
+.menu-btn.open .mb-line.l1{transform:translateY(5.8px) rotate(45deg);width:20px;background:linear-gradient(90deg,#f0c75e,#d9ae3e)}
+.menu-btn.open .mb-line.l2{opacity:0;transform:scaleX(0) translateX(10px)}
+.menu-btn.open .mb-line.l3{transform:translateY(-5.7px) rotate(-45deg);width:20px;background:linear-gradient(90deg,#f0c75e,#d9ae3e)}
+.mb-glow{position:absolute;inset:-12px;border-radius:20px;z-index:0;opacity:0;filter:blur(10px);background:conic-gradient(from 0deg,rgba(240,199,94,.0),rgba(240,199,94,.35),rgba(74,143,226,.25),rgba(240,199,94,.0));transition:opacity .5s}
+.menu-btn.open .mb-glow{opacity:.7;animation:mbSpin 2.8s linear infinite}
+@keyframes mbSpin{to{transform:rotate(360deg)}}
+
+/* سایدبار پرمیوم با انیمیشن فوق نرم */
+.sidebar{
+  transition:transform .68s cubic-bezier(.16,1,.3,1),opacity .55s cubic-bezier(.16,1,.3,1),filter .62s cubic-bezier(.16,1,.3,1),box-shadow .6s ease;
+  will-change:transform,opacity,filter;
+  transform-origin:right center;
+}
+.sidebar.open{transform:translateX(0) scale(1);opacity:1;filter:blur(0) saturate(1);box-shadow:-18px 0 60px rgba(2,8,20,.55),-1px 0 0 rgba(148,180,224,.12),inset 0 1px 0 rgba(255,255,255,.06)}
+.sidebar.closed{transform:translateX(104%) scale(.96);opacity:0;filter:blur(12px) saturate(.85);pointer-events:none;box-shadow:none}
+.sb-glow{position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;pointer-events:none;filter:blur(40px);opacity:.18;background:radial-gradient(circle,rgba(240,199,94,.8),transparent 70%);transition:all .7s ease}
+.sidebar.open .sb-glow{opacity:.32;transform:scale(1.2)}
+.sb-close{
+  margin-inline-start:auto;width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:rgba(148,180,224,.06);border:1px solid rgba(148,180,224,.14);color:var(--tx2);cursor:pointer;
+  transition:all .38s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;
+}
+.sb-close:hover{color:#fff;background:rgba(199,91,84,.18);border-color:rgba(199,91,84,.45);transform:rotate(90deg) scale(1.06);box-shadow:0 6px 18px rgba(199,91,84,.2)}
+.sb-close:active{transform:rotate(90deg) scale(.92)}
+
+/* اورلی */
+.sb-overlay{
+  position:fixed;inset:0;z-index:49;
+  background:radial-gradient(120% 120% at 80% 20%,rgba(46,108,184,.18),transparent 60%),rgba(6,10,26,.52);
+  backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+  opacity:0;pointer-events:none;
+  transition:opacity .58s cubic-bezier(.16,1,.3,1),backdrop-filter .58s ease;
+  will-change:opacity;
+}
+.sb-overlay.open{opacity:1;pointer-events:auto}
+
+/* وقتی منو بسته است در دسکتاپ، محتوا تمام عرض */
+body:not(.sb-open) .main{margin-inline-end:0}
+body.sb-open .main{margin-inline-end:var(--side)}
+.main{transition:margin .68s cubic-bezier(.16,1,.3,1)}
+
+/* انیمیشن آیتم‌های منو هنگام باز شدن — استگر لوکس */
+.sidebar.open .nav-item{animation:sbItemIn .56s cubic-bezier(.16,1,.3,1) both}
+.sidebar.open .nav-item:nth-child(1){animation-delay:.04s}
+.sidebar.open .nav-item:nth-child(2){animation-delay:.08s}
+.sidebar.open .nav-item:nth-child(3){animation-delay:.12s}
+.sidebar.open .nav-item:nth-child(5){animation-delay:.16s}
+.sidebar.open .nav-item:nth-child(6){animation-delay:.20s}
+.sidebar.open .nav-item:nth-child(7){animation-delay:.24s}
+.sidebar.open .nav-item:nth-child(8){animation-delay:.28s}
+.sidebar.open .nav-item:nth-child(9){animation-delay:.32s}
+@keyframes sbItemIn{from{opacity:0;transform:translateX(18px) scale(.96)}to{opacity:1;transform:none}}
+.sidebar.open .nav-cats .nav-cat{animation:sbCatIn .5s cubic-bezier(.16,1,.3,1) both}
+.sidebar.open .nav-cats .nav-cat:nth-child(1){animation-delay:.18s}
+.sidebar.open .nav-cats .nav-cat:nth-child(2){animation-delay:.22s}
+.sidebar.open .nav-cats .nav-cat:nth-child(3){animation-delay:.26s}
+.sidebar.open .nav-cats .nav-cat:nth-child(4){animation-delay:.30s}
+@keyframes sbCatIn{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+
+/* موبایل: سایدبار همیشه اورلی */
+@media (max-width:920px){
+  .sidebar{width:min(84vw,320px);z-index:60;box-shadow:-20px 0 70px rgba(2,8,20,.65)}
+  .sidebar.closed{transform:translateX(106%) scale(.97)}
+  .menu-btn{width:42px;height:42px;border-radius:12px}
+  body.sb-open{overflow:hidden}
+  body.sb-open .sb-overlay{opacity:1}
+  .main{margin-inline-end:0!important}
+}
+@media (max-width:560px){
+  .menu-btn{width:40px;height:40px}
+  .mb-box{width:18px;height:12px}
+}
+
+/* کاهش حرکت */
+@media (prefers-reduced-motion:reduce){
+  .sidebar,.sb-overlay,.menu-btn,.mb-line,.nav-item,.nav-cat{transition:none!important;animation:none!important}
+}
