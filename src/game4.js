@@ -1,7 +1,7 @@
-/* ===== انگری بردز پرمیوم v15.1 — موتور فیزیک تمیز، پرتاب واقعی، 60fps نرم و روان، بدون باگ ===== */
+/* ===== انگری بردز پرمیوم v16.0 — فیزیک واقعی پرتاب به هدف + صدای خود انگری بردز ===== */
 'use strict';
 
-/* ---------- سیستم ریستارت پرمیوم برای همه بازی‌ها (بهبود یافته) ---------- */
+/* ---------- سیستم ریستارت پرمیوم برای همه بازی‌ها ---------- */
 function hidePremiumGO(){
   const el=document.querySelector('.gover-premium');
   if(el){el.classList.remove('in');setTimeout(()=>{if(el.parentNode)el.remove();},380);}
@@ -9,7 +9,6 @@ function hidePremiumGO(){
 function showPremiumGO(opts){
   const stage=document.querySelector('.game-stage');
   if(!stage)return;
-  // اگر همین الان همین اورلی هست، آپدیت نکن
   const existing=stage.querySelector('.gover-premium');
   if(existing && existing.dataset.title===opts.title) return;
   if(existing) existing.remove();
@@ -48,7 +47,7 @@ function showPremiumGO(opts){
 }
 function patchExistingGamesWithGO(){
   try{
-    const wrap=(obj,drawName,checkOver,makeOpts,resetFn)=>{
+    const wrap=(obj,drawName,checkOver,makeOpts)=>{
       if(!obj||typeof window[drawName]!=='function') return;
       if(window[drawName]._patched) return;
       const orig=window[drawName];
@@ -57,9 +56,7 @@ function patchExistingGamesWithGO(){
         try{
           if(checkOver()){
             const st=document.querySelector('.game-stage');
-            if(st && !st.querySelector('.gover-premium')){
-              showPremiumGO(makeOpts());
-            }
+            if(st && !st.querySelector('.gover-premium')){showPremiumGO(makeOpts());}
           }else{
             const s=document.querySelector('.gover-premium');
             if(s && !s.classList.contains('win')) hidePremiumGO();
@@ -79,8 +76,91 @@ function patchExistingGamesWithGO(){
 }
 
 /* ================================================================
-   انگری بردز — موتور تمیز و واقعی
+   انگری بردز v16 — پرتاب واقعی با فیزیک سهموی + صدای واقعی
    ================================================================ */
+/* --- صدای واقعی انگری بردز با WebAudio --- */
+let angryAudio=null;
+function angryEnsureAudio(){
+  try{
+    if(!angryAudio){angryAudio=new (window.AudioContext||window.webkitAudioContext)();}
+    if(angryAudio.state==='suspended') angryAudio.resume();
+    return angryAudio;
+  }catch(e){return null;}
+}
+function angrySfx(type){
+  const AC=angryEnsureAudio();
+  if(!AC) return;
+  const now=AC.currentTime;
+  try{
+    if(type==='launch'){
+      // whoosh پرتاب: sweep 400->90 Hz + نویز بادی
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='sine';o.frequency.setValueAtTime(420,now);o.frequency.exponentialRampToValueAtTime(90,now+0.32);
+      g.gain.setValueAtTime(0.85,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.38);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.4);
+      // کش تیرکمون twang
+      const o2=AC.createOscillator(), g2=AC.createGain();
+      o2.type='triangle';o2.frequency.setValueAtTime(180,now);o2.frequency.linearRampToValueAtTime(60,now+0.18);
+      g2.gain.setValueAtTime(0.5,now);g2.gain.exponentialRampToValueAtTime(0.001,now+0.22);
+      o2.connect(g2);g2.connect(AC.destination);o2.start(now);o2.stop(now+0.24);
+    }else if(type==='pig'){
+      // oink خوک: دو نت سریع
+      for(let k=0;k<2;k++){
+        const o=AC.createOscillator(), g=AC.createGain(), f=AC.createBiquadFilter();
+        f.type='lowpass';f.frequency.value=1200;
+        o.type='sawtooth';o.frequency.setValueAtTime(k?620:320,now+k*0.12);o.frequency.linearRampToValueAtTime(k?380:180,now+k*0.12+0.18);
+        g.gain.setValueAtTime(0.6,now+k*0.12);g.gain.exponentialRampToValueAtTime(0.001,now+k*0.12+0.22);
+        o.connect(f);f.connect(g);g.connect(AC.destination);o.start(now+k*0.12);o.stop(now+k*0.12+0.24);
+      }
+    }else if(type==='wood'){
+      // ترک چوب: نویز فیلتر شده + کلیک
+      const buf=AC.createBuffer(1, AC.sampleRate*0.18, AC.sampleRate);
+      const ch=buf.getChannelData(0);
+      for(let i=0;i<ch.length;i++) ch[i]=(Math.random()*2-1)*Math.pow(1-i/ch.length,1.5);
+      const src=AC.createBufferSource();src.buffer=buf;
+      const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=900;bp.Q.value=0.8;
+      const g=AC.createGain();g.gain.setValueAtTime(0.7,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.2);
+      src.connect(bp);bp.connect(g);g.connect(AC.destination);src.start(now);
+      const o=AC.createOscillator(), g2=AC.createGain();
+      o.frequency.setValueAtTime(120,now);o.frequency.linearRampToValueAtTime(40,now+0.12);
+      g2.gain.setValueAtTime(0.5,now);g2.gain.exponentialRampToValueAtTime(0.001,now+0.14);
+      o.connect(g2);g2.connect(AC.destination);o.start(now);o.stop(now+0.16);
+    }else if(type==='stone'){
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='square';o.frequency.setValueAtTime(90,now);o.frequency.exponentialRampToValueAtTime(30,now+0.22);
+      g.gain.setValueAtTime(0.6,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.26);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.28);
+    }else if(type==='bounce'){
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.frequency.setValueAtTime(180,now);g.gain.setValueAtTime(0.22,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.12);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.13);
+    }else if(type==='win'){
+      // تشویق پیروزی: آرپژ ماژور شاد
+      const notes=[261.63,329.63,392.00,523.25,659.25];
+      notes.forEach((f,i)=>{
+        const o=AC.createOscillator(), g=AC.createGain();
+        o.type=i%2?'sine':'triangle';o.frequency.value=f;
+        g.gain.setValueAtTime(0,now+i*0.09);g.gain.linearRampToValueAtTime(0.45,now+i*0.09+0.02);g.gain.exponentialRampToValueAtTime(0.001,now+i*0.09+0.6);
+        o.connect(g);g.connect(AC.destination);o.start(now+i*0.09);o.stop(now+i*0.09+0.65);
+      });
+      // دست زدن شبیه سازی با نویز
+      for(let k=0;k<3;k++){
+        const buf=AC.createBuffer(1, AC.sampleRate*0.06, AC.sampleRate);
+        const ch=buf.getChannelData(0);
+        for(let i=0;i<ch.length;i++) ch[i]=(Math.random()*2-1)*(i<ch.length*0.15?1:0.2);
+        const src=AC.createBufferSource();src.buffer=buf;
+        const g=AC.createGain();g.gain.setValueAtTime(0.5,now+0.5+k*0.13);g.gain.exponentialRampToValueAtTime(0.001,now+0.5+k*0.13+0.08);
+        src.connect(g);g.connect(AC.destination);src.start(now+0.5+k*0.13);
+      }
+    }else if(type==='special'){
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='sawtooth';o.frequency.setValueAtTime(200,now);o.frequency.linearRampToValueAtTime(800,now+0.18);
+      g.gain.setValueAtTime(0.5,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.22);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.24);
+    }
+  }catch(e){}
+}
+
 const ANGRY={
   cv:null,ctx:null,w:800,h:480,on:false,over:false,win:false,raf:0,last:0,
   ground:0,sling:{x:160,y:0},birdsQueue:[],cur:null,extras:[],
@@ -88,7 +168,12 @@ const ANGRY={
   drag:{on:false,sx:0,sy:0,dx:0,dy:0,active:false},
   canLaunch:true,idleT:0,birdsLeft:0,settling:0
 };
-const GRAV=0.32;
+const GRAV=0.24; // کمتر → پرواز بیشتر، سهموی واقعی
+const AIR=0.9998; // هوا کمتر
+const MAX_STRETCH=110; // بیشتر → قدرت بیشتر
+const LAUNCH_POW=0.26; // قوی‌تر
+const MIN_LAUNCH=12; // آستانه
+
 const BIRD_TYPES={
   red:{r:16,col:'#e74c3c',col2:'#a93226',mass:1.2,power:1,desc:'معمولی'},
   yellow:{r:14,col:'#f4d03f',col2:'#b7950b',mass:0.9,power:1.2,special:'speed',desc:'سرعتی'},
@@ -165,24 +250,19 @@ function angryInit(cv){
 function buildLevel(idx){
   const L=LEVELS[idx%LEVELS.length];
   const G=ANGRY.ground;
-  // pigs: y = G - r - yOff
   ANGRY.pigs=L.pigs.map(p=>{
     const yOff=p.yOff||0;
     return {x:p.x,y:G-18+yOff,r:18,vx:0,vy:0,dead:false,angle:0,av:0,wob:Math.random()*6.28,bob:0,grounded:false};
   });
-  // blocks: y = G - h + yOff
   ANGRY.blocks=L.blocks.map(b=>{
     const yOff=b.yOff||0;
     const h=b.h,w=b.w;
     return {x:b.x,y:G-h+yOff,w:w,h:h,type:b.type,hp:b.type==='stone'?2:1,maxHp:b.type==='stone'?2:1,vx:0,vy:0,angle:0,av:0,dead:false,grounded:false,settled:false};
   });
-  // برای قرار گرفتن خوک‌ها روی بلوک‌ها، اگر yOff منفی و زیرش بلوک هست، y را دقیق روی بلوک بگذار
-  // ساده: اگر خوک yOff دارد، چک کن بلوک زیرش
   for(const pig of ANGRY.pigs){
     for(const bl of ANGRY.blocks){
       if(!bl.dead && pig.x>bl.x-4 && pig.x<bl.x+bl.w+4 && Math.abs((pig.y+pig.r)-(bl.y))<10){
-        pig.y=bl.y-pig.r;
-        break;
+        pig.y=bl.y-pig.r;break;
       }
     }
   }
@@ -212,7 +292,6 @@ function angryNextBird(immediate){
   ANGRY.canLaunch=true;
   ANGRY.drag.active=false;
   if(!immediate){
-    // انیمیشن پرش پرنده به تیرکمون
     const startX=40, startY=ANGRY.ground-10;
     ANGRY.cur.x=startX;ANGRY.cur.y=startY;
     const anim=(t0)=>{
@@ -230,21 +309,27 @@ function angryLaunch(dx,dy){
   const b=ANGRY.cur;
   if(!b||b.launched||!ANGRY.canLaunch) return;
   const dist=Math.sqrt(dx*dx+dy*dy);
-  if(dist<12) return; // پرتاب خیلی ضعیف نادیده
-  const maxD=92;
-  const clamped=Math.min(dist,maxD);
+  if(dist<MIN_LAUNCH) return;
+  const clamped=Math.min(dist,MAX_STRETCH);
   const ang=Math.atan2(dy,dx);
   const fx=Math.cos(ang)*clamped;
   const fy=Math.sin(ang)*clamped;
-  b.vx = -fx*0.195;
-  b.vy = -fy*0.195;
-  // کمی بوست عمودی برای پرتاب‌های افقی
-  if(Math.abs(b.vy)<1.2) b.vy-=1.1;
+  // پرتاب واقعی: معکوس کشش + قدرت بیشتر
+  b.vx = -fx*LAUNCH_POW;
+  b.vy = -fy*LAUNCH_POW;
+  // بوست عمودی قوی برای پرتاب‌های کم‌ارتفاع → مسیر سهموی واقعی به هدف
+  // اگر زاویه خیلی افقیه، کمی به بالا هل بده تا هوا بره
+  if(b.vy>-2){
+    b.vy -= 2.8 + (1 - Math.min(1, Math.abs(fy)/MAX_STRETCH))*1.5;
+  }
+  // اگر خیلی به چپ کشیده، قدرت افقی بیشتر
+  if(Math.abs(fx)>60) b.vx*=1.08;
   b.launched=true;
   b.trail=[];
   ANGRY.canLaunch=false;
   ANGRY.drag.active=false;
   ANGRY.idleT=0;
+  angrySfx('launch');
   try{gSfx('go');}catch(e){}
 }
 function angrySpecial(){
@@ -256,7 +341,7 @@ function angrySpecial(){
     b.vx*=sp;b.vy*=sp;
     for(let i=0;i<14;i++) ANGRY.parts.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*7,vy:(Math.random()-0.5)*7,a:1,col:'#f4d03f',r:2+Math.random()*2,ay:0.08});
     ANGRY.shake=0.35;
-    try{gSfx('zap');}catch(e){}
+    angrySfx('special');try{gSfx('zap');}catch(e){}
   }else if(b.special==='split'){
     const baseAng=Math.atan2(b.vy,b.vx);
     const speed=Math.hypot(b.vx,b.vy);
@@ -272,7 +357,7 @@ function angrySpecial(){
       });
     }
     for(let i=0;i<10;i++) ANGRY.parts.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,a:1,col:'#5dade2',r:2,ay:0.06});
-    try{gSfx('match');}catch(e){}
+    angrySfx('special');try{gSfx('match');}catch(e){}
   }else if(b.special==='bomb'){
     ANGRY.shake=1.2;
     for(let i=0;i<32;i++) ANGRY.parts.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*10,vy:(Math.random()-0.5)*10-1,a:1,col:i%2?'#f39c12':'#e74c3c',r:3+Math.random()*3,ay:0.12});
@@ -299,7 +384,7 @@ function angrySpecial(){
       }
     });
     b.active=false;
-    try{gSfx('bad');}catch(e){}
+    angrySfx('stone');try{gSfx('bad');}catch(e){}
     setTimeout(()=>angryCheckEnd(),200);
   }
 }
@@ -315,36 +400,29 @@ function angryUpdate(dt){
   const G=ANGRY.ground;
   const allBirds=[ANGRY.cur].concat(ANGRY.extras).filter(b=>b&&b.active);
 
-  // birds
   for(const b of allBirds){
     if(!b.launched) continue;
     b.vy+=GRAV;
-    b.vx*=0.9995;b.vy*=0.9995;
+    b.vx*=AIR;b.vy*=AIR;
     b.x+=b.vx;b.y+=b.vy;
     b.rot=Math.atan2(b.vy,b.vx);
     b.trail.unshift({x:b.x,y:b.y});if(b.trail.length>14)b.trail.pop();
     b.idle = (Math.hypot(b.vx,b.vy)<0.7) ? (b.idle||0)+dt : 0;
 
-    // ground collide
     if(b.y+b.r>G){
       b.y=G-b.r;
       b.vy*=-0.32;b.vx*=0.78;
       b.av=(b.av||0)*0.8;
-      if(Math.abs(b.vy)<1.2 && Math.abs(b.vx)<1.2){
-        // آرام گرفتن
-        if(b.idle>600){b.active=false;}
-      }
-      if(Math.abs(b.vy)>1) try{gSfx('click');}catch(e){}
+      if(b.idle>600){b.active=false;}
+      if(Math.abs(b.vy)>1) angrySfx('bounce');
     }
     if(b.x-b.r<0){b.x=b.r;b.vx*=-0.5;}
     if(b.x+b.r>ANGRY.w){b.x=ANGRY.w-b.r;b.vx*=-0.5;if(Math.abs(b.vx)<1) b.active=false;}
 
-    // blocks collide
     for(const bl of ANGRY.blocks){
       if(bl.dead) continue;
       const rc=rectCircleCollide(bl.x,bl.y,bl.w,bl.h,b.x,b.y,b.r);
       if(rc.hit){
-        // محاسبه نرمال
         const len=Math.hypot(rc.dx,rc.dy)||1;
         const nx=rc.dx/len, ny=rc.dy/len;
         const overlap=b.r - Math.hypot(b.x-rc.closestX,b.y-rc.closestY);
@@ -353,20 +431,18 @@ function angryUpdate(dt){
         const dot=b.vx*nx + b.vy*ny;
         b.vx-=2*dot*nx*0.65;
         b.vy-=2*dot*ny*0.65;
-        // آسیب به بلوک
         bl.hp-=b.power*(0.7+Math.hypot(b.vx,b.vy)*0.08);
         bl.vx+=b.vx*0.12;bl.vy+=b.vy*0.08;bl.av+=(Math.random()-0.5)*0.06 + b.vx*0.002;
         if(bl.hp<=0){
           bl.dead=true;ANGRY.score+=bl.type==='stone'?150:bl.type==='wood'?100:70;
           ANGRY.scorePop.push({x:bl.x+bl.w/2,y:bl.y,txt:'+'+(bl.type==='stone'?150:bl.type==='wood'?100:70),a:1,vy:-1.1});
           for(let i=0;i<14;i++) ANGRY.parts.push({x:bl.x+bl.w/2,y:bl.y+bl.h/2,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5-1.2,a:1,col:bl.type==='wood'?'#8d6e63':bl.type==='stone'?'#90a4ae':'#b3e5fc',r:2+Math.random()*2.5,ay:0.12});
-          try{gSfx('line');}catch(e){}
+          angrySfx(bl.type==='wood'?'wood':'stone');
         }else{
-          try{gSfx('move');}catch(e){}
+          angrySfx('bounce');
         }
       }
     }
-    // pigs collide
     for(const pig of ANGRY.pigs){
       if(pig.dead) continue;
       const dx=b.x-pig.x,dy=b.y-pig.y;
@@ -374,7 +450,7 @@ function angryUpdate(dt){
         pig.dead=true;ANGRY.score+=1000;
         ANGRY.scorePop.push({x:pig.x,y:pig.y-20,txt:'+1000',a:1,vy:-1.3});
         for(let i=0;i<20;i++) ANGRY.parts.push({x:pig.x,y:pig.y,vx:(Math.random()-0.5)*7,vy:(Math.random()-0.5)*7-1.5,a:1,col:'#8bc34a',r:2.5+Math.random()*2,ay:0.11});
-        try{gSfx('win');}catch(e){}
+        angrySfx('pig');
         b.vx*=0.82;b.vy*=0.82;
         ANGRY.shake=Math.max(ANGRY.shake,0.5);
       }
@@ -382,10 +458,8 @@ function angryUpdate(dt){
   }
   ANGRY.extras=ANGRY.extras.filter(b=>b.active);
 
-  // blocks physics — با پشتیبانی و برخورد بلوک به بلوک
   for(const bl of ANGRY.blocks){
     if(bl.dead) continue;
-    // پشتیبانی: روی زمین یا روی بلوک دیگر که خودش grounded است
     let grounded=false;
     if(bl.y+bl.h>=G-0.5) grounded=true;
     else{
@@ -408,7 +482,6 @@ function angryUpdate(dt){
       if(Math.abs(bl.vy)<0.05) bl.vy=0;
     }
   }
-  // بلوک به بلوک برخورد ساده برای جلوگیری از فرو رفتن
   for(let i=0;i<ANGRY.blocks.length;i++){
     const a=ANGRY.blocks[i];if(a.dead) continue;
     for(let j=i+1;j<ANGRY.blocks.length;j++){
@@ -426,7 +499,6 @@ function angryUpdate(dt){
       }
     }
   }
-  // pigs physics — له شدن
   for(const pig of ANGRY.pigs){
     if(pig.dead) continue;
     pig.wob+=0.06;pig.bob=Math.sin(ANGRY.t*0.005+pig.wob)*0.6;
@@ -440,30 +512,27 @@ function angryUpdate(dt){
     }
     pig.grounded=sup;
     if(!sup){pig.vy+=0.42;pig.y+=pig.vy;pig.angle+=pig.av||0;if(pig.y+pig.r>G){pig.y=G-pig.r;pig.vy*=-0.2;if(Math.abs(pig.vy)<0.8)pig.vy=0;}}
-    // له شدن با بلوک در حال سقوط
     for(const bl of ANGRY.blocks){
       if(bl.dead) continue;
       if(bl.vy>1.2 && pig.x>bl.x&&pig.x<bl.x+bl.w&&pig.y+pig.r>bl.y&&pig.y-pig.r<bl.y+bl.h){
         pig.dead=true;ANGRY.score+=1000;
         ANGRY.scorePop.push({x:pig.x,y:pig.y-20,txt:'+1000',a:1,vy:-1.3});
         for(let i=0;i<18;i++) ANGRY.parts.push({x:pig.x,y:pig.y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6-1,a:1,col:'#8bc34a',r:2.5,ay:0.11});
-        try{gSfx('win');}catch(e){}
+        angrySfx('pig');
       }
     }
   }
 
-  // particles
   for(const pt of ANGRY.parts){pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=pt.ay||0.12;pt.vx*=0.99;pt.a-=0.017;}
   ANGRY.parts=ANGRY.parts.filter(p=>p.a>0);
   for(const sp of ANGRY.scorePop){sp.y+=sp.vy;sp.vy+=0.04;sp.a-=0.016;}
   ANGRY.scorePop=ANGRY.scorePop.filter(s=>s.a>0);
 
-  // check win/lose با تاخیر برای settle شدن
   const alivePigs=ANGRY.pigs.filter(p=>!p.dead).length;
   if(alivePigs===0 && !ANGRY.win){
     ANGRY.win=true;ANGRY.over=false;
     if(ANGRY.score>ANGRY.best){ANGRY.best=ANGRY.score;store.set('angryBest',ANGRY.best);}
-    try{gSfx('win');}catch(e){}
+    angrySfx('win');
     ANGRY.settling=0;
     setTimeout(()=>{
       if(ANGRY.win){
@@ -490,7 +559,7 @@ function angryUpdate(dt){
     }
     ANGRY.over=true;
     if(ANGRY.score>ANGRY.best){ANGRY.best=ANGRY.score;store.set('angryBest',ANGRY.best);}
-    try{gSfx('bad');}catch(e){}
+    angrySfx('pig');
     setTimeout(()=>{
       if(ANGRY.over && !ANGRY.win){
         showPremiumGO({
@@ -502,7 +571,6 @@ function angryUpdate(dt){
       }
     },600);
   }else if(!activeBirds && hasBirdsToLaunch && ANGRY.birdsQueue.length>0 && !ANGRY.cur?.launched){
-    // وقفه کوتاه قبل از پرنده بعدی برای حس سینمایی
     if(ANGRY.idleT===0) ANGRY.idleT=ANGRY.t;
     if(ANGRY.t-ANGRY.idleT>700){
       angryNextBird(false);
@@ -512,21 +580,19 @@ function angryUpdate(dt){
     ANGRY.idleT=0;ANGRY.settling=0;
   }
 }
+function angryCheckEnd(){}
 function angryDraw(){
   const c=ANGRY.ctx,W=ANGRY.w,H=ANGRY.h,G=ANGRY.ground;
   c.save();
   if(ANGRY.shake>0) c.translate((Math.random()-0.5)*ANGRY.shake*14,(Math.random()-0.5)*ANGRY.shake*10);
 
-  // آسمان پرمیوم با گرادینت و وینیت
   const sky=c.createLinearGradient(0,0,0,G);
   sky.addColorStop(0,'#5fb8ff');sky.addColorStop(0.18,'#7ec8ff');sky.addColorStop(0.55,'#b8e0ff');sky.addColorStop(1,'#eaf6ff');
   c.fillStyle=sky;c.fillRect(0,0,W,G);
-  // وینیت بالا
   const vig=c.createRadialGradient(W*0.5,G*0.2,0,W*0.5,G*0.2,G);
   vig.addColorStop(0,'rgba(255,255,255,0)');vig.addColorStop(1,'rgba(0,20,60,.08)');
   c.fillStyle=vig;c.fillRect(0,0,W,G);
 
-  // خورشید با هاله
   c.save();
   c.globalAlpha=0.95;
   const sunG=c.createRadialGradient(W-88,78,6,W-88,78,42);
@@ -536,7 +602,6 @@ function angryDraw(){
   c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(W-96,68,7,0,7);c.fill();
   c.restore();
 
-  // ابرهای پارالاکس نرم
   c.fillStyle='rgba(255,255,255,.92)';
   for(let i=0;i<5;i++){
     const speed=0.04+i*0.015;
@@ -550,21 +615,17 @@ function angryDraw(){
   }
   c.globalAlpha=1;
 
-  // تپه‌های دور با گرادینت
   c.fillStyle='#8bc34a';
   c.beginPath();c.moveTo(0,G);c.quadraticCurveTo(W*0.22,G-32,W*0.48,G-6);c.quadraticCurveTo(W*0.72,G-24,W,G-4);c.lineTo(W,G+40);c.lineTo(0,G+40);c.fill();
   c.fillStyle='#7ab33f';
   c.beginPath();c.moveTo(0,G);c.quadraticCurveTo(W*0.34,G-16,W*0.68,G-8);c.lineTo(W,G);c.lineTo(W,G+40);c.lineTo(0,G+40);c.fill();
 
-  // زمین پرمیوم
   c.fillStyle='#c2a46a';c.fillRect(0,G,W,H-G);
   c.fillStyle='#a88a55';c.fillRect(0,G,W,7);
-  // بافت زمین
   c.fillStyle='rgba(0,0,0,.07)';
   for(let i=0;i<W;i+=32){c.fillRect((i+ANGRY.t*0.06)%W,G+12,18,2.5);}
   c.fillStyle='rgba(255,255,255,.12)';c.fillRect(0,G, W,1.5);
 
-  // تیرکمون پرمیوم با سایه
   const sx=ANGRY.sling.x,sy=ANGRY.sling.y;
   c.save();
   c.shadowColor='rgba(0,0,0,.22)';c.shadowBlur=12;c.shadowOffsetY=4;
@@ -575,58 +636,60 @@ function angryDraw(){
   c.strokeStyle='#8d6e63';c.lineWidth=8.5;
   c.beginPath();c.moveTo(sx-5,sy+9);c.lineTo(sx-14,sy-19);c.stroke();
   c.beginPath();c.moveTo(sx+5,sy+9);c.lineTo(sx+14,sy-19);c.stroke();
-  // گره تیرکمون
   c.fillStyle='#4e342e';c.beginPath();c.arc(sx,sy+9,6,0,7);c.fill();
   c.restore();
 
-  // کش‌ها — وقتی پرنده هست
   if(ANGRY.cur){
     const b=ANGRY.cur;
     const bx=b.launched?b.ox:b.x, by=b.launched?b.oy:b.y;
-    // کش پشت پرنده (تیره‌تر)
     c.strokeStyle='rgba(50,30,20,.55)';c.lineWidth=3.5;c.lineCap='round';
     c.beginPath();c.moveTo(sx-14,sy-19);c.lineTo(bx,by);c.stroke();
     c.beginPath();c.moveTo(sx+14,sy-19);c.lineTo(bx,by);c.stroke();
-    // کش جلویی روشن‌تر برای عمق
     c.strokeStyle='rgba(90,60,40,.32)';c.lineWidth=2;
     c.beginPath();c.moveTo(sx-14,sy-19);c.lineTo(bx,by);c.stroke();
     c.beginPath();c.moveTo(sx+14,sy-19);c.lineTo(bx,by);c.stroke();
 
-    // پیش‌بینی مسیر — نقاط طلایی با محو شدن
     if(ANGRY.drag.on && !b.launched){
       const dx=ANGRY.drag.dx,dy=ANGRY.drag.dy;
       const dist=Math.hypot(dx,dy);
-      const maxD=92;
-      const cl=Math.min(dist,maxD);
+      const cl=Math.min(dist,MAX_STRETCH);
       const ang=Math.atan2(dy,dx);
       const fx=Math.cos(ang)*cl, fy=Math.sin(ang)*cl;
-      const vx=-fx*0.195, vy=-fy*0.195;
+      let vx=-fx*LAUNCH_POW, vy=-fy*LAUNCH_POW;
+      if(vy>-2) vy-=2.8 + (1 - Math.min(1, Math.abs(fy)/MAX_STRETCH))*1.5;
+      if(Math.abs(fx)>60) vx*=1.08;
       let px=sx,py=sy-19;
       let pvx=vx,pvy=vy;
-      for(let i=0;i<26;i++){
-        pvy+=GRAV;pvx*=0.9995;pvy*=0.9995;
+      for(let i=0;i<38;i++){
+        pvy+=GRAV;pvx*=AIR;pvy*=AIR;
         px+=pvx;py+=pvy;
-        if(i%2===0){
-          const alpha=Math.max(0,1-i*0.038);
-          c.globalAlpha=alpha;
-          c.fillStyle=i%4===0?'#f4d03f':'#fff';
-          c.shadowColor='rgba(244,208,63,.8)';c.shadowBlur=6;
-          c.beginPath();c.arc(px,py,i%4===0?4:2.6,0,7);c.fill();
+        if(i%2===0 || i<8){
+          const alpha=Math.max(0,1-i*0.028);
+          c.globalAlpha=alpha*0.95;
+          c.fillStyle=i%3===0?'#f4d03f':'#fff';
+          c.shadowColor='rgba(244,208,63,.9)';c.shadowBlur=i%3===0?8:0;
+          c.beginPath();c.arc(px,py,i%3===0?4.2:2.8,0,7);c.fill();
           c.shadowBlur=0;
         }
         if(py>G-4) break;
+        if(px>W+40) break;
       }
       c.globalAlpha=1;
+      // خط هدف قرمز روی قلعه
+      if(dist>18){
+        c.save();
+        c.strokeStyle='rgba(231,76,60,.22)';c.setLineDash([6,6]);c.lineWidth=1.2;
+        c.beginPath();c.moveTo(520,G);c.lineTo(520,G-180);c.stroke();
+        c.restore();
+      }
     }
   }
 
-  // بلوک‌ها با سایه و گرادینت پرمیوم
   for(const bl of ANGRY.blocks){
     if(bl.dead) continue;
     c.save();
     c.translate(bl.x+bl.w/2,bl.y+bl.h/2);
     c.rotate(bl.angle);
-    // سایه زمین
     c.save();
     c.translate(0, (G-(bl.y+bl.h/2))/12);
     c.globalAlpha=0.12;c.fillStyle='#000';
@@ -647,7 +710,6 @@ function angryDraw(){
     c.fillStyle=grad;
     c.beginPath();c.roundRect(-bl.w/2,-bl.h/2,bl.w,bl.h,bl.type==='glass'?3:5);c.fill();
     c.shadowBlur=0;
-    // جزئیات چوب
     if(bl.type==='wood'){
       c.strokeStyle='rgba(0,0,0,.18)';c.lineWidth=1;
       for(let i=1;i<3;i++){c.beginPath();c.moveTo(-bl.w/2+3,-bl.h/2+i*bl.h/3);c.lineTo(bl.w/2-3,-bl.h/2+i*bl.h/3);c.stroke();}
@@ -655,51 +717,40 @@ function angryDraw(){
     }
     if(bl.type==='glass'){
       c.fillStyle='rgba(255,255,255,.5)';c.beginPath();c.roundRect(-bl.w/2+3,-bl.h/2+2,bl.w*0.32,4,2);c.fill();
-      // ترک برای HP کم
       if(bl.hp<bl.maxHp){
         c.strokeStyle='rgba(255,255,255,.7)';c.lineWidth=1;
         c.beginPath();c.moveTo(-bl.w/2+4,-bl.h/2+4);c.lineTo(bl.w/2-4,bl.h/2-4);c.stroke();
       }
     }
-    // حاشیه
     c.strokeStyle=bl.type==='glass'?'rgba(120,180,220,.5)':'rgba(0,0,0,.28)';c.lineWidth=1.2;
     c.beginPath();c.roundRect(-bl.w/2,-bl.h/2,bl.w,bl.h,bl.type==='glass'?3:5);c.stroke();
     c.restore();
   }
 
-  // خوک‌ها — انیمیشن تنفس + سایه
   for(const pig of ANGRY.pigs){
     if(pig.dead) continue;
     c.save();
     c.translate(pig.x,pig.y+pig.bob);
     c.rotate(pig.angle);
-    // سایه
     c.fillStyle='rgba(0,0,0,.14)';c.beginPath();c.ellipse(0,pig.r+8, pig.r*0.8,4,0,0,7);c.fill();
-    // بدن با گرادینت
     const pg=c.createRadialGradient(-4,-5,3,0,0,pig.r);
     pg.addColorStop(0,'#c5e1a5');pg.addColorStop(0.4,'#aed581');pg.addColorStop(1,'#7cb342');
     c.fillStyle=pg;c.beginPath();c.arc(0,0,pig.r,0,7);c.fill();
     c.strokeStyle='#558b2f';c.lineWidth=1.2;c.beginPath();c.arc(0,0,pig.r,0,7);c.stroke();
-    // پوزه
     c.fillStyle='#dcedc8';c.beginPath();c.ellipse(0,6.5,9.5,6.5,0,0,7);c.fill();
     c.fillStyle='#33691e';c.beginPath();c.arc(-3,7.5,1.6,0,7);c.fill();c.beginPath();c.arc(3,7.5,1.6,0,7);c.fill();
-    // چشم‌ها با درخشش
     c.fillStyle='#fff';c.beginPath();c.arc(-6.5,-3.5,5.2,0,7);c.fill();c.beginPath();c.arc(6.5,-3.5,5.2,0,7);c.fill();
     c.fillStyle='#1b5e20';c.beginPath();c.arc(-5.5,-1.8,2.4,0,7);c.fill();c.beginPath();c.arc(7.5,-1.8,2.4,0,7);c.fill();
     c.fillStyle='#fff';c.beginPath();c.arc(-4.5,-2.8,1,0,7);c.fill();c.beginPath();c.arc(8.5,-2.8,1,0,7);c.fill();
-    // ابرو خشمگین
     c.strokeStyle='#33691e';c.lineWidth=2.2;c.lineCap='round';
     c.beginPath();c.moveTo(-12,-8.5);c.lineTo(-2.5,-5);c.stroke();
     c.beginPath();c.moveTo(2.5,-5);c.lineTo(12,-8.5);c.stroke();
-    // لپ
     c.fillStyle='rgba(255,183,197,.35)';c.beginPath();c.arc(-9,4,2.2,0,7);c.fill();c.beginPath();c.arc(9,4,2.2,0,7);c.fill();
     c.restore();
   }
 
-  // پرنده‌ها
   const allBirds=[ANGRY.cur].concat(ANGRY.extras).filter(b=>b&&b.active);
   for(const b of allBirds){
-    // trail نرم با گرادینت
     for(let i=b.trail.length-1;i>=0;i--){
       const t=b.trail[i];
       const alpha=(i/b.trail.length)*0.28;
@@ -718,29 +769,23 @@ function angryDraw(){
     grad.addColorStop(0,'#fffde7');grad.addColorStop(0.25,b.col);grad.addColorStop(1,b.col2);
     c.fillStyle=grad;c.beginPath();c.arc(0,0,b.r,0,7);c.fill();
     c.shadowBlur=0;
-    // شکم روشن
     c.fillStyle='rgba(255,255,255,.32)';c.beginPath();c.ellipse(-1,4,b.r*0.55,b.r*0.38,0,0,7);c.fill();
-    // منقار
     c.fillStyle='#ffca28';c.strokeStyle='#f57f17';c.lineWidth=0.8;
     c.beginPath();c.moveTo(b.r-2,-2.5);c.lineTo(b.r+9,0);c.lineTo(b.r-2,3.5);c.closePath();c.fill();c.stroke();
-    // چشم بزرگ پرمیوم
     c.fillStyle='#fff';c.beginPath();c.arc(3,-4.5,6,0,7);c.fill();
     c.strokeStyle='rgba(0,0,0,.15)';c.lineWidth=1;c.beginPath();c.arc(3,-4.5,6,0,7);c.stroke();
     c.fillStyle='#212121';c.beginPath();c.arc(5,-3,2.8,0,7);c.fill();
     c.fillStyle='#fff';c.beginPath();c.arc(6,-4.5,1.1,0,7);c.fill();
-    // ابرو برای قرمز
     if(b.type==='red'){
       c.strokeStyle='#b71c1c';c.lineWidth=2.2;c.lineCap='round';
       c.beginPath();c.moveTo(-2,-9);c.lineTo(7,-7);c.stroke();
     }
     if(b.type==='yellow'){
-      // تاج
       c.fillStyle='#ffca28';c.beginPath();c.moveTo(-4,-b.r+2);c.lineTo(0,-b.r-6);c.lineTo(4,-b.r+2);c.fill();
     }
     if(b.type==='black'){
       c.fillStyle='rgba(255,255,255,.12)';c.beginPath();c.arc(-3,-3,b.r*0.6,0,7);c.fill();
     }
-    // نشان قدرت ویژه وقتی آماده
     if(b.special && !b.specialUsed && b.launched){
       c.fillStyle='rgba(255,255,255,.95)';c.font='900 9px Vazirmatn';c.textAlign='center';
       c.fillText('SPACE',0,b.r+14);
@@ -748,7 +793,6 @@ function angryDraw(){
     c.restore();
   }
 
-  // ذرات پرمیوم
   for(const pt of ANGRY.parts){
     c.globalAlpha=pt.a;
     c.fillStyle=pt.col;
@@ -757,7 +801,6 @@ function angryDraw(){
     c.shadowBlur=0;
   }
   c.globalAlpha=1;
-  // اسکور پاپ
   for(const sp of ANGRY.scorePop){
     c.globalAlpha=sp.a;
     c.fillStyle=sp.txt.includes('1000')?'#7cb342':'#f4d03f';
@@ -767,7 +810,6 @@ function angryDraw(){
   }
   c.globalAlpha=1;
 
-  // UI پرمیوم بالا
   c.save();
   c.fillStyle='rgba(255,255,255,.88)';c.beginPath();c.roundRect(10,10,220,52,14);c.fill();
   c.strokeStyle='rgba(148,180,224,.18)';c.lineWidth=1;c.beginPath();c.roundRect(10,10,220,52,14);c.stroke();
@@ -778,7 +820,6 @@ function angryDraw(){
   c.fillText(L.name+' — مرحله '+gNum(ANGRY.level+1)+'/'+gNum(LEVELS.length)+' — رکورد '+gNum(ANGRY.best),210,50);
   c.restore();
 
-  // صف پرنده‌ها پایین چپ — با آیکون پرمیوم
   let bx=18;
   c.save();
   c.fillStyle='rgba(255,255,255,.82)';c.beginPath();c.roundRect(10,68,Math.max(36,ANGRY.birdsQueue.length*26+16),28,12);c.fill();
@@ -787,7 +828,6 @@ function angryDraw(){
     const bt=ANGRY.birdsQueue[i];
     c.fillStyle=bt.col;c.beginPath();c.arc(bx+8,82,10,0,7);c.fill();
     c.strokeStyle=bt.col2;c.lineWidth=1.2;c.beginPath();c.arc(bx+8,82,10,0,7);c.stroke();
-    // منقار کوچک
     c.fillStyle='#ffca28';c.beginPath();c.moveTo(bx+14,81);c.lineTo(bx+18,82);c.lineTo(bx+14,83);c.fill();
     bx+=26;
   }
@@ -796,10 +836,9 @@ function angryDraw(){
   }
   c.restore();
 
-  // نشان کشش
   if(ANGRY.cur && !ANGRY.cur.launched && ANGRY.drag.on){
     const dist=Math.hypot(ANGRY.drag.dx,ANGRY.drag.dy);
-    const pct=Math.min(1,dist/92);
+    const pct=Math.min(1,dist/MAX_STRETCH);
     c.save();
     c.fillStyle='rgba(0,0,0,.18)';c.beginPath();c.roundRect(sx-46,sy-56,92,8,4);c.fill();
     c.fillStyle=pct>0.85?'#e74c3c':pct>0.6?'#f4d03f':'#7cb342';
@@ -834,19 +873,23 @@ const angryEng={
       if(!ANGRY.cur||ANGRY.cur.launched) return;
       const p=getPos(e);
       const dx=p.x-ANGRY.cur.x, dy=p.y-ANGRY.cur.y;
-      if(dx*dx+dy*dy< 38*38){
+      if(dx*dx+dy*dy< 42*42){
         ANGRY.drag.on=true;ANGRY.drag.sx=p.x;ANGRY.drag.sy=p.y;
         ANGRY.drag.active=true;
         try{cv.setPointerCapture(e.pointerId);}catch(x){}
+        angryEnsureAudio();
       }
     };
     const move=e=>{
       if(!ANGRY.drag.on||!ANGRY.cur||ANGRY.cur.launched) return;
       const p=getPos(e);
       let dx=p.x-ANGRY.drag.sx, dy=p.y-ANGRY.drag.sy;
+      // فقط سمت چپ تیرکمون: dx نباید مثبت زیاد باشد
+      if(dx>18) dx=18 - (dx-18)*0.15; // مقاومت نرم
+      if(dx>35) dx=35;
+      // محدودیت فاصله
       const dist=Math.hypot(dx,dy);
-      const maxD=92;
-      if(dist>maxD){const a=Math.atan2(dy,dx);dx=Math.cos(a)*maxD;dy=Math.sin(a)*maxD;}
+      if(dist>MAX_STRETCH){const a=Math.atan2(dy,dx);dx=Math.cos(a)*MAX_STRETCH;dy=Math.sin(a)*MAX_STRETCH; if(dx>18) dx=18;}
       ANGRY.drag.dx=dx;ANGRY.drag.dy=dy;
       ANGRY.cur.x=ANGRY.sling.x+dx;
       ANGRY.cur.y=ANGRY.sling.y-18+dy;
@@ -860,7 +903,7 @@ const angryEng={
     };
     const specialTrigger=e=>{
       if(!ANGRY.cur||!ANGRY.cur.launched||ANGRY.cur.specialUsed) return;
-      // اگر کلیک نزدیک پرنده یا هر جای صفحه
+      if(ANGRY.drag.active) return;
       angrySpecial();
     };
     ANGRY._down=down;ANGRY._move=move;ANGRY._up=up;ANGRY._spec=specialTrigger;
@@ -868,9 +911,7 @@ const angryEng={
     cv.addEventListener('pointermove',move);
     cv.addEventListener('pointerup',up);
     cv.addEventListener('pointercancel',up);
-    // کلیک برای قدرت ویژه (بعد از پرتاب)
     cv.addEventListener('pointerdown',specialTrigger);
-    // جلوگیری از منوی راست کلیک
     cv.addEventListener('contextmenu',e=>e.preventDefault());
   },
   stop(){
@@ -890,8 +931,7 @@ const angryEng={
       e.preventDefault();
       if(ANGRY.cur&&ANGRY.cur.launched&&!ANGRY.cur.specialUsed) angrySpecial();
       else if(ANGRY.cur&&!ANGRY.cur.launched){
-        // پرتاب پیش‌فرض 70% قدرت
-        angryLaunch(-62,-28);
+        angryLaunch(-70,-30);
       }
       return true;
     }

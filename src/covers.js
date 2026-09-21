@@ -378,6 +378,48 @@ const COVERS={
     +'</g>'
     +'<g fill="#f0c75e" opacity=".6"><circle cx="18" cy="22" r="1.6"/><circle cx="300" cy="34" r="1.8"/></g>',
 
+
+  'hajabbas':()=>'<defs>'
+    +'<linearGradient id="cvh-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1e0e"/><stop offset="1" stop-color="#4a3314"/></linearGradient>'
+    +'<linearGradient id="cvh-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#d9ae3e"/></linearGradient>'
+    +'<linearGradient id="cvh-face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffecb3"/><stop offset="1" stop-color="#e6c27a"/></linearGradient>'
+    +'<filter id="cvh-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cvh-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,233,168,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'</defs>'
+    +'<rect width="320" height="200" fill="url(#cvh-bg)"/>'
+    +'<rect width="320" height="200" fill="url(#cvh-glow)"/>'
+    +'<g opacity=".06" fill="#ffe9a8"><rect x="20" y="20" width="36" height="32" rx="8"/><rect x="64" y="20" width="36" height="32" rx="8"/><rect x="108" y="20" width="36" height="32" rx="8"/><rect x="152" y="20" width="36" height="32" rx="8"/></g>'
+    +'<g transform="translate(48,26)" filter="url(#cvh-sh)">'
+      +'<rect width="56" height="56" rx="14" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.14)"/>'
+      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#ffe9a8" text-anchor="middle">ا</text>'
+    +'</g>'
+    +'<g transform="translate(112,26)" filter="url(#cvh-sh)">'
+      +'<rect width="56" height="56" rx="14" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.14)"/>'
+      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#ffe9a8" text-anchor="middle">ب</text>'
+    +'</g>'
+    +'<g transform="translate(176,26)" filter="url(#cvh-sh)">'
+      +'<rect width="56" height="56" rx="14" fill="url(#cvh-gold)" stroke="#b8922f"/>'
+      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#3e2723" text-anchor="middle">ج</text>'
+    +'</g>'
+    +'<g transform="translate(200,96)" filter="url(#cvh-sh)">'
+      +'<circle r="34" fill="url(#cvh-face)" stroke="#b8922f" stroke-width="1.2"/>'
+      +'<path d="M-22 -18 Q0 -28 22 -18 L22 -12 Q0 -22 -22 -12 Z" fill="#5d4037"/>'
+      +'<circle cx="-8" cy="-2" r="3" fill="#fff"/><circle cx="8" cy="-2" r="3" fill="#fff"/>'
+      +'<circle cx="-7" cy="0" r="1.4" fill="#212121"/><circle cx="9" cy="0" r="1.4" fill="#212121"/>'
+      +'<path d="M-6 10 Q0 14 6 10" stroke="#5d4037" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+      +'<path d="M-18 12 Q0 26 18 12 L18 20 Q0 34 -18 20 Z" fill="#fff" stroke="#b0bec5" stroke-width=".8"/>'
+    +'</g>'
+    +'<g transform="translate(48,108)" opacity=".9">'
+      +'<rect width="56" height="18" rx="9" fill="rgba(126,200,111,.18)" stroke="rgba(126,200,111,.32)"/>'
+      +'<text x="28" y="13" font-family="Vazirmatn" font-size="11" font-weight="800" fill="#a5d6a7" text-anchor="middle">عباس</text>'
+    +'</g>'
+    +'<g transform="translate(112,108)">'
+      +'<rect width="56" height="18" rx="9" fill="rgba(240,199,94,.18)" stroke="rgba(240,199,94,.35)"/>'
+      +'<text x="28" y="13" font-family="Vazirmatn" font-size="11" font-weight="800" fill="#ffe9a8" text-anchor="middle">حاجی</text>'
+    +'</g>'
+    +'<g fill="#f0c75e" opacity=".5"><circle cx="18" cy="18" r="1.6"/><circle cx="300" cy="32" r="1.8"/></g>',
+
 };
+
 
 function gcov(k){const f=COVERS[k];return f?'<svg class="gcov-svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+f()+'</svg>':'';}

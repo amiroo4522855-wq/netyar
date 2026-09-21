@@ -1845,6 +1845,75 @@ body.sb-open .main{margin-inline-end:var(--side)}
 .gover-btn.next{background:linear-gradient(135deg,#7ee2a0,#5ec9a0);color:#0a1f14;box-shadow:0 10px 26px rgba(126,226,160,.35),inset 0 1px 0 rgba(255,255,255,.5)}
 .gover-btn.next:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 16px 36px rgba(126,226,160,.5)}
 
+/* ============ v16: حاج عباس + فروشگاه + انگری بردز با صدای واقعی ============ */
+/* --- حاج عباس --- */
+.haj-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.haj-char{display:flex;align-items:center;gap:12px}
+.haj-svg{width:64px;height:64px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
+.haj-name{font-size:18px;font-weight:900;color:#ffe9a8}
+.haj-lvl{font-size:11px;color:var(--tx3);margin-top:2px}
+.haj-stats{display:flex;gap:8px}
+.haj-stats .hs{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--tx2);background:rgba(148,180,224,.06);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+.haj-stats .hs.gold{color:var(--gold2);border-color:rgba(217,174,62,.32);background:rgba(217,174,62,.08)}
+.haj-progress{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.haj-pbar{flex:1;height:10px;border-radius:99px;background:rgba(148,180,224,.1);overflow:hidden;position:relative}
+.haj-pbar i{display:block;height:100%;background:linear-gradient(90deg,#f0c75e,#d9ae3e);border-radius:99px;transition:width .6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 12px rgba(240,199,94,.4)}
+.haj-ptxt{font-size:11px;color:var(--tx2);font-weight:750;min-width:90px;text-align:left;font-variant-numeric:tabular-nums}
+.haj-words{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:18px}
+.haj-w{display:flex;align-items:center;gap:6px;padding:10px 12px;border-radius:12px;background:rgba(148,180,224,.05);border:1px solid var(--line);transition:all .32s cubic-bezier(.16,1,.3,1)}
+.haj-w.found{background:linear-gradient(135deg,rgba(63,169,124,.14),rgba(63,169,124,.06));border-color:rgba(63,169,124,.35);transform:translateY(-1px);box-shadow:0 8px 18px rgba(63,169,124,.12)}
+.haj-w .hw-c{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:rgba(148,180,224,.08);border:1px solid var(--line);color:transparent;transition:all .32s}
+.haj-w.found .hw-c.on{background:linear-gradient(135deg,#f0c75e,#d9ae3e);color:#1a1305;border-color:transparent;box-shadow:0 4px 10px rgba(217,174,62,.25);transform:scale(1.05)}
+.haj-w .hw-lbl{font-size:11px;color:var(--tx3);margin-inline-start:auto}
+.haj-w.found .hw-lbl{color:var(--tx);font-weight:800}
+.haj-cur-wrap{text-align:center;margin-bottom:16px}
+.haj-cur{position:relative;display:inline-block;min-width:220px;padding:16px 24px;border-radius:16px;font-size:22px;font-weight:900;letter-spacing:1px;min-height:56px;
+  background:linear-gradient(165deg,rgba(20,36,66,.72),rgba(12,22,40,.88));border:1px solid rgba(148,180,224,.18);color:var(--tx3);transition:all .32s cubic-bezier(.16,1,.3,1);box-shadow:0 12px 30px rgba(2,8,20,.35),inset 0 1px 0 rgba(255,255,255,.06)}
+.haj-cur.has{color:#ffe9a8;border-color:rgba(240,199,94,.42);background:linear-gradient(165deg,rgba(32,52,92,.88),rgba(18,30,54,.95));box-shadow:0 16px 40px rgba(2,8,20,.5),0 0 20px rgba(240,199,94,.15)}
+.haj-cur.shake{animation:shakeX .4s ease}
+.haj-letters{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;min-height:64px}
+.haj-l{width:62px;height:62px;border-radius:16px;border:1px solid rgba(148,180,224,.18);background:linear-gradient(165deg,rgba(20,36,66,.82),rgba(12,22,40,.92));color:#ffe9a8;font-family:inherit;font-size:22px;font-weight:900;cursor:pointer;position:relative;overflow:hidden;transition:all .32s cubic-bezier(.16,1,.3,1);box-shadow:0 8px 22px rgba(2,8,20,.35),inset 0 1px 0 rgba(255,255,255,.08)}
+.haj-l:hover{transform:translateY(-3px) scale(1.04);border-color:rgba(240,199,94,.42);box-shadow:0 16px 36px rgba(2,8,20,.5),0 0 20px rgba(240,199,94,.2)}
+.haj-l:active{transform:scale(.94)}
+.haj-l.used{opacity:.28;transform:scale(.88);pointer-events:none;filter:grayscale(.6)}
+.haj-l span{position:relative;z-index:1}
+.haj-l::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 120% at 30% 20%,rgba(255,255,255,.18),transparent 60%);opacity:.6}
+.haj-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.haj-acts .btn{min-width:110px;justify-content:center}
+
+/* --- فروشگاه --- */
+.shop-hero{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:42px 36px;border-radius:26px;overflow:hidden;margin-bottom:22px;border:1px solid rgba(148,180,224,.16);background:linear-gradient(150deg,rgba(46,108,184,.16),rgba(12,22,40,.78) 50%,rgba(217,174,62,.12));box-shadow:0 26px 70px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+.shop-hero-bg{position:absolute;inset:0;background:radial-gradient(600px 300px at 85% 10%,rgba(240,199,94,.14),transparent 60%),radial-gradient(500px 300px at 10% 90%,rgba(46,108,184,.18),transparent 60%)}
+.shop-hero-glow{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+.shop-hero-glow.g1{width:220px;height:220px;background:rgba(240,199,94,.18);top:-40px;right:10%;animation:drift 12s ease-in-out infinite alternate}
+.shop-hero-glow.g2{width:180px;height:180px;background:rgba(46,108,184,.22);bottom:-30px;left:5%;animation:drift 14s ease-in-out infinite alternate-reverse}
+.shop-hero-content{position:relative;z-index:1}
+.shop-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:850;color:var(--gold2);background:rgba(217,174,62,.1);border:1px solid rgba(217,174,62,.35);padding:6px 14px;border-radius:99px;margin-bottom:14px}
+.shop-hero h1{font-size:36px;font-weight:900;line-height:1.4;margin-bottom:10px}
+.shop-hero h1 .g{background:var(--gradG);-webkit-background-clip:text;background-clip:text;color:transparent}
+.shop-hero p{font-size:13.5px;color:var(--tx2);line-height:2;margin-bottom:16px;max-width:520px}
+.shop-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.shop-stats span{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--tx2);background:rgba(148,180,224,.06);border:1px solid var(--line);padding:6px 12px;border-radius:99px}
+.shop-visual{position:relative;z-index:1;height:200px;display:flex;align-items:center;justify-content:center}
+.shop-cards-stack{position:relative;width:140px;height:140px}
+.shop-cards-stack .scard{position:absolute;width:86px;height:86px;border-radius:20px;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 14px 32px rgba(2,8,20,.45),inset 0 1px 0 rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.14);animation:hvFloat2 4s ease-in-out infinite}
+.shop-cards-stack .scard.s1{background:linear-gradient(135deg,#f0c75e,#d9ae3e);top:0;left:0;transform:rotate(-12deg);animation-delay:0s}
+.shop-cards-stack .scard.s2{background:linear-gradient(135deg,#e74c3c,#c0392b);top:20px;left:40px;transform:rotate(8deg);animation-delay:.6s}
+.shop-cards-stack .scard.s3{background:linear-gradient(135deg,#4fae6b,#2e8a4d);top:60px;left:10px;transform:rotate(-4deg);animation-delay:1.2s}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+.shop-card{position:relative;display:flex;align-items:center;gap:14px;padding:16px;border-radius:18px;cursor:pointer;overflow:hidden;background:linear-gradient(165deg,rgba(20,36,66,.68),rgba(12,22,40,.88));border:1px solid rgba(148,180,224,.14);box-shadow:0 10px 26px rgba(2,8,20,.35),inset 0 1px 0 rgba(255,255,255,.05);transition:all .42s cubic-bezier(.16,1,.3,1)}
+.shop-card:hover{transform:translateY(-5px) scale(1.01);border-color:color-mix(in srgb,var(--cc) 50%,rgba(240,199,94,.3));box-shadow:0 20px 44px rgba(2,8,20,.5),0 0 0 1px color-mix(in srgb,var(--cc) 18%,transparent),0 0 28px -8px color-mix(in srgb,var(--cc) 35%,transparent)}
+.shop-ic{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:color-mix(in srgb,var(--cc) 14%,transparent);border:1px solid color-mix(in srgb,var(--cc) 32%,transparent);color:var(--cc);transition:transform .38s cubic-bezier(.16,1,.3,1)}
+.shop-card:hover .shop-ic{transform:scale(1.12) rotate(-6deg)}
+.shop-info{flex:1;min-width:0}
+.shop-t{font-size:13.5px;font-weight:900;color:#fff;margin-bottom:3px}
+.shop-d{font-size:11px;color:var(--tx3);line-height:1.6}
+.shop-p{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:850;color:var(--gold2);background:rgba(217,174,62,.08);border:1px solid rgba(217,174,62,.22);padding:3px 10px;border-radius:99px;margin-top:6px}
+.shop-buy{flex-shrink:0;border-radius:11px!important;padding:10px 16px!important;font-size:12px}
+.shop-shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.12) 45%,transparent 70%);transform:translateX(-120%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.shop-card:hover .shop-shine{transform:translateX(0)}
+@media (max-width:860px){.shop-hero{grid-template-columns:1fr;padding:28px 22px}.shop-visual{display:none}.shop-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -4842,10 +4911,10 @@ Object.assign(GAME_ENG,{
   'flappy':flapEng,'breakout':brkEng,'mines':minesEng,'bubble':bubEng
 });
 
-/* ===== انگری بردز پرمیوم v15.1 — موتور فیزیک تمیز، پرتاب واقعی، 60fps نرم و روان، بدون باگ ===== */
+/* ===== انگری بردز پرمیوم v16.0 — فیزیک واقعی پرتاب به هدف + صدای خود انگری بردز ===== */
 'use strict';
 
-/* ---------- سیستم ریستارت پرمیوم برای همه بازی‌ها (بهبود یافته) ---------- */
+/* ---------- سیستم ریستارت پرمیوم برای همه بازی‌ها ---------- */
 function hidePremiumGO(){
   const el=document.querySelector('.gover-premium');
   if(el){el.classList.remove('in');setTimeout(()=>{if(el.parentNode)el.remove();},380);}
@@ -4853,7 +4922,6 @@ function hidePremiumGO(){
 function showPremiumGO(opts){
   const stage=document.querySelector('.game-stage');
   if(!stage)return;
-  // اگر همین الان همین اورلی هست، آپدیت نکن
   const existing=stage.querySelector('.gover-premium');
   if(existing && existing.dataset.title===opts.title) return;
   if(existing) existing.remove();
@@ -4892,7 +4960,7 @@ function showPremiumGO(opts){
 }
 function patchExistingGamesWithGO(){
   try{
-    const wrap=(obj,drawName,checkOver,makeOpts,resetFn)=>{
+    const wrap=(obj,drawName,checkOver,makeOpts)=>{
       if(!obj||typeof window[drawName]!=='function') return;
       if(window[drawName]._patched) return;
       const orig=window[drawName];
@@ -4901,9 +4969,7 @@ function patchExistingGamesWithGO(){
         try{
           if(checkOver()){
             const st=document.querySelector('.game-stage');
-            if(st && !st.querySelector('.gover-premium')){
-              showPremiumGO(makeOpts());
-            }
+            if(st && !st.querySelector('.gover-premium')){showPremiumGO(makeOpts());}
           }else{
             const s=document.querySelector('.gover-premium');
             if(s && !s.classList.contains('win')) hidePremiumGO();
@@ -4923,8 +4989,91 @@ function patchExistingGamesWithGO(){
 }
 
 /* ================================================================
-   انگری بردز — موتور تمیز و واقعی
+   انگری بردز v16 — پرتاب واقعی با فیزیک سهموی + صدای واقعی
    ================================================================ */
+/* --- صدای واقعی انگری بردز با WebAudio --- */
+let angryAudio=null;
+function angryEnsureAudio(){
+  try{
+    if(!angryAudio){angryAudio=new (window.AudioContext||window.webkitAudioContext)();}
+    if(angryAudio.state==='suspended') angryAudio.resume();
+    return angryAudio;
+  }catch(e){return null;}
+}
+function angrySfx(type){
+  const AC=angryEnsureAudio();
+  if(!AC) return;
+  const now=AC.currentTime;
+  try{
+    if(type==='launch'){
+      // whoosh پرتاب: sweep 400->90 Hz + نویز بادی
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='sine';o.frequency.setValueAtTime(420,now);o.frequency.exponentialRampToValueAtTime(90,now+0.32);
+      g.gain.setValueAtTime(0.85,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.38);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.4);
+      // کش تیرکمون twang
+      const o2=AC.createOscillator(), g2=AC.createGain();
+      o2.type='triangle';o2.frequency.setValueAtTime(180,now);o2.frequency.linearRampToValueAtTime(60,now+0.18);
+      g2.gain.setValueAtTime(0.5,now);g2.gain.exponentialRampToValueAtTime(0.001,now+0.22);
+      o2.connect(g2);g2.connect(AC.destination);o2.start(now);o2.stop(now+0.24);
+    }else if(type==='pig'){
+      // oink خوک: دو نت سریع
+      for(let k=0;k<2;k++){
+        const o=AC.createOscillator(), g=AC.createGain(), f=AC.createBiquadFilter();
+        f.type='lowpass';f.frequency.value=1200;
+        o.type='sawtooth';o.frequency.setValueAtTime(k?620:320,now+k*0.12);o.frequency.linearRampToValueAtTime(k?380:180,now+k*0.12+0.18);
+        g.gain.setValueAtTime(0.6,now+k*0.12);g.gain.exponentialRampToValueAtTime(0.001,now+k*0.12+0.22);
+        o.connect(f);f.connect(g);g.connect(AC.destination);o.start(now+k*0.12);o.stop(now+k*0.12+0.24);
+      }
+    }else if(type==='wood'){
+      // ترک چوب: نویز فیلتر شده + کلیک
+      const buf=AC.createBuffer(1, AC.sampleRate*0.18, AC.sampleRate);
+      const ch=buf.getChannelData(0);
+      for(let i=0;i<ch.length;i++) ch[i]=(Math.random()*2-1)*Math.pow(1-i/ch.length,1.5);
+      const src=AC.createBufferSource();src.buffer=buf;
+      const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=900;bp.Q.value=0.8;
+      const g=AC.createGain();g.gain.setValueAtTime(0.7,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.2);
+      src.connect(bp);bp.connect(g);g.connect(AC.destination);src.start(now);
+      const o=AC.createOscillator(), g2=AC.createGain();
+      o.frequency.setValueAtTime(120,now);o.frequency.linearRampToValueAtTime(40,now+0.12);
+      g2.gain.setValueAtTime(0.5,now);g2.gain.exponentialRampToValueAtTime(0.001,now+0.14);
+      o.connect(g2);g2.connect(AC.destination);o.start(now);o.stop(now+0.16);
+    }else if(type==='stone'){
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='square';o.frequency.setValueAtTime(90,now);o.frequency.exponentialRampToValueAtTime(30,now+0.22);
+      g.gain.setValueAtTime(0.6,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.26);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.28);
+    }else if(type==='bounce'){
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.frequency.setValueAtTime(180,now);g.gain.setValueAtTime(0.22,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.12);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.13);
+    }else if(type==='win'){
+      // تشویق پیروزی: آرپژ ماژور شاد
+      const notes=[261.63,329.63,392.00,523.25,659.25];
+      notes.forEach((f,i)=>{
+        const o=AC.createOscillator(), g=AC.createGain();
+        o.type=i%2?'sine':'triangle';o.frequency.value=f;
+        g.gain.setValueAtTime(0,now+i*0.09);g.gain.linearRampToValueAtTime(0.45,now+i*0.09+0.02);g.gain.exponentialRampToValueAtTime(0.001,now+i*0.09+0.6);
+        o.connect(g);g.connect(AC.destination);o.start(now+i*0.09);o.stop(now+i*0.09+0.65);
+      });
+      // دست زدن شبیه سازی با نویز
+      for(let k=0;k<3;k++){
+        const buf=AC.createBuffer(1, AC.sampleRate*0.06, AC.sampleRate);
+        const ch=buf.getChannelData(0);
+        for(let i=0;i<ch.length;i++) ch[i]=(Math.random()*2-1)*(i<ch.length*0.15?1:0.2);
+        const src=AC.createBufferSource();src.buffer=buf;
+        const g=AC.createGain();g.gain.setValueAtTime(0.5,now+0.5+k*0.13);g.gain.exponentialRampToValueAtTime(0.001,now+0.5+k*0.13+0.08);
+        src.connect(g);g.connect(AC.destination);src.start(now+0.5+k*0.13);
+      }
+    }else if(type==='special'){
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='sawtooth';o.frequency.setValueAtTime(200,now);o.frequency.linearRampToValueAtTime(800,now+0.18);
+      g.gain.setValueAtTime(0.5,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.22);
+      o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+0.24);
+    }
+  }catch(e){}
+}
+
 const ANGRY={
   cv:null,ctx:null,w:800,h:480,on:false,over:false,win:false,raf:0,last:0,
   ground:0,sling:{x:160,y:0},birdsQueue:[],cur:null,extras:[],
@@ -4932,7 +5081,12 @@ const ANGRY={
   drag:{on:false,sx:0,sy:0,dx:0,dy:0,active:false},
   canLaunch:true,idleT:0,birdsLeft:0,settling:0
 };
-const GRAV=0.32;
+const GRAV=0.24; // کمتر → پرواز بیشتر، سهموی واقعی
+const AIR=0.9998; // هوا کمتر
+const MAX_STRETCH=110; // بیشتر → قدرت بیشتر
+const LAUNCH_POW=0.26; // قوی‌تر
+const MIN_LAUNCH=12; // آستانه
+
 const BIRD_TYPES={
   red:{r:16,col:'#e74c3c',col2:'#a93226',mass:1.2,power:1,desc:'معمولی'},
   yellow:{r:14,col:'#f4d03f',col2:'#b7950b',mass:0.9,power:1.2,special:'speed',desc:'سرعتی'},
@@ -5009,24 +5163,19 @@ function angryInit(cv){
 function buildLevel(idx){
   const L=LEVELS[idx%LEVELS.length];
   const G=ANGRY.ground;
-  // pigs: y = G - r - yOff
   ANGRY.pigs=L.pigs.map(p=>{
     const yOff=p.yOff||0;
     return {x:p.x,y:G-18+yOff,r:18,vx:0,vy:0,dead:false,angle:0,av:0,wob:Math.random()*6.28,bob:0,grounded:false};
   });
-  // blocks: y = G - h + yOff
   ANGRY.blocks=L.blocks.map(b=>{
     const yOff=b.yOff||0;
     const h=b.h,w=b.w;
     return {x:b.x,y:G-h+yOff,w:w,h:h,type:b.type,hp:b.type==='stone'?2:1,maxHp:b.type==='stone'?2:1,vx:0,vy:0,angle:0,av:0,dead:false,grounded:false,settled:false};
   });
-  // برای قرار گرفتن خوک‌ها روی بلوک‌ها، اگر yOff منفی و زیرش بلوک هست، y را دقیق روی بلوک بگذار
-  // ساده: اگر خوک yOff دارد، چک کن بلوک زیرش
   for(const pig of ANGRY.pigs){
     for(const bl of ANGRY.blocks){
       if(!bl.dead && pig.x>bl.x-4 && pig.x<bl.x+bl.w+4 && Math.abs((pig.y+pig.r)-(bl.y))<10){
-        pig.y=bl.y-pig.r;
-        break;
+        pig.y=bl.y-pig.r;break;
       }
     }
   }
@@ -5056,7 +5205,6 @@ function angryNextBird(immediate){
   ANGRY.canLaunch=true;
   ANGRY.drag.active=false;
   if(!immediate){
-    // انیمیشن پرش پرنده به تیرکمون
     const startX=40, startY=ANGRY.ground-10;
     ANGRY.cur.x=startX;ANGRY.cur.y=startY;
     const anim=(t0)=>{
@@ -5074,21 +5222,27 @@ function angryLaunch(dx,dy){
   const b=ANGRY.cur;
   if(!b||b.launched||!ANGRY.canLaunch) return;
   const dist=Math.sqrt(dx*dx+dy*dy);
-  if(dist<12) return; // پرتاب خیلی ضعیف نادیده
-  const maxD=92;
-  const clamped=Math.min(dist,maxD);
+  if(dist<MIN_LAUNCH) return;
+  const clamped=Math.min(dist,MAX_STRETCH);
   const ang=Math.atan2(dy,dx);
   const fx=Math.cos(ang)*clamped;
   const fy=Math.sin(ang)*clamped;
-  b.vx = -fx*0.195;
-  b.vy = -fy*0.195;
-  // کمی بوست عمودی برای پرتاب‌های افقی
-  if(Math.abs(b.vy)<1.2) b.vy-=1.1;
+  // پرتاب واقعی: معکوس کشش + قدرت بیشتر
+  b.vx = -fx*LAUNCH_POW;
+  b.vy = -fy*LAUNCH_POW;
+  // بوست عمودی قوی برای پرتاب‌های کم‌ارتفاع → مسیر سهموی واقعی به هدف
+  // اگر زاویه خیلی افقیه، کمی به بالا هل بده تا هوا بره
+  if(b.vy>-2){
+    b.vy -= 2.8 + (1 - Math.min(1, Math.abs(fy)/MAX_STRETCH))*1.5;
+  }
+  // اگر خیلی به چپ کشیده، قدرت افقی بیشتر
+  if(Math.abs(fx)>60) b.vx*=1.08;
   b.launched=true;
   b.trail=[];
   ANGRY.canLaunch=false;
   ANGRY.drag.active=false;
   ANGRY.idleT=0;
+  angrySfx('launch');
   try{gSfx('go');}catch(e){}
 }
 function angrySpecial(){
@@ -5100,7 +5254,7 @@ function angrySpecial(){
     b.vx*=sp;b.vy*=sp;
     for(let i=0;i<14;i++) ANGRY.parts.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*7,vy:(Math.random()-0.5)*7,a:1,col:'#f4d03f',r:2+Math.random()*2,ay:0.08});
     ANGRY.shake=0.35;
-    try{gSfx('zap');}catch(e){}
+    angrySfx('special');try{gSfx('zap');}catch(e){}
   }else if(b.special==='split'){
     const baseAng=Math.atan2(b.vy,b.vx);
     const speed=Math.hypot(b.vx,b.vy);
@@ -5116,7 +5270,7 @@ function angrySpecial(){
       });
     }
     for(let i=0;i<10;i++) ANGRY.parts.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,a:1,col:'#5dade2',r:2,ay:0.06});
-    try{gSfx('match');}catch(e){}
+    angrySfx('special');try{gSfx('match');}catch(e){}
   }else if(b.special==='bomb'){
     ANGRY.shake=1.2;
     for(let i=0;i<32;i++) ANGRY.parts.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*10,vy:(Math.random()-0.5)*10-1,a:1,col:i%2?'#f39c12':'#e74c3c',r:3+Math.random()*3,ay:0.12});
@@ -5143,7 +5297,7 @@ function angrySpecial(){
       }
     });
     b.active=false;
-    try{gSfx('bad');}catch(e){}
+    angrySfx('stone');try{gSfx('bad');}catch(e){}
     setTimeout(()=>angryCheckEnd(),200);
   }
 }
@@ -5159,36 +5313,29 @@ function angryUpdate(dt){
   const G=ANGRY.ground;
   const allBirds=[ANGRY.cur].concat(ANGRY.extras).filter(b=>b&&b.active);
 
-  // birds
   for(const b of allBirds){
     if(!b.launched) continue;
     b.vy+=GRAV;
-    b.vx*=0.9995;b.vy*=0.9995;
+    b.vx*=AIR;b.vy*=AIR;
     b.x+=b.vx;b.y+=b.vy;
     b.rot=Math.atan2(b.vy,b.vx);
     b.trail.unshift({x:b.x,y:b.y});if(b.trail.length>14)b.trail.pop();
     b.idle = (Math.hypot(b.vx,b.vy)<0.7) ? (b.idle||0)+dt : 0;
 
-    // ground collide
     if(b.y+b.r>G){
       b.y=G-b.r;
       b.vy*=-0.32;b.vx*=0.78;
       b.av=(b.av||0)*0.8;
-      if(Math.abs(b.vy)<1.2 && Math.abs(b.vx)<1.2){
-        // آرام گرفتن
-        if(b.idle>600){b.active=false;}
-      }
-      if(Math.abs(b.vy)>1) try{gSfx('click');}catch(e){}
+      if(b.idle>600){b.active=false;}
+      if(Math.abs(b.vy)>1) angrySfx('bounce');
     }
     if(b.x-b.r<0){b.x=b.r;b.vx*=-0.5;}
     if(b.x+b.r>ANGRY.w){b.x=ANGRY.w-b.r;b.vx*=-0.5;if(Math.abs(b.vx)<1) b.active=false;}
 
-    // blocks collide
     for(const bl of ANGRY.blocks){
       if(bl.dead) continue;
       const rc=rectCircleCollide(bl.x,bl.y,bl.w,bl.h,b.x,b.y,b.r);
       if(rc.hit){
-        // محاسبه نرمال
         const len=Math.hypot(rc.dx,rc.dy)||1;
         const nx=rc.dx/len, ny=rc.dy/len;
         const overlap=b.r - Math.hypot(b.x-rc.closestX,b.y-rc.closestY);
@@ -5197,20 +5344,18 @@ function angryUpdate(dt){
         const dot=b.vx*nx + b.vy*ny;
         b.vx-=2*dot*nx*0.65;
         b.vy-=2*dot*ny*0.65;
-        // آسیب به بلوک
         bl.hp-=b.power*(0.7+Math.hypot(b.vx,b.vy)*0.08);
         bl.vx+=b.vx*0.12;bl.vy+=b.vy*0.08;bl.av+=(Math.random()-0.5)*0.06 + b.vx*0.002;
         if(bl.hp<=0){
           bl.dead=true;ANGRY.score+=bl.type==='stone'?150:bl.type==='wood'?100:70;
           ANGRY.scorePop.push({x:bl.x+bl.w/2,y:bl.y,txt:'+'+(bl.type==='stone'?150:bl.type==='wood'?100:70),a:1,vy:-1.1});
           for(let i=0;i<14;i++) ANGRY.parts.push({x:bl.x+bl.w/2,y:bl.y+bl.h/2,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5-1.2,a:1,col:bl.type==='wood'?'#8d6e63':bl.type==='stone'?'#90a4ae':'#b3e5fc',r:2+Math.random()*2.5,ay:0.12});
-          try{gSfx('line');}catch(e){}
+          angrySfx(bl.type==='wood'?'wood':'stone');
         }else{
-          try{gSfx('move');}catch(e){}
+          angrySfx('bounce');
         }
       }
     }
-    // pigs collide
     for(const pig of ANGRY.pigs){
       if(pig.dead) continue;
       const dx=b.x-pig.x,dy=b.y-pig.y;
@@ -5218,7 +5363,7 @@ function angryUpdate(dt){
         pig.dead=true;ANGRY.score+=1000;
         ANGRY.scorePop.push({x:pig.x,y:pig.y-20,txt:'+1000',a:1,vy:-1.3});
         for(let i=0;i<20;i++) ANGRY.parts.push({x:pig.x,y:pig.y,vx:(Math.random()-0.5)*7,vy:(Math.random()-0.5)*7-1.5,a:1,col:'#8bc34a',r:2.5+Math.random()*2,ay:0.11});
-        try{gSfx('win');}catch(e){}
+        angrySfx('pig');
         b.vx*=0.82;b.vy*=0.82;
         ANGRY.shake=Math.max(ANGRY.shake,0.5);
       }
@@ -5226,10 +5371,8 @@ function angryUpdate(dt){
   }
   ANGRY.extras=ANGRY.extras.filter(b=>b.active);
 
-  // blocks physics — با پشتیبانی و برخورد بلوک به بلوک
   for(const bl of ANGRY.blocks){
     if(bl.dead) continue;
-    // پشتیبانی: روی زمین یا روی بلوک دیگر که خودش grounded است
     let grounded=false;
     if(bl.y+bl.h>=G-0.5) grounded=true;
     else{
@@ -5252,7 +5395,6 @@ function angryUpdate(dt){
       if(Math.abs(bl.vy)<0.05) bl.vy=0;
     }
   }
-  // بلوک به بلوک برخورد ساده برای جلوگیری از فرو رفتن
   for(let i=0;i<ANGRY.blocks.length;i++){
     const a=ANGRY.blocks[i];if(a.dead) continue;
     for(let j=i+1;j<ANGRY.blocks.length;j++){
@@ -5270,7 +5412,6 @@ function angryUpdate(dt){
       }
     }
   }
-  // pigs physics — له شدن
   for(const pig of ANGRY.pigs){
     if(pig.dead) continue;
     pig.wob+=0.06;pig.bob=Math.sin(ANGRY.t*0.005+pig.wob)*0.6;
@@ -5284,30 +5425,27 @@ function angryUpdate(dt){
     }
     pig.grounded=sup;
     if(!sup){pig.vy+=0.42;pig.y+=pig.vy;pig.angle+=pig.av||0;if(pig.y+pig.r>G){pig.y=G-pig.r;pig.vy*=-0.2;if(Math.abs(pig.vy)<0.8)pig.vy=0;}}
-    // له شدن با بلوک در حال سقوط
     for(const bl of ANGRY.blocks){
       if(bl.dead) continue;
       if(bl.vy>1.2 && pig.x>bl.x&&pig.x<bl.x+bl.w&&pig.y+pig.r>bl.y&&pig.y-pig.r<bl.y+bl.h){
         pig.dead=true;ANGRY.score+=1000;
         ANGRY.scorePop.push({x:pig.x,y:pig.y-20,txt:'+1000',a:1,vy:-1.3});
         for(let i=0;i<18;i++) ANGRY.parts.push({x:pig.x,y:pig.y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6-1,a:1,col:'#8bc34a',r:2.5,ay:0.11});
-        try{gSfx('win');}catch(e){}
+        angrySfx('pig');
       }
     }
   }
 
-  // particles
   for(const pt of ANGRY.parts){pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=pt.ay||0.12;pt.vx*=0.99;pt.a-=0.017;}
   ANGRY.parts=ANGRY.parts.filter(p=>p.a>0);
   for(const sp of ANGRY.scorePop){sp.y+=sp.vy;sp.vy+=0.04;sp.a-=0.016;}
   ANGRY.scorePop=ANGRY.scorePop.filter(s=>s.a>0);
 
-  // check win/lose با تاخیر برای settle شدن
   const alivePigs=ANGRY.pigs.filter(p=>!p.dead).length;
   if(alivePigs===0 && !ANGRY.win){
     ANGRY.win=true;ANGRY.over=false;
     if(ANGRY.score>ANGRY.best){ANGRY.best=ANGRY.score;store.set('angryBest',ANGRY.best);}
-    try{gSfx('win');}catch(e){}
+    angrySfx('win');
     ANGRY.settling=0;
     setTimeout(()=>{
       if(ANGRY.win){
@@ -5334,7 +5472,7 @@ function angryUpdate(dt){
     }
     ANGRY.over=true;
     if(ANGRY.score>ANGRY.best){ANGRY.best=ANGRY.score;store.set('angryBest',ANGRY.best);}
-    try{gSfx('bad');}catch(e){}
+    angrySfx('pig');
     setTimeout(()=>{
       if(ANGRY.over && !ANGRY.win){
         showPremiumGO({
@@ -5346,7 +5484,6 @@ function angryUpdate(dt){
       }
     },600);
   }else if(!activeBirds && hasBirdsToLaunch && ANGRY.birdsQueue.length>0 && !ANGRY.cur?.launched){
-    // وقفه کوتاه قبل از پرنده بعدی برای حس سینمایی
     if(ANGRY.idleT===0) ANGRY.idleT=ANGRY.t;
     if(ANGRY.t-ANGRY.idleT>700){
       angryNextBird(false);
@@ -5356,21 +5493,19 @@ function angryUpdate(dt){
     ANGRY.idleT=0;ANGRY.settling=0;
   }
 }
+function angryCheckEnd(){}
 function angryDraw(){
   const c=ANGRY.ctx,W=ANGRY.w,H=ANGRY.h,G=ANGRY.ground;
   c.save();
   if(ANGRY.shake>0) c.translate((Math.random()-0.5)*ANGRY.shake*14,(Math.random()-0.5)*ANGRY.shake*10);
 
-  // آسمان پرمیوم با گرادینت و وینیت
   const sky=c.createLinearGradient(0,0,0,G);
   sky.addColorStop(0,'#5fb8ff');sky.addColorStop(0.18,'#7ec8ff');sky.addColorStop(0.55,'#b8e0ff');sky.addColorStop(1,'#eaf6ff');
   c.fillStyle=sky;c.fillRect(0,0,W,G);
-  // وینیت بالا
   const vig=c.createRadialGradient(W*0.5,G*0.2,0,W*0.5,G*0.2,G);
   vig.addColorStop(0,'rgba(255,255,255,0)');vig.addColorStop(1,'rgba(0,20,60,.08)');
   c.fillStyle=vig;c.fillRect(0,0,W,G);
 
-  // خورشید با هاله
   c.save();
   c.globalAlpha=0.95;
   const sunG=c.createRadialGradient(W-88,78,6,W-88,78,42);
@@ -5380,7 +5515,6 @@ function angryDraw(){
   c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(W-96,68,7,0,7);c.fill();
   c.restore();
 
-  // ابرهای پارالاکس نرم
   c.fillStyle='rgba(255,255,255,.92)';
   for(let i=0;i<5;i++){
     const speed=0.04+i*0.015;
@@ -5394,21 +5528,17 @@ function angryDraw(){
   }
   c.globalAlpha=1;
 
-  // تپه‌های دور با گرادینت
   c.fillStyle='#8bc34a';
   c.beginPath();c.moveTo(0,G);c.quadraticCurveTo(W*0.22,G-32,W*0.48,G-6);c.quadraticCurveTo(W*0.72,G-24,W,G-4);c.lineTo(W,G+40);c.lineTo(0,G+40);c.fill();
   c.fillStyle='#7ab33f';
   c.beginPath();c.moveTo(0,G);c.quadraticCurveTo(W*0.34,G-16,W*0.68,G-8);c.lineTo(W,G);c.lineTo(W,G+40);c.lineTo(0,G+40);c.fill();
 
-  // زمین پرمیوم
   c.fillStyle='#c2a46a';c.fillRect(0,G,W,H-G);
   c.fillStyle='#a88a55';c.fillRect(0,G,W,7);
-  // بافت زمین
   c.fillStyle='rgba(0,0,0,.07)';
   for(let i=0;i<W;i+=32){c.fillRect((i+ANGRY.t*0.06)%W,G+12,18,2.5);}
   c.fillStyle='rgba(255,255,255,.12)';c.fillRect(0,G, W,1.5);
 
-  // تیرکمون پرمیوم با سایه
   const sx=ANGRY.sling.x,sy=ANGRY.sling.y;
   c.save();
   c.shadowColor='rgba(0,0,0,.22)';c.shadowBlur=12;c.shadowOffsetY=4;
@@ -5419,58 +5549,60 @@ function angryDraw(){
   c.strokeStyle='#8d6e63';c.lineWidth=8.5;
   c.beginPath();c.moveTo(sx-5,sy+9);c.lineTo(sx-14,sy-19);c.stroke();
   c.beginPath();c.moveTo(sx+5,sy+9);c.lineTo(sx+14,sy-19);c.stroke();
-  // گره تیرکمون
   c.fillStyle='#4e342e';c.beginPath();c.arc(sx,sy+9,6,0,7);c.fill();
   c.restore();
 
-  // کش‌ها — وقتی پرنده هست
   if(ANGRY.cur){
     const b=ANGRY.cur;
     const bx=b.launched?b.ox:b.x, by=b.launched?b.oy:b.y;
-    // کش پشت پرنده (تیره‌تر)
     c.strokeStyle='rgba(50,30,20,.55)';c.lineWidth=3.5;c.lineCap='round';
     c.beginPath();c.moveTo(sx-14,sy-19);c.lineTo(bx,by);c.stroke();
     c.beginPath();c.moveTo(sx+14,sy-19);c.lineTo(bx,by);c.stroke();
-    // کش جلویی روشن‌تر برای عمق
     c.strokeStyle='rgba(90,60,40,.32)';c.lineWidth=2;
     c.beginPath();c.moveTo(sx-14,sy-19);c.lineTo(bx,by);c.stroke();
     c.beginPath();c.moveTo(sx+14,sy-19);c.lineTo(bx,by);c.stroke();
 
-    // پیش‌بینی مسیر — نقاط طلایی با محو شدن
     if(ANGRY.drag.on && !b.launched){
       const dx=ANGRY.drag.dx,dy=ANGRY.drag.dy;
       const dist=Math.hypot(dx,dy);
-      const maxD=92;
-      const cl=Math.min(dist,maxD);
+      const cl=Math.min(dist,MAX_STRETCH);
       const ang=Math.atan2(dy,dx);
       const fx=Math.cos(ang)*cl, fy=Math.sin(ang)*cl;
-      const vx=-fx*0.195, vy=-fy*0.195;
+      let vx=-fx*LAUNCH_POW, vy=-fy*LAUNCH_POW;
+      if(vy>-2) vy-=2.8 + (1 - Math.min(1, Math.abs(fy)/MAX_STRETCH))*1.5;
+      if(Math.abs(fx)>60) vx*=1.08;
       let px=sx,py=sy-19;
       let pvx=vx,pvy=vy;
-      for(let i=0;i<26;i++){
-        pvy+=GRAV;pvx*=0.9995;pvy*=0.9995;
+      for(let i=0;i<38;i++){
+        pvy+=GRAV;pvx*=AIR;pvy*=AIR;
         px+=pvx;py+=pvy;
-        if(i%2===0){
-          const alpha=Math.max(0,1-i*0.038);
-          c.globalAlpha=alpha;
-          c.fillStyle=i%4===0?'#f4d03f':'#fff';
-          c.shadowColor='rgba(244,208,63,.8)';c.shadowBlur=6;
-          c.beginPath();c.arc(px,py,i%4===0?4:2.6,0,7);c.fill();
+        if(i%2===0 || i<8){
+          const alpha=Math.max(0,1-i*0.028);
+          c.globalAlpha=alpha*0.95;
+          c.fillStyle=i%3===0?'#f4d03f':'#fff';
+          c.shadowColor='rgba(244,208,63,.9)';c.shadowBlur=i%3===0?8:0;
+          c.beginPath();c.arc(px,py,i%3===0?4.2:2.8,0,7);c.fill();
           c.shadowBlur=0;
         }
         if(py>G-4) break;
+        if(px>W+40) break;
       }
       c.globalAlpha=1;
+      // خط هدف قرمز روی قلعه
+      if(dist>18){
+        c.save();
+        c.strokeStyle='rgba(231,76,60,.22)';c.setLineDash([6,6]);c.lineWidth=1.2;
+        c.beginPath();c.moveTo(520,G);c.lineTo(520,G-180);c.stroke();
+        c.restore();
+      }
     }
   }
 
-  // بلوک‌ها با سایه و گرادینت پرمیوم
   for(const bl of ANGRY.blocks){
     if(bl.dead) continue;
     c.save();
     c.translate(bl.x+bl.w/2,bl.y+bl.h/2);
     c.rotate(bl.angle);
-    // سایه زمین
     c.save();
     c.translate(0, (G-(bl.y+bl.h/2))/12);
     c.globalAlpha=0.12;c.fillStyle='#000';
@@ -5491,7 +5623,6 @@ function angryDraw(){
     c.fillStyle=grad;
     c.beginPath();c.roundRect(-bl.w/2,-bl.h/2,bl.w,bl.h,bl.type==='glass'?3:5);c.fill();
     c.shadowBlur=0;
-    // جزئیات چوب
     if(bl.type==='wood'){
       c.strokeStyle='rgba(0,0,0,.18)';c.lineWidth=1;
       for(let i=1;i<3;i++){c.beginPath();c.moveTo(-bl.w/2+3,-bl.h/2+i*bl.h/3);c.lineTo(bl.w/2-3,-bl.h/2+i*bl.h/3);c.stroke();}
@@ -5499,51 +5630,40 @@ function angryDraw(){
     }
     if(bl.type==='glass'){
       c.fillStyle='rgba(255,255,255,.5)';c.beginPath();c.roundRect(-bl.w/2+3,-bl.h/2+2,bl.w*0.32,4,2);c.fill();
-      // ترک برای HP کم
       if(bl.hp<bl.maxHp){
         c.strokeStyle='rgba(255,255,255,.7)';c.lineWidth=1;
         c.beginPath();c.moveTo(-bl.w/2+4,-bl.h/2+4);c.lineTo(bl.w/2-4,bl.h/2-4);c.stroke();
       }
     }
-    // حاشیه
     c.strokeStyle=bl.type==='glass'?'rgba(120,180,220,.5)':'rgba(0,0,0,.28)';c.lineWidth=1.2;
     c.beginPath();c.roundRect(-bl.w/2,-bl.h/2,bl.w,bl.h,bl.type==='glass'?3:5);c.stroke();
     c.restore();
   }
 
-  // خوک‌ها — انیمیشن تنفس + سایه
   for(const pig of ANGRY.pigs){
     if(pig.dead) continue;
     c.save();
     c.translate(pig.x,pig.y+pig.bob);
     c.rotate(pig.angle);
-    // سایه
     c.fillStyle='rgba(0,0,0,.14)';c.beginPath();c.ellipse(0,pig.r+8, pig.r*0.8,4,0,0,7);c.fill();
-    // بدن با گرادینت
     const pg=c.createRadialGradient(-4,-5,3,0,0,pig.r);
     pg.addColorStop(0,'#c5e1a5');pg.addColorStop(0.4,'#aed581');pg.addColorStop(1,'#7cb342');
     c.fillStyle=pg;c.beginPath();c.arc(0,0,pig.r,0,7);c.fill();
     c.strokeStyle='#558b2f';c.lineWidth=1.2;c.beginPath();c.arc(0,0,pig.r,0,7);c.stroke();
-    // پوزه
     c.fillStyle='#dcedc8';c.beginPath();c.ellipse(0,6.5,9.5,6.5,0,0,7);c.fill();
     c.fillStyle='#33691e';c.beginPath();c.arc(-3,7.5,1.6,0,7);c.fill();c.beginPath();c.arc(3,7.5,1.6,0,7);c.fill();
-    // چشم‌ها با درخشش
     c.fillStyle='#fff';c.beginPath();c.arc(-6.5,-3.5,5.2,0,7);c.fill();c.beginPath();c.arc(6.5,-3.5,5.2,0,7);c.fill();
     c.fillStyle='#1b5e20';c.beginPath();c.arc(-5.5,-1.8,2.4,0,7);c.fill();c.beginPath();c.arc(7.5,-1.8,2.4,0,7);c.fill();
     c.fillStyle='#fff';c.beginPath();c.arc(-4.5,-2.8,1,0,7);c.fill();c.beginPath();c.arc(8.5,-2.8,1,0,7);c.fill();
-    // ابرو خشمگین
     c.strokeStyle='#33691e';c.lineWidth=2.2;c.lineCap='round';
     c.beginPath();c.moveTo(-12,-8.5);c.lineTo(-2.5,-5);c.stroke();
     c.beginPath();c.moveTo(2.5,-5);c.lineTo(12,-8.5);c.stroke();
-    // لپ
     c.fillStyle='rgba(255,183,197,.35)';c.beginPath();c.arc(-9,4,2.2,0,7);c.fill();c.beginPath();c.arc(9,4,2.2,0,7);c.fill();
     c.restore();
   }
 
-  // پرنده‌ها
   const allBirds=[ANGRY.cur].concat(ANGRY.extras).filter(b=>b&&b.active);
   for(const b of allBirds){
-    // trail نرم با گرادینت
     for(let i=b.trail.length-1;i>=0;i--){
       const t=b.trail[i];
       const alpha=(i/b.trail.length)*0.28;
@@ -5562,29 +5682,23 @@ function angryDraw(){
     grad.addColorStop(0,'#fffde7');grad.addColorStop(0.25,b.col);grad.addColorStop(1,b.col2);
     c.fillStyle=grad;c.beginPath();c.arc(0,0,b.r,0,7);c.fill();
     c.shadowBlur=0;
-    // شکم روشن
     c.fillStyle='rgba(255,255,255,.32)';c.beginPath();c.ellipse(-1,4,b.r*0.55,b.r*0.38,0,0,7);c.fill();
-    // منقار
     c.fillStyle='#ffca28';c.strokeStyle='#f57f17';c.lineWidth=0.8;
     c.beginPath();c.moveTo(b.r-2,-2.5);c.lineTo(b.r+9,0);c.lineTo(b.r-2,3.5);c.closePath();c.fill();c.stroke();
-    // چشم بزرگ پرمیوم
     c.fillStyle='#fff';c.beginPath();c.arc(3,-4.5,6,0,7);c.fill();
     c.strokeStyle='rgba(0,0,0,.15)';c.lineWidth=1;c.beginPath();c.arc(3,-4.5,6,0,7);c.stroke();
     c.fillStyle='#212121';c.beginPath();c.arc(5,-3,2.8,0,7);c.fill();
     c.fillStyle='#fff';c.beginPath();c.arc(6,-4.5,1.1,0,7);c.fill();
-    // ابرو برای قرمز
     if(b.type==='red'){
       c.strokeStyle='#b71c1c';c.lineWidth=2.2;c.lineCap='round';
       c.beginPath();c.moveTo(-2,-9);c.lineTo(7,-7);c.stroke();
     }
     if(b.type==='yellow'){
-      // تاج
       c.fillStyle='#ffca28';c.beginPath();c.moveTo(-4,-b.r+2);c.lineTo(0,-b.r-6);c.lineTo(4,-b.r+2);c.fill();
     }
     if(b.type==='black'){
       c.fillStyle='rgba(255,255,255,.12)';c.beginPath();c.arc(-3,-3,b.r*0.6,0,7);c.fill();
     }
-    // نشان قدرت ویژه وقتی آماده
     if(b.special && !b.specialUsed && b.launched){
       c.fillStyle='rgba(255,255,255,.95)';c.font='900 9px Vazirmatn';c.textAlign='center';
       c.fillText('SPACE',0,b.r+14);
@@ -5592,7 +5706,6 @@ function angryDraw(){
     c.restore();
   }
 
-  // ذرات پرمیوم
   for(const pt of ANGRY.parts){
     c.globalAlpha=pt.a;
     c.fillStyle=pt.col;
@@ -5601,7 +5714,6 @@ function angryDraw(){
     c.shadowBlur=0;
   }
   c.globalAlpha=1;
-  // اسکور پاپ
   for(const sp of ANGRY.scorePop){
     c.globalAlpha=sp.a;
     c.fillStyle=sp.txt.includes('1000')?'#7cb342':'#f4d03f';
@@ -5611,7 +5723,6 @@ function angryDraw(){
   }
   c.globalAlpha=1;
 
-  // UI پرمیوم بالا
   c.save();
   c.fillStyle='rgba(255,255,255,.88)';c.beginPath();c.roundRect(10,10,220,52,14);c.fill();
   c.strokeStyle='rgba(148,180,224,.18)';c.lineWidth=1;c.beginPath();c.roundRect(10,10,220,52,14);c.stroke();
@@ -5622,7 +5733,6 @@ function angryDraw(){
   c.fillText(L.name+' — مرحله '+gNum(ANGRY.level+1)+'/'+gNum(LEVELS.length)+' — رکورد '+gNum(ANGRY.best),210,50);
   c.restore();
 
-  // صف پرنده‌ها پایین چپ — با آیکون پرمیوم
   let bx=18;
   c.save();
   c.fillStyle='rgba(255,255,255,.82)';c.beginPath();c.roundRect(10,68,Math.max(36,ANGRY.birdsQueue.length*26+16),28,12);c.fill();
@@ -5631,7 +5741,6 @@ function angryDraw(){
     const bt=ANGRY.birdsQueue[i];
     c.fillStyle=bt.col;c.beginPath();c.arc(bx+8,82,10,0,7);c.fill();
     c.strokeStyle=bt.col2;c.lineWidth=1.2;c.beginPath();c.arc(bx+8,82,10,0,7);c.stroke();
-    // منقار کوچک
     c.fillStyle='#ffca28';c.beginPath();c.moveTo(bx+14,81);c.lineTo(bx+18,82);c.lineTo(bx+14,83);c.fill();
     bx+=26;
   }
@@ -5640,10 +5749,9 @@ function angryDraw(){
   }
   c.restore();
 
-  // نشان کشش
   if(ANGRY.cur && !ANGRY.cur.launched && ANGRY.drag.on){
     const dist=Math.hypot(ANGRY.drag.dx,ANGRY.drag.dy);
-    const pct=Math.min(1,dist/92);
+    const pct=Math.min(1,dist/MAX_STRETCH);
     c.save();
     c.fillStyle='rgba(0,0,0,.18)';c.beginPath();c.roundRect(sx-46,sy-56,92,8,4);c.fill();
     c.fillStyle=pct>0.85?'#e74c3c':pct>0.6?'#f4d03f':'#7cb342';
@@ -5678,19 +5786,23 @@ const angryEng={
       if(!ANGRY.cur||ANGRY.cur.launched) return;
       const p=getPos(e);
       const dx=p.x-ANGRY.cur.x, dy=p.y-ANGRY.cur.y;
-      if(dx*dx+dy*dy< 38*38){
+      if(dx*dx+dy*dy< 42*42){
         ANGRY.drag.on=true;ANGRY.drag.sx=p.x;ANGRY.drag.sy=p.y;
         ANGRY.drag.active=true;
         try{cv.setPointerCapture(e.pointerId);}catch(x){}
+        angryEnsureAudio();
       }
     };
     const move=e=>{
       if(!ANGRY.drag.on||!ANGRY.cur||ANGRY.cur.launched) return;
       const p=getPos(e);
       let dx=p.x-ANGRY.drag.sx, dy=p.y-ANGRY.drag.sy;
+      // فقط سمت چپ تیرکمون: dx نباید مثبت زیاد باشد
+      if(dx>18) dx=18 - (dx-18)*0.15; // مقاومت نرم
+      if(dx>35) dx=35;
+      // محدودیت فاصله
       const dist=Math.hypot(dx,dy);
-      const maxD=92;
-      if(dist>maxD){const a=Math.atan2(dy,dx);dx=Math.cos(a)*maxD;dy=Math.sin(a)*maxD;}
+      if(dist>MAX_STRETCH){const a=Math.atan2(dy,dx);dx=Math.cos(a)*MAX_STRETCH;dy=Math.sin(a)*MAX_STRETCH; if(dx>18) dx=18;}
       ANGRY.drag.dx=dx;ANGRY.drag.dy=dy;
       ANGRY.cur.x=ANGRY.sling.x+dx;
       ANGRY.cur.y=ANGRY.sling.y-18+dy;
@@ -5704,7 +5816,7 @@ const angryEng={
     };
     const specialTrigger=e=>{
       if(!ANGRY.cur||!ANGRY.cur.launched||ANGRY.cur.specialUsed) return;
-      // اگر کلیک نزدیک پرنده یا هر جای صفحه
+      if(ANGRY.drag.active) return;
       angrySpecial();
     };
     ANGRY._down=down;ANGRY._move=move;ANGRY._up=up;ANGRY._spec=specialTrigger;
@@ -5712,9 +5824,7 @@ const angryEng={
     cv.addEventListener('pointermove',move);
     cv.addEventListener('pointerup',up);
     cv.addEventListener('pointercancel',up);
-    // کلیک برای قدرت ویژه (بعد از پرتاب)
     cv.addEventListener('pointerdown',specialTrigger);
-    // جلوگیری از منوی راست کلیک
     cv.addEventListener('contextmenu',e=>e.preventDefault());
   },
   stop(){
@@ -5734,8 +5844,7 @@ const angryEng={
       e.preventDefault();
       if(ANGRY.cur&&ANGRY.cur.launched&&!ANGRY.cur.specialUsed) angrySpecial();
       else if(ANGRY.cur&&!ANGRY.cur.launched){
-        // پرتاب پیش‌فرض 70% قدرت
-        angryLaunch(-62,-28);
+        angryLaunch(-70,-30);
       }
       return true;
     }
@@ -5758,6 +5867,249 @@ const angryEng={
 
 Object.assign(GAME_ENG,{'angry':angryEng});
 setTimeout(patchExistingGamesWithGO,400);
+
+/* ===== حاج عباس — بازی کلمه‌سازی مثل آمیرزا، پرمیوم و خوشگل ===== */
+'use strict';
+
+const HAJ={
+  el:null,level:0,best:0,
+  letters:[],words:[],found:new Set(),
+  cur:[], // array of {char, idx}
+  used:new Set(),
+  score:0,hintUsed:0,shuffle:0,
+  t:0
+};
+
+const HAJ_LEVELS=[
+  {name:'ابر بهاری', letters:['ا','ب','ر'], words:['ابر','بر','رب']},
+  {name:'حاجی کوچک', letters:['ح','ا','ج'], words:['حاج','جا','حج']},
+  {name:'عبای حاجی', letters:['ع','ب','ا','س'], words:['عباس','عابس','اسب','عبا','با','سا']},
+  {name:'حاجی و حیا', letters:['ح','ا','ج','ی'], words:['حاجی','حاج','حیا','جا','یا']},
+  {name:'قهوه داغ', letters:['ق','ه','و','ه'], words:['قهوه','قوه','قه','هو','وه']},
+  {name:'یاران', letters:['ن','ت','ی','ا','ر'], words:['یاران','یاران','یار','تیر','تار','ریا','نار','تن','نت','یا','ران','آری']},
+  {name:'کافی‌نت', letters:['ک','ا','ف','ی'], words:['کافی','کاف','یا','آف']},
+  {name:'بازی شیرین', letters:['ب','ا','ز','ی'], words:['بازی','باز','زی','با','یاز']},
+  {name:'دانش', letters:['د','ا','ن','ش'], words:['دانش','شاد','دان','شان','شدن','اش','نش']},
+  {name:'موزیک', letters:['م','و','ز','ی','ک'], words:['موزیک','موز','میز','کوی','موی','زیک']},
+  {name:'پرینت', letters:['پ','ر','ی','ن','ت'], words:['پرینت','پرین','پری','نیت','تن','پر']},
+  {name:'حاج عباس', letters:['ح','ا','ج','ع','ب','ا','س'], words:['حاج عباس','عباس','حاجی','حجاب','سحاب','عابس','حباب','اسب','عاب','حاج','جا','با']},
+  {name:'کتابخانه', letters:['ک','ت','ا','ب'], words:['کتاب','تاب','بت','با','تاک','آب']},
+  {name:'سفره', letters:['س','ف','ر','ه'], words:['سفره','سفر','رفه','فر','سر','هر']},
+  {name:'خوشحال', letters:['خ','و','ش','ح','ا','ل'], words:['خوشحال','خوش','حال','شال','خواب','حالش','خال','شوخ','الو']},
+];
+
+function hajCanMake(word, letters){
+  const need={};
+  for(const ch of word.replace(/\s/g,'')) need[ch]=(need[ch]||0)+1;
+  const have={};
+  for(const ch of letters) have[ch]=(have[ch]||0)+1;
+  for(const k in need) if((have[k]||0)<need[k]) return false;
+  return true;
+}
+function hajInit(){
+  HAJ.best=store.get('hajBest',0);
+}
+function hajReset(lv){
+  if(lv!=null) HAJ.level=lv;
+  HAJ.level=Math.max(0,Math.min(HAJ_LEVELS.length-1,HAJ.level));
+  const L=HAJ_LEVELS[HAJ.level];
+  // letters may have duplicates, keep as is but shuffle display
+  HAJ.letters=L.letters.slice();
+  // filter words that can be made and unique
+  const uniq=[];
+  const seen=new Set();
+  for(const w of L.words){
+    const nw=w.replace(/\s/g,'');
+    if(!seen.has(nw) && hajCanMake(nw, L.letters)){uniq.push(w);seen.add(nw);}
+  }
+  // ensure main word first
+  HAJ.words=uniq;
+  HAJ.found=new Set();
+  HAJ.cur=[];HAJ.used=new Set();
+  HAJ.score=0;HAJ.hintUsed=0;
+  // auto reveal 2-letter words? No
+  hajRender();
+  hidePremiumGO();
+}
+function hajShuffle(){
+  for(let i=HAJ.letters.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[HAJ.letters[i],HAJ.letters[j]]=[HAJ.letters[j],HAJ.letters[i]];}
+  HAJ.shuffle++;
+  hajRender();
+  try{gSfx('shuffle');}catch(e){}
+}
+function hajTap(idx){
+  if(HAJ.used.has(idx)) return;
+  HAJ.cur.push({char:HAJ.letters[idx], idx:idx});
+  HAJ.used.add(idx);
+  hajRenderCur();
+  try{gSfx('click');}catch(e){}
+}
+function hajBack(){
+  if(!HAJ.cur.length) return;
+  const last=HAJ.cur.pop();
+  HAJ.used.delete(last.idx);
+  hajRenderCur();
+  try{gSfx('move');}catch(e){}
+}
+function hajClear(){
+  HAJ.cur=[];HAJ.used.clear();
+  hajRenderCur();
+}
+function hajSubmit(){
+  const word=HAJ.cur.map(o=>o.char).join('');
+  if(word.length<2){toast('کلمه کوتاه است','info');return;}
+  const normWord=word.replace(/\s/g,'');
+  // check if in words list (compare without space)
+  let foundWord=null;
+  for(const w of HAJ.words){
+    if(w.replace(/\s/g,'')===normWord){foundWord=w;break;}
+  }
+  if(!foundWord){
+    // check if can make but not in list -> not valid
+    const el=document.querySelector('.haj-cur');
+    if(el){el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);}
+    toast('«'+word+'» در لیست نیست — دوباره امتحان کن','alert');
+    try{gSfx('bad');}catch(e){}
+    return;
+  }
+  if(HAJ.found.has(foundWord)){
+    toast('«'+foundWord+'» رو قبلا پیدا کردی!','info');
+    hajClear();
+    return;
+  }
+  HAJ.found.add(foundWord);
+  HAJ.score+=foundWord.replace(/\s/g,'').length*10;
+  toast('آفرین! «'+foundWord+'» پیدا شد!','trophy');
+  try{gSfx('win');}catch(e){}
+  hajClear();
+  hajRenderWords();
+  hajCheckWin();
+}
+function hajHint(){
+  const remaining=HAJ.words.filter(w=>!HAJ.found.has(w));
+  if(!remaining.length) return;
+  const pick=remaining[Math.floor(Math.random()*remaining.length)];
+  HAJ.found.add(pick);
+  HAJ.hintUsed++;
+  toast('راهنما: «'+pick+'»','lightbulb');
+  hajRenderWords();
+  hajCheckWin();
+  try{gSfx('lightbulb');}catch(e){}
+}
+function hajCheckWin(){
+  if(HAJ.found.size===HAJ.words.length){
+    if(HAJ.level>HAJ.best){HAJ.best=HAJ.level;store.set('hajBest',HAJ.best);}
+    try{gSfx('win');}catch(e){}
+    const isLast=HAJ.level===HAJ_LEVELS.length-1;
+    setTimeout(()=>{
+      showPremiumGO({
+        title: isLast?'آفرین حاج عباس راضی شد!':'مرحله '+gNum(HAJ.level+1)+' تموم شد!',
+        sub: isLast?'تمام '+gNum(HAJ_LEVELS.length)+' مرحله رو مثل آمیرزا ترکوندی! حاج عباس برات چای می‌ریزه!':'همه کلمات «'+HAJ_LEVELS[HAJ.level].name+'» رو پیدا کردی — برو مرحله بعد!',
+        score:HAJ.score,best:HAJ.best,win:true,
+        nextLabel: isLast?'از اول':'مرحله بعد',
+        onNext:()=>{hajReset(isLast?0:HAJ.level+1);},
+        restart:()=>{hajReset(HAJ.level);}
+      });
+    },400);
+  }
+}
+function hajRenderCur(){
+  const curEl=document.getElementById('hajCur');
+  const lettersEl=document.getElementById('hajLetters');
+  if(curEl){
+    curEl.textContent=HAJ.cur.map(o=>o.char).join('')||'حروف رو بچین...';
+    curEl.classList.toggle('has',HAJ.cur.length>0);
+  }
+  if(lettersEl){
+    // update used state
+    [...lettersEl.querySelectorAll('.haj-l')].forEach((btn,i)=>{
+      const idx=parseInt(btn.dataset.idx);
+      btn.classList.toggle('used',HAJ.used.has(idx));
+    });
+  }
+  const subBtn=document.getElementById('hajSubmit');
+  if(subBtn) subBtn.disabled=HAJ.cur.length<2;
+}
+function hajRenderWords(){
+  const box=document.getElementById('hajWords');
+  if(!box) return;
+  box.innerHTML=HAJ.words.map(w=>{
+    const found=HAJ.found.has(w);
+    const chars=w.replace(/\s/g,'').split('');
+    return '<div class="haj-w '+(found?'found':'')+'">'+
+      chars.map(ch=>'<span class="hw-c '+(found?'on':'')+'">'+(found?ch:'')+'</span>').join('')+
+      '<span class="hw-lbl">'+(found?w:'<i>'+gNum(chars.length)+' حرف</i>')+'</span>'+
+    '</div>';
+  }).join('');
+  const prog=document.getElementById('hajProg');
+  if(prog){
+    const pct=Math.round(HAJ.found.size/HAJ.words.length*100);
+    prog.style.width=pct+'%';
+    const txt=document.getElementById('hajProgTxt');
+    if(txt) txt.textContent=gNum(HAJ.found.size)+' از '+gNum(HAJ.words.length)+' — '+gNum(pct)+'٪';
+  }
+}
+function hajRender(){
+  const el=HAJ.el;
+  if(!el) return;
+  const L=HAJ_LEVELS[HAJ.level];
+  el.innerHTML=
+    '<div class="haj-top">'+
+      '<div class="haj-char">'+
+        '<svg viewBox="0 0 120 120" class="haj-svg">'+
+          '<defs><radialGradient id="hg1" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#d9ae3e"/></radialGradient></defs>'+
+          '<circle cx="60" cy="60" r="52" fill="rgba(217,174,62,.12)" stroke="rgba(217,174,62,.25)"/>'+
+          '<circle cx="60" cy="52" r="28" fill="url(#hg1)" stroke="#b8922f" stroke-width="1.2"/>'+
+          '<path d="M32 32 Q60 12 88 32 L88 38 Q60 18 32 38 Z" fill="#5d4037" stroke="#3e2723" stroke-width="1.2"/>'+
+          '<circle cx="48" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>'+
+          '<circle cx="49" cy="51" r="1.6" fill="#212121"/><circle cx="73" cy="51" r="1.6" fill="#212121"/>'+
+          '<path d="M52 62 Q60 68 68 62" stroke="#5d4037" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+          '<path d="M38 68 Q60 88 82 68 L82 78 Q60 98 38 78 Z" fill="#fff" stroke="#b0bec5"/>'+
+          '<path d="M38 78 Q60 82 82 78" stroke="#5d4037" stroke-width="1.2" fill="none"/>'+
+          '<circle cx="60" cy="84" r="2" fill="#d9ae3e"/>'+
+        '</svg>'+
+        '<div class="haj-name">حاج عباس</div><div class="haj-lvl">'+L.name+' — مرحله '+gNum(HAJ.level+1)+'/'+gNum(HAJ_LEVELS.length)+'</div>'+
+      '</div>'+
+      '<div class="haj-stats">'+
+        '<span class="hs">'+ic('trophy',12)+' رکورد '+gNum(HAJ.best+1)+'</span>'+
+        '<span class="hs gold">'+ic('star',12)+' '+gNum(HAJ.score)+' امتیاز</span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="haj-progress"><div class="haj-pbar"><i id="hajProg" style="width:0%"></i></div><span id="hajProgTxt" class="haj-ptxt">۰ از ۰</span></div>'+
+    '<div class="haj-words" id="hajWords"></div>'+
+    '<div class="haj-cur-wrap"><div class="haj-cur" id="hajCur">حروف رو بچین...</div></div>'+
+    '<div class="haj-letters" id="hajLetters">'+
+      HAJ.letters.map((ch,i)=>'<button class="haj-l" data-idx="'+i+'" onclick="hajTap('+i+')"><span>'+ch+'</span></button>').join('')+
+    '</div>'+
+    '<div class="haj-acts">'+
+      '<button class="btn ghost" onclick="hajShuffle()">'+ic('shuffle',14)+' به‌هم‌ریز</button>'+
+      '<button class="btn ghost" onclick="hajBack()">'+ic('delete',14)+' حذف</button>'+
+      '<button class="btn ghost" onclick="hajHint()">'+ic('lightbulb',14)+' راهنما</button>'+
+      '<button class="btn primary" id="hajSubmit" onclick="hajSubmit()" disabled>'+ic('check',14)+' تایید</button>'+
+    '</div>';
+  hajRenderWords();
+  hajRenderCur();
+}
+
+const hajEng={
+  start(el){hajInit();HAJ.el=el;hajReset(HAJ.level);},
+  stop(){HAJ.el=null;hidePremiumGO();},
+  key(e){
+    if(e.key==='Enter'){e.preventDefault();if(HAJ.cur.length>=2)hajSubmit();return true;}
+    if(e.key==='Backspace'){e.preventDefault();hajBack();return true;}
+    if(e.key===' '||e.key==='s'||e.key==='S'){e.preventDefault();hajShuffle();return true;}
+    if(e.key.length===1){
+      // find letter
+      const ch=e.key;
+      // map persian/english?
+      const idx=HAJ.letters.findIndex((l,i)=>!HAJ.used.has(i)&&l===ch);
+      if(idx>=0){hajTap(idx);return true;}
+    }
+    return false;
+  }
+};
+
+Object.assign(GAME_ENG,{'hajabbas':hajEng});
 
 /* ================================================================
    کاورهای پرمیوم بازی‌ها — SVG داخلی با کیفیت بالا، شیک و جذاب
@@ -6139,7 +6491,49 @@ const COVERS={
     +'</g>'
     +'<g fill="#f0c75e" opacity=".6"><circle cx="18" cy="22" r="1.6"/><circle cx="300" cy="34" r="1.8"/></g>',
 
+
+  'hajabbas':()=>'<defs>'
+    +'<linearGradient id="cvh-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1e0e"/><stop offset="1" stop-color="#4a3314"/></linearGradient>'
+    +'<linearGradient id="cvh-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#d9ae3e"/></linearGradient>'
+    +'<linearGradient id="cvh-face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffecb3"/><stop offset="1" stop-color="#e6c27a"/></linearGradient>'
+    +'<filter id="cvh-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cvh-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,233,168,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'</defs>'
+    +'<rect width="320" height="200" fill="url(#cvh-bg)"/>'
+    +'<rect width="320" height="200" fill="url(#cvh-glow)"/>'
+    +'<g opacity=".06" fill="#ffe9a8"><rect x="20" y="20" width="36" height="32" rx="8"/><rect x="64" y="20" width="36" height="32" rx="8"/><rect x="108" y="20" width="36" height="32" rx="8"/><rect x="152" y="20" width="36" height="32" rx="8"/></g>'
+    +'<g transform="translate(48,26)" filter="url(#cvh-sh)">'
+      +'<rect width="56" height="56" rx="14" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.14)"/>'
+      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#ffe9a8" text-anchor="middle">ا</text>'
+    +'</g>'
+    +'<g transform="translate(112,26)" filter="url(#cvh-sh)">'
+      +'<rect width="56" height="56" rx="14" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.14)"/>'
+      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#ffe9a8" text-anchor="middle">ب</text>'
+    +'</g>'
+    +'<g transform="translate(176,26)" filter="url(#cvh-sh)">'
+      +'<rect width="56" height="56" rx="14" fill="url(#cvh-gold)" stroke="#b8922f"/>'
+      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#3e2723" text-anchor="middle">ج</text>'
+    +'</g>'
+    +'<g transform="translate(200,96)" filter="url(#cvh-sh)">'
+      +'<circle r="34" fill="url(#cvh-face)" stroke="#b8922f" stroke-width="1.2"/>'
+      +'<path d="M-22 -18 Q0 -28 22 -18 L22 -12 Q0 -22 -22 -12 Z" fill="#5d4037"/>'
+      +'<circle cx="-8" cy="-2" r="3" fill="#fff"/><circle cx="8" cy="-2" r="3" fill="#fff"/>'
+      +'<circle cx="-7" cy="0" r="1.4" fill="#212121"/><circle cx="9" cy="0" r="1.4" fill="#212121"/>'
+      +'<path d="M-6 10 Q0 14 6 10" stroke="#5d4037" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+      +'<path d="M-18 12 Q0 26 18 12 L18 20 Q0 34 -18 20 Z" fill="#fff" stroke="#b0bec5" stroke-width=".8"/>'
+    +'</g>'
+    +'<g transform="translate(48,108)" opacity=".9">'
+      +'<rect width="56" height="18" rx="9" fill="rgba(126,200,111,.18)" stroke="rgba(126,200,111,.32)"/>'
+      +'<text x="28" y="13" font-family="Vazirmatn" font-size="11" font-weight="800" fill="#a5d6a7" text-anchor="middle">عباس</text>'
+    +'</g>'
+    +'<g transform="translate(112,108)">'
+      +'<rect width="56" height="18" rx="9" fill="rgba(240,199,94,.18)" stroke="rgba(240,199,94,.35)"/>'
+      +'<text x="28" y="13" font-family="Vazirmatn" font-size="11" font-weight="800" fill="#ffe9a8" text-anchor="middle">حاجی</text>'
+    +'</g>'
+    +'<g fill="#f0c75e" opacity=".5"><circle cx="18" cy="18" r="1.6"/><circle cx="300" cy="32" r="1.8"/></g>',
+
 };
+
 
 function gcov(k){const f=COVERS[k];return f?'<svg class="gcov-svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+f()+'</svg>':'';}
 
@@ -7735,13 +8129,14 @@ const NAV=[
   {v:'fav',i:'star',t:'علاقه‌مندی‌ها'},
   {sec:'سرگرمیِ کافی‌نت'},
   {v:'games',i:'gamepad',t:'بازی‌ها'},
+  {v:'shop',i:'shopping-bag',t:'فروشگاه'},
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
   {v:'typing',i:'type',t:'آموزش'},
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
-const VIEWS=['home','sites','fav','games','music','calc','typing','ai'];
-const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry'];
+const VIEWS=['home','sites','fav','games','shop','music','calc','typing','ai'];
+const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 function sideHtml(){
@@ -7765,13 +8160,13 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۵٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۶٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
 
 function topHtml(){
-  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
+  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',shop:'فروشگاه',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
   let dt='',tm='';
   try{
     const now=new Date();
@@ -7837,7 +8232,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۵٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۶٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -7990,7 +8385,10 @@ const GAME_META={
     d:'تیرکمون را بکش و پرنده‌های خشمگین را به سمت خوک‌های سبز پرتاب کن! قرمز معمولی، زرد با سرعت برق، آبی سه‌تایی و سیاه انفجاری — هر مرحله قلعه‌ای جدید با فیزیک واقعی چوب و سنگ و شیشه!',
     ctrl:'کشیدن موس = نشانه‌گیری · رها کردن = پرتاب · Space = قدرت ویژه · Enter = دوباره',
     btns:[{t:'قدرت ویژه!',k:' ',i:'zap',cls:'primary'},{t:'دوباره',k:'Enter',i:'rotate-ccw'}]},
-
+  'hajabbas':{t:'حاج عباس',i:'book-open',c:'#d9ae3e',type:'dom',best:['hajBest','مرحله'],
+    d:'بازی کلمه‌سازی مثل آمیرزا — حاج عباس پیر خردمند حروف را به تو می‌دهد، تو کلمات پنهان را پیدا کن! هر مرحله سخت‌تر، حروف بیشتر و کلمات بیشتر — با راهنما و به‌هم‌ریز خوشگل!',
+    ctrl:'کلیک روی حروف = ساخت کلمه · Enter = تایید · Backspace = حذف · Space = به‌هم‌ریز',
+    btns:[{t:'به‌هم‌ریز',k:' ',i:'shuffle',cls:'ghost'},{t:'حذف',k:'Backspace',i:'delete'},{t:'تایید',k:'Enter',i:'check',cls:'primary'}]},
 };
 function bannerDino(){
   return '<div class="g-banner" onclick="go(\'game-dino\')" role="button" title="بازی دایی ناصر">'
@@ -8045,6 +8443,50 @@ function bannerTower(){
   +'<div class="gb-keys"><kbd>Enter</kbd> یا کلیک = رها کردن</div>'
   +'<button class="btn gold">'+ic('play',15)+'بازی کن</button></div></div>';
 }
+
+function vShop(){
+  const ups=[
+    {t:'پرنده طلایی انگری',d:'قدرت 3 برابر + انفجار طلایی',i:'crown',c:'#f0c75e',p:'۱۲۰ سکه'},
+    {t:'تیرکمون لیزری',d:'نشانه‌گیری لیزری + پیش‌بینی دقیق',i:'target',c:'#e74c3c',p:'۹۰ سکه'},
+    {t:'سکه بی‌نهایت مار',d:'مار طلایی با سرعت بیشتر',i:'coins',c:'#4fae6b',p:'۷۵ سکه'},
+    {t:'پک حروف حاج عباس',d:'راهنمای بیشتر + مرحله اضافی',i:'book-open',c:'#8b7bd8',p:'۶۰ سکه'},
+    {t:'اسکین کافی‌نت',d:'تم شب پرستاره + فنجان طلایی',i:'palette',c:'#4c8ddb',p:'۱۵۰ سکه'},
+    {t:'حذف تبلیغات',d:'همیشه بدون تبلیغ + پاداش دو برابر',i:'shield-check',c:'#3fa37c',p:'۲۰۰ سکه'},
+  ];
+  return '<section class="shop-hero">'+
+    '<div class="shop-hero-bg"></div>'+
+    '<div class="shop-hero-glow g1"></div><div class="shop-hero-glow g2"></div>'+
+    '<div class="shop-hero-content">'+
+      '<span class="shop-badge">'+ic('shopping-bag',14)+' فروشگاه کافی‌نت نت‌یار</span>'+
+      '<h1>بازی‌هات رو <span class="g">ارتقا</span> بده!</h1>'+
+      '<p>سکه جمع کن، آیتم‌های پرمیوم بگیر و بازی‌خانه رو به قلعه خودت تبدیل کن — همه با طراحی طلایی و انیمیشن نرم!</p>'+
+      '<div class="shop-stats"><span>'+ic('coins',14)+' '+faNum(1240)+' سکه داری</span><span>'+ic('trophy',14)+' '+faNum(Object.keys(GAME_META).length)+' بازی</span><span>'+ic('zap',14)+' ارتقای فوری</span></div>'+
+      '<button class="btn gold" onclick="toast(\'به زودی درحال ساخت می باشد\',\'shopping-bag\')">'+ic('gift',16)+' دریافت سکه رایگان</button>'+
+    '</div>'+
+    '<div class="shop-visual">'+
+      '<div class="shop-cards-stack">'+
+        '<div class="scard s1">'+ic('crown',28)+'</div>'+
+        '<div class="scard s2">'+ic('target',26)+'</div>'+
+        '<div class="scard s3">'+ic('coins',24)+'</div>'+
+      '</div>'+
+    '</div>'+
+  '</section>'+
+  secHead('shopping-bag','blue','آیتم‌های ویژه','برای ارتقای بازی‌ها')+
+  '<div class="shop-grid">'+ups.map((u,i)=>'<div class="shop-card reveal" style="--cc:'+u.c+';transition-delay:'+Math.min(i*50,400)+'ms" onclick="toast(\'به زودی درحال ساخت می باشد — '+u.t+'\',\'shopping-bag\')">'+
+    '<div class="shop-ic" style="--cc:'+u.c+'">'+ic(u.i,22)+'</div>'+
+    '<div class="shop-info"><div class="shop-t">'+u.t+'</div><div class="shop-d">'+u.d+'</div><div class="shop-p">'+ic('coins',12)+u.p+'</div></div>'+
+    '<button class="btn primary shop-buy">'+ic('shopping-bag',14)+' ارتقا</button>'+
+    '<span class="shop-shine"></span></div>').join('')+
+  '</div>'+
+  secHead('gift','','چطور سکه بگیری؟','راه‌های ساده')+
+  '<div class="perks">'+
+    '<div class="perk reveal"><span class="pic">'+ic('gamepad',18)+'</span><div><h3>بازی کن و ببر</h3><p>هر برد ۱۰ سکه، هر رکورد جدید ۵۰ سکه!</p></div></div>'+
+    '<div class="perk reveal" style="transition-delay:.08s"><span class="pic">'+ic('star',18)+'</span><div><h3>علاقه‌مندی‌ها</h3><p>هر ۵ سایت ستاره‌دار = ۲۰ سکه هدیه</p></div></div>'+
+    '<div class="perk reveal" style="transition-delay:.16s"><span class="pic">'+ic('share',18)+'</span><div><h3>اشتراک‌گذاری</h3><p>لینک نت‌یار رو بفرست، ۱۰۰ سکه بگیر!</p></div></div>'+
+  '</div>'+footHtml();
+}
+
+
 function vGames(){
   return '<section class="soon-hero" style="margin-bottom:18px"><span class="soon-badge live"><span class="d"></span> '+faNum(Object.keys(GAME_META).length)+' بازی کامل — همین حالا بازی کن!</span>'
     +'<h2>بازی‌خانهٔ کافی‌نت</h2>'
@@ -8052,7 +8494,7 @@ function vGames(){
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
   +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
   +secHead('gamepad','blue','بقیهٔ بازی‌ها','همگی کامل و قابل بازی')
-  +'<div class="game-grid">'+['angry','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+  +'<div class="game-grid">'+['hajabbas','angry','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       const m=GAME_META[k];
       const rec=m.best?faNum(store.get(m.best[0],0))+' '+m.best[1]:'';
       const desc=m.d.split('！')[0].split('!')[0].split(' — ')[0];
@@ -8796,6 +9238,7 @@ function render(){
     case 'sites':body=vSites();break;
     case 'fav':body=vFav();break;
     case 'games':body=vGames();break;
+    case 'shop':body=vShop();break;
     case 'music':body=musHero();break;
     case 'calc':body=vCalc();break;
     case 'typing':body=typView();break;

@@ -257,13 +257,14 @@ const NAV=[
   {v:'fav',i:'star',t:'علاقه‌مندی‌ها'},
   {sec:'سرگرمیِ کافی‌نت'},
   {v:'games',i:'gamepad',t:'بازی‌ها'},
+  {v:'shop',i:'shopping-bag',t:'فروشگاه'},
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
   {v:'typing',i:'type',t:'آموزش'},
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
-const VIEWS=['home','sites','fav','games','music','calc','typing','ai'];
-const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry'];
+const VIEWS=['home','sites','fav','games','shop','music','calc','typing','ai'];
+const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 function sideHtml(){
@@ -287,13 +288,13 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۵٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۶٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
 
 function topHtml(){
-  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
+  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',shop:'فروشگاه',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
   let dt='',tm='';
   try{
     const now=new Date();
@@ -359,7 +360,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۵٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۶٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -512,7 +513,10 @@ const GAME_META={
     d:'تیرکمون را بکش و پرنده‌های خشمگین را به سمت خوک‌های سبز پرتاب کن! قرمز معمولی، زرد با سرعت برق، آبی سه‌تایی و سیاه انفجاری — هر مرحله قلعه‌ای جدید با فیزیک واقعی چوب و سنگ و شیشه!',
     ctrl:'کشیدن موس = نشانه‌گیری · رها کردن = پرتاب · Space = قدرت ویژه · Enter = دوباره',
     btns:[{t:'قدرت ویژه!',k:' ',i:'zap',cls:'primary'},{t:'دوباره',k:'Enter',i:'rotate-ccw'}]},
-
+  'hajabbas':{t:'حاج عباس',i:'book-open',c:'#d9ae3e',type:'dom',best:['hajBest','مرحله'],
+    d:'بازی کلمه‌سازی مثل آمیرزا — حاج عباس پیر خردمند حروف را به تو می‌دهد، تو کلمات پنهان را پیدا کن! هر مرحله سخت‌تر، حروف بیشتر و کلمات بیشتر — با راهنما و به‌هم‌ریز خوشگل!',
+    ctrl:'کلیک روی حروف = ساخت کلمه · Enter = تایید · Backspace = حذف · Space = به‌هم‌ریز',
+    btns:[{t:'به‌هم‌ریز',k:' ',i:'shuffle',cls:'ghost'},{t:'حذف',k:'Backspace',i:'delete'},{t:'تایید',k:'Enter',i:'check',cls:'primary'}]},
 };
 function bannerDino(){
   return '<div class="g-banner" onclick="go(\'game-dino\')" role="button" title="بازی دایی ناصر">'
@@ -567,6 +571,50 @@ function bannerTower(){
   +'<div class="gb-keys"><kbd>Enter</kbd> یا کلیک = رها کردن</div>'
   +'<button class="btn gold">'+ic('play',15)+'بازی کن</button></div></div>';
 }
+
+function vShop(){
+  const ups=[
+    {t:'پرنده طلایی انگری',d:'قدرت 3 برابر + انفجار طلایی',i:'crown',c:'#f0c75e',p:'۱۲۰ سکه'},
+    {t:'تیرکمون لیزری',d:'نشانه‌گیری لیزری + پیش‌بینی دقیق',i:'target',c:'#e74c3c',p:'۹۰ سکه'},
+    {t:'سکه بی‌نهایت مار',d:'مار طلایی با سرعت بیشتر',i:'coins',c:'#4fae6b',p:'۷۵ سکه'},
+    {t:'پک حروف حاج عباس',d:'راهنمای بیشتر + مرحله اضافی',i:'book-open',c:'#8b7bd8',p:'۶۰ سکه'},
+    {t:'اسکین کافی‌نت',d:'تم شب پرستاره + فنجان طلایی',i:'palette',c:'#4c8ddb',p:'۱۵۰ سکه'},
+    {t:'حذف تبلیغات',d:'همیشه بدون تبلیغ + پاداش دو برابر',i:'shield-check',c:'#3fa37c',p:'۲۰۰ سکه'},
+  ];
+  return '<section class="shop-hero">'+
+    '<div class="shop-hero-bg"></div>'+
+    '<div class="shop-hero-glow g1"></div><div class="shop-hero-glow g2"></div>'+
+    '<div class="shop-hero-content">'+
+      '<span class="shop-badge">'+ic('shopping-bag',14)+' فروشگاه کافی‌نت نت‌یار</span>'+
+      '<h1>بازی‌هات رو <span class="g">ارتقا</span> بده!</h1>'+
+      '<p>سکه جمع کن، آیتم‌های پرمیوم بگیر و بازی‌خانه رو به قلعه خودت تبدیل کن — همه با طراحی طلایی و انیمیشن نرم!</p>'+
+      '<div class="shop-stats"><span>'+ic('coins',14)+' '+faNum(1240)+' سکه داری</span><span>'+ic('trophy',14)+' '+faNum(Object.keys(GAME_META).length)+' بازی</span><span>'+ic('zap',14)+' ارتقای فوری</span></div>'+
+      '<button class="btn gold" onclick="toast(\'به زودی درحال ساخت می باشد\',\'shopping-bag\')">'+ic('gift',16)+' دریافت سکه رایگان</button>'+
+    '</div>'+
+    '<div class="shop-visual">'+
+      '<div class="shop-cards-stack">'+
+        '<div class="scard s1">'+ic('crown',28)+'</div>'+
+        '<div class="scard s2">'+ic('target',26)+'</div>'+
+        '<div class="scard s3">'+ic('coins',24)+'</div>'+
+      '</div>'+
+    '</div>'+
+  '</section>'+
+  secHead('shopping-bag','blue','آیتم‌های ویژه','برای ارتقای بازی‌ها')+
+  '<div class="shop-grid">'+ups.map((u,i)=>'<div class="shop-card reveal" style="--cc:'+u.c+';transition-delay:'+Math.min(i*50,400)+'ms" onclick="toast(\'به زودی درحال ساخت می باشد — '+u.t+'\',\'shopping-bag\')">'+
+    '<div class="shop-ic" style="--cc:'+u.c+'">'+ic(u.i,22)+'</div>'+
+    '<div class="shop-info"><div class="shop-t">'+u.t+'</div><div class="shop-d">'+u.d+'</div><div class="shop-p">'+ic('coins',12)+u.p+'</div></div>'+
+    '<button class="btn primary shop-buy">'+ic('shopping-bag',14)+' ارتقا</button>'+
+    '<span class="shop-shine"></span></div>').join('')+
+  '</div>'+
+  secHead('gift','','چطور سکه بگیری؟','راه‌های ساده')+
+  '<div class="perks">'+
+    '<div class="perk reveal"><span class="pic">'+ic('gamepad',18)+'</span><div><h3>بازی کن و ببر</h3><p>هر برد ۱۰ سکه، هر رکورد جدید ۵۰ سکه!</p></div></div>'+
+    '<div class="perk reveal" style="transition-delay:.08s"><span class="pic">'+ic('star',18)+'</span><div><h3>علاقه‌مندی‌ها</h3><p>هر ۵ سایت ستاره‌دار = ۲۰ سکه هدیه</p></div></div>'+
+    '<div class="perk reveal" style="transition-delay:.16s"><span class="pic">'+ic('share',18)+'</span><div><h3>اشتراک‌گذاری</h3><p>لینک نت‌یار رو بفرست، ۱۰۰ سکه بگیر!</p></div></div>'+
+  '</div>'+footHtml();
+}
+
+
 function vGames(){
   return '<section class="soon-hero" style="margin-bottom:18px"><span class="soon-badge live"><span class="d"></span> '+faNum(Object.keys(GAME_META).length)+' بازی کامل — همین حالا بازی کن!</span>'
     +'<h2>بازی‌خانهٔ کافی‌نت</h2>'
@@ -574,7 +622,7 @@ function vGames(){
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
   +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
   +secHead('gamepad','blue','بقیهٔ بازی‌ها','همگی کامل و قابل بازی')
-  +'<div class="game-grid">'+['angry','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+  +'<div class="game-grid">'+['hajabbas','angry','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       const m=GAME_META[k];
       const rec=m.best?faNum(store.get(m.best[0],0))+' '+m.best[1]:'';
       const desc=m.d.split('！')[0].split('!')[0].split(' — ')[0];
@@ -1318,6 +1366,7 @@ function render(){
     case 'sites':body=vSites();break;
     case 'fav':body=vFav();break;
     case 'games':body=vGames();break;
+    case 'shop':body=vShop();break;
     case 'music':body=musHero();break;
     case 'calc':body=vCalc();break;
     case 'typing':body=typView();break;
