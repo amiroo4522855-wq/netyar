@@ -263,7 +263,7 @@ const NAV=[
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
 const VIEWS=['home','sites','fav','games','music','calc','typing','ai'];
-const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble'];
+const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 function sideHtml(){
@@ -287,7 +287,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۴٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۵٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -359,7 +359,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۴٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۵٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -508,6 +508,11 @@ const GAME_META={
   'bubble':{t:'حباب‌پاپ',i:'sparkles',c:'#8b7bd8',type:'canvas',best:['bubBest','امتیاز'],
     d:'حباب‌های رنگی را قبل از فرار بترکان! هر حباب = امتیاز، کمبو پشت سر هم = امتیاز بیشتر. ۳۰ ثانیه فرصت داری — سریع باش!',
     ctrl:'کلیک روی حباب‌ها · Enter = دوباره'},
+  'angry':{t:'انگری بردز',i:'target',c:'#e74c3c',type:'canvas',best:['angryBest','امتیاز'],
+    d:'تیرکمون را بکش و پرنده‌های خشمگین را به سمت خوک‌های سبز پرتاب کن! قرمز معمولی، زرد با سرعت برق، آبی سه‌تایی و سیاه انفجاری — هر مرحله قلعه‌ای جدید با فیزیک واقعی چوب و سنگ و شیشه!',
+    ctrl:'کشیدن موس = نشانه‌گیری · رها کردن = پرتاب · Space = قدرت ویژه · Enter = دوباره',
+    btns:[{t:'قدرت ویژه!',k:' ',i:'zap',cls:'primary'},{t:'دوباره',k:'Enter',i:'rotate-ccw'}]},
+
 };
 function bannerDino(){
   return '<div class="g-banner" onclick="go(\'game-dino\')" role="button" title="بازی دایی ناصر">'
@@ -569,11 +574,11 @@ function vGames(){
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
   +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
   +secHead('gamepad','blue','بقیهٔ بازی‌ها','همگی کامل و قابل بازی')
-  +'<div class="game-grid">'+['flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+  +'<div class="game-grid">'+['angry','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       const m=GAME_META[k];
       const rec=m.best?faNum(store.get(m.best[0],0))+' '+m.best[1]:'';
       const desc=m.d.split('！')[0].split('!')[0].split(' — ')[0];
-      return '<div class="game-card playable reveal" style="--gc:'+m.c+';transition-delay:'+Math.min(i*30,400)+'ms" onclick="go(\'game-'+k+'\')">'
+      return '<div class="game-card playable reveal" data-k="'+k+'" style="--gc:'+m.c+';transition-delay:'+Math.min(i*30,400)+'ms" onclick="go(\'game-'+k+'\')">'
         +'<div class="gcov">'+gcov(k)+'<span class="gcov-shine"></span><span class="gcov-play">'+ic('play',12)+'بازی کن</span></div>'
         +'<div class="gc-info"><div class="gc-row"><span class="gt">'+m.t+'</span>'
         +(rec?'<span class="gc-best">'+ic('trophy',11)+rec+'</span>':'')

@@ -29,13 +29,13 @@ for(const v of views){
 }
 T('همه ۲۴ نما بدون خطا رندر شدند ('+navOK+'/'+views.length+')',navOK===views.length);
 if(navBad.length)console.log('   nav bad:',navBad.join(' | '));
-T('۱۸ بازی در متادیتا',ev('Object.keys(GAME_META).length')===18);
+T('۱۹ بازی در متادیتا',ev('Object.keys(GAME_META).length')===19);
 
 console.log('— بازی‌خانه —');
 w.go('games');await sleep(300);
 T('بنر دایی ناصر',bodyTxt().includes('دایی ناصر'));
 T('بنر برج‌سازی',bodyTxt().includes('برج‌سازی'));
-T('۱۶ کارت بازی جدید',$$('.game-card.playable').length===16);
+T('۱۷ کارت بازی جدید',$$('.game-card.playable').length===17);
 T('بدون «به‌زودی» در صفحه',!bodyTxt().includes('به‌زودی'));
 
 console.log('— تتریس —');
@@ -219,7 +219,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-  T('نسخه ۱۴٫۰',bodyTxt().includes('نسخه ۱۴٫۰'));
+  T('نسخه ۱۵٫۰',bodyTxt().includes('نسخه ۱۵٫۰'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);
@@ -283,8 +283,8 @@ T('بازگشت به تایپ بدون خطا',!!$('.typ-wrap'));
 
 console.log('— v8: کاورها و مار موسی —');
 w.go('games');await sleep(320);
-T('کاور SVG روی هر ۱۶ کارت',$$('.game-card.playable .gcov > svg').length===16);
-T('دکمهٔ «بازی کن» روی کاور',$$('.gcov-play').length===16);
+T('کاور SVG روی هر ۱۷ کارت',$$('.game-card.playable .gcov > svg').length===17);
+T('دکمهٔ «بازی کن» روی کاور',$$('.gcov-play').length===17);
 T('بدون کارت بدون کاور',[...$$('.game-card.playable')].every(c=>c.querySelector('.gcov > svg')));
 w.go('game-snake');await sleep(320);
 T('بنر کاور در صفحهٔ بازی',$$('.gcov.page svg').length===1);
