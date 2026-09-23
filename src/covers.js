@@ -405,6 +405,36 @@ const COVERS={
       +'<g transform="translate(30,0)"><rect width="96" height="22" rx="5" fill="hsl(295 62% 58%)"/><path d="M3 0 L11 -7 L85 -7 L93 0 Z" fill="hsl(295 68% 70%)"/></g>'
     +'</g>'
     +'<rect y="186" width="320" height="14" fill="#79b877"/><g fill="#ffd76e"><path d="M40 50 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 Z"/><path d="M270 86 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z"/></g>',
+
+  'shop':()=>'<defs>'
+    +'<linearGradient id="cvsh-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a1420"/><stop offset="1" stop-color="#2e2a18"/></linearGradient>'
+    +'<linearGradient id="cvsh-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset=".5" stop-color="#f0c75e"/><stop offset="1" stop-color="#b8922f"/></linearGradient>'
+    +'<linearGradient id="cvsh-bag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a12"/><stop offset="1" stop-color="#1e1508"/></linearGradient>'
+    +'<radialGradient id="cvsh-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(240,199,94,.28)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvsh-sh"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".6"/></filter>'
+    +'<filter id="cvsh-gl"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f0c75e" flood-opacity=".7"/></filter>'
+    +'</defs>'
+    +'<rect width="320" height="200" fill="url(#cvsh-bg)"/><rect width="320" height="200" fill="url(#cvsh-glow)"/>'
+    +'<g opacity=".06" fill="#ffe9a8"><circle cx="48" cy="40" r="30"/><circle cx="272" cy="156" r="36"/></g>'
+    // coins floating
+    +'<g filter="url(#cvsh-sh)">'
+      +'<g transform="translate(56,52)"><circle r="18" fill="url(#cvsh-gold)" stroke="#b8922f" stroke-width="1"/><text x="0" y="6" font-family="Vazirmatn" font-size="14" font-weight="900" fill="#3e2723" text-anchor="middle">₵</text><ellipse cx="-6" cy="-7" rx="7" ry="4" fill="rgba(255,255,255,.45)" transform="rotate(-22 -6 -7)"/></g>'
+      +'<g transform="translate(236,44)"><circle r="14" fill="url(#cvsh-gold)" stroke="#b8922f" stroke-width="1"/><text x="0" y="5" font-family="Vazirmatn" font-size="11" font-weight="900" fill="#3e2723" text-anchor="middle">✦</text></g>'
+      +'<g transform="translate(42,132)"><circle r="11" fill="url(#cvsh-gold)" opacity=".85"/><text x="0" y="4" font-family="Vazirmatn" font-size="9" font-weight="900" fill="#3e2723" text-anchor="middle">★</text></g>'
+    +'</g>'
+    // shopping bag premium AI design
+    +'<g transform="translate(160,102)" filter="url(#cvsh-sh)">'
+      +'<path d="M-42 -36 L42 -36 L38 42 L-38 42 Z" fill="url(#cvsh-bag)" stroke="rgba(255,233,168,.28)" stroke-width="1.2"/>'
+      +'<path d="M-42 -36 L42 -36 L42 -30 L-42 -30 Z" fill="url(#cvsh-gold)"/>'
+      +'<path d="M-18 -36 C-18 -58, 18 -58, 18 -36" fill="none" stroke="url(#cvsh-gold)" stroke-width="5" stroke-linecap="round"/>'
+      +'<g transform="translate(0,4)">'
+        +'<circle r="22" fill="rgba(240,199,94,.14)" stroke="rgba(240,199,94,.35)" stroke-width="1.2"/>'
+        +'<path d="M-2 -10 L6 -4 L-6 10 L-2 2 L-8 2 Z" fill="url(#cvsh-gold)" filter="url(#cvsh-gl)"/>'
+      +'</g>'
+      +'<ellipse cx="0" cy="46" rx="30" ry="5" fill="rgba(0,0,0,.35)"/>'
+    +'</g>'
+    +'<g fill="#f0c75e" opacity=".7"><circle cx="24" cy="22" r="1.8"/><circle cx="296" cy="28" r="2.2"><animate attributeName="opacity" values="1;.2;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="286" cy="162" r="1.6"/></g>'
+    +'<text x="160" y="188" font-family="Vazirmatn" font-size="11" font-weight="800" fill="rgba(255,233,168,.65)" text-anchor="middle" letter-spacing=".8">فروشگاه پرمیوم نت‌یار — AI DESIGN</text>',
 };
 
 function gcov(k){const f=COVERS[k];return f?'<svg class="gcov-svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+f()+'</svg>':'';}

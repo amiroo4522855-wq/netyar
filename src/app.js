@@ -257,7 +257,6 @@ const NAV=[
   {v:'fav',i:'star',t:'علاقه‌مندی‌ها'},
   {sec:'سرگرمیِ کافی‌نت'},
   {v:'games',i:'gamepad',t:'بازی‌ها'},
-  {v:'shop',i:'shopping-bag',t:'فروشگاه'},
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
   {v:'typing',i:'type',t:'آموزش'},
@@ -288,7 +287,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۸٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۸٫۱ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -360,7 +359,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۸٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۸٫۱</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -673,8 +672,13 @@ function vGames(){
     +'<p>قهوه‌ات را بردار و بازی کن — بدون نصب، بدون انتظار، همه با کیبورد و لمس. رکوردهایت روی همین دستگاه ذخیره می‌شود!</p>'
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
   +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
-  +secHead('gamepad','blue','بقیهٔ بازی‌ها','همگی کامل و قابل بازی')
-  +'<div class="game-grid">'+['hajabbas','angry','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+  +secHead('gamepad','blue','بازی‌ها + فروشگاه','همگی کامل و قابل بازی — فروشگاه هم اینجاست!')
+  +'<div class="game-grid">'+['hajabbas','angry','shop','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+      if(k==='shop'){
+        return '<div class="game-card playable reveal shop-card-in-games" data-k="shop" style="--gc:#d9ae3e;transition-delay:'+Math.min(i*30,400)+'ms" onclick="go(\'shop\')">'
+          +'<div class="gcov">'+gcov('shop')+'<span class="gcov-shine"></span><span class="gcov-play">'+ic('shopping-bag',12)+'فروشگاه</span></div>'
+          +'<div class="gc-info"><div class="gc-row"><span class="gt">فروشگاه پرمیوم</span><span class="gc-best">'+ic('sparkles',11)+'AI DESIGN</span></div><div class="gd">سکه جمع کن، آیتم‌های طلایی بگیر — طراحی هوش مصنوعی</div></div></div>';
+      }
       const m=GAME_META[k];
       const rec=m.best?faNum(store.get(m.best[0],0))+' '+m.best[1]:'';
       const desc=m.d.split('！')[0].split('!')[0].split(' — ')[0];

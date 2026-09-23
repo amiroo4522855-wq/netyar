@@ -219,7 +219,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-  T('نسخه ۱۸٫۰',bodyTxt().includes('نسخه ۱۸٫۰'));
+  T('نسخه ۱۸٫۱',bodyTxt().includes('نسخه ۱۸٫۱'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);
@@ -286,6 +286,8 @@ w.go('games');await sleep(320);
 T('کاور SVG روی هر کارت (۱۸)',$$('.game-card.playable .gcov > svg').length>=17);
 T('دکمهٔ «بازی کن» روی کاور',$$('.gcov-play').length>=17);
 T('بدون کارت بدون کاور',[...$$('.game-card.playable')].every(c=>c.querySelector('.gcov > svg')));
+T('فروشگاه داخل بازی‌ها با کاور AI', !!$('.shop-card-in-games') && ev('typeof COVERS!==\"undefined\" && COVERS[\"shop\"]') && ev('COVERS[\"shop\"]()').includes('cvsh-bg'));
+T('فروشگاه بین بازی‌ها (بعد از حاج عباس)', ev('(()=>{const cards=[...document.querySelectorAll(\".game-card.playable\")].map(c=>c.dataset.k||c.getAttribute(\"data-k\")); const iH=cards.indexOf(\"hajabbas\"); const iS=cards.indexOf(\"shop\"); return iH>=0 && iS>=0 && Math.abs(iS-iH)<=3;})()'));
 w.go('game-snake');await sleep(320);
 T('بنر کاور در صفحهٔ بازی',$$('.gcov.page svg').length===1);
 const cvEl=$('#gameCv');
@@ -439,6 +441,7 @@ T('Esc و Backspace برای خروج تمام‌صفحه در کد', src.includ
 T('CSS تمام‌صفحه :fullscreen', src.includes(':fullscreen') && src.includes('game-fs-wrap'));
 T('CSS دکمه مربع خوشگل تمام‌صفحه', src.includes('.gi-fs') && src.includes('maximize'));
 T('۲۰ بازی در متا', ev('Object.keys(GAME_META).length')===20);
+T('انگری بردز RAF + dt clamp', src.includes('angryFrame') && src.includes('Math.min(33') && src.includes('GRAV') && src.includes('MAX_STRETCH'));
 
 function kbKey(k){return [...$$('.kk')].find(b=>b.dataset.k===k);}
 console.log('\n═══ v11: '+pass+' ✓ / '+fail+' ✗ ═══');
