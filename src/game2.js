@@ -90,7 +90,7 @@ function tetMerge(){
   TET.cur=TET.next;TET.next=tetSpawn();
   if(tetCollide(TET.cur.m,TET.cur.x,TET.cur.y)){
     TET.over=true;
-    if(TET.score>TET.best){TET.best=TET.score;store.set('tetrisBest',TET.best);}
+    if(TET.score>TET.best){TET.best=TET.score;store.set('tetrisBest',TET.best); try{ if(typeof coinAdd==='function') coinAdd(20,'رکورد تتریس'); }catch(e){} }
   }
 }
 function tetRotate(){
@@ -255,7 +255,7 @@ function g48Move(dir){
     prev.forEach((v,i)=>{if(v===0&&b[i]>0)born=i;});
     G48.fx={m:mergedCells,born:born};
     G48.gainFx=gain;
-    if(G48.score>G48.best){G48.best=G48.score;store.set('g2048Best',G48.best);}
+    if(G48.score>G48.best){G48.best=G48.score;store.set('g2048Best',G48.best); try{ if(typeof coinAdd==='function') coinAdd(18,'رکورد ۲۰۴۸'); }catch(e){} }
     if(!g48Can()){G48.over=true;store.set('g2048Best',G48.best);}
     g48Render();
   }
@@ -338,7 +338,7 @@ function snkUpdate(dt){
   if(h.x<0||h.x>=SNK.cols||h.y<0||h.y>=SNK.rows||SNK.snake.some(s=>s.x===h.x&&s.y===h.y)){
     SNK.over=true;
     gSfx('bad');
-    if(SNK.score>SNK.best){SNK.best=SNK.score;store.set('snakeBest',SNK.best);}
+    if(SNK.score>SNK.best){SNK.best=SNK.score;store.set('snakeBest',SNK.best); try{ if(typeof coinAdd==='function') coinAdd(12,'رکورد مار'); }catch(e){} }
     return;
   }
   SNK.snake.unshift(h);
@@ -498,7 +498,7 @@ function tttPlace(i){
   const w=tttWinner(TTT.b);
   if(w){
     TTT.over=true;
-    if(w.p==='X'){TTT.score.w++;toast('بردی! '.replace(' ',''),'trophy');}
+    if(w.p==='X'){TTT.score.w++;toast('بردی!','trophy'); try{ if(typeof coinAdd==='function') coinAdd(15,'برد دوز'); }catch(e){} }
     else if(w.p==='O'){TTT.score.l++;}
     else{TTT.score.d++;}
   }else{
@@ -562,7 +562,7 @@ function memFlip(i){
     setTimeout(()=>{
       if(MEM.cards[a].icn===MEM.cards[b].icn){
         MEM.cards[a].done=MEM.cards[b].done=true;MEM.found++;
-        if(MEM.found===8&&(!MEM.best||MEM.moves<MEM.best)){MEM.best=MEM.moves;store.set('memoryBest',MEM.best);}
+        if(MEM.found===8&&(!MEM.best||MEM.moves<MEM.best)){MEM.best=MEM.moves;store.set('memoryBest',MEM.best); try{ if(typeof coinAdd==='function') coinAdd(20,'برد حافظه'); }catch(e){} }
       }
       MEM.open=[];MEM.lock=false;memRender();
     },620);
@@ -647,7 +647,7 @@ function rctClick(){
   }else if(RCT.st==='go'){
     const ms=Math.round(performance.now()-RCT.t0);
     RCT.st='idle';
-    if(!RCT.best||ms<RCT.best){RCT.best=ms;store.set('reactBest',ms);}
+    if(!RCT.best||ms<RCT.best){RCT.best=ms;store.set('reactBest',ms); try{ if(typeof coinAdd==='function') coinAdd(10,'رکورد ری‌اکشن'); }catch(e){} }
     rctRender(gNum(ms)+' میلی‌ثانیه!','result');
     setTimeout(()=>{if(RCT.st==='idle')rctRender();},1600);
   }
@@ -680,7 +680,7 @@ function coinFlip(){
   setTimeout(()=>{
     COIN.spinning=false;
     if(r)COIN.h++;else COIN.t++;
-    coinRender(r?'شیر آمد!':'خط آمد!');
+    coinRender(r?'شیر آمد!':'خط آمد!'); try{ if(typeof coinAdd==='function') coinAdd(1,'پرتاب سکه'); }catch(e){}
     COIN.el.querySelector('#coin3d').style.transform='rotateY('+(r?0:180)+'deg)';
   },2100);
 }
@@ -748,7 +748,7 @@ function pzlMove(i){
   PZL.moves++;
   pzlRender();
   if(PZL.tiles.every((v,idx)=>v===(idx+1)%16)){
-    if(!PZL.best||PZL.moves<PZL.best){PZL.best=PZL.moves;store.set('puzzleBest',PZL.best);}
+    if(!PZL.best||PZL.moves<PZL.best){PZL.best=PZL.moves;store.set('puzzleBest',PZL.best); try{ if(typeof coinAdd==='function') coinAdd(15,'برد پازل'); }catch(e){} }
     setTimeout(()=>pzlRender(true),60);
   }
 }
@@ -841,7 +841,7 @@ function wrdCheck(cells){
       WRD.found.push(w.w);
       toast('پیدا شد: '+w.w,'trophy');
       if(WRD.found.length===WRD_LIST.filter(x=>WRD.words.some(y=>y.w===x)).length){
-        toast('همهٔ کلمات پیدا شد!','crown');
+        toast('همهٔ کلمات پیدا شد!','crown'); try{ if(typeof coinAdd==='function') coinAdd(20,'برد واژه‌یاب'); }catch(e){}
       }
       return true;
     }
@@ -1055,6 +1055,7 @@ function chsRender(){
     if(pcv&&pcv.t==='k'&&chsAttacked(CHS.b,r,c2,pcv.col==='w'?'b':'w'))cell.classList.add('chk');
   });
   el.querySelectorAll('.chs-c').forEach(b=>b.onclick=()=>chsClick(+b.dataset.r,+b.dataset.c));
+  try{ if(typeof applyChessSkin==='function') applyChessSkin(); }catch(e){}
 }
 const chsEng={
   start(el){CHS.el=el;chsReset();},

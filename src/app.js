@@ -257,18 +257,23 @@ const NAV=[
   {v:'fav',i:'star',t:'علاقه‌مندی‌ها'},
   {sec:'سرگرمیِ کافی‌نت'},
   {v:'games',i:'gamepad',t:'بازی‌ها'},
+  {v:'shop',i:'shopping-bag',t:'فروشگاه'},
+  {v:'customers',i:'users',t:'مشتری‌ها',secret:true},
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
   {v:'typing',i:'type',t:'آموزش'},
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
-const VIEWS=['home','sites','fav','games','shop','music','calc','typing','ai'];
+const VIEWS=['home','sites','fav','games','shop','customers','music','calc','typing','ai'];
 const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
+
 
 function sideHtml(){
   const catKeys=Object.keys(CATS);
   const openCls=state.sbOpen?' open':' closed';
+  const crmCount=(typeof crmGet==='function'?crmGet().length:0);
+  const coinBal=(typeof coinGet==='function'?coinGet():0);
   return '<div class="sb-overlay'+(state.sbOpen?' open':'')+'" onclick="closeSidebar()"></div>'
     +'<aside class="sidebar'+openCls+'">'
     +'<div class="sb-glow"></div>'
@@ -280,32 +285,35 @@ function sideHtml(){
     +'<nav class="nav no-sb">'
       +NAV.map(item=>item.sec
         ?'<div class="nav-sec">'+item.sec+'</div>'
-        :'<div class="nav-item'+(state.view===item.v?' active':'')+'" data-v="'+item.v+'" onclick="go(\''+item.v+'\');if(isMobile())closeSidebar()"><span class="nico">'+ic(item.i,17)+'</span><span>'+item.t+'</span>'+(item.v==='sites'?'<span class="cnt">'+faNum(SITES.length)+'</span>':'')+(item.v==='fav'?'<span class="cnt" style="display:'+(state.favs.length?'':'none')+'">'+faNum(state.favs.length)+'</span>':'')+'</div>'
+        :'<div class="nav-item'+(state.view===item.v?' active':'')+(item.secret?' secret':'')+'" data-v="'+item.v+'" onclick="go(\''+item.v+'\');if(isMobile())closeSidebar()"><span class="nico">'+ic(item.i,17)+'</span><span>'+item.t+'</span>'+(item.secret?'<span class="lock-ic">'+ic('lock',10)+'</span>':'')+(item.v==='sites'?'<span class="cnt">'+faNum(SITES.length)+'</span>':'')+(item.v==='fav'?'<span class="cnt" style="display:'+(state.favs.length?'':'none')+'">'+faNum(state.favs.length)+'</span>':'')+(item.v==='customers'?'<span class="cnt">'+faNum(crmCount)+'</span>':'')+(item.v==='shop'?'<span class="cnt gold">'+faNum(coinBal)+'</span>':'')+'</div>'
       ).join('')
       +'<div class="nav-sec">دسته‌بندی‌ها</div>'
       +'<div class="nav-cats">'
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۸٫۱ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۹٫۰ — '+faNum(SITES.length)+' سایت · '+faNum(coinBal)+' سکه</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
 
+
 function topHtml(){
-  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',shop:'فروشگاه',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
+  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',shop:'فروشگاه',customers:'مشتری‌ها',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
   let dt='',tm='';
   try{
     const now=new Date();
     dt=new Intl.DateTimeFormat('fa-IR',{weekday:'long',day:'numeric',month:'long'}).format(now);
     tm=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(now);
   }catch(e){}
+  const coinBalTop=(typeof coinGet==='function'?coinGet():0);
   return '<header class="topbar">'
     +'<button class="menu-btn'+(state.sbOpen?' open':'')+'" id="menuBtn" onclick="toggleSidebar()" title="باز/بستن منو"><span class="mb-box"><i class="mb-line l1"></i><i class="mb-line l2"></i><i class="mb-line l3"></i></span><span class="mb-glow"></span></button>'
     +'<button class="back-btn'+(HIST.length?'':' hide')+'" onclick="goBack()" title="بازگشت به صفحهٔ قبل">'+ic('arrow-left',17)+'</button>'
     +'<div class="top-logo" onclick="go(\'home\')"><span class="logo-mark">'+ic('coffee',18)+'</span>کافی‌نتِ <b>نت‌یار</b></div>'
     +'<div class="pg-ttl">'+(titles[state.view]||'')+'<span class="bdg">'+ic('shield-check',10)+'نت‌یار</span></div>'
     +'<div class="sp"></div>'
+    +'<span class="coin-pill-top" title="سکه‌های شما">'+ic('coins',12)+'<b id="coinBalance">'+faNum(coinBalTop)+'</b></span>'
     +'<div class="status-pill"><span class="dot"></span><span class="st-lbl">سرویس آنلاین</span></div>'
     +'<div class="clock">'+ic('clock',15)+'<div><div class="tm">'+tm+'</div><div class="dt">'+dt+'</div></div></div>'
   +'</header>';
@@ -359,7 +367,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۸٫۱</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۹٫۰ — سکه + مشتری + تایپ پرمیوم</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -1425,7 +1433,8 @@ function render(){
     case 'sites':body=vSites();break;
     case 'fav':body=vFav();break;
     case 'games':body=vGames();break;
-    case 'shop':body=vShop();break;
+    case 'shop':body=(typeof vShopFull==='function'?vShopFull():vShop());break;
+    case 'customers':body=(typeof vCustomers==='function'?vCustomers():'<div class="empty"><h3>مشتریان در حال بارگذاری…</h3></div>');break;
     case 'music':body=musHero();break;
     case 'calc':body=vCalc();break;
     case 'typing':body=typView();break;

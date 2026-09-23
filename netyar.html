@@ -1987,6 +1987,249 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 .shop-card-in-games::before{content:"ویژه";position:absolute;top:12px;left:12px;z-index:6;font-size:10px;font-weight:900;color:#1a1305;background:linear-gradient(135deg,#ffe9a8,#f0c75e);padding:4px 11px;border-radius:99px;box-shadow:0 6px 16px rgba(217,174,62,.4);animation:beatp 2s infinite}
 
 
+/* ============ v19: مشتریان + فروشگاه پرمیوم + آموزش تایپ + سکه ============ */
+/* --- coin pill --- */
+.coin-pill-top{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:900;color:var(--gold2);background:linear-gradient(135deg,rgba(217,174,62,.18),rgba(217,174,62,.08));border:1px solid rgba(217,174,62,.42);padding:6px 14px;border-radius:99px;box-shadow:0 4px 14px rgba(217,174,62,.15),inset 0 1px 0 rgba(255,255,255,.1);transition:all .3s}
+.coin-pill-top:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(217,174,62,.25)}
+.coin-pill-top b{color:#ffe9a8;font-size:13px}
+.coin-pill-top.pop{animation:coinPop .4s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes coinPop{40%{transform:scale(1.18)}}
+.nav-item.secret{border:1px dashed rgba(217,174,62,.28);background:linear-gradient(90deg,rgba(217,174,62,.08),transparent)}
+.nav-item.secret .nico{color:var(--gold2)}
+.nav-item.secret .lock-ic{margin-inline-start:auto;display:flex;color:var(--gold2);opacity:.8}
+.nav-item .cnt.gold{color:var(--gold2);background:rgba(217,174,62,.13);border-color:rgba(217,174,62,.4)}
+
+/* --- customers lock --- */
+.crm-lock-wrap{position:relative;min-height:560px;display:flex;align-items:center;justify-content:center;padding:40px 20px;border-radius:24px;overflow:hidden;border:1px solid var(--line2);background:linear-gradient(165deg,rgba(20,36,66,.6),rgba(10,20,36,.85))}
+.crm-lock-bg{position:absolute;inset:0;pointer-events:none}
+.crm-lock-glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}
+.crm-lock-glow.g1{width:320px;height:320px;background:rgba(46,108,184,.22);top:-60px;right:-40px;animation:drift 14s ease-in-out infinite alternate}
+.crm-lock-glow.g2{width:260px;height:260px;background:rgba(217,174,62,.14);bottom:-40px;left:-30px;animation:drift 18s ease-in-out infinite alternate-reverse}
+.crm-lock-card{position:relative;z-index:1;width:min(94vw,420px);padding:32px 26px;border-radius:22px;text-align:center;background:linear-gradient(165deg,rgba(20,36,66,.88),rgba(12,22,40,.98));border:1px solid rgba(148,180,224,.18);box-shadow:0 26px 70px rgba(2,8,20,.65),inset 0 1px 0 rgba(255,255,255,.08)}
+.crm-lock-ic{width:72px;height:72px;margin:0 auto 16px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,rgba(217,174,62,.22),rgba(46,108,184,.22));border:1px solid rgba(217,174,62,.32);color:var(--gold2);box-shadow:0 12px 30px rgba(217,174,62,.18)}
+.crm-lock-card h2{font-size:20px;font-weight:900;margin-bottom:8px}
+.crm-lock-card p{font-size:12.5px;color:var(--tx2);line-height:2;margin-bottom:18px}
+.crm-lock-input{display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:14px}
+.crm-lock-input input{width:140px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line2);background:rgba(4,10,20,.6);color:#fff;font-family:inherit;font-size:18px;font-weight:900;text-align:center;letter-spacing:6px;outline:none;transition:all .25s}
+.crm-lock-input input:focus{border-color:rgba(217,174,62,.6);box-shadow:0 0 0 4px rgba(217,174,62,.12)}
+.crm-lock-input input.shake{animation:shakeX .4s}
+.crm-lock-hint{font-size:11px;color:var(--tx3);background:rgba(148,180,224,.06);border:1px solid var(--line);padding:8px 12px;border-radius:11px;display:inline-flex;gap:6px;align-items:center}
+.crm-lock-foot{display:flex;justify-content:center;gap:16px;margin-top:18px;font-size:10.5px;color:var(--tx3)}
+.crm-lock-foot span{display:flex;align-items:center;gap:6px}
+
+/* --- customers hero --- */
+.crm-hero{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:42px 36px;border-radius:26px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(148,180,224,.16);background:linear-gradient(150deg,rgba(46,108,184,.16),rgba(12,22,40,.78) 50%,rgba(217,174,62,.12));box-shadow:0 26px 70px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+.crm-hero-bg{position:absolute;inset:0;background:radial-gradient(600px 300px at 85% 10%,rgba(240,199,94,.14),transparent 60%),radial-gradient(500px 300px at 10% 90%,rgba(46,108,184,.18),transparent 60%)}
+.crm-hero-glow{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+.crm-hero-glow.g1{width:220px;height:220px;background:rgba(240,199,94,.18);top:-40px;right:10%;animation:drift 12s ease-in-out infinite alternate}
+.crm-hero-glow.g2{width:180px;height:180px;background:rgba(46,108,184,.22);bottom:-30px;left:5%;animation:drift 14s ease-in-out infinite alternate-reverse}
+.crm-hero-content{position:relative;z-index:1}
+.crm-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:850;color:var(--gold2);background:rgba(217,174,62,.1);border:1px solid rgba(217,174,62,.35);padding:6px 14px;border-radius:99px;margin-bottom:14px}
+.crm-hero h1{font-size:34px;font-weight:900;line-height:1.4;margin-bottom:10px}
+.crm-hero h1 .g{background:var(--gradG);-webkit-background-clip:text;background-clip:text;color:transparent}
+.crm-hero p{font-size:13.5px;color:var(--tx2);line-height:2;margin-bottom:14px;max-width:560px}
+.crm-hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.crm-hero-stats span{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--tx2);background:rgba(148,180,224,.06);border:1px solid var(--line);padding:6px 12px;border-radius:99px}
+.crm-hero-acts{display:flex;gap:10px;flex-wrap:wrap}
+.crm-hero-visual{position:relative;z-index:1;height:200px;display:flex;align-items:center;justify-content:center}
+.crm-stack{position:relative;width:140px;height:140px}
+.crm-stack .cs{position:absolute;width:86px;height:86px;border-radius:20px;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 14px 32px rgba(2,8,20,.45),inset 0 1px 0 rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.14);animation:hvFloat2 4s ease-in-out infinite}
+.crm-stack .cs.s1{background:linear-gradient(135deg,#4c8ddb,#2e6cb8);top:0;left:0;transform:rotate(-12deg)}
+.crm-stack .cs.s2{background:linear-gradient(135deg,#d9ae3e,#b8922f);top:20px;left:40px;transform:rotate(8deg);animation-delay:.6s;color:#1a1305}
+.crm-stack .cs.s3{background:linear-gradient(135deg,#4fa98c,#2e8a4d);top:60px;left:10px;transform:rotate(-4deg);animation-delay:1.2s}
+
+/* toolbar */
+.crm-toolbar{display:flex;flex-direction:column;gap:12px;margin-bottom:18px;padding:14px;border-radius:18px;background:rgba(10,20,36,.7);border:1px solid var(--line);backdrop-filter:blur(12px)}
+.crm-search{position:relative;max-width:520px}
+.crm-search input{width:100%;padding:12px 44px 12px 14px;border-radius:12px;border:1.5px solid var(--line2);background:rgba(9,18,34,.85);color:var(--tx);font-family:inherit;font-size:13px;outline:none;transition:all .22s}
+.crm-search input:focus{border-color:rgba(217,174,62,.5);box-shadow:0 0 0 3px rgba(217,174,62,.12)}
+.crm-search .si{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--tx3);display:flex}
+.crm-search .clear{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(148,180,224,.08);color:var(--tx2);cursor:pointer}
+.crm-cats{display:flex;gap:8px;flex-wrap:wrap}
+.crm-cat-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;cursor:pointer;font-size:11px;font-weight:800;color:var(--tx2);background:rgba(148,180,224,.06);border:1px solid var(--line);transition:all .22s;white-space:nowrap}
+.crm-cat-chip:hover{transform:translateY(-1px);border-color:var(--line2);color:var(--tx)}
+.crm-cat-chip.on{color:#fff;background:linear-gradient(135deg,color-mix(in srgb,var(--cc) 32%,#1a3c6e),color-mix(in srgb,var(--cc) 12%,transparent));border-color:color-mix(in srgb,var(--cc) 55%,transparent);box-shadow:0 6px 16px color-mix(in srgb,var(--cc) 22%,transparent)}
+.crm-cat-chip b{font-size:10px;opacity:.8}
+
+/* form */
+.crm-form-card{padding:22px;border-radius:20px;background:linear-gradient(165deg,rgba(20,36,66,.72),rgba(12,22,40,.9));border:1px solid rgba(148,180,224,.18);box-shadow:0 18px 44px -12px rgba(2,8,20,.55);margin-bottom:18px;animation:vEnter .4s ease}
+.crm-form-card h3{font-size:15px;font-weight:900;margin-bottom:14px;display:flex;gap:8px;align-items:center}
+.crm-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.crm-form-grid label{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:800;color:var(--tx2)}
+.crm-form-grid label.wide{grid-column:1/-1}
+.crm-form-grid label span{display:flex;align-items:center;gap:6px}
+.crm-form-grid input,.crm-form-grid textarea{padding:11px 14px;border-radius:11px;border:1px solid var(--line2);background:rgba(4,10,20,.55);color:var(--tx);font-family:inherit;font-size:13px;outline:none;transition:all .2s}
+.crm-form-grid textarea{min-height:70px;resize:vertical}
+.crm-form-grid input:focus,.crm-form-grid textarea:focus{border-color:rgba(217,174,62,.5);box-shadow:0 0 0 3px rgba(217,174,62,.1)}
+.crm-cat-pick{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
+.crm-cat-opt{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;cursor:pointer;font-size:11px;font-weight:800;color:var(--tx2);background:rgba(148,180,224,.06);border:1px solid var(--line);transition:all .22s}
+.crm-cat-opt.on{color:#fff;background:color-mix(in srgb,var(--cc) 22%,#1a3c6e);border-color:var(--cc);box-shadow:0 4px 12px color-mix(in srgb,var(--cc) 25%,transparent)}
+.crm-form-acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.crm-form-hint{margin-top:12px;font-size:10.5px;color:var(--tx3);display:flex;gap:6px;align-items:center;background:rgba(148,180,224,.05);border:1px solid var(--line);padding:8px 12px;border-radius:11px}
+
+/* cards grid */
+.crm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.crm-card{position:relative;padding:18px;border-radius:18px;background:linear-gradient(165deg,rgba(20,36,66,.68),rgba(12,22,40,.9));border:1px solid rgba(148,180,224,.14);box-shadow:0 10px 26px rgba(2,8,20,.35),inset 0 1px 0 rgba(255,255,255,.05);transition:all .38s cubic-bezier(.16,1,.3,1);overflow:hidden}
+.crm-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--cc) 45%,rgba(240,199,94,.25));box-shadow:0 20px 44px rgba(2,8,20,.5)}
+.crm-card::after{content:"";position:absolute;top:0;right:0;left:0;height:2px;background:linear-gradient(90deg,transparent,var(--cc),transparent);opacity:.6}
+.crm-card-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.crm-av{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:color-mix(in srgb,var(--cc) 16%,#1a3c6e);border:1px solid color-mix(in srgb,var(--cc) 32%,transparent);color:var(--cc)}
+.crm-meta{flex:1;min-width:0}
+.crm-name{font-size:14px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crm-sub{font-size:10.5px;color:var(--tx3);display:flex;gap:6px;align-items:center;margin-top:3px}
+.crm-cat-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:850;color:#fff;background:color-mix(in srgb,var(--cc) 22%,#1a3c6e);border:1px solid var(--cc);padding:4px 10px;border-radius:99px;flex-shrink:0}
+.crm-card-body{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.crm-row{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11.5px;padding:7px 10px;border-radius:10px;background:rgba(148,180,224,.04);border:1px solid rgba(148,180,224,.06)}
+.crm-row.wide{flex-direction:column;align-items:flex-start}
+.crm-row span{color:var(--tx3);display:flex;align-items:center;gap:6px;font-weight:700}
+.crm-row b{color:var(--tx);font-weight:850;max-width:65%;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crm-row.wide b{max-width:100%;white-space:normal;line-height:1.8}
+.crm-row b.ltr{direction:ltr}
+.crm-date{font-size:10px;color:var(--tx3);display:flex;align-items:center;gap:6px;justify-content:center;margin-top:4px;background:rgba(2,8,20,.3);padding:6px 10px;border-radius:99px}
+.crm-card-acts{display:flex;gap:7px;flex-wrap:wrap}
+.crm-card-acts .btn{flex:1;justify-content:center;padding:9px 10px!important;font-size:11.5px;border-radius:10px}
+.crm-card-acts .btn.danger{color:#e08b85;border-color:rgba(199,91,84,.35)}
+.crm-card-acts .btn.danger:hover{background:rgba(199,91,84,.12);color:#fff}
+
+/* --- shop premium v19 --- */
+.shop-hero-premium{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:26px;align-items:center;padding:44px 38px;border-radius:26px;overflow:hidden;margin-bottom:24px;border:1px solid rgba(148,180,224,.16);background:linear-gradient(150deg,rgba(46,108,184,.16),rgba(12,22,40,.82) 52%,rgba(217,174,62,.14));box-shadow:0 26px 70px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+.shop-hero-premium .shop-hero-bg{position:absolute;inset:0;background:radial-gradient(600px 300px at 85% 10%,rgba(240,199,94,.16),transparent 60%),radial-gradient(500px 300px at 10% 90%,rgba(46,108,184,.2),transparent 60%)}
+.shop-hero-premium .shop-hero-glow{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+.shop-hero-premium .shop-hero-glow.g1{width:240px;height:240px;background:rgba(240,199,94,.2);top:-50px;right:12%;animation:drift 12s ease-in-out infinite alternate}
+.shop-hero-premium .shop-hero-glow.g2{width:200px;height:200px;background:rgba(46,108,184,.24);bottom:-40px;left:6%;animation:drift 16s ease-in-out infinite alternate-reverse}
+.shop-hero-premium .shop-hero-content{position:relative;z-index:1}
+.shop-hero-premium h1{font-size:36px;font-weight:900;line-height:1.4;margin-bottom:10px}
+.shop-hero-premium h1 .g{background:var(--gradG);-webkit-background-clip:text;background-clip:text;color:transparent}
+.shop-hero-premium p{font-size:13.5px;color:var(--tx2);line-height:2.1;margin-bottom:16px;max-width:560px}
+.shop-visual-premium{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px}
+.shop-cover-svg{width:100%;max-width:320px;border-radius:18px;overflow:hidden;border:1px solid rgba(217,174,62,.28);box-shadow:0 18px 44px rgba(2,8,20,.5),0 0 32px rgba(217,174,62,.18)}
+.shop-coin-float{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:99px;background:linear-gradient(135deg,#f0c75e,#d9ae3e);color:#1a1305;font-weight:900;box-shadow:0 10px 24px rgba(217,174,62,.35);animation:hvFloat2 3s ease-in-out infinite}
+.shop-skins-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:22px}
+.shop-skin-card{position:relative;display:flex;flex-direction:column;gap:0;padding:0;border-radius:18px;overflow:hidden;background:linear-gradient(165deg,rgba(20,36,66,.7),rgba(12,22,40,.92));border:1px solid rgba(148,180,224,.14);box-shadow:0 10px 26px rgba(2,8,20,.35);transition:all .42s cubic-bezier(.16,1,.3,1)}
+.shop-skin-card:hover{transform:translateY(-6px) scale(1.01);border-color:rgba(240,199,94,.38);box-shadow:0 22px 50px rgba(2,8,20,.5),0 0 0 1px rgba(240,199,94,.15)}
+.shop-skin-card.owned{border-color:rgba(63,169,124,.32)}
+.shop-skin-card.active{border-color:rgba(240,199,94,.55);box-shadow:0 0 0 2px rgba(240,199,94,.2),0 18px 40px rgba(2,8,20,.5)}
+.ssk-preview{position:relative;height:110px;background:linear-gradient(135deg,var(--cl),var(--cd));display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ssk-board{display:grid;grid-template-columns:1fr 1fr;width:64px;height:64px;border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.25);transform:rotate(-4deg)}
+.ssk-board .ssk-c.l{background:var(--cl)}.ssk-board .ssk-c.d{background:var(--cd)}
+.ssk-icon{position:absolute;top:10px;right:10px;font-size:22px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.ssk-active{position:absolute;bottom:8px;left:8px;display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:900;color:#0a1f14;background:linear-gradient(135deg,#7ee2a0,#5ec9a0);padding:4px 10px;border-radius:99px;box-shadow:0 4px 12px rgba(126,226,160,.3)}
+.ssk-info{padding:14px 16px;flex:1}
+.ssk-name{font-size:14px;font-weight:900;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.ssk-badge{font-size:9px;font-weight:850;color:var(--gold2);background:rgba(217,174,62,.12);border:1px solid rgba(217,174,62,.32);padding:2px 8px;border-radius:99px}
+.ssk-desc{font-size:11px;color:var(--tx3);line-height:1.7}
+.ssk-price{margin-top:8px;font-size:11.5px;font-weight:850;color:var(--gold2);display:flex;align-items:center;gap:6px}
+.ssk-price .owned{color:#7ee2a8;background:rgba(63,169,124,.12);border:1px solid rgba(63,169,124,.32);padding:3px 10px;border-radius:99px;display:inline-flex;gap:5px}
+.ssk-acts{padding:0 14px 14px;display:flex}
+.ssk-acts .btn{width:100%;justify-content:center}
+.my-items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.my-item-card{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);transition:all .28s}
+.my-item-card.active{border-color:rgba(240,199,94,.45);background:linear-gradient(135deg,rgba(217,174,62,.12),rgba(217,174,62,.04))}
+.my-item-card .my-board{display:grid;grid-template-columns:1fr 1fr;width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.my-item-card .my-info{flex:1;min-width:0}
+.my-item-card .my-info b{display:block;font-size:12.5px;font-weight:900}
+.my-item-card .my-info span{font-size:10px;color:var(--tx3)}
+.shop-earn{padding:20px;border-radius:18px;background:var(--card);border:1px solid var(--line);margin-bottom:20px}
+.shop-earn h3{font-size:14px;font-weight:900;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.earn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.earn-card{display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:12px;background:rgba(148,180,224,.05);border:1px solid var(--line);transition:all .22s}
+.earn-card:hover{transform:translateY(-2px);border-color:rgba(217,174,62,.32)}
+.earn-card b{font-size:12.5px;font-weight:900}
+.earn-card span{font-size:10.5px;color:var(--tx3);line-height:1.7}
+
+/* --- typing v19 --- */
+.typ-wrap-v19{--tw:rgba(148,180,224,.07);--twb:rgba(148,180,224,.14);--ttxt:var(--tx)}
+.typ-wrap-v19.light{--tw:rgba(255,255,255,.78);--twb:rgba(20,40,80,.12);--ttxt:#16233c}
+.typ-hero-v19{position:relative;display:grid;grid-template-columns:1.2fr .6fr;gap:22px;align-items:center;padding:38px 32px;border-radius:24px;overflow:hidden;margin-bottom:18px;border:1px solid var(--line2);background:linear-gradient(150deg,rgba(46,108,184,.14),rgba(12,22,40,.78) 50%,rgba(217,174,62,.1));box-shadow:0 26px 70px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+.typ-hero-bg{position:absolute;inset:0;background:radial-gradient(600px 280px at 85% 8%,rgba(240,199,94,.14),transparent 60%),radial-gradient(500px 280px at 10% 90%,rgba(46,108,184,.18),transparent 60%)}
+.typ-glow{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+.typ-glow.g1{width:200px;height:200px;background:rgba(240,199,94,.16);top:-30px;right:8%;animation:drift 12s ease-in-out infinite alternate}
+.typ-glow.g2{width:180px;height:180px;background:rgba(46,108,184,.2);bottom:-30px;left:5%;animation:drift 14s ease-in-out infinite alternate-reverse}
+.typ-hero-content{position:relative;z-index:1}
+.typ-hero-content h1{font-size:32px;font-weight:900;line-height:1.4;margin-bottom:8px}
+.typ-hero-content h1 .g{background:var(--gradG);-webkit-background-clip:text;background-clip:text;color:transparent}
+.typ-hero-content p{font-size:13px;color:var(--tx2);line-height:2.1;margin-bottom:12px;max-width:520px}
+.typ-hero-stats{display:flex;gap:10px;flex-wrap:wrap}
+.typ-hero-stats span{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--tx2);background:rgba(148,180,224,.06);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+.typ-hero-visual{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px}
+.typ-card-stack{position:relative;width:120px;height:120px}
+.typ-card-stack .tc{position:absolute;width:72px;height:72px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 12px 28px rgba(2,8,20,.4);border:1px solid rgba(255,255,255,.12);animation:hvFloat2 4s ease-in-out infinite}
+.typ-card-stack .tc.s1{background:linear-gradient(135deg,#4c8ddb,#2e6cb8);top:0;left:0;transform:rotate(-10deg)}
+.typ-card-stack .tc.s2{background:linear-gradient(135deg,#f0c75e,#d9ae3e);top:18px;left:36px;transform:rotate(8deg);animation-delay:.5s;color:#1a1305}
+.typ-card-stack .tc.s3{background:linear-gradient(135deg,#4fa98c,#2e8a4d);top:54px;left:10px;transform:rotate(-4deg);animation-delay:1s}
+.typ-mini-chart{width:140px;height:60px;border-radius:12px;background:rgba(4,10,20,.45);border:1px solid var(--line);padding:6px}
+.typ-hctl{position:absolute;top:16px;left:16px;z-index:2;display:flex;gap:8px}
+.typ-tabs-v19{display:flex;gap:8px;margin:16px 0}
+.typ-tabs-v19 .typ-tab{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:850;color:var(--tx2);cursor:pointer;background:var(--tw);border:1px solid var(--twb);padding:10px 18px;border-radius:13px;transition:all .28s;backdrop-filter:blur(8px)}
+.typ-tabs-v19 .typ-tab:hover{transform:translateY(-2px);border-color:rgba(217,174,62,.4)}
+.typ-tabs-v19 .typ-tab.on{background:var(--gradG);color:#1a1305;border-color:transparent;box-shadow:0 8px 20px rgba(217,174,62,.3)}
+.typ-strip-v19{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.typ-strip-v19 .tst{background:var(--tw);border:1px solid var(--twb);border-radius:15px;padding:11px 16px;display:flex;flex-direction:column;gap:3px;min-width:105px;backdrop-filter:blur(8px)}
+.typ-strip-v19 .tst b{font-size:19px;font-weight:900;color:var(--gold2)}
+.typ-strip-v19 .tst span{font-size:10px;color:var(--tx3);font-weight:700}
+.typ-strip-v19 .tst.wide{flex:1;min-width:180px;justify-content:center}
+.typ-lessons-v19{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:16px}
+.typ-lessons-v19 .tls{position:relative;display:flex;flex-direction:column;gap:4px;text-align:right;font-family:inherit;cursor:pointer;background:var(--tw);border:1px solid var(--twb);border-radius:15px;padding:14px 15px;transition:all .28s;backdrop-filter:blur(8px);color:var(--ttxt)}
+.typ-lessons-v19 .tls:hover{transform:translateY(-3px);border-color:rgba(217,174,62,.45);box-shadow:0 12px 26px rgba(2,8,20,.35)}
+.typ-lessons-v19 .tls.done{border-color:rgba(63,169,124,.4)}
+.typ-lessons-v19 .tls.cur{border-color:rgba(217,174,62,.6);box-shadow:0 0 0 3px rgba(217,174,62,.15)}
+.typ-lessons-v19 .tls.lock{opacity:.45;cursor:not-allowed}
+.typ-practice-v19{background:var(--tw);border:1px solid var(--twb);border-radius:20px;padding:20px 22px;backdrop-filter:blur(10px);box-shadow:0 18px 44px -14px rgba(2,8,20,.5);animation:vEnter .35s ease;margin-bottom:14px}
+.typ-practice-v19 .typ-phead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.typ-practice-v19 .typ-pttl{font-size:15px;font-weight:900;color:var(--tx)}
+.typ-practice-v19 .typ-pctl{display:flex;gap:7px;flex-wrap:wrap}
+.typ-practice-v19 .typ-prompt{font-size:13px;font-weight:750;color:var(--tx2);margin-bottom:13px;min-height:22px}
+.typ-practice-v19 .typ-text{font-size:23px;font-weight:750;line-height:2.15;letter-spacing:.4px;min-height:110px;max-height:230px;overflow:auto;padding:14px 16px;border-radius:14px;background:rgba(2,8,20,.28);border:1px solid var(--twb);cursor:text}
+.typ-wrap-v19.light .typ-text{background:rgba(255,255,255,.55)}
+.typ-chart{width:100%;height:80px;margin-top:14px;border-radius:12px;background:rgba(4,10,20,.35);border:1px solid var(--line)}
+.typ-heat{padding:16px;border-radius:16px;background:var(--card);border:1px solid var(--line);margin-top:12px}
+.typ-heat h4{font-size:12.5px;font-weight:900;margin-bottom:10px;display:flex;gap:8px;align-items:center}
+.heat-grid{display:flex;gap:8px;flex-wrap:wrap}
+.heat-k{display:inline-flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:11px;background:rgba(148,180,224,.06);border:1px solid var(--line);min-width:56px}
+.heat-k b{font-size:15px;font-weight:900;color:var(--tx)}
+.heat-k i{font-size:10px;color:var(--gold2);font-style:normal;font-weight:800}
+.typ-free-v19 textarea{width:100%;min-height:190px;resize:vertical;font-family:inherit;font-size:17px;line-height:2;color:var(--tx);background:var(--tw);border:1px solid var(--twb);border-radius:18px;padding:16px 18px;outline:none;backdrop-filter:blur(8px)}
+.typ-free-v19 .typ-fstats{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.typ-free-v19 .typ-fstats span{font-size:11.5px;color:var(--tx2);font-weight:750;background:var(--tw);border:1px solid var(--twb);padding:7px 13px;border-radius:11px}
+.typ-modal-v19{text-align:center;min-width:min(94vw,380px)}
+.typ-modal-v19 .tm-ic{width:72px;height:72px;margin:4px auto 12px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:var(--gradG);color:#1a1305;box-shadow:0 12px 30px rgba(217,174,62,.4);animation:beatp 2s infinite}
+
+/* reuse kb styles for v19 */
+.typ-kb-v19{margin-top:20px;display:flex;flex-direction:column;gap:7px;align-items:center;user-select:none}
+.typ-kb-v19 .krow{display:flex;gap:7px;justify-content:center;width:100%}
+.typ-kb-v19 .kk{position:relative;flex:0 1 52px;height:52px;border-radius:11px;cursor:pointer;font-family:inherit;padding:0;background:linear-gradient(175deg,rgba(148,180,224,.13),rgba(148,180,224,.06));border:1px solid var(--twb);border-bottom-width:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:transform .08s,background .18s,border-color .18s,box-shadow .18s;color:var(--tx)}
+.typ-kb-v19 .kk .kmain{font-size:15.5px;font-weight:850;line-height:1}
+.typ-kb-v19 .kk .ksub{font-size:8.5px;color:var(--tx3);font-weight:700;position:absolute;top:4px;inset-inline-start:6px;opacity:.8}
+.typ-kb-v19 .kk.wide-s{flex-basis:60px}
+.typ-kb-v19 .kk.bk{flex:0 1 84px}
+.typ-kb-v19 .kk.space{flex:1 1 340px;max-width:430px;height:46px}
+.typ-kb-v19 .kk.space .kmain{font-size:11px;color:var(--tx3);letter-spacing:2px}
+.typ-kb-v19 .kk.space.half{flex:0 1 110px}
+.typ-kb-v19 .kk::after{content:"";position:absolute;bottom:2px;inset-inline:8px;height:3px;border-radius:99px;opacity:.75}
+.typ-kb-v19 .z-lp::after{background:#e06a75}.typ-kb-v19 .z-lr::after{background:#e08b5a}.typ-kb-v19 .z-lm::after{background:#d9b23e}
+.typ-kb-v19 .z-li::after{background:#7ea84e}.typ-kb-v19 .z-ri::after{background:#4fae8f}.typ-kb-v19 .z-rm::after{background:#4fa3c8}
+.typ-kb-v19 .z-rr::after{background:#6a8fd8}.typ-kb-v19 .z-rp::after{background:#9b6fb8}.typ-kb-v19 .z-th::after{background:#c9a227}
+.typ-kb-v19 .kk.next{border-color:var(--gold2);background:linear-gradient(175deg,rgba(217,174,62,.3),rgba(217,174,62,.12));box-shadow:0 0 0 3px rgba(217,174,62,.22),0 6px 16px rgba(217,174,62,.3);transform:translateY(-3px)}
+.typ-kb-v19 .kk.hit{transform:translateY(2px) scale(.94);background:linear-gradient(175deg,rgba(63,174,125,.5),rgba(63,174,125,.25));border-color:rgba(63,174,125,.7)}
+.typ-kb-v19 .kk.miss{transform:translateY(2px) scale(.94);background:linear-gradient(175deg,rgba(224,106,117,.5),rgba(224,106,117,.25));border-color:rgba(224,106,117,.7)}
+
+@media (max-width:860px){
+  .crm-hero{grid-template-columns:1fr;padding:28px 22px}
+  .crm-hero-visual{display:none}
+  .crm-form-grid{grid-template-columns:1fr}
+  .crm-grid{grid-template-columns:1fr}
+  .shop-hero-premium{grid-template-columns:1fr;padding:28px 22px}
+  .shop-visual-premium{display:none}
+  .shop-skins-grid{grid-template-columns:1fr}
+  .typ-hero-v19{grid-template-columns:1fr;padding:28px 22px}
+  .typ-hero-visual{display:none}
+  .typ-lessons-v19{grid-template-columns:1fr 1fr}
+  .typ-kb-v19 .kk{flex-basis:30px;height:42px;border-radius:9px}
+  .typ-kb-v19 .kk .kmain{font-size:12px}
+  .typ-kb-v19 .kk .ksub{display:none}
+  .typ-kb-v19 .kk.space{flex-basis:150px;height:38px}
+}
+
 </style>
 </head>
 <body>
@@ -2690,7 +2933,16 @@ const IC = {
   'chevron-down':'<path d="m6 9 6 6 6-6"/>',
   'user':'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
   'trash':'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
-  'github':'<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>'
+  'github':'<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>',
+  'users':'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  'lock':'<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  'unlock':'<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>',
+  'share':'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98"/><path d="m15.41 6.51-6.82 3.98"/>',
+  'edit':'<path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/>',
+  'plus':'<path d="M12 5v14"/><path d="M5 12h14"/>',
+  'upload':'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>',
+  'image':'<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+  'coins2':'<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/>'
 };
 function ic(n,s,c){
   s=s||18;
@@ -2832,7 +3084,7 @@ function dinoUpdate(dt){
       const oy=o.fly?o.y:o.y-o.h;
       if(px<o.x+o.w-6&&px+dw>o.x+6&&py+dh>oy+4&&py<oy+(o.fly?o.h:o.h)-2){
         D.over=true;D.shake=1;
-        if(D.score>D.best){D.best=D.score;store.set('dinoBest',D.best);}
+        if(D.score>D.best){D.best=D.score;store.set('dinoBest',D.best); try{ if(typeof coinAdd==='function') coinAdd(15,'رکورد دایی ناصر'); }catch(e){} }
         for(let i=0;i<16;i++)D.parts.push({x:px+dw/2,y:py+dh/2,vx:(Math.random()-0.5)*0.5,vy:-Math.random()*0.5-0.1,l:1});
         break;
       }
@@ -3184,7 +3436,7 @@ function twrDrop(){
     /* کامل باخت */
     T.pieces.push({x:T.cur.x,w:T.cur.w,y:y,vx:T.cur.dir*0.25,vr:T.cur.dir*0.004,rot:0,hue:T.hueOf()});
     T.cur=null;T.over=true;
-    if(T.score>T.best){T.best=T.score;store.set('towerBest',T.best);}
+    if(T.score>T.best){T.best=T.score;store.set('towerBest',T.best); try{ if(typeof coinAdd==='function') coinAdd(15,'رکورد برج‌سازی'); }catch(e){} }
     return;
   }
   const diff=Math.abs(T.cur.x-top.x);
@@ -3479,7 +3731,7 @@ function tetMerge(){
   TET.cur=TET.next;TET.next=tetSpawn();
   if(tetCollide(TET.cur.m,TET.cur.x,TET.cur.y)){
     TET.over=true;
-    if(TET.score>TET.best){TET.best=TET.score;store.set('tetrisBest',TET.best);}
+    if(TET.score>TET.best){TET.best=TET.score;store.set('tetrisBest',TET.best); try{ if(typeof coinAdd==='function') coinAdd(20,'رکورد تتریس'); }catch(e){} }
   }
 }
 function tetRotate(){
@@ -3644,7 +3896,7 @@ function g48Move(dir){
     prev.forEach((v,i)=>{if(v===0&&b[i]>0)born=i;});
     G48.fx={m:mergedCells,born:born};
     G48.gainFx=gain;
-    if(G48.score>G48.best){G48.best=G48.score;store.set('g2048Best',G48.best);}
+    if(G48.score>G48.best){G48.best=G48.score;store.set('g2048Best',G48.best); try{ if(typeof coinAdd==='function') coinAdd(18,'رکورد ۲۰۴۸'); }catch(e){} }
     if(!g48Can()){G48.over=true;store.set('g2048Best',G48.best);}
     g48Render();
   }
@@ -3727,7 +3979,7 @@ function snkUpdate(dt){
   if(h.x<0||h.x>=SNK.cols||h.y<0||h.y>=SNK.rows||SNK.snake.some(s=>s.x===h.x&&s.y===h.y)){
     SNK.over=true;
     gSfx('bad');
-    if(SNK.score>SNK.best){SNK.best=SNK.score;store.set('snakeBest',SNK.best);}
+    if(SNK.score>SNK.best){SNK.best=SNK.score;store.set('snakeBest',SNK.best); try{ if(typeof coinAdd==='function') coinAdd(12,'رکورد مار'); }catch(e){} }
     return;
   }
   SNK.snake.unshift(h);
@@ -3887,7 +4139,7 @@ function tttPlace(i){
   const w=tttWinner(TTT.b);
   if(w){
     TTT.over=true;
-    if(w.p==='X'){TTT.score.w++;toast('بردی! '.replace(' ',''),'trophy');}
+    if(w.p==='X'){TTT.score.w++;toast('بردی!','trophy'); try{ if(typeof coinAdd==='function') coinAdd(15,'برد دوز'); }catch(e){} }
     else if(w.p==='O'){TTT.score.l++;}
     else{TTT.score.d++;}
   }else{
@@ -3951,7 +4203,7 @@ function memFlip(i){
     setTimeout(()=>{
       if(MEM.cards[a].icn===MEM.cards[b].icn){
         MEM.cards[a].done=MEM.cards[b].done=true;MEM.found++;
-        if(MEM.found===8&&(!MEM.best||MEM.moves<MEM.best)){MEM.best=MEM.moves;store.set('memoryBest',MEM.best);}
+        if(MEM.found===8&&(!MEM.best||MEM.moves<MEM.best)){MEM.best=MEM.moves;store.set('memoryBest',MEM.best); try{ if(typeof coinAdd==='function') coinAdd(20,'برد حافظه'); }catch(e){} }
       }
       MEM.open=[];MEM.lock=false;memRender();
     },620);
@@ -4036,7 +4288,7 @@ function rctClick(){
   }else if(RCT.st==='go'){
     const ms=Math.round(performance.now()-RCT.t0);
     RCT.st='idle';
-    if(!RCT.best||ms<RCT.best){RCT.best=ms;store.set('reactBest',ms);}
+    if(!RCT.best||ms<RCT.best){RCT.best=ms;store.set('reactBest',ms); try{ if(typeof coinAdd==='function') coinAdd(10,'رکورد ری‌اکشن'); }catch(e){} }
     rctRender(gNum(ms)+' میلی‌ثانیه!','result');
     setTimeout(()=>{if(RCT.st==='idle')rctRender();},1600);
   }
@@ -4069,7 +4321,7 @@ function coinFlip(){
   setTimeout(()=>{
     COIN.spinning=false;
     if(r)COIN.h++;else COIN.t++;
-    coinRender(r?'شیر آمد!':'خط آمد!');
+    coinRender(r?'شیر آمد!':'خط آمد!'); try{ if(typeof coinAdd==='function') coinAdd(1,'پرتاب سکه'); }catch(e){}
     COIN.el.querySelector('#coin3d').style.transform='rotateY('+(r?0:180)+'deg)';
   },2100);
 }
@@ -4137,7 +4389,7 @@ function pzlMove(i){
   PZL.moves++;
   pzlRender();
   if(PZL.tiles.every((v,idx)=>v===(idx+1)%16)){
-    if(!PZL.best||PZL.moves<PZL.best){PZL.best=PZL.moves;store.set('puzzleBest',PZL.best);}
+    if(!PZL.best||PZL.moves<PZL.best){PZL.best=PZL.moves;store.set('puzzleBest',PZL.best); try{ if(typeof coinAdd==='function') coinAdd(15,'برد پازل'); }catch(e){} }
     setTimeout(()=>pzlRender(true),60);
   }
 }
@@ -4230,7 +4482,7 @@ function wrdCheck(cells){
       WRD.found.push(w.w);
       toast('پیدا شد: '+w.w,'trophy');
       if(WRD.found.length===WRD_LIST.filter(x=>WRD.words.some(y=>y.w===x)).length){
-        toast('همهٔ کلمات پیدا شد!','crown');
+        toast('همهٔ کلمات پیدا شد!','crown'); try{ if(typeof coinAdd==='function') coinAdd(20,'برد واژه‌یاب'); }catch(e){}
       }
       return true;
     }
@@ -4444,6 +4696,7 @@ function chsRender(){
     if(pcv&&pcv.t==='k'&&chsAttacked(CHS.b,r,c2,pcv.col==='w'?'b':'w'))cell.classList.add('chk');
   });
   el.querySelectorAll('.chs-c').forEach(b=>b.onclick=()=>chsClick(+b.dataset.r,+b.dataset.c));
+  try{ if(typeof applyChessSkin==='function') applyChessSkin(); }catch(e){}
 }
 const chsEng={
   start(el){CHS.el=el;chsReset();},
@@ -4523,7 +4776,7 @@ function flapUpdate(dt){
   FLAP.parts=FLAP.parts.filter(p=>p.a>0);
 }
 function flapDie(){
-  if(FLAP.score>FLAP.best){FLAP.best=FLAP.score;store.set('flapBest',FLAP.best);}
+  if(FLAP.score>FLAP.best){FLAP.best=FLAP.score;store.set('flapBest',FLAP.best); try{ if(typeof coinAdd==='function') coinAdd(12,'رکورد فلپی'); }catch(e){} }
   gSfx('bad');
   for(let i=0;i<18;i++)FLAP.parts.push({x:FLAP.bird.x,y:FLAP.bird.y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6-1,a:1,r:2+Math.random()*3});
 }
@@ -4654,7 +4907,7 @@ function brkUpdate(dt){
   if(b.y-b.r<0){b.y=b.r;b.vy*=-1;gSfx('click');}
   if(b.y+b.r>BRK.h){
     BRK.lives--;gSfx('bad');
-    if(BRK.lives<=0){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best);}}
+    if(BRK.lives<=0){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best); try{ if(typeof coinAdd==='function') coinAdd(Math.floor(BRK.score/50)+5,'بریک‌اوت'); }catch(e){} }}
     else{BRK.ball={x:p.x+p.w/2,y:300,vx:(Math.random()<0.5?1:-1)*2.6,vy:-3.4,r:7,trail:[]};}
     return;
   }
@@ -4675,7 +4928,7 @@ function brkUpdate(dt){
       b.vy*=-1;
       gSfx('line');
       for(let k=0;k<8;k++)BRK.parts.push({x:br.x+br.w/2,y:br.y+br.h/2,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4-1,a:1,col:br.col});
-      if(!BRK.bricks.length){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best);}}
+      if(!BRK.bricks.length){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best);} try{ if(typeof coinAdd==='function') coinAdd(25,'برد بریک‌اوت'); }catch(e){} }
       break;
     }
   }
@@ -4808,7 +5061,7 @@ function minesOpen(r,c){
   if(closed===0){
     MINES.win=true;clearInterval(MINES.timer);gSfx('win');
     if(MINES.time<MINES.best){MINES.best=MINES.time;store.set('minesBest',MINES.best);}
-    toast('بردی! زمان: '+gNum(MINES.time)+' ثانیه','trophy');
+    toast('بردی! زمان: '+gNum(MINES.time)+' ثانیه','trophy'); try{ if(typeof coinAdd==='function') coinAdd(20,'برد مین‌یاب'); }catch(e){}
   }
   minesRender();
 }
@@ -4889,7 +5142,7 @@ function bubUpdate(dt){
   if(BUB.over)return;
   BUB.t+=dt;
   BUB.time-=dt/1000;
-  if(BUB.time<=0){BUB.over=true;if(BUB.score>BUB.best){BUB.best=BUB.score;store.set('bubBest',BUB.best);}return;}
+  if(BUB.time<=0){BUB.over=true;if(BUB.score>BUB.best){BUB.best=BUB.score;store.set('bubBest',BUB.best);} try{ if(typeof coinAdd==='function') coinAdd(Math.floor(BUB.score/10)+5,'حباب‌پاپ'); }catch(e){} return;}
   for(const b of BUB.bubbles){
     b.wob+=dt*0.004;
     b.x+=b.vx+Math.sin(b.wob)*0.6;
@@ -5733,6 +5986,7 @@ function angryUpdate(dt){
     const stars = birdsUsed<=Math.ceil(totalBirds*0.4)?3:birdsUsed<=Math.ceil(totalBirds*0.7)?2:1;
     ANGRY.stars=stars;
     if(ANGRY.score>ANGRY.best){ANGRY.best=ANGRY.score;store.set('angryBest',ANGRY.best);}
+    try{ if(typeof coinAdd==='function') coinAdd(20+stars*10,'برد انگری بردز — '+stars+' ستاره'); }catch(e){}
     angrySfx('win');
     ANGRY.settling=0;
     setTimeout(()=>{
@@ -6350,6 +6604,7 @@ function hajSubmit(){
   HAJ.found.add(foundWord);
   HAJ.score+=foundWord.replace(/\s/g,'').length*10;
   toast('آفرین! «'+foundWord+'» پیدا شد!','trophy');
+  try{ if(typeof coinAdd==='function') coinAdd(5,'حاج عباس — '+foundWord); }catch(e){}
   try{gSfx('win');}catch(e){}
   hajClear();
   hajRenderWords();
@@ -6369,6 +6624,7 @@ function hajHint(){
 function hajCheckWin(){
   if(HAJ.found.size===HAJ.words.length){
     if(HAJ.level>HAJ.best){HAJ.best=HAJ.level;store.set('hajBest',HAJ.best);}
+    try{ if(typeof coinAdd==='function') coinAdd(30,'مرحله حاج عباس '+HAJ.level); }catch(e){}
     try{gSfx('win');}catch(e){}
     const isLast=HAJ.level===HAJ_LEVELS.length-1;
     setTimeout(()=>{
@@ -6923,28 +7179,37 @@ const COVERS={
 function gcov(k){const f=COVERS[k];return f?'<svg class="gcov-svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+f()+'</svg>':'';}
 
 /* ================================================================
-   آموزش تایپ — Typing Lab کافی‌نت
-   درس‌های مرحله‌ای فارسی/انگلیسی + کیبورد زنده با رنگ انگشت‌ها
-   + آزمون زمان‌دار + تایپ آزاد + پیشرفت روی دستگاه
+   آموزش تایپ نت‌یار — v19 پرمیوم تمیز و با کیفیت + باگ‌فیکس کامل
+   - باگ دابل شمارش خطا رفع شد
+   - کیبورد فارسی/انگلیسی دقیق + نیم‌فاصله
+   - پیشرفت ۳ دوری تمیز + آنلاک خودکار درس بعدی
+   - نمودار WPM + هیت‌مپ خطا + استریک روزانه
+   - موبایل فوکوس + صدا + لایت + استریکت
    ================================================================ */
+'use strict';
 const TYP={
   lang:'',mode:'learn',lesson:-1,text:'',log:[],errs:0,
   startT:0,charT:0,reactSum:0,reactN:0,running:false,fin:false,
   block:true,int:0,light:false,
   dur:30,testLeft:0,freeN:0,freeBad:0,freeT0:0,res:null,
+  history:[], // WPM history for chart
+  heat:{}, // error heatmap
 };
-/* store در app.js تعریف می‌شود — مقداردهی تنبل، هیچ خواندنی در سطح فایل نیست */
 function typLazy(){
-  if(!TYP.lang){TYP.lang=store.get('typLang','fa');TYP.light=store.get('typLight',false);}
+  if(!TYP.lang){TYP.lang=store.get('typLang','fa');TYP.light=store.get('typLight',false);TYP.history=store.get('typHistory',[]);TYP.heat=store.get('typHeat',{});}
 }
 function typProg(){return store.get('typLab',{});}
 function typSaveProg(p){store.set('typLab',p);}
 function typStats(){
   const p=typProg();const s=p[TYP.lang]||{done:{},rnd:{},n:0,w:0,a:0,best:{}};
-  s.rnd=s.rnd||{};s.done=s.done||{};
+  s.rnd=s.rnd||{};s.done=s.done||{};s.best=s.best||{};
   return s;
 }
-function typNorm(c){return c==='ي'?'ی':c==='ك'?'ک':c;}
+function typNorm(c){
+  if(!c) return '';
+  // normalize Persian variants
+  return c.replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/‌/g,'\u200c');
+}
 let TYPC=null;
 function typSndOn(){return store.get('typSnd',true);}
 function typSndToggle(){store.set('typSnd',!typSndOn());typRerender();}
@@ -6954,10 +7219,11 @@ function typSfx(ok){
     const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
     TYPC=TYPC||new AC();if(TYPC.state==='suspended')TYPC.resume();
     const o=TYPC.createOscillator(),g=TYPC.createGain();
-    o.type=ok?'sine':'triangle';o.frequency.value=ok?600+Math.min(500,(TYP.log.length%10)*18):170;
-    g.gain.setValueAtTime(.035,TYPC.currentTime);
-    g.gain.exponentialRampToValueAtTime(.001,TYPC.currentTime+.09);
-    o.connect(g);g.connect(TYPC.destination);o.start();o.stop(TYPC.currentTime+.1);
+    o.type=ok?'sine':'triangle';
+    o.frequency.value=ok?620+Math.min(520,(TYP.log.length%12)*22):165;
+    g.gain.setValueAtTime(.038,TYPC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,TYPC.currentTime+.11);
+    o.connect(g);g.connect(TYPC.destination);o.start();o.stop(TYPC.currentTime+.12);
   }catch(e){}
 }
 
@@ -6978,7 +7244,7 @@ const TYP_ROWS={
 };
 const TYP_SUB={
   fa:{'۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9','۰':'0','ض':'q','ص':'w','ث':'e','ق':'r','ف':'t','غ':'y','ع':'u','ه':'i','خ':'o','ح':'p','ج':'[','چ':']','ش':'a','س':'s','ی':'d','ب':'f','ل':'g','ا':'h','ت':'j','ن':'k','م':'l','ک':';','گ':"'",'ظ':'z','ط':'x','ز':'c','ر':'v','ذ':'b','د':'n','پ':'m','و':',','.':'.','؟':'/'},
-  en:{q:'ض',w:'ص',e:'ث',r:'ق',t:'ف',y:'غ',u:'ع',i:'ه',o:'خ',p:'ح',a:'ش',s:'س',d:'ی',f:'ب',g:'ل',h:'ا',j:'ت',k:'ن',l:'م',';':'ک',z:'ظ',x:'ط',c:'ز',v:'ر',b:'ذ',n:'د',m:'پ',',':'و','.':'.','/':'؟'},
+  en:{},
 };
 const TYP_ZONE={
   fa:{'۱':'lp','۲':'lr','۳':'lm','۴':'li','۵':'li','۶':'ri','۷':'ri','۸':'rm','۹':'rr','۰':'rp','ض':'lp','ص':'lr','ث':'lm','ق':'li','ف':'li','غ':'ri','ع':'ri','ه':'rm','خ':'rr','ح':'rp','ج':'rp','چ':'rp','ش':'lp','س':'lr','ی':'lm','ب':'li','ل':'li','ا':'ri','ت':'ri','ن':'rm','م':'rr','ک':'rp','گ':'rp','ظ':'lp','ط':'lr','ز':'lm','ر':'li','ذ':'li','د':'ri','پ':'ri','و':'rm','.':'rr','؟':'rp',' ':'th','\u200c':'th',
@@ -6986,7 +7252,7 @@ const TYP_ZONE={
   en:{q:'lp',w:'lr',e:'lm',r:'li',t:'li',y:'ri',u:'ri',i:'rm',o:'rr',p:'rp',a:'lp',s:'lr',d:'lm',f:'li',g:'li',h:'ri',j:'ri',k:'rm',l:'rr',';':'rp',z:'lp',x:'lr',c:'lm',v:'li',b:'li',n:'ri',m:'ri',',':'rm','.':'rr','/':'rp','1':'lp','2':'lr','3':'lm','4':'li','5':'li','6':'ri','7':'ri','8':'rm','9':'rr','0':'rp',' ':'th'},
 };
 const TYP_FINGER={
-  fa:{lp:'انگشت کوچکِ دست چپ',lr:'انگشت حلقهٔ دست چپ',lm:'انگشت میانی دست چپ',li:'انگشت اشارهٔ دست چپ',th:'شست (فضا)',ri:'انگشت اشارهٔ دست راست',rm:'انگشت میانی دست راست',rr:'انگشت حلقهٔ دست راست',rp:'انگشت کوچکِ دست راست'},
+  fa:{lp:'انگشت کوچک چپ',lr:'حلقه چپ',lm:'میانی چپ',li:'اشاره چپ',th:'شست (فاصله)',ri:'اشاره راست',rm:'میانی راست',rr:'حلقه راست',rp:'کوچک راست'},
   en:{lp:'Left pinky',lr:'Left ring',lm:'Left middle',li:'Left index',th:'Thumb (space)',ri:'Right index',rm:'Right middle',rr:'Right ring',rp:'Right pinky'},
 };
 
@@ -7048,24 +7314,39 @@ function typLvl(){
 function typView(){
   typLazy();
   const L=TYP.lang;
-  return '<section class="typ-wrap'+(TYP.light?' light':'')+'">'
-    +'<div class="typ-hero">'
-      +'<div><span class="kicker"><span class="dot"></span> '+(L==='fa'?'آزمایشگاه تایپ — از صفر، ده‌انگشتی':'Typing Lab — touch typing from zero')+'</span>'
-      +'<h1>'+(L==='fa'?'<span class="g">آموزش</span> تایپ':'<span class="g">Typing</span> Lab')+'</h1>'
-      +'<p>'+(L==='fa'?'درس‌به‌درس جلو برو، جای کلیدها را با کیبورد زنده یاد بگیر و سرعتت را در آزمون زمان‌دار بسنج.':'Step by step, learn key positions with the live keyboard and test your speed.')+'</p></div>'
+  const done=Object.keys(typStats().done||{}).length;
+  const pct=Math.round(done/TYP_LESSONS[TYP.lang].length*100);
+  const streak=store.get('typStreak',0);
+  return '<section class="typ-wrap typ-wrap-v19'+(TYP.light?' light':'')+'">'
+    +'<div class="typ-hero-v19">'
+      +'<div class="typ-hero-bg"><div class="typ-glow g1"></div><div class="typ-glow g2"></div></div>'
+      +'<div class="typ-hero-content">'
+        +'<span class="kicker"><span class="dot"></span> '+(L==='fa'?'آزمایشگاه تایپ نت‌یار — نسخه ۱۹ پرمیوم':'Typing Lab v19 — Premium')+' · '+faNum(done)+'/'+faNum(TYP_LESSONS[L].length)+' درس</span>'
+        +'<h1>'+(L==='fa'?'<span class="g">تایپ</span> ده‌انگشتی رو حرفه‌ای یاد بگیر':'Learn <span class="g">touch typing</span> pro')+'</h1>'
+        +'<p>'+(L==='fa'?'درس‌به‌درس، با کیبورد زنده، نمودار سرعت، هیت‌مپ خطا و آزمون زمان‌دار — همه باگ‌ها رفع شد، کیفیت فول، طراحی تمیز خوشگل.':'Step by step with live keyboard, WPM chart, error heatmap and timed tests — bug-free, full quality, clean premium.')+'</p>'
+        +'<div class="typ-hero-stats">'
+          +'<span>'+ic('trophy',12)+' '+faNum(pct)+'% پیشرفت</span>'
+          +'<span>'+ic('zap',12)+' میانگین '+faNum(typStats().n?Math.round(typStats().w/typStats().n):0)+' WPM</span>'
+          +'<span>'+ic('activity',12)+' استریک '+faNum(streak)+' روز</span>'
+        +'</div>'
+      +'</div>'
+      +'<div class="typ-hero-visual">'
+        +'<div class="typ-card-stack"><div class="tc s1">'+ic('keyboard',20)+'</div><div class="tc s2">'+ic('type',18)+'</div><div class="tc s3">'+ic('zap',16)+'</div></div>'
+        +'<div class="typ-mini-chart"><canvas id="typMiniChart" width="140" height="60"></canvas></div>'
+      +'</div>'
       +'<div class="typ-hctl">'
         +'<div class="typ-langseg"><button class="tl-btn'+(L==='fa'?' on':'')+'" onclick="typSetLang(\'fa\')">فارسی</button><button class="tl-btn'+(L==='en'?' on':'')+'" onclick="typSetLang(\'en\')">English</button></div>'
-        +'<button class="tl-btn ghost" onclick="typLight()" title="حالت روشن/تاریک">'+ic('sun',14)+'</button>'
+        +'<button class="tl-btn ghost" onclick="typLight()" title="حالت روشن/تاریک">'+ic('palette',14)+'</button>'
       +'</div>'
     +'</div>'
-    +'<div class="typ-tabs">'
+    +'<div class="typ-tabs-v19">'
       +'<span class="typ-tab'+(TYP.mode==='learn'?' on':'')+'" onclick="typMode(\'learn\')">'+ic('graduation',14)+(L==='fa'?'آموزش از صفر':'Course')+'</span>'
       +'<span class="typ-tab'+(TYP.mode==='test'?' on':'')+'" onclick="typMode(\'test\')">'+ic('clock',14)+(L==='fa'?'آزمون سرعت':'Speed test')+'</span>'
       +'<span class="typ-tab'+(TYP.mode==='free'?' on':'')+'" onclick="typMode(\'free\')">'+ic('type',14)+(L==='fa'?'تایپ آزاد':'Free')+'</span>'
     +'</div>'
     +'<div id="typBody">'+typBodyHtml()+'</div>'
     +'<div id="typKbWrap">'+typKbHtml()+'</div>'
-    +'<input type="text" id="typInput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="'+(L==='fa'?'ورودی تایپ':'typing input')+'">'
+    +'<input type="text" id="typInput" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" aria-label="'+(L==='fa'?'ورودی تایپ':'typing input')+'">'
   +'</section>';
 }
 function typBodyHtml(){
@@ -7075,53 +7356,63 @@ function typBodyHtml(){
     const pct=Math.round(done/TYP_LESSONS[TYP.lang].length*100);
     const lv=typLvl();
     const aw=s.n?Math.round(s.w/s.n):0,aa=s.n?Math.round(s.a/s.n):0;
-    return '<div class="typ-strip">'
+    const streak=store.get('typStreak',0);
+    return '<div class="typ-strip-v19">'
       +'<div class="tst"><b>'+faNum(lv)+'</b><span>'+TYP_LVL_NAMES[TYP.lang][lv-1]+'</span></div>'
-      +'<div class="tst"><b>'+faNum(aw)+'</b><span>'+(TYP.lang==='fa'?'سرعت میانگین':'Avg WPM')+'</span></div>'
-      +'<div class="tst"><b>'+faNum(aa)+'٪</b><span>'+(TYP.lang==='fa'?'دقت میانگین':'Avg accuracy')+'</span></div>'
-      +'<div class="tst"><b>'+faNum(s.n)+'</b><span>'+(TYP.lang==='fa'?'تمرین‌ها':'Sessions')+'</span></div>'
-      +'<div class="tst wide"><span>'+(TYP.lang==='fa'?'پیشرفت':'Progress')+' — '+faNum(pct)+'٪</span><div class="typ-pbar"><i style="width:'+pct+'%"></i></div></div>'
+      +'<div class="tst"><b>'+faNum(aw)+'</b><span>'+(TYP.lang==='fa'?'میانگین WPM':'Avg WPM')+'</span></div>'
+      +'<div class="tst"><b>'+faNum(aa)+'٪</b><span>'+(TYP.lang==='fa'?'میانگین دقت':'Avg Acc')+'</span></div>'
+      +'<div class="tst"><b>'+faNum(s.n)+'</b><span>'+(TYP.lang==='fa'?'تمرین':'Sessions')+'</span></div>'
+      +'<div class="tst wide"><span>'+(TYP.lang==='fa'?'پیشرفت':'Progress')+' — '+faNum(pct)+'٪ · استریک '+faNum(streak)+' روز</span><div class="typ-pbar"><i style="width:'+pct+'%"></i></div></div>'
     +'</div>'
-    +'<div class="typ-lessons">'+TYP_LESSONS[TYP.lang].map((ls,i)=>{
+    +'<div class="typ-lessons-v19">'+TYP_LESSONS[TYP.lang].map((ls,i)=>{
       const dn=s.done&&s.done[i];
       const lock=i>0&&!(s.done&&s.done[i-1]);
       const cur=TYP.lesson===i&&!TYP.fin;
       const rr=s.rnd[i]||0;
       return '<button class="tls'+(dn?' done':'')+(cur?' cur':'')+(lock?' lock':'')+'" onclick="typClickLesson('+i+')">'
-        +'<span class="tls-n">'+(dn?'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>':faNum(i+1))+'</span>'
+        +'<span class="tls-n">'+(dn?ic('check',14):faNum(i+1))+'</span>'
         +'<span class="tls-t">'+ls.t+'</span><span class="tls-d">'+ls.d+'</span>'
         +'<span class="tls-r">'+[0,1,2].map(k=>'<i class="tdot'+(rr>k?' on':'')+'"></i>').join('')+'</span>'
-        +(lock?'<span class="tls-lock">'+ic('shield-check',12)+'</span>':'')
+        +(lock?'<span class="tls-lock">'+ic('lock',12)+'</span>':'')
       +'</button>';
     }).join('')+'</div>'
-    +'<div id="typPractice">'+((TYP.lesson>=0)?typPracticeHtml():'')+'</div>';
+    +'<div id="typPractice">'+((TYP.lesson>=0)?typPracticeHtml():'')+'</div>'
+    +typHeatmapHtml();
   }
   if(TYP.mode==='test'){
     const s=typStats();
     const durs=[30,60,120,300];
-    return '<div class="typ-strip">'
-      +'<div class="tst"><b>'+faNum(s.best&&s.best[TYP.dur]||0)+'</b><span>'+(TYP.lang==='fa'?'رکورد این زمان (WPM)':'Best WPM here')+'</span></div>'
-      +'<div class="tst wide"><span>'+(TYP.lang==='fa'?'زمان آزمون را انتخاب کن':'Pick a duration')+'</span>'
+    return '<div class="typ-strip-v19">'
+      +'<div class="tst"><b>'+faNum(s.best&&s.best[TYP.dur]||0)+'</b><span>'+(TYP.lang==='fa'?'رکورد این زمان':'Best here')+'</span></div>'
+      +'<div class="tst wide"><span>'+(TYP.lang==='fa'?'زمان آزمون':'Duration')+'</span>'
       +'<div class="typ-durs">'+durs.map(d=>'<button class="tdur'+(TYP.dur===d?' on':'')+'" onclick="typDur('+d+')">'+(d<60?faNum(d)+' ثانیه':faNum(d/60)+' دقیقه')+'</button>').join('')
-      +'<span class="tdur custom">'+ic('wrench',12)+'<input type="number" id="typCustom" min="10" max="600" placeholder="'+(TYP.lang==='fa'?'ثانیه':'sec')+'" value=""></span>'
+      +'<span class="tdur custom">'+ic('wrench',12)+'<input type="number" id="typCustom" min="10" max="600" placeholder="ثانیه" value=""></span>'
       +'<button class="btn gold" onclick="typDurCustom()">'+ic('play',13)+(TYP.lang==='fa'?'شروع':'Start')+'</button></div></div>'
     +'</div>'
-    +'<div id="typPractice">'+((TYP.lesson>=0)?typPracticeHtml():'')+'</div>';
+    +'<div id="typPractice">'+((TYP.lesson>=0)?typPracticeHtml():'<div class="empty small"><span class="e-ic">'+ic('clock',24)+'</span><h3>آماده‌ای؟</h3><p>زمان رو انتخاب کن و شروع کن — سرعتت زنده حساب می‌شه.</p><button class="btn gold" onclick="typStartTest()">'+ic('play',14)+' شروع آزمون '+faNum(TYP.dur)+' ثانیه‌ای</button></div>')+'</div>';
   }
-  /* آزاد */
-  return '<div class="typ-free"><textarea id="typInpFree" dir="'+(TYP.lang==='fa'?'rtl':'ltr')+'" placeholder="'+(TYP.lang==='fa'?'هر چه دوست داری بنویس — سرعتت زنده حساب می‌شود…':'Type anything — live speed is counted…')+'"></textarea>'
-    +'<div class="typ-fstats"><span>'+(TYP.lang==='fa'?'سرعت':'WPM')+': <b id="tfWpm">۰</b></span><span>'+(TYP.lang==='fa'?'کاراکتر':'Chars')+': <b id="tfCh">۰</b></span><span>'+(TYP.lang==='fa'?'کلمه':'Words')+': <b id="tfWd">۰</b></span><span>'+(TYP.lang==='fa'?'زمان':'Time')+': <b id="tfT">۰:۰۰</b></span></div></div>';
+  return '<div class="typ-free-v19"><textarea id="typInpFree" dir="'+(TYP.lang==='fa'?'rtl':'ltr')+'" placeholder="'+(TYP.lang==='fa'?'هر چه دوست داری بنویس — سرعتت زنده حساب می‌شود…':'Type anything — live speed is counted…')+'"></textarea>'
+    +'<div class="typ-fstats"><span>'+(TYP.lang==='fa'?'سرعت':'WPM')+': <b id="tfWpm">۰</b></span><span>'+(TYP.lang==='fa'?'کاراکتر':'Chars')+': <b id="tfCh">۰</b></span><span>'+(TYP.lang==='fa'?'کلمه':'Words')+': <b id="tfWd">۰</b></span><span>'+(TYP.lang==='fa'?'زمان':'Time')+': <b id="tfT">۰:۰۰</b></span><button class="btn ghost sm" onclick="document.getElementById(\'typInpFree\').value=\'\';typFreeStats()">'+ic('trash',12)+' پاک</button></div></div>';
+}
+function typHeatmapHtml(){
+  const heat=TYP.heat||{};
+  const entries=Object.entries(heat).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  if(!entries.length) return '';
+  return '<div class="typ-heat"><h4>'+ic('activity',14)+' کلیدهای پرخطا — روشون بیشتر تمرین کن</h4><div class="heat-grid">'+entries.map(([k,c])=>{
+    const z=TYP_ZONE[TYP.lang][k]||'th';
+    return '<span class="heat-k z-'+z+'" title="'+esc(k)+' — '+faNum(c)+' خطا"><b>'+esc(k)+'</b><i>'+faNum(c)+'</i></span>';
+  }).join('')+'</div></div>';
 }
 function typPracticeHtml(){
   const L=TYP.lang;
   const ls=TYP.mode==='learn'?TYP_LESSONS[L][TYP.lesson]:null;
-  return '<div class="typ-practice'+(TYP.fin?' fin':'')+'">'
+  return '<div class="typ-practice-v19'+(TYP.fin?' fin':'')+'">'
     +'<div class="typ-phead"><span class="typ-pttl">'+(ls?ls.t:(L==='fa'?'آزمون سرعت':'Speed test'))+'</span>'
-      +(TYP.mode==='learn'?'<span class="typ-round">'+(L==='fa'?'دور':'Round')+' <b>'+faNum((typStats().rnd[TYP.lesson]||0)+1)+'</b>'+(L==='fa'?' از ۳':' of 3')
+      +(TYP.mode==='learn'?'<span class="typ-round">'+(L==='fa'?'دور':'Round')+' <b>'+faNum((typStats().rnd[TYP.lesson]||0)+1)+'</b> از ۳'
         +'<span class="tdots">'+[0,1,2].map(k=>'<i class="tdot'+((typStats().rnd[TYP.lesson]||0)>k?' on':'')+'"></i>').join('')+'</span></span>':'')
       +'<div class="typ-pctl">'
         +'<button class="tl-btn sm'+(typSndOn()?' on':'')+'" onclick="typSndToggle()" title="صدا">'+ic(typSndOn()?'volume':'volume-x',12)+'</button>'
-        +(TYP.mode==='learn'?'<button class="tl-btn sm'+(TYP.block?' on':'')+'" onclick="typBlock()">'+ic('shield-check',12)+(L==='fa'?'حالت آموزشی':'Strict')+'</button>':'')
+        +(TYP.mode==='learn'?'<button class="tl-btn sm'+(TYP.block?' on':'')+'" onclick="typBlock()">'+ic('shield-check',12)+(L==='fa'?'سخت‌گیر':'Strict')+'</button>':'')
         +'<button class="tl-btn sm" onclick="typRestart()">'+ic('rotate-ccw',12)+(L==='fa'?'از نو':'Restart')+'</button>'
         +(TYP.mode==='learn'?'<button class="tl-btn sm" onclick="typQuit()">'+ic('x',12)+(L==='fa'?'بستن':'Close')+'</button>':'')
       +'</div></div>'
@@ -7132,21 +7423,22 @@ function typPracticeHtml(){
       +'<span class="tss">'+ic('shield-check',12)+(L==='fa'?'دقت':'Acc')+' <b id="tAcc">۱۰۰٪</b></span>'
       +'<span class="tss bad">'+ic('x',12)+(L==='fa'?'خطا':'Errors')+' <b id="tErr">۰</b></span>'
       +'<span class="tss">'+ic('clock',12)+(L==='fa'?'زمان':'Time')+' <b id="tTime">۰:۰۰</b></span>'
-      +(TYP.mode==='test'?'<span class="tss gold">'+ic('clock',12)+(L==='fa'?'باقی‌مانده':'Left')+' <b id="tLeft">—</b></span>':'<span class="tss">'+ic('list',12)+(L==='fa'?'باقی‌مانده':'Left')+' <b id="tLeft">—</b></span>')
+      +(TYP.mode==='test'?'<span class="tss gold">'+ic('clock',12)+(L==='fa'?'مانده':'Left')+' <b id="tLeft">—</b></span>':'<span class="tss">'+ic('list',12)+(L==='fa'?'مانده':'Left')+' <b id="tLeft">—</b></span>')
       +'<span class="tss">'+ic('activity',12)+(L==='fa'?'واکنش':'React')+' <b id="tReact">—</b></span>'
     +'</div>'
     +'<div class="typ-pbar big"><i id="tBar" style="width:0%"></i></div>'
+    +'<canvas id="typChart" width="600" height="100" class="typ-chart"></canvas>'
   +'</div>';
 }
 function typPromptHtml(){
   if(TYP.fin)return TYP.mode==='test'?(TYP.lang==='fa'?'تمام شد! نتیجه آماده است':'Done! Results ready'):(TYP.lang==='fa'?'درس تمام شد! عالی بودی':'Lesson complete!');
   const t=TYP.text[TYP.log.length]||'';
-  if(t==='' )return (TYP.lang==='fa'?'شروع کن… تایپ کن!':'Start typing!');
-  if(t===' ')return TYP.lang==='fa'?'حرف بعدی: <b>فاصله</b> — '+TYP_FINGER.fa.th:'Next: <b>Space</b> — '+TYP_FINGER.en.th;
-  if(t==='\u200c')return TYP.lang==='fa'?'حرف بعدی: <b>نیم‌فاصله</b> — '+TYP_FINGER.fa.th:'Next: <b>Half-space</b>';
-  const z=TYP_ZONE[TYP.lang][t]||'th';
+  if(t==='')return (TYP.lang==='fa'?'شروع کن… تایپ کن!':'Start typing!');
+  if(t===' ')return TYP.lang==='fa'?'بعدی: <b>فاصله</b> — '+TYP_FINGER.fa.th:'Next: <b>Space</b> — '+TYP_FINGER.en.th;
+  if(t==='\u200c')return TYP.lang==='fa'?'بعدی: <b>نیم‌فاصله</b> — Shift+Space':'Next: <b>Half-space</b>';
+  const z=TYP_ZONE[TYP.lang][t]||TYP_ZONE[TYP.lang][typNorm(t)]||'th';
   const disp=TYP.lang==='en'?t.toUpperCase():t;
-  return (TYP.lang==='fa'?'حرف بعدی:':'Next:')+' <b class="gold">'+esc(disp)+'</b> — '+TYP_FINGER[TYP.lang][z];
+  return (TYP.lang==='fa'?'بعدی:':'Next:')+' <b class="gold">'+esc(disp)+'</b> — '+TYP_FINGER[TYP.lang][z];
 }
 function typTextHtml(){
   let h='';
@@ -7161,17 +7453,16 @@ function typTextHtml(){
   }
   return h;
 }
-/* ---------- کیبورد زنده ---------- */
 function typKbHtml(){
   const L=TYP.lang,rows=TYP_ROWS[L],sub=TYP_SUB[L==='fa'?'en':'fa'];
-  let h='<div class="typ-kb'+(L==='en'?' en':'')+'" id="typKb">';
+  let h='<div class="typ-kb-v19'+(L==='en'?' en':'')+'" id="typKb">';
   rows.forEach((r,ri)=>{
     h+='<div class="krow r'+ri+'">';
     r.forEach(k=>{
       const z=TYP_ZONE[L][k]||'th';
       h+='<button class="kk z-'+z+(k===';'||k==='.'||k==='/'||k===','?' wide-s':'')+'" data-k="'+esc(k)+'" data-z="'+z+'" onclick="typKbTap(\''+(k==='\\'?'\\\\':k.replace(/'/g,"\\'"))+'\')">'
         +'<span class="kmain">'+(L==='en'?k.toUpperCase():k)+'</span>'
-        +(sub[k]?'<span class="ksub">'+sub[k]+'</span>':'')
+        +(sub&&sub[k]?'<span class="ksub">'+sub[k]+'</span>':'')
       +'</button>';
     });
     if(ri===3)h+='<button class="kk bk z-rp" data-k="BK" onclick="typKbTap(\'BK\')"><span class="kmain">⌫</span></button>';
@@ -7187,14 +7478,21 @@ function typKbTap(k){
   if(k==='HS'){typChar('\u200c');return;}
   typChar(k==='\\'?'\\':k);
 }
-function kbEl(ch){const d=document.getElementById('typKb');if(!d)return null;return d.querySelector('[data-k="'+(ch==='"'?'\\"':ch)+'"]');}
+function kbEl(ch){
+  const d=document.getElementById('typKb');if(!d)return null;
+  const esc=k=>{ try{ return (window.CSS&&CSS.escape?CSS.escape(k):k); }catch(e){ return k; } };
+  let el=d.querySelector('[data-k="'+esc(ch)+'"]');
+  if(el) return el;
+  el=d.querySelector('[data-k="'+esc(typNorm(ch))+'"]');
+  return el;
+}
 function typKbNext(){
   const d=document.getElementById('typKb');if(!d)return;
   d.querySelectorAll('.next,.zl').forEach(e=>e.classList.remove('next','zl'));
   if(TYP.fin||!TYP.text)return;
   const t=TYP.text[TYP.log.length];
   if(!t)return;
-  const el=kbEl(typNorm(t));
+  const el=kbEl(typNorm(t))||kbEl(t);
   if(el){
     el.classList.add('next');
     const z=el.dataset.z;
@@ -7204,47 +7502,47 @@ function typKbNext(){
   if(pr)pr.innerHTML=typPromptHtml();
 }
 function typKbHit(ch,ok){
-  const el=kbEl(typNorm(ch));
-  if(el){el.classList.add(ok?'hit':'miss');setTimeout(()=>el.classList.remove('hit','miss'),190);}
+  const el=kbEl(typNorm(ch))||kbEl(ch);
+  if(el){el.classList.add(ok?'hit':'miss');setTimeout(()=>el.classList.remove('hit','miss'),200);}
 }
-/* ---------- جریان تمرین ---------- */
+
+/* ---------- جریان تمرین — باگ‌فیکس اصلی ---------- */
 function typMode(m){
-  TYP.mode=m;TYP.lesson=-1;TYP.fin=false;typStopInt();typRerender();
+  TYP.mode=m;TYP.lesson=-1;TYP.fin=false;typStopInt();typRerender();setTimeout(typFocus,80);
 }
 function typSetLang(l){
   TYP.lang=l;store.set('typLang',l);
-  TYP.lesson=-1;TYP.fin=false;TYP.log=[];typStopInt();typRerender();
+  TYP.lesson=-1;TYP.fin=false;TYP.log=[];typStopInt();typRerender();setTimeout(typFocus,80);
 }
 function typLight(){TYP.light=!TYP.light;store.set('typLight',TYP.light);
-  const w=document.querySelector('.typ-wrap');if(w)w.classList.toggle('light',TYP.light);}
+  const w=document.querySelector('.typ-wrap-v19')||document.querySelector('.typ-wrap');if(w)w.classList.toggle('light',TYP.light);}
 function typClickLesson(i){
   const s=typStats();
-  if(i>0&&!(s.done&&s.done[i-1])){toast(TYP.lang==='fa'?'اول درس قبلی را تمام کن!':'Finish the previous lesson first','info');return;}
+  if(i>0&&!(s.done&&s.done[i-1])){toast(TYP.lang==='fa'?'اول درس قبلی را تمام کن!':'Finish previous first','info');return;}
   TYP.mode='learn';typStartLesson(i);
 }
 function typStartLesson(i){
-  TYP.lesson=i;TYP.fin=false;TYP.log=[];TYP.errs=0;TYP.startT=0;TYP.charT=0;TYP.reactSum=0;TYP.reactN=0;TYP.res=null;
+  TYP.lesson=i;TYP.fin=false;TYP.log=[];TYP.errs=0;TYP.startT=0;TYP.charT=0;TYP.reactSum=0;TYP.reactN=0;TYP.res=null;TYP.history=[];
   const ls=TYP_LESSONS[TYP.lang][i];
   const st=typStats();
   const pool=(ls.pool&&ls.pool.length)?ls.pool:[ls.x];
   TYP.text=pool[(st.rnd[i]||0)%pool.length]||'';
   if(!TYP.text){TYP.mode='free';typRerender();return;}
   TYP.running=true;typStopInt();
-  typRerender();
-  const inp=document.getElementById('typInput');if(inp)inp.focus();
+  typRerender();setTimeout(()=>{typFocus();typDrawChart();},60);
 }
 function typDur(d){TYP.dur=d;typRerender();}
 function typDurCustom(){
   const el=document.getElementById('typCustom');
   const v=el&&+el.value;
-  if(!v||v<5||v>900){toast(TYP.lang==='fa'?'زمان را بین ۵ تا ۹۰۰ ثانیه بده':'Pick 5–900 seconds','info');return;}
+  if(!v||v<5||v>900){toast(TYP.lang==='fa'?'زمان بین ۵ تا ۹۰۰ ثانیه':'Pick 5–900 sec','info');return;}
   TYP.dur=v;typStartTest();
 }
 function typStartTest(){
-  TYP.mode='test';TYP.fin=false;TYP.log=[];TYP.errs=0;TYP.startT=0;TYP.charT=0;TYP.reactSum=0;TYP.reactN=0;TYP.res=null;
+  TYP.mode='test';TYP.fin=false;TYP.log=[];TYP.errs=0;TYP.startT=0;TYP.charT=0;TYP.reactSum=0;TYP.reactN=0;TYP.res=null;TYP.history=[];
   const ws=TYP_WORDS[TYP.lang];
   const parts=[];
-  for(let i=0;i<150;i++)parts.push(ws[Math.floor(Math.random()*ws.length)]);
+  for(let i=0;i<160;i++)parts.push(ws[Math.floor(Math.random()*ws.length)]);
   TYP.text=parts.join(' ');
   TYP.testLeft=TYP.dur;TYP.running=true;
   typStopInt();
@@ -7256,53 +7554,69 @@ function typStartTest(){
     typTickStats();
     if(TYP.testLeft<=0)typFinishTest();
   },1000);
-  typRerender();
-  const inp=document.getElementById('typInput');if(inp)inp.focus();
+  typRerender();setTimeout(()=>{typFocus();typDrawChart();},60);
 }
 function typRestart(){
   if(TYP.mode==='test')typStartTest();
   else if(TYP.lesson>=0)typStartLesson(TYP.lesson);
 }
 function typQuit(){TYP.lesson=-1;TYP.fin=false;TYP.log=[];typStopInt();typRerender();}
-function typBlock(){TYP.block=!TYP.block;typRerender();}
+function typBlock(){TYP.block=!TYP.block;typRerender();setTimeout(typFocus,50);}
 function typBack(){
   if(TYP.mode==='free')return;
   if(TYP.block&&TYP.mode==='learn')return;
   if(!TYP.log.length)return;
-  TYP.log.pop();typPaint();
+  TYP.log.pop();
+  typPaint();
+}
+function typFocus(){
+  const inp=document.getElementById('typInput');
+  if(inp){ inp.value=''; inp.focus(); }
 }
 function typChar(ch){
   if(TYP.mode==='free'){
     const ta=document.getElementById('typInpFree');
     if(!ta)return;
     if(!TYP.freeT0)TYP.freeT0=performance.now();
-    TYP.freeN=ta.value.length;
     typFreeStats();
     return;
   }
   if(TYP.fin||!TYP.text)return;
-  const tgt=TYP.text[TYP.log.length];
+  const idx=TYP.log.length;
+  const tgt=TYP.text[idx];
   if(tgt===undefined)return;
   const now=performance.now();
   if(TYP.startT===0){TYP.startT=now;TYP.charT=now;typStartElapsed();}
-  const ok=typNorm(ch)===typNorm(tgt)||(tgt==='\u200c'&&(ch==='-'));
-  if(ok)TYP.reactSum+=now-TYP.charT,TYP.reactN++;
-  TYP.charT=now;
-  if(!ok){
+  const normCh=typNorm(ch);
+  const normTgt=typNorm(tgt);
+  const ok=normCh===normTgt;
+  if(ok){
+    TYP.reactSum+=now-TYP.charT; TYP.reactN++;
+    TYP.charT=now;
+    typSfx(true); typKbHit(ch,true);
+    TYP.log.push({c:ch,ok:true});
+    // WPM history
+    if(TYP.log.length%6===0){ TYP.history.push(typCalcWpm()); typDrawChart(); }
+  }else{
+    // خطا
     TYP.errs++;
-    typSfx(false);
-    typKbHit(ch,false);
+    // heatmap
+    const key=tgt;
+    TYP.heat[key]=(TYP.heat[key]||0)+1;
+    store.set('typHeat',TYP.heat);
+    typSfx(false); typKbHit(ch,false);
     const cur=document.querySelector('.tc.cur');
     if(cur){cur.classList.add('no');setTimeout(()=>cur&&cur.classList.remove('no'),260);}
-    if(TYP.block){typPaintStats();return;}
-    TYP.log.push({c:ch,ok:false});
-  }else{
-    typSfx(true);
-    typKbHit(ch,true);
-    TYP.log.push({c:ch,ok:true});
+    if(TYP.block){
+      // در حالت سخت‌گیر، فقط خطا بشمار، جلو نرو
+      typPaintStats();
+      return;
+    }else{
+      TYP.log.push({c:ch,ok:false});
+    }
   }
   if(TYP.log.length>=TYP.text.length){
-    if(TYP.mode==='test'){typFinishTest();}
+    if(TYP.mode==='test')typFinishTest();
     else typFinishLesson();
     return;
   }
@@ -7318,15 +7632,15 @@ function typStartElapsed(){
   },1000);
 }
 function typStopInt(){if(TYP.int){clearInterval(TYP.int);TYP.int=0;}}
-function typStopAll(){typStopInt();}
 function typElapsed(){return TYP.startT?(performance.now()-TYP.startT)/1000:0;}
 function typCalcWpm(){const m=typElapsed()/60;return m>0?Math.round(TYP.log.filter(x=>x.ok).length/5/m):0;}
 function typPaintStats(){
   const w=document.getElementById('tWpm');if(w)w.textContent=faNum(typCalcWpm());
   const okc=TYP.log.filter(x=>x.ok).length;
-  const bad=TYP.log.filter(x=>!x.ok).length+TYP.errs;
+  const bad=TYP.log.filter(x=>!x.ok).length + (TYP.block?TYP.errs:0); // در سخت‌گیر، errs جداگانه
+  const tot=okc+bad;
   const acc=document.getElementById('tAcc');
-  if(acc){const tot=okc+bad;acc.textContent=faNum(tot?Math.round(okc/tot*100):100)+'٪';}
+  if(acc){acc.textContent=faNum(tot?Math.round(okc/tot*100):100)+'٪';}
   const e=document.getElementById('tErr');if(e)e.textContent=faNum(bad);
   const l=document.getElementById('tLeft');
   if(l&&TYP.mode!=='test')l.textContent=faNum(TYP.text.length-TYP.log.length);
@@ -7335,10 +7649,34 @@ function typPaintStats(){
   const b=document.getElementById('tBar');
   if(b)b.style.width=Math.round(TYP.log.length/Math.max(1,TYP.text.length)*100)+'%';
 }
+function typTickStats(){ typPaintStats(); if(TYP.log.length%5===0){ TYP.history.push(typCalcWpm()); typDrawChart(); } }
+function typDrawChart(){
+  const c=document.getElementById('typChart'); if(!c) return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);
+  const hist=TYP.history;
+  if(!hist.length) return;
+  const max=Math.max(...hist,10);
+  ctx.beginPath();
+  ctx.strokeStyle='rgba(240,199,94,.9)'; ctx.lineWidth=2.5; ctx.lineJoin='round';
+  hist.forEach((v,i)=>{
+    const x=i/(Math.max(1,hist.length-1))*W;
+    const y=H - (v/max)*H*0.8 - 8;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  // fill
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'rgba(240,199,94,.35)'); grad.addColorStop(1,'rgba(240,199,94,0)');
+  ctx.fillStyle=grad; ctx.fill();
+}
 function typFreeStats(){
   const ta=document.getElementById('typInpFree');if(!ta)return;
   const v=ta.value;
-  const s=Math.floor((performance.now()-TYP.freeT0)/1000);
+  if(!TYP.freeT0 && v.length) TYP.freeT0=performance.now();
+  const s=TYP.freeT0?Math.floor((performance.now()-TYP.freeT0)/1000):0;
   const wpm=s>2?Math.round(v.length/5/(s/60)):0;
   const a=document.getElementById('tfWpm');if(a)a.textContent=faNum(wpm);
   const c=document.getElementById('tfCh');if(c)c.textContent=faNum(v.length);
@@ -7359,6 +7697,8 @@ function typPaint(){
     }
     if(sp[i])sp[i].className='tc cur'+(TYP.text[i]===' '?' sp':'');
     t.dataset.li=i;
+    // auto scroll to current
+    const cur=sp[i]; if(cur){ try{ cur.scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(e){} }
   }
   typKbNext();
 }
@@ -7367,14 +7707,15 @@ function typRerender(){
   if(k)k.innerHTML=typKbHtml();
   const b=document.getElementById('typBody');
   if(b)b.innerHTML=typBodyHtml();
-  typPaint();typPaintStats();
+  typPaint();typPaintStats();setTimeout(typDrawChart,80);
+  setTimeout(typFocus,80);
 }
 /* ---------- پایان‌ها ---------- */
 function typFinishLesson(){
   TYP.fin=true;TYP.running=false;typStopInt();
   const wpm=typCalcWpm();
   const okc=TYP.log.filter(x=>x.ok).length;
-  const bad=TYP.log.filter(x=>!x.ok).length+TYP.errs;
+  const bad=TYP.log.filter(x=>!x.ok).length + (TYP.block?TYP.errs:0);
   const acc=okc+bad?Math.round(okc/(okc+bad)*100):100;
   const react=TYP.reactN?Math.round(TYP.reactSum/TYP.reactN):0;
   const p=typProg();
@@ -7385,6 +7726,19 @@ function typFinishLesson(){
   const complete=rounds>=3;
   if(complete&&!s.done[TYP.lesson])s.done[TYP.lesson]={w:wpm,a:acc};
   s.n++;s.w+=wpm;s.a+=acc;
+  // streak
+  const today=new Date().toDateString();
+  const last=store.get('typLastDay','');
+  if(last!==today){
+    if(last && (new Date()-new Date(last))/86400000<2) store.set('typStreak',(store.get('typStreak',0)||0)+1);
+    else store.set('typStreak',1);
+    store.set('typLastDay',today);
+  }
+  // history
+  let hist=store.get('typHistory',[]);
+  hist.push({t:Date.now(),w:wpm,a:acc,lang:TYP.lang,lesson:TYP.lesson});
+  if(hist.length>60) hist=hist.slice(-60);
+  store.set('typHistory',hist);
   typSaveProg(p);
   TYP.res={wpm,acc,errs:bad,react,rounds,complete};
   typSfx(true);
@@ -7393,14 +7747,15 @@ function typFinishLesson(){
   const ttl=complete?(TYP.lang==='fa'?'درس تمام شد!':'Lesson complete!'):(TYP.lang==='fa'?'دور '+faNum(rounds)+' از ۳':'Round '+rounds+' of 3');
   if(pr)pr.insertAdjacentHTML('beforeend',typResultHtml(ttl,true));
   toast((complete?(TYP.lang==='fa'?'درس ':'Lesson '):(TYP.lang==='fa'?'دور ':'Round '))+faNum(TYP.lesson+1)+' — '+faNum(wpm)+' WPM','trophy');
+  try{ if(typeof coinAdd==='function') coinAdd(5+(complete?15:0), 'تایپ '+TYP_LESSONS[TYP.lang][TYP.lesson].t); }catch(e){}
 }
 function typFinishTest(){
   TYP.fin=true;TYP.running=false;typStopInt();
   const wpm=typCalcWpm();
   const okc=TYP.log.filter(x=>x.ok).length;
-  const bad=TYP.log.filter(x=>!x.ok).length+TYP.errs;
+  const bad=TYP.log.filter(x=>!x.ok).length + (TYP.block?TYP.errs:0);
   const acc=okc+bad?Math.round(okc/(okc+bad)*100):100;
-  const secs=TYP.mode==='test'?Math.min(TYP.dur,Math.round(typElapsed()))||TYP.dur:Math.round(typElapsed());
+  const secs=Math.min(TYP.dur,Math.round(typElapsed()))||TYP.dur;
   const p=typProg();
   const s=p[TYP.lang]=p[TYP.lang]||{done:{},n:0,w:0,a:0,best:{}};
   const prev=s.best&&s.best[TYP.dur]||0;
@@ -7413,14 +7768,15 @@ function typFinishTest(){
   const pr=document.getElementById('typPractice');
   if(pr)pr.insertAdjacentHTML('beforeend',typResultHtml(TYP.lang==='fa'?'زمان تمام شد!':'Time is up!',false));
   toast((TYP.lang==='fa'?'نتیجه: ':'Result: ')+faNum(wpm)+(TYP.lang==='fa'?' کلمه در دقیقه':' WPM'),rec?'trophy':'info');
+  try{ if(typeof coinAdd==='function') coinAdd(Math.max(5, Math.floor(wpm/4)), 'آزمون تایپ'); }catch(e){}
 }
 function typResultHtml(title,isLesson){
   const r=TYP.res;if(!r)return '';
   const L=TYP.lang;
   return '<div class="overlay typ-ov" onclick="if(event.target===this)this.remove()">'
-    +'<div class="modal typ-modal" onclick="event.stopPropagation()">'
+    +'<div class="modal typ-modal typ-modal-v19" onclick="event.stopPropagation()">'
       +'<button class="x" onclick="this.closest(\'.overlay\').remove()">'+ic('x',14)+'</button>'
-      +'<div class="tm-ic">'+ic('trophy',26)+'</div>'
+      +'<div class="tm-ic">'+ic('trophy',28)+'</div>'
       +'<h3>'+title+'</h3>'
       +(r.rec?'<div class="tm-rec">'+ic('sparkles',13)+(L==='fa'?'رکورد جدید!':'New record!')+'</div>':'')
       +'<div class="tm-grid">'
@@ -7429,7 +7785,7 @@ function typResultHtml(title,isLesson){
         +'<div class="tm-c"><b>'+faNum(r.errs)+'</b><span>'+(L==='fa'?'خطا':'Errors')+'</span></div>'
         +'<div class="tm-c"><b>'+(isLesson?faNum(Math.round((r.react||0)))+'ms':faNum(r.okc))+'</b><span>'+(isLesson?(L==='fa'?'واکنش':'Reaction'):(L==='fa'?'صحیح':'Correct'))+'</span></div>'
       +'</div>'
-      +(isLesson&&!r.complete?'<div class="tm-round">'+(L==='fa'?'این درس '+faNum(3)+' دور دارد — خط بعدی را تمرین کن!':'This lesson has 3 rounds — next line!')+'</div>':'')
+      +(isLesson&&!r.complete?'<div class="tm-round">'+(L==='fa'?'این درس ۳ دور دارد — خط بعدی را تمرین کن!':'This lesson has 3 rounds — next line!')+'</div>':'')
       +'<div class="row">'
         +'<button class="btn gold" onclick="this.closest(\'.overlay\').remove();typRestart()">'+ic('rotate-ccw',14)+(isLesson&&!r.complete?(L==='fa'?'دور بعد':'Next round'):(L==='fa'?'دوباره':'Again'))+'</button>'
         +'<button class="btn ghost" onclick="this.closest(\'.overlay\').remove()">'+ic('check',14)+(L==='fa'?'باشه':'OK')+'</button>'
@@ -7438,9 +7794,40 @@ function typResultHtml(title,isLesson){
 }
 /* ---------- اتصال رخدادها ---------- */
 function typBind(){
+  document.addEventListener('keydown',e=>{
+    if(TYP.mode==='free') return;
+    if(!TYP.text || TYP.fin) return;
+    // handle backspace globally for typing view
+    if(e.key==='Backspace'){ 
+      const active=document.activeElement && document.activeElement.id==='typInpFree';
+      if(active) return;
+      e.preventDefault(); typBack(); return;
+    }
+    // prevent typing when input not focused? allow
+    if(e.key.length===1 || e.key===' ' || e.key==='Enter'){
+      const active=document.activeElement && (document.activeElement.tagName==='INPUT' || document.activeElement.tagName==='TEXTAREA');
+      if(active && document.activeElement.id!=='typInput') return;
+      if(e.key==='Enter') return;
+      e.preventDefault();
+      typChar(e.key===' '?' ':e.key);
+      const inp=document.getElementById('typInput'); if(inp) inp.value='';
+    }
+  });
   document.addEventListener('input',e=>{
-    if(e.target&&e.target.id==='typInput'&&e.data){typChar(e.data);e.target.value='';}
+    if(e.target&&e.target.id==='typInput'){
+      const v=e.target.value;
+      if(v){
+        // handle last char
+        const ch=v.slice(-1);
+        if(ch) typChar(ch);
+        e.target.value='';
+      }
+    }
     if(e.target&&e.target.id==='typInpFree')typFreeStats();
+  });
+  document.addEventListener('click',e=>{
+    const t=e.target.closest && e.target.closest('.typ-text');
+    if(t) typFocus();
   });
 }
 if(typeof document!=='undefined'&&document.addEventListener&&!window.__typBound){
@@ -7448,6 +7835,582 @@ if(typeof document!=='undefined'&&document.addEventListener&&!window.__typBound)
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',typBind);
   else typBind();
 }
+
+/* ================================================================
+   مشتریان کافی‌نت نت‌یار — CRM پرمیوم واقعی
+   رمز مخفی 5585 — ذخیره پایدار، اشتراک، ذخیره گالری، ویرایش/حذف
+   ================================================================ */
+'use strict';
+
+const CRM_PASS = '5585';
+const CRM_STORE_KEY = 'crm_customers';
+const CRM_AUTH_KEY = 'crm_auth';
+const CRM_CATS = [
+  {id:'regular', l:'عادی', c:'#4c8ddb', i:'user'},
+  {id:'student', l:'دانشجو', c:'#8b7bd8', i:'graduation'},
+  {id:'freelancer', l:'فریلنسر', c:'#4fa98c', i:'code'},
+  {id:'gamer', l:'گیمر', c:'#7a9e4f', i:'gamepad'},
+  {id:'business', l:'کسب‌وکار', c:'#c9a227', i:'briefcase'},
+  {id:'vip', l:'VIP طلایی', c:'#d9ae3e', i:'crown'},
+  {id:'other', l:'سایر', c:'#7c8da6', i:'layers'},
+];
+
+function crmGet(){ return store.get(CRM_STORE_KEY, []); }
+function crmSet(arr){ store.set(CRM_STORE_KEY, arr); }
+function crmIsAuth(){ 
+  try{ return store.get(CRM_AUTH_KEY, false)===true || sessionStorage.getItem('crm_auth')==='1'; }catch(e){ return store.get(CRM_AUTH_KEY,false); }
+}
+function crmSetAuth(v){ 
+  try{ store.set(CRM_AUTH_KEY, v); if(v) sessionStorage.setItem('crm_auth','1'); else sessionStorage.removeItem('crm_auth'); }catch(e){ store.set(CRM_AUTH_KEY,v); }
+}
+function crmNow(){ 
+  try{ return new Intl.DateTimeFormat('fa-IR',{dateStyle:'full',timeStyle:'medium'}).format(new Date()); }catch(e){ return new Date().toLocaleString('fa-IR'); }
+}
+function crmId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+
+// اعتبارسنجی کد ملی ایران
+function crmValidNational(code){
+  if(!/^\d{10}$/.test(code)) return false;
+  if(/^(\d)\1{9}$/.test(code)) return false;
+  const check = +code[9];
+  let sum=0;
+  for(let i=0;i<9;i++) sum+= +code[i]*(10-i);
+  const r=sum%11;
+  return (r<2 && check===r) || (r>=2 && check===11-r);
+}
+function crmValidMobile(m){
+  return /^09\d{9}$/.test(m.replace(/\s+/g,''));
+}
+
+let CRM={q:'',cat:null,editId:null,view:'list'};
+
+function crmLockHtml(){
+  return '<section class="crm-lock-wrap">'
+    +'<div class="crm-lock-bg"><div class="crm-lock-glow g1"></div><div class="crm-lock-glow g2"></div></div>'
+    +'<div class="crm-lock-card reveal">'
+      +'<div class="crm-lock-ic">'+ic('shield-check',42)+'</div>'
+      +'<h2>بخش مشتریان — دسترسی امن</h2>'
+      +'<p>این بخش فقط برای مدیریت کافی‌نت است. رمز ۴ رقمی را وارد کنید تا وارد شوید.</p>'
+      +'<div class="crm-lock-input">'
+        +'<input type="password" id="crmPassInp" inputmode="numeric" maxlength="4" placeholder="رمز ۴ رقمی" autocomplete="off">'
+        +'<button class="btn gold" onclick="crmTryPass()">'+ic('unlock',16)+' ورود</button>'
+      +'</div>'
+      +'<div class="crm-lock-hint">'+ic('info',12)+' رمز پیش‌فرض: <b>۵۵۸۵</b> — قابل تغییر نیست (سفارشی شما)</div>'
+      +'<div class="crm-lock-foot"><span>'+ic('users',12)+' '+faNum(crmGet().length)+' مشتری ذخیره شده</span><span>'+ic('shield',12)+' رمزنگاری محلی</span></div>'
+    +'</div></section>';
+}
+
+function crmTryPass(){
+  const inp=document.getElementById('crmPassInp');
+  const v=(inp&&inp.value||'').trim();
+  if(v===CRM_PASS){
+    crmSetAuth(true);
+    toast('خوش آمدید! دسترسی باز شد','shield-check');
+    try{gSfx('win');}catch(e){}
+    render();
+  }else{
+    toast('رمز اشتباه است!','alert');
+    if(inp){inp.classList.add('shake'); inp.value=''; setTimeout(()=>inp.classList.remove('shake'),400);}
+    try{gSfx('bad');}catch(e){}
+  }
+}
+function crmLogout(){
+  crmSetAuth(false);
+  toast('از بخش مشتریان خارج شدید','lock');
+  render();
+}
+
+function crmFormHtml(editObj){
+  const cats=CRM_CATS;
+  const obj=editObj||{fullName:'',national:'',mobile:'',address:'',appIds:'',age:'',job:'',cat:'regular',note:''};
+  return '<div class="crm-form-card">'
+    +'<h3>'+ic(editObj?'edit':'plus',16)+(editObj?' ویرایش مشتری':' افزودن مشتری جدید')+'</h3>'
+    +'<div class="crm-form-grid">'
+      +'<label><span>'+ic('user',12)+' نام و نام خانوادگی *</span><input id="cfName" value="'+esc(obj.fullName||'')+'" placeholder="مثلا: علی رضایی"></label>'
+      +'<label><span>'+ic('hash',12)+' کد ملی *</span><input id="cfNational" value="'+esc(obj.national||'')+'" maxlength="10" inputmode="numeric" placeholder="۱۰ رقم"></label>'
+      +'<label><span>'+ic('smartphone',12)+' شماره موبایل *</span><input id="cfMobile" value="'+esc(obj.mobile||'')+'" inputmode="tel" placeholder="۰۹۱۲..."></label>'
+      +'<label><span>'+ic('clock',12)+' سن</span><input id="cfAge" type="number" min="1" max="120" value="'+esc(obj.age||'')+'" placeholder="مثلا: ۲۴"></label>'
+      +'<label class="wide"><span>'+ic('briefcase',12)+' نوع کار / شغل</span><input id="cfJob" value="'+esc(obj.job||'')+'" placeholder="مثلا: برنامه‌نویس، دانشجو، گیمر..."></label>'
+      +'<label class="wide"><span>'+ic('layers',12)+' دسته‌بندی</span><div class="crm-cat-pick">'+cats.map(c=>'<span class="crm-cat-opt'+(obj.cat===c.id?' on':'')+'" data-cat="'+c.id+'" style="--cc:'+c.c+'" onclick="crmPickCat(\''+c.id+'\')">'+ic(c.i,12)+c.l+'</span>').join('')+'</div></label>'
+      +'<label class="wide"><span>'+ic('message',12)+' آیدی اپلیکیشن‌ها (اینستا، تلگرام، واتساپ...)</span><input id="cfAppIds" value="'+esc(obj.appIds||'')+'" placeholder="مثلا: @ali_telegram , insta: ali.rez"></label>'
+      +'<label class="wide"><span>'+ic('home',12)+' آدرس</span><textarea id="cfAddr" placeholder="آدرس کامل...">'+esc(obj.address||'')+'</textarea></label>'
+      +'<label class="wide"><span>'+ic('type',12)+' یادداشت</span><textarea id="cfNote" placeholder="یادداشت اضافی...">'+esc(obj.note||'')+'</textarea></label>'
+    +'</div>'
+    +'<div class="crm-form-acts">'
+      +'<button class="btn gold" onclick="crmSave()">'+ic('check',16)+(editObj?' ذخیره تغییرات':' افزودن مشتری')+'</button>'
+      +'<button class="btn ghost" onclick="crmCancelEdit()">'+ic('x',14)+' انصراف</button>'
+    +'</div>'
+    +'<div class="crm-form-hint">'+ic('shield-check',12)+' همه اطلاعات روی همین دستگاه ذخیره می‌شود، پاک نمی‌شود.</div>'
+  +'</div>';
+}
+
+function crmPickCat(id){
+  const cur=document.querySelector('.crm-form-card');
+  if(!cur) return;
+  CRM._pickedCat=id;
+  cur.querySelectorAll('.crm-cat-opt').forEach(el=>el.classList.toggle('on',el.dataset.cat===id));
+}
+
+function crmCancelEdit(){ CRM.editId=null; CRM._pickedCat=null; crmRerender(); }
+
+function crmSave(){
+  const getV=id=>{const el=document.getElementById(id); return el?el.value.trim():'';};
+  const fullName=getV('cfName');
+  const national=getV('cfNational');
+  const mobile=getV('cfMobile');
+  const age=getV('cfAge');
+  const job=getV('cfJob');
+  const appIds=getV('cfAppIds');
+  const address=getV('cfAddr');
+  const note=getV('cfNote');
+  const cat=CRM._pickedCat || (CRM.editId ? (crmGet().find(x=>x.id===CRM.editId)||{}).cat : 'regular') || 'regular';
+
+  if(!fullName){ toast('نام الزامی است','alert'); return; }
+  if(!national || !/^\d{10}$/.test(national)){ toast('کد ملی باید ۱۰ رقم باشد','alert'); return; }
+  if(!crmValidNational(national)){ toast('کد ملی معتبر نیست (الگوریتم)','alert'); /* allow? we warn but still allow? We'll block */ return; }
+  if(!mobile || !crmValidMobile(mobile)){ toast('موبایل باید ۰۹xxxxxxxxx باشد','alert'); return; }
+  if(age && (+age<1 || +age>120)){ toast('سن نامعتبر','alert'); return; }
+
+  let list=crmGet();
+  const now=new Date().toISOString();
+  if(CRM.editId){
+    const idx=list.findIndex(x=>x.id===CRM.editId);
+    if(idx>=0){
+      list[idx]={...list[idx], fullName, national, mobile, age:age?+age:null, job, appIds, address, note, cat, updatedAt:now};
+      toast('مشتری ویرایش شد ✓','check-circle');
+    }
+  }else{
+    // check duplicate national
+    if(list.some(x=>x.national===national)){ toast('این کد ملی قبلا ثبت شده','info'); return; }
+    const obj={id:crmId(), fullName, national, mobile, age:age?+age:null, job, appIds, address, note, cat, createdAt:now, updatedAt:now};
+    list.unshift(obj);
+    toast('مشتری اضافه شد ✓ — '+faNum(list.length)+' مشتری','users');
+    try{gSfx('win');}catch(e){}
+  }
+  crmSet(list);
+  CRM.editId=null; CRM._pickedCat=null;
+  crmRerender();
+}
+
+function crmDel(id){
+  if(!confirm('حذف این مشتری؟')) return;
+  let list=crmGet();
+  list=list.filter(x=>x.id!==id);
+  crmSet(list);
+  toast('حذف شد','trash');
+  crmRerender();
+}
+function crmEdit(id){
+  CRM.editId=id;
+  CRM.view='form';
+  crmRerender();
+  setTimeout(()=>{document.querySelector('.crm-form-card')?.scrollIntoView({behavior:'smooth'});},100);
+}
+
+function crmShare(id){
+  const c=crmGet().find(x=>x.id===id);
+  if(!c) return;
+  const txt=''+c.fullName+'\n کد ملی: '+c.national+'\n موبایل: '+c.mobile+'\n شغل: '+(c.job||'-')+'\n سن: '+(c.age||'-')+'\n دسته: '+(CRM_CATS.find(x=>x.id===c.cat)||{}).l+'\n آیدی‌ها: '+(c.appIds||'-')+'\n آدرس: '+(c.address||'-')+'\n ثبت: '+crmNow();
+  if(navigator.share){
+    navigator.share({title:'مشتری '+c.fullName, text:txt}).catch(()=>copyText(txt).then(()=>toast('کپی شد','copy')));
+  }else{
+    copyText(txt).then(ok=>toast(ok?'متن مشتری کپی شد ✓':'کپی دستی','share'));
+  }
+}
+
+function crmGallerySave(id){
+  const c=crmGet().find(x=>x.id===id);
+  if(!c) return;
+  // generate canvas card
+  const W=1080,H=1350;
+  const canvas=document.createElement('canvas');
+  canvas.width=W; canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  // background gradient
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'#0a1424'); grad.addColorStop(1,'#13253f');
+  ctx.fillStyle=grad; ctx.fillRect(0,0,W,H);
+  // gold glow
+  const rg=ctx.createRadialGradient(W*0.5, H*0.15, 0, W*0.5, H*0.15, W*0.8);
+  rg.addColorStop(0,'rgba(240,199,94,.22)'); rg.addColorStop(1,'transparent');
+  ctx.fillStyle=rg; ctx.fillRect(0,0,W,H);
+  // card
+  ctx.fillStyle='rgba(255,255,255,.06)'; ctx.strokeStyle='rgba(148,180,224,.18)';
+  const cardX=40, cardY=40, cardW=W-80, cardH=H-80;
+  ctx.beginPath(); 
+  const r=36;
+  ctx.moveTo(cardX+r, cardY); ctx.lineTo(cardX+cardW-r, cardY); ctx.quadraticCurveTo(cardX+cardW, cardY, cardX+cardW, cardY+r);
+  ctx.lineTo(cardX+cardW, cardY+cardH-r); ctx.quadraticCurveTo(cardX+cardW, cardY+cardH, cardX+cardW-r, cardY+cardH);
+  ctx.lineTo(cardX+r, cardY+cardH); ctx.quadraticCurveTo(cardX, cardY+cardH, cardX, cardY+cardH-r);
+  ctx.lineTo(cardX, cardY+r); ctx.quadraticCurveTo(cardX, cardY, cardX+r, cardY);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  // header
+  ctx.fillStyle='#f0c75e'; ctx.font='900 64px Vazirmatn'; ctx.textAlign='center';
+  ctx.fillText('کافی‌نت نت‌یار', W/2, 160);
+  ctx.fillStyle='rgba(234,241,251,.7)'; ctx.font='600 32px Vazirmatn';
+  ctx.fillText('کارت مشتری — '+ (CRM_CATS.find(x=>x.id===c.cat)||{}).l, W/2, 220);
+  // avatar circle
+  ctx.beginPath(); ctx.arc(W/2, 340, 110, 0, Math.PI*2);
+  const ag=ctx.createLinearGradient(W/2-110,230,W/2+110,450);
+  ag.addColorStop(0,'#2e6cb8'); ag.addColorStop(1,'#d9ae3e');
+  ctx.fillStyle=ag; ctx.fill();
+  ctx.fillStyle='#fff'; ctx.font='900 90px Vazirmatn'; ctx.fillText((c.fullName||'?')[0], W/2, 375);
+  // name
+  ctx.fillStyle='#fff'; ctx.font='900 56px Vazirmatn'; ctx.fillText(c.fullName, W/2, 540);
+  // details
+  ctx.textAlign='right'; ctx.font='700 36px Vazirmatn';
+  let y=640;
+  const line=(label,val)=>{
+    ctx.fillStyle='rgba(169,186,212,.7)'; ctx.fillText(label+': ', W-80, y);
+    const w=ctx.measureText(label+': ').width;
+    ctx.fillStyle='#eaf1fb'; ctx.fillText(val||'-', W-80-w, y);
+    y+=64;
+  };
+  line('کد ملی', c.national);
+  line('موبایل', c.mobile);
+  line('سن', c.age?String(c.age):'-');
+  line('شغل', c.job||'-');
+  line('دسته', (CRM_CATS.find(x=>x.id===c.cat)||{}).l);
+  line('آیدی‌ها', c.appIds||'-');
+  // address multiline
+  ctx.fillStyle='rgba(169,186,212,.7)'; ctx.fillText('آدرس: ', W-80, y);
+  y+=10;
+  ctx.fillStyle='#eaf1fb'; ctx.font='600 30px Vazirmatn';
+  const addr=c.address||'-';
+  // wrap
+  const words=addr.split(' ');
+  let lineTxt=''; let lines=[];
+  for(const w of words){ 
+    const test=lineTxt+' '+w;
+    if(ctx.measureText(test).width > cardW-120){ lines.push(lineTxt); lineTxt=w; } else lineTxt=test;
+  }
+  if(lineTxt) lines.push(lineTxt);
+  ctx.textAlign='right';
+  for(const l of lines.slice(0,3)){
+    y+=46; ctx.fillText(l.trim(), W-80, y);
+  }
+  // date
+  y+=80;
+  ctx.fillStyle='rgba(100,120,155,.9)'; ctx.font='600 26px Vazirmatn'; ctx.textAlign='center';
+  try{ ctx.fillText(new Date(c.createdAt).toLocaleString('fa-IR'), W/2, H-80); }catch(e){ ctx.fillText(c.createdAt, W/2, H-80); }
+
+  // download
+  const url=canvas.toDataURL('image/png');
+  const a=document.createElement('a');
+  a.href=url; a.download='customer-'+c.fullName.replace(/\s+/g,'-')+'.png';
+  a.click();
+  toast('کارت ذخیره شد در گالری (دانلود)','download');
+}
+
+function crmExport(){
+  const data=JSON.stringify(crmGet(),null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='netyar-customers.json'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+  toast('خروجی JSON دانلود شد','download');
+}
+function crmImportFile(inp){
+  const file=inp.files&&inp.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const arr=JSON.parse(e.target.result);
+      if(!Array.isArray(arr)) throw new Error('bad');
+      // merge
+      let cur=crmGet();
+      const map=new Set(cur.map(x=>x.national));
+      let added=0;
+      for(const c of arr){
+        if(c.national && !map.has(c.national)){ cur.push(c); added++; map.add(c.national); }
+      }
+      crmSet(cur);
+      toast(faNum(added)+' مشتری وارد شد','users');
+      crmRerender();
+    }catch(err){ toast('فایل نامعتبر','alert'); }
+  };
+  reader.readAsText(file);
+}
+
+function crmRerender(){
+  const body=document.querySelector('.content[data-view=\"customers\"]');
+  if(!body) { render(); return; }
+  body.innerHTML=crmBodyHtml();
+  // focus search etc
+  const qInp=document.getElementById('crmSearch');
+  if(qInp){ qInp.value=CRM.q; }
+}
+
+function crmBodyHtml(){
+  if(!crmIsAuth()) return crmLockHtml();
+  const list=crmGet();
+  const q=CRM.q.trim();
+  const cat=CRM.cat;
+  let filtered=list.filter(c=>{
+    if(cat && c.cat!==cat) return false;
+    if(!q) return true;
+    const nq=norm(q);
+    return norm(c.fullName).includes(nq) || norm(c.national).includes(nq) || norm(c.mobile).includes(nq) || norm(c.job||'').includes(nq) || norm(c.appIds||'').includes(nq) || norm(c.address||'').includes(nq);
+  });
+  // sort newest first
+  filtered=filtered.slice().sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+
+  const cats=CRM_CATS;
+
+  return '<section class="crm-hero">'
+    +'<div class="crm-hero-bg"></div><div class="crm-hero-glow g1"></div><div class="crm-hero-glow g2"></div>'
+    +'<div class="crm-hero-content">'
+      +'<span class="crm-badge">'+ic('users',14)+' مدیریت مشتریان کافی‌نت — '+faNum(list.length)+' مشتری</span>'
+      +'<h1>مشتری‌هات رو <span class="g">حرفه‌ای</span> مدیریت کن</h1>'
+      +'<p>همه چیز واقعی، تمیز، ذخیره پایدار روی دستگاه — با جستجو، دسته‌بندی، اشتراک‌گذاری و کارت گالری خوشگل. رمز ورود: ۵۵۸۵</p>'
+      +'<div class="crm-hero-stats"><span>'+ic('shield-check',14)+' ذخیره محلی امن</span><span>'+ic('clock',14)+' تاریخ دقیق</span><span>'+ic('share',14)+' اشتراک فوری</span></div>'
+      +'<div class="crm-hero-acts"><button class="btn gold" onclick="CRM.view=\'form\';CRM.editId=null;crmRerender();document.querySelector(\'.crm-form-card\')?.scrollIntoView({behavior:\'smooth\'})">'+ic('plus',16)+' افزودن مشتری</button><button class="btn ghost" onclick="crmExport()">'+ic('download',14)+' خروجی</button><label class="btn ghost" style="cursor:pointer">'+ic('upload',14)+' ورود<input type="file" accept=".json" style="display:none" onchange="crmImportFile(this)"></label><button class="btn ghost" onclick="crmLogout()">'+ic('lock',14)+' قفل</button></div>'
+    +'</div>'
+    +'<div class="crm-hero-visual"><div class="crm-stack"><div class="cs s1">'+ic('users',28)+'</div><div class="cs s2">'+ic('shield-check',24)+'</div><div class="cs s3">'+ic('crown',22)+'</div></div></div>'
+  +'</section>'
+  +'<div class="crm-toolbar">'
+    +'<div class="crm-search"><span class="si">'+ic('search',16)+'</span><input id="crmSearch" placeholder="جستجو نام، کد ملی، موبایل، شغل..." oninput="CRM.q=this.value;crmRerender()"><span class="clear" onclick="CRM.q=\'\';crmRerender()">'+ic('x',12)+'</span></div>'
+    +'<div class="crm-cats">'+cats.map(c=>'<span class="crm-cat-chip'+(CRM.cat===c.id?' on':'')+'" style="--cc:'+c.c+'" onclick="CRM.cat=CRM.cat===\''+c.id+'\'?null:\''+c.id+'\';crmRerender()">'+ic(c.i,12)+c.l+' <b>'+faNum(list.filter(x=>x.cat===c.id).length)+'</b></span>').join('')+'<span class="crm-cat-chip'+(!CRM.cat?' on':'')+'" onclick="CRM.cat=null;crmRerender()">'+ic('layers',12)+'همه <b>'+faNum(list.length)+'</b></span></div>'
+  +'</div>'
+  +'<div id="crmFormWrap">'+(CRM.view==='form' || CRM.editId ? crmFormHtml(CRM.editId ? list.find(x=>x.id===CRM.editId) : null) : '')+'</div>'
+  +(filtered.length
+    ?'<div class="crm-grid">'+filtered.map((c,i)=>crmCard(c,i)).join('')+'</div>'
+    :'<div class="empty"><span class="e-ic">'+ic('users',32)+'</span><h3>مشتری‌ای پیدا نشد</h3><p>'+(q||cat?'فیلتر را عوض کن یا جستجوی دیگری بزن':'هنوز مشتری اضافه نکردی — دکمه افزودن را بزن و اولین مشتری کافی‌نت رو ثبت کن!')+'</p></div>')
+  +footHtml();
+}
+
+function crmCard(c,i){
+  const cat=CRM_CATS.find(x=>x.id===c.cat)||CRM_CATS[0];
+  const dateTxt=(()=>{try{return new Date(c.createdAt).toLocaleDateString('fa-IR')+' — '+new Date(c.createdAt).toLocaleTimeString('fa-IR');}catch(e){return c.createdAt;}})();
+  return '<div class="crm-card reveal" style="--cc:'+cat.c+';transition-delay:'+Math.min(i*40,400)+'ms">'
+    +'<div class="crm-card-head">'
+      +'<span class="crm-av" style="--cc:'+cat.c+'">'+ic(cat.i,18)+'</span>'
+      +'<div class="crm-meta"><div class="crm-name">'+esc(c.fullName)+'</div><div class="crm-sub">'+ic('hash',10)+esc(c.national)+' · '+ic('smartphone',10)+esc(c.mobile)+'</div></div>'
+      +'<span class="crm-cat-badge" style="--cc:'+cat.c+'">'+ic(cat.i,10)+cat.l+'</span>'
+    +'</div>'
+    +'<div class="crm-card-body">'
+      +'<div class="crm-row"><span>'+ic('briefcase',12)+' شغل</span><b>'+esc(c.job||'—')+'</b></div>'
+      +'<div class="crm-row"><span>'+ic('clock',12)+' سن</span><b>'+(c.age?faNum(c.age):'—')+'</b></div>'
+      +'<div class="crm-row"><span>'+ic('message',12)+' آیدی‌ها</span><b class="ltr">'+esc(c.appIds||'—')+'</b></div>'
+      +'<div class="crm-row wide"><span>'+ic('home',12)+' آدرس</span><b>'+esc(c.address||'—')+'</b></div>'
+      +'<div class="crm-date">'+ic('clock',11)+dateTxt+'</div>'
+    +'</div>'
+    +'<div class="crm-card-acts">'
+      +'<button class="btn ghost sm" onclick="crmShare(\''+c.id+'\')">'+ic('share',12)+' اشتراک</button>'
+      +'<button class="btn ghost sm" onclick="crmGallerySave(\''+c.id+'\')">'+ic('download',12)+' گالری</button>'
+      +'<button class="btn ghost sm" onclick="crmEdit(\''+c.id+'\')">'+ic('edit',12)+' ویرایش</button>'
+      +'<button class="btn ghost sm danger" onclick="crmDel(\''+c.id+'\')">'+ic('trash',12)+' حذف</button>'
+    +'</div>'
+  +'</div>';
+}
+
+function vCustomers(){ return crmBodyHtml(); }
+
+// expose globals
+window.crmTryPass=crmTryPass;
+window.crmLogout=crmLogout;
+window.crmPickCat=crmPickCat;
+window.crmSave=crmSave;
+window.crmCancelEdit=crmCancelEdit;
+window.crmDel=crmDel;
+window.crmEdit=crmEdit;
+window.crmShare=crmShare;
+window.crmGallerySave=crmGallerySave;
+window.crmExport=crmExport;
+window.crmImportFile=crmImportFile;
+window.crmRerender=crmRerender;
+
+/* ================================================================
+   اقتصاد سکه — کافی‌نت نت‌یار
+   سکه از بازی‌ها + فروشگاه اسکین شطرنج + آیتم‌های من
+   ================================================================ */
+'use strict';
+
+const COIN_KEY='netyar_coins';
+const SHOP_OWNED_KEY='netyar_shop_owned';
+const CHESS_SKIN_KEY='netyar_chess_skin';
+
+const CHESS_SKINS=[
+  {id:'classic', name:'کلاسیک آبی', desc:'آبی سرمه‌ای استاندارد کافی‌نت', price:0, light:'#c8d4e8', dark:'#46598a', owned:true, badge:'پیش‌فرض', icon:'♔'},
+  {id:'wood', name:'چوب گردو', desc:'گرمای چوب طبیعی با کنتراست بالا', price:60, light:'#f0d9b5', dark:'#b58863', badge:'چوبی', icon:'♜'},
+  {id:'gold', name:'طلایی لوکس', desc:'طلایی سلطنتی با سایه‌های پرمیوم', price:140, light:'#ffe9a8', dark:'#9a7a2a', badge:'لوکس', icon:'✦'},
+  {id:'neon', name:'نئون شب', desc:'تیره نئونی با درخشش آبی', price:95, light:'#2a3a5a', dark:'#0d1a30', badge:'نئون', icon:'◍'},
+  {id:'forest', name:'جنگل سبز', desc:'سبز آرامش‌بخش جنگلی', price:80, light:'#d9e8c8', dark:'#4a7a4a', badge:'طبیعت', icon:'♗'},
+  {id:'rose', name:'رز صورتی', desc:'صورتی رز با حس لطیف', price:70, light:'#f8d8e0', dark:'#a85a6a', badge:'رز', icon:'♕'},
+  {id:'midnight', name:'نیمه‌شب', desc:'مشکی مات پرمیوم برای گیمرهای حرفه‌ای', price:110, light:'#3a3a5a', dark:'#16161e', badge:'تاریک', icon:'♚'},
+  {id:'sand', name:'صحرا', desc:'شنی گرم الهام از کویر ایران', price:65, light:'#f5e6c8', dark:'#c9a86a', badge:'کویر', icon:'♞'},
+  {id:'ocean', name:'اقیانوس', desc:'آبی اقیانوسی عمیق و شفاف', price:85, light:'#a8d8f0', dark:'#2a6a9a', badge:'اقیانوس', icon:'♖'},
+  {id:'cherry', name:'آلبالویی', desc:'قرمز آلبالویی شیک', price:75, light:'#f0c8c8', dark:'#8a3a4a', badge:'آلبالو', icon:'♝'},
+];
+
+function coinGet(){ return store.get(COIN_KEY, 120); } // start with 120 to test
+function coinSet(v){ store.set(COIN_KEY, Math.max(0, Math.floor(v))); }
+function coinAdd(amount, reason){
+  if(!amount || amount<=0) return coinGet();
+  const cur=coinGet();
+  const next=cur+amount;
+  coinSet(next);
+  // toast with animation
+  if(reason){
+    toast('+'+faNum(amount)+' سکه — '+reason, 'coins');
+  }else{
+    toast('+'+faNum(amount)+' سکه', 'coins');
+  }
+  try{
+    // coin pop effect if exists
+    const el=document.getElementById('coinBalance');
+    if(el){ el.classList.add('pop'); setTimeout(()=>el.classList.remove('pop'),400); el.textContent=faNum(next); }
+    const el2=document.getElementById('coinBalShop');
+    if(el2){ el2.textContent=faNum(next); }
+  }catch(e){}
+  try{gSfx('win');}catch(e){}
+  return next;
+}
+function coinSpend(amount){
+  const cur=coinGet();
+  if(cur < amount) return false;
+  coinSet(cur-amount);
+  try{
+    const el=document.getElementById('coinBalance');
+    if(el){ el.textContent=faNum(cur-amount); }
+    const el2=document.getElementById('coinBalShop');
+    if(el2){ el2.textContent=faNum(cur-amount); }
+  }catch(e){}
+  return true;
+}
+
+function shopOwnedGet(){
+  let owned=store.get(SHOP_OWNED_KEY, null);
+  if(!owned){
+    // default: classic owned
+    owned=['classic'];
+    store.set(SHOP_OWNED_KEY, owned);
+  }
+  return owned;
+}
+function shopOwnedSet(arr){ store.set(SHOP_OWNED_KEY, arr); }
+function isOwned(id){ return shopOwnedGet().includes(id); }
+
+function chessSkinGet(){ return store.get(CHESS_SKIN_KEY, 'classic'); }
+function chessSkinSet(id){ store.set(CHESS_SKIN_KEY, id); }
+
+function buySkin(id){
+  const skin=CHESS_SKINS.find(s=>s.id===id);
+  if(!skin){ toast('اسکین پیدا نشد','alert'); return; }
+  if(isOwned(id)){ toast('این اسکین رو قبلا خریدی','info'); selectSkin(id); return; }
+  if(!coinSpend(skin.price)){
+    toast('سکه کم داری! برو بازی کن تا سکه جمع کنی','coins');
+    try{gSfx('bad');}catch(e){}
+    return;
+  }
+  const owned=shopOwnedGet();
+  owned.push(id);
+  shopOwnedSet(owned);
+  toast('خرید شد ✓ '+skin.name+' — حالا می‌تونی انتخابش کنی','shopping-bag');
+  try{gSfx('win');}catch(e){}
+  // re-render shop if open
+  if(typeof shopRerender==='function') shopRerender();
+}
+
+function selectSkin(id){
+  if(!isOwned(id)){ toast('اول باید بخریش!','alert'); return; }
+  chessSkinSet(id);
+  toast('اسکین '+ (CHESS_SKINS.find(s=>s.id===id)||{}).name +' فعال شد ✓','palette');
+  // apply to chess board if exists
+  applyChessSkin();
+  if(typeof shopRerender==='function') shopRerender();
+}
+
+function applyChessSkin(){
+  const skinId=chessSkinGet();
+  const skin=CHESS_SKINS.find(s=>s.id===skinId) || CHESS_SKINS[0];
+  // inject style
+  let styleEl=document.getElementById('chessSkinStyle');
+  if(!styleEl){
+    styleEl=document.createElement('style');
+    styleEl.id='chessSkinStyle';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent=
+    '.chs-c.l{background:'+skin.light+'!important}'+
+    '.chs-c.d{background:'+skin.dark+'!important}'+
+    (skin.pieceW ? '.chs-p.w{color:'+skin.pieceW+'!important}' : '')+
+    (skin.pieceB ? '.chs-p.b{color:'+skin.pieceB+'!important}' : '');
+}
+
+// shop render helper
+function shopRerender(){
+  const wrap=document.querySelector('.content[data-view="shop"]');
+  if(wrap){
+    wrap.innerHTML=vShopFull();
+  }
+}
+
+// expose
+window.coinGet=coinGet;
+window.coinAdd=coinAdd;
+window.coinSpend=coinSpend;
+window.buySkin=buySkin;
+window.selectSkin=selectSkin;
+window.applyChessSkin=applyChessSkin;
+window.shopRerender=shopRerender;
+window.CHESS_SKINS=CHESS_SKINS;
+window.isOwned=isOwned;
+window.shopOwnedGet=shopOwnedGet;
+
+// improved shop view
+function vShopFull(){
+  const coins=coinGet();
+  const owned=shopOwnedGet();
+  const active=chessSkinGet();
+  // hero
+  return '<section class="shop-hero-premium">'
+    +'<div class="shop-hero-bg"></div><div class="shop-hero-glow g1"></div><div class="shop-hero-glow g2"></div>'
+    +'<div class="shop-hero-content">'
+      +'<span class="shop-badge">'+ic('shopping-bag',14)+' فروشگاه پرمیوم نت‌یار — '+faNum(coins)+' سکه داری</span>'
+      +'<h1>با سکه‌هات <span class="g">تخته شطرنج</span> خاص بخر</h1>'
+      +'<p>هر برد در بازی‌های <b>حاج عباس، انگری بردز، دوز، ۲۰۴۸، حافظه، فلپی و...</b> بهت سکه میده. سکه‌ها رو اینجا خرج کن و تخته شطرنجتو شیک کن — همه واقعی و ذخیره پایدار.</p>'
+      +'<div class="shop-stats"><span>'+ic('coins',12)+' موجودی: <b id="coinBalShop">'+faNum(coins)+'</b> سکه</span><span>'+ic('palette',12)+' '+faNum(CHESS_SKINS.length)+' اسکین</span><span>'+ic('check-circle',12)+' '+faNum(owned.length)+' خریداری شده</span></div>'
+      +'<div class="shop-hero-acts"><button class="btn gold" onclick="document.getElementById(\'shopSkins\').scrollIntoView({behavior:\'smooth\'})">'+ic('shopping-bag',16)+' ورود به فروشگاه</button><button class="btn ghost" onclick="goView(\'games\')">'+ic('gamepad',14)+' بازی و جمع سکه</button></div>'
+    +'</div>'
+    +'<div class="shop-visual-premium"><div class="shop-cover-svg">'+gcov('shop','',0)+'</div><div class="shop-coin-float">'+ic('coins',20)+'<b>'+faNum(coins)+'</b></div></div>'
+  +'</section>'
+  +'<div class="sec-head"><span class="sq">'+ic('palette',16)+'</span><h2>اسکین‌های شطرنج</h2><span class="mini">انتخاب کن، بخر، اعمال کن</span><span class="ln"></span></div>'
+  +'<div id="shopSkins" class="shop-skins-grid">'+CHESS_SKINS.map(s=>{
+    const ow=isOwned(s.id);
+    const isActive=active===s.id;
+    return '<div class="shop-skin-card'+(ow?' owned':'')+(isActive?' active':'')+'" style="--cl:'+s.light+';--cd:'+s.dark+'">'
+      +'<div class="ssk-preview"><div class="ssk-board"><div class="ssk-c l"></div><div class="ssk-c d"></div><div class="ssk-c d"></div><div class="ssk-c l"></div></div><span class="ssk-icon">'+s.icon+'</span>'+(isActive?'<span class="ssk-active">'+ic('check',12)+' فعال</span>':'')+'</div>'
+      +'<div class="ssk-info"><div class="ssk-name">'+s.name+' <span class="ssk-badge">'+s.badge+'</span></div><div class="ssk-desc">'+s.desc+'</div><div class="ssk-price">'+(ow?'<span class="owned">'+ic('check-circle',12)+' خریده شده</span>':'<span>'+ic('coins',12)+faNum(s.price)+' سکه</span>')+'</div></div>'
+      +'<div class="ssk-acts">'+(ow
+        ? (isActive ? '<button class="btn ghost sm" disabled>'+ic('check',12)+' همین الان فعاله</button>' : '<button class="btn gold sm" onclick="selectSkin(\''+s.id+'\')">'+ic('palette',12)+' انتخاب</button>')
+        : '<button class="btn gold sm" onclick="buySkin(\''+s.id+'\')">'+ic('shopping-bag',12)+' خرید</button>')+'</div>'
+    +'</div>';
+  }).join('')+'</div>'
+  +'<div class="sec-head"><span class="sq blue">'+ic('layers',16)+'</span><h2>آیتم‌های من</h2><span class="mini">اسکین‌های خریداری شده</span><span class="ln"></span></div>'
+  +'<div class="my-items-grid">'+(owned.length?owned.map(id=>{
+    const s=CHESS_SKINS.find(x=>x.id===id)||CHESS_SKINS[0];
+    const isActive=active===id;
+    return '<div class="my-item-card'+(isActive?' active':'')+'" style="--cl:'+s.light+';--cd:'+s.dark+'"><div class="my-board"><div class="ssk-c l"></div><div class="ssk-c d"></div></div><div class="my-info"><b>'+s.name+'</b><span>'+s.badge+'</span></div><button class="btn '+(isActive?'ghost':'gold')+' sm" '+(isActive?'disabled':'onclick="selectSkin(\''+id+'\')"')+'>'+(isActive?ic('check',12)+' فعال':ic('palette',12)+' اعمال')+'</button></div>';
+  }).join('') : '<div class="empty small"><span class="e-ic">'+ic('shopping-bag',22)+'</span><p>هنوز چیزی نخریدی — برو اسکین بخر!</p></div>')+'</div>'
+  +'<div class="shop-earn">'
+    +'<h3>'+ic('trophy',16)+' چطور سکه جمع کنم؟</h3>'
+    +'<div class="earn-grid">'
+      +'<div class="earn-card">'+ic('type',18)+'<b>حاج عباس</b><span>هر کلمه درست +۵ سکه، هر مرحله +۳۰</span></div>'
+      +'<div class="earn-card">'+ic('zap',18)+'<b>انگری بردز</b><span>هر برد +۲۰ سکه، ستاره اضافه +۱۰</span></div>'
+      +'<div class="earn-card">'+ic('grid3x3',18)+'<b>دوز و ۲۰۴۸</b><span>برد +۱۵ سکه، رکورد جدید +۲۵</span></div>'
+      +'<div class="earn-card">'+ic('brain',18)+'<b>حافظه و پازل</b><span>حل کردن +۱۰ تا +۲۰ سکه</span></div>'
+    +'</div>'
+  +'</div>'
+  +footHtml();
+}
+
+// legacy vShop placeholder for old code path (will be overridden)
+function vShop(){ return vShopFull(); }
+
+// coin balance in topbar
+function coinBalanceHtml(){ return '<span class="coin-pill" id="coinBalanceWrap">'+ic('coins',12)+'<b id="coinBalance">'+faNum(coinGet())+'</b></span>'; }
 
 /* ===== هوش مصنوعی نت‌یار — چت واقعی با OpenRouter + استریم + تاریخچه ===== */
 'use strict';
@@ -8514,18 +9477,23 @@ const NAV=[
   {v:'fav',i:'star',t:'علاقه‌مندی‌ها'},
   {sec:'سرگرمیِ کافی‌نت'},
   {v:'games',i:'gamepad',t:'بازی‌ها'},
+  {v:'shop',i:'shopping-bag',t:'فروشگاه'},
+  {v:'customers',i:'users',t:'مشتری‌ها',secret:true},
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
   {v:'typing',i:'type',t:'آموزش'},
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
-const VIEWS=['home','sites','fav','games','shop','music','calc','typing','ai'];
+const VIEWS=['home','sites','fav','games','shop','customers','music','calc','typing','ai'];
 const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
+
 
 function sideHtml(){
   const catKeys=Object.keys(CATS);
   const openCls=state.sbOpen?' open':' closed';
+  const crmCount=(typeof crmGet==='function'?crmGet().length:0);
+  const coinBal=(typeof coinGet==='function'?coinGet():0);
   return '<div class="sb-overlay'+(state.sbOpen?' open':'')+'" onclick="closeSidebar()"></div>'
     +'<aside class="sidebar'+openCls+'">'
     +'<div class="sb-glow"></div>'
@@ -8537,32 +9505,35 @@ function sideHtml(){
     +'<nav class="nav no-sb">'
       +NAV.map(item=>item.sec
         ?'<div class="nav-sec">'+item.sec+'</div>'
-        :'<div class="nav-item'+(state.view===item.v?' active':'')+'" data-v="'+item.v+'" onclick="go(\''+item.v+'\');if(isMobile())closeSidebar()"><span class="nico">'+ic(item.i,17)+'</span><span>'+item.t+'</span>'+(item.v==='sites'?'<span class="cnt">'+faNum(SITES.length)+'</span>':'')+(item.v==='fav'?'<span class="cnt" style="display:'+(state.favs.length?'':'none')+'">'+faNum(state.favs.length)+'</span>':'')+'</div>'
+        :'<div class="nav-item'+(state.view===item.v?' active':'')+(item.secret?' secret':'')+'" data-v="'+item.v+'" onclick="go(\''+item.v+'\');if(isMobile())closeSidebar()"><span class="nico">'+ic(item.i,17)+'</span><span>'+item.t+'</span>'+(item.secret?'<span class="lock-ic">'+ic('lock',10)+'</span>':'')+(item.v==='sites'?'<span class="cnt">'+faNum(SITES.length)+'</span>':'')+(item.v==='fav'?'<span class="cnt" style="display:'+(state.favs.length?'':'none')+'">'+faNum(state.favs.length)+'</span>':'')+(item.v==='customers'?'<span class="cnt">'+faNum(crmCount)+'</span>':'')+(item.v==='shop'?'<span class="cnt gold">'+faNum(coinBal)+'</span>':'')+'</div>'
       ).join('')
       +'<div class="nav-sec">دسته‌بندی‌ها</div>'
       +'<div class="nav-cats">'
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۸٫۱ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۹٫۰ — '+faNum(SITES.length)+' سایت · '+faNum(coinBal)+' سکه</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
 
+
 function topHtml(){
-  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',shop:'فروشگاه',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
+  const titles={home:'خانه',sites:'همه سایت‌ها',fav:'علاقه‌مندی‌ها',games:'بازی‌ها',shop:'فروشگاه',customers:'مشتری‌ها',music:'موزیک',calc:'ماشین‌حساب',typing:'آموزش',ai:'هوش مصنوعی'};
   let dt='',tm='';
   try{
     const now=new Date();
     dt=new Intl.DateTimeFormat('fa-IR',{weekday:'long',day:'numeric',month:'long'}).format(now);
     tm=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(now);
   }catch(e){}
+  const coinBalTop=(typeof coinGet==='function'?coinGet():0);
   return '<header class="topbar">'
     +'<button class="menu-btn'+(state.sbOpen?' open':'')+'" id="menuBtn" onclick="toggleSidebar()" title="باز/بستن منو"><span class="mb-box"><i class="mb-line l1"></i><i class="mb-line l2"></i><i class="mb-line l3"></i></span><span class="mb-glow"></span></button>'
     +'<button class="back-btn'+(HIST.length?'':' hide')+'" onclick="goBack()" title="بازگشت به صفحهٔ قبل">'+ic('arrow-left',17)+'</button>'
     +'<div class="top-logo" onclick="go(\'home\')"><span class="logo-mark">'+ic('coffee',18)+'</span>کافی‌نتِ <b>نت‌یار</b></div>'
     +'<div class="pg-ttl">'+(titles[state.view]||'')+'<span class="bdg">'+ic('shield-check',10)+'نت‌یار</span></div>'
     +'<div class="sp"></div>'
+    +'<span class="coin-pill-top" title="سکه‌های شما">'+ic('coins',12)+'<b id="coinBalance">'+faNum(coinBalTop)+'</b></span>'
     +'<div class="status-pill"><span class="dot"></span><span class="st-lbl">سرویس آنلاین</span></div>'
     +'<div class="clock">'+ic('clock',15)+'<div><div class="tm">'+tm+'</div><div class="dt">'+dt+'</div></div></div>'
   +'</header>';
@@ -8616,7 +9587,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۸٫۱</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۹٫۰ — سکه + مشتری + تایپ پرمیوم</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -9682,7 +10653,8 @@ function render(){
     case 'sites':body=vSites();break;
     case 'fav':body=vFav();break;
     case 'games':body=vGames();break;
-    case 'shop':body=vShop();break;
+    case 'shop':body=(typeof vShopFull==='function'?vShopFull():vShop());break;
+    case 'customers':body=(typeof vCustomers==='function'?vCustomers():'<div class="empty"><h3>مشتریان در حال بارگذاری…</h3></div>');break;
     case 'music':body=musHero();break;
     case 'calc':body=vCalc();break;
     case 'typing':body=typView();break;

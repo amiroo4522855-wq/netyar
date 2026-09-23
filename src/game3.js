@@ -63,7 +63,7 @@ function flapUpdate(dt){
   FLAP.parts=FLAP.parts.filter(p=>p.a>0);
 }
 function flapDie(){
-  if(FLAP.score>FLAP.best){FLAP.best=FLAP.score;store.set('flapBest',FLAP.best);}
+  if(FLAP.score>FLAP.best){FLAP.best=FLAP.score;store.set('flapBest',FLAP.best); try{ if(typeof coinAdd==='function') coinAdd(12,'رکورد فلپی'); }catch(e){} }
   gSfx('bad');
   for(let i=0;i<18;i++)FLAP.parts.push({x:FLAP.bird.x,y:FLAP.bird.y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6-1,a:1,r:2+Math.random()*3});
 }
@@ -194,7 +194,7 @@ function brkUpdate(dt){
   if(b.y-b.r<0){b.y=b.r;b.vy*=-1;gSfx('click');}
   if(b.y+b.r>BRK.h){
     BRK.lives--;gSfx('bad');
-    if(BRK.lives<=0){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best);}}
+    if(BRK.lives<=0){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best); try{ if(typeof coinAdd==='function') coinAdd(Math.floor(BRK.score/50)+5,'بریک‌اوت'); }catch(e){} }}
     else{BRK.ball={x:p.x+p.w/2,y:300,vx:(Math.random()<0.5?1:-1)*2.6,vy:-3.4,r:7,trail:[]};}
     return;
   }
@@ -215,7 +215,7 @@ function brkUpdate(dt){
       b.vy*=-1;
       gSfx('line');
       for(let k=0;k<8;k++)BRK.parts.push({x:br.x+br.w/2,y:br.y+br.h/2,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4-1,a:1,col:br.col});
-      if(!BRK.bricks.length){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best);}}
+      if(!BRK.bricks.length){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best);} try{ if(typeof coinAdd==='function') coinAdd(25,'برد بریک‌اوت'); }catch(e){} }
       break;
     }
   }
@@ -348,7 +348,7 @@ function minesOpen(r,c){
   if(closed===0){
     MINES.win=true;clearInterval(MINES.timer);gSfx('win');
     if(MINES.time<MINES.best){MINES.best=MINES.time;store.set('minesBest',MINES.best);}
-    toast('بردی! زمان: '+gNum(MINES.time)+' ثانیه','trophy');
+    toast('بردی! زمان: '+gNum(MINES.time)+' ثانیه','trophy'); try{ if(typeof coinAdd==='function') coinAdd(20,'برد مین‌یاب'); }catch(e){}
   }
   minesRender();
 }
@@ -429,7 +429,7 @@ function bubUpdate(dt){
   if(BUB.over)return;
   BUB.t+=dt;
   BUB.time-=dt/1000;
-  if(BUB.time<=0){BUB.over=true;if(BUB.score>BUB.best){BUB.best=BUB.score;store.set('bubBest',BUB.best);}return;}
+  if(BUB.time<=0){BUB.over=true;if(BUB.score>BUB.best){BUB.best=BUB.score;store.set('bubBest',BUB.best);} try{ if(typeof coinAdd==='function') coinAdd(Math.floor(BUB.score/10)+5,'حباب‌پاپ'); }catch(e){} return;}
   for(const b of BUB.bubbles){
     b.wob+=dt*0.004;
     b.x+=b.vx+Math.sin(b.wob)*0.6;

@@ -110,6 +110,7 @@ function hajSubmit(){
   HAJ.found.add(foundWord);
   HAJ.score+=foundWord.replace(/\s/g,'').length*10;
   toast('آفرین! «'+foundWord+'» پیدا شد!','trophy');
+  try{ if(typeof coinAdd==='function') coinAdd(5,'حاج عباس — '+foundWord); }catch(e){}
   try{gSfx('win');}catch(e){}
   hajClear();
   hajRenderWords();
@@ -129,6 +130,7 @@ function hajHint(){
 function hajCheckWin(){
   if(HAJ.found.size===HAJ.words.length){
     if(HAJ.level>HAJ.best){HAJ.best=HAJ.level;store.set('hajBest',HAJ.best);}
+    try{ if(typeof coinAdd==='function') coinAdd(30,'مرحله حاج عباس '+HAJ.level); }catch(e){}
     try{gSfx('win');}catch(e){}
     const isLast=HAJ.level===HAJ_LEVELS.length-1;
     setTimeout(()=>{

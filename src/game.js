@@ -133,7 +133,7 @@ function dinoUpdate(dt){
       const oy=o.fly?o.y:o.y-o.h;
       if(px<o.x+o.w-6&&px+dw>o.x+6&&py+dh>oy+4&&py<oy+(o.fly?o.h:o.h)-2){
         D.over=true;D.shake=1;
-        if(D.score>D.best){D.best=D.score;store.set('dinoBest',D.best);}
+        if(D.score>D.best){D.best=D.score;store.set('dinoBest',D.best); try{ if(typeof coinAdd==='function') coinAdd(15,'رکورد دایی ناصر'); }catch(e){} }
         for(let i=0;i<16;i++)D.parts.push({x:px+dw/2,y:py+dh/2,vx:(Math.random()-0.5)*0.5,vy:-Math.random()*0.5-0.1,l:1});
         break;
       }
@@ -485,7 +485,7 @@ function twrDrop(){
     /* کامل باخت */
     T.pieces.push({x:T.cur.x,w:T.cur.w,y:y,vx:T.cur.dir*0.25,vr:T.cur.dir*0.004,rot:0,hue:T.hueOf()});
     T.cur=null;T.over=true;
-    if(T.score>T.best){T.best=T.score;store.set('towerBest',T.best);}
+    if(T.score>T.best){T.best=T.score;store.set('towerBest',T.best); try{ if(typeof coinAdd==='function') coinAdd(15,'رکورد برج‌سازی'); }catch(e){} }
     return;
   }
   const diff=Math.abs(T.cur.x-top.x);

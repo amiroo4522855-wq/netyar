@@ -747,6 +747,7 @@ function angryUpdate(dt){
     const stars = birdsUsed<=Math.ceil(totalBirds*0.4)?3:birdsUsed<=Math.ceil(totalBirds*0.7)?2:1;
     ANGRY.stars=stars;
     if(ANGRY.score>ANGRY.best){ANGRY.best=ANGRY.score;store.set('angryBest',ANGRY.best);}
+    try{ if(typeof coinAdd==='function') coinAdd(20+stars*10,'برد انگری بردز — '+stars+' ستاره'); }catch(e){}
     angrySfx('win');
     ANGRY.settling=0;
     setTimeout(()=>{

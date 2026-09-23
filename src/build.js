@@ -1,4 +1,4 @@
-/* بیلدر کافی‌نت نت‌یار — همه‌چیز را در یک HTML خودکفا مونتاژ می‌کند */
+/* بیلدر کافی‌نت نت‌یار — همه‌چیز را در یک HTML خودکفا مونتاژ می‌کند v19 */
 const fs = require('fs');
 const path = require('path');
 const SRC = path.join(__dirname);
@@ -26,12 +26,14 @@ const GAME4JS = read('game4.js');
 const GAME5JS = read('game5.js');
 const COVJS = read('covers.js');
 const TYPJS = read('typing.js');
+const CUSTJS = read('customers.js');
+const COINJS = read('coins.js');
 const AIJS = read('ai.js');
 const APPJS = read('app.js');
 const SHELL = read('shell.html');
 
 let out = SHELL;
-for (const [k, v] of [['{{FONTS}}', FONTS], ['{{CSS}}', CSS], ['{{DATA}}', DATA], ['{{ICONS}}', ICONS], ['{{GAMEJS}}', GAMEJS], ['{{GAME2JS}}', GAME2JS], ['{{GAME3JS}}', GAME3JS], ['{{GAME4JS}}', GAME4JS], ['{{GAME5JS}}', GAME5JS], ['{{COVJS}}', COVJS], ['{{TYPJS}}', TYPJS], ['{{AIJS}}', AIJS], ['{{APPJS}}', APPJS]]) {
+for (const [k, v] of [['{{FONTS}}', FONTS], ['{{CSS}}', CSS], ['{{DATA}}', DATA], ['{{ICONS}}', ICONS], ['{{GAMEJS}}', GAMEJS], ['{{GAME2JS}}', GAME2JS], ['{{GAME3JS}}', GAME3JS], ['{{GAME4JS}}', GAME4JS], ['{{GAME5JS}}', GAME5JS], ['{{COVJS}}', COVJS], ['{{TYPJS}}', TYPJS], ['{{CUSTJS}}', CUSTJS], ['{{COINJS}}', COINJS], ['{{AIJS}}', AIJS], ['{{APPJS}}', APPJS]]) {
   out = out.split(k).join(v);
 }
 
@@ -44,8 +46,7 @@ fs.writeFileSync(path.join(__dirname, '..', 'index.html'), out, 'utf8');
 const names = [];
 for (const f of dataFiles) {
   const c = read(f);
-  const m = c.match(/\[["']/g);
-  names.push((c.match(/,\s*\[["']/g) || []).length);
+  names.push((c.match(/,\s*\[[\"']/g) || []).length);
 }
 console.log('سایت‌ها در هر فایل:', names.join(' | '));
 console.log('خروجی:', OUT, '—', (fs.statSync(OUT).size / 1024).toFixed(1), 'KB');
