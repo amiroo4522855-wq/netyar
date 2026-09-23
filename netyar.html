@@ -1921,6 +1921,64 @@ body.sb-open .main{margin-inline-end:var(--side)}
 .gover-stars .gs.on:nth-child(2){transition-delay:.08s}
 .gover-stars .gs.on:nth-child(3){transition-delay:.16s}
 
+/* ============ v18: تمام‌صفحه پرمیوم + موتور اختصاصی + کلیدهای با کیفیت خفن ============ */
+/* --- wrapper تمام‌صفحه --- */
+.game-fs-wrap{position:relative;border-radius:24px;overflow:hidden;transition:all .45s cubic-bezier(.16,1,.3,1);background:linear-gradient(165deg,rgba(12,22,40,.88),rgba(8,16,32,.95));border:1px solid rgba(148,180,224,.14);box-shadow:0 22px 52px -12px rgba(2,8,20,.55),inset 0 1px 0 rgba(255,255,255,.06)}
+.game-fs-wrap:fullscreen{width:100vw;height:100vh;border-radius:0;border:none;background:#0a1030;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;overflow:auto}
+.game-fs-wrap:fullscreen .game-stage{width:min(96vw,1200px);max-width:100%;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 30px 80px rgba(0,0,0,.6)}
+.game-fs-wrap:fullscreen .game-stage canvas{max-height:82vh;width:100%;object-fit:contain}
+.game-fs-wrap:fullscreen .touch-btns{width:min(96vw,1200px);padding:0 12px}
+.game-fs-wrap:fullscreen .game-info-bar{width:min(96vw,1200px);border-radius:14px;margin-top:14px}
+.game-fs-wrap:-webkit-full-screen{width:100vw;height:100vh;border-radius:0;border:none;background:#0a1030;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0}
+body.fs-on{overflow:hidden}
+body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:translateY(-10px)}
+/* --- دکمه تمام‌صفحه مربع خوشگل --- */
+.gi-fs{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:11px;cursor:pointer;user-select:none;font-size:11.5px;font-weight:850;letter-spacing:.2px;color:#1a1305;background:linear-gradient(135deg,#ffe9a8,#f0c75e 55%,#d9ae3e);border:1px solid rgba(217,174,62,.55);box-shadow:0 6px 18px rgba(217,174,62,.28),inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(217,174,62,.18);transition:all .38s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;isolation:isolate}
+.gi-fs::before{content:"";position:absolute;inset:0;border-radius:11px;background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.45) 45%,transparent 70%);transform:translateX(-120%);transition:transform .75s cubic-bezier(.16,1,.3,1)}
+.gi-fs:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 12px 28px rgba(217,174,62,.42),inset 0 1px 0 rgba(255,255,255,.6),0 0 0 1px rgba(240,199,94,.35),0 0 28px -6px rgba(240,199,94,.5)}
+.gi-fs:hover::before{transform:translateX(0)}
+.gi-fs:active{transform:scale(.94);transition-duration:.12s}
+.gi-fs.on{background:linear-gradient(135deg,#2a3f6e,#1c2a4d);color:#eaf1fb;border-color:rgba(110,168,240,.35);box-shadow:0 6px 18px rgba(2,8,20,.35),inset 0 1px 0 rgba(255,255,255,.06)}
+.gi-fs.on:hover{border-color:rgba(240,199,94,.45);color:#ffe9a8}
+.gi-fs svg{transition:transform .3s ease;flex-shrink:0}
+.gi-fs:hover svg{transform:scale(1.18) rotate(-6deg)}
+/* --- کلیدهای بازی با کیفیت بالا --- */
+.touch-btns{gap:12px;margin-top:14px}
+.touch-btns .btn{position:relative;min-height:56px;padding:16px 18px;border-radius:16px;font-size:15px;font-weight:900;letter-spacing:.3px;backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(148,180,224,.18);box-shadow:0 10px 24px rgba(2,8,20,.4),inset 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(148,180,224,.06);transition:all .34s cubic-bezier(.16,1,.3,1);overflow:hidden;isolation:isolate}
+.touch-btns .btn::before{content:"";position:absolute;inset:0;border-radius:16px;background:linear-gradient(115deg,transparent 18%,rgba(255,255,255,.14) 42%,transparent 68%);transform:translateX(-130%);transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.touch-btns .btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 36px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.14),0 0 0 1px rgba(240,199,94,.18)}
+.touch-btns .btn:hover::before{transform:translateX(0)}
+.touch-btns .btn:active{transform:scale(.94) translateY(1px);transition-duration:.12s}
+.touch-btns .btn.primary{background:linear-gradient(135deg,#f0c75e,#d9ae3e 55%,#b8922f);color:#1a1305;border:none;box-shadow:0 12px 28px rgba(217,174,62,.38),inset 0 1px 0 rgba(255,255,255,.55),0 0 0 1px rgba(217,174,62,.28)}
+.touch-btns .btn.primary:hover{box-shadow:0 18px 40px rgba(217,174,62,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+.touch-btns .btn.ghost{background:linear-gradient(165deg,rgba(20,36,66,.72),rgba(12,22,40,.88));color:var(--tx);border-color:rgba(148,180,224,.18)}
+.touch-btns .btn.ghost:hover{color:#fff;border-color:rgba(110,168,240,.4);background:linear-gradient(165deg,rgba(28,50,88,.82),rgba(16,30,54,.92))}
+/* کیبورد فیزیکی نمایش */
+.game-info-bar{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:linear-gradient(165deg,rgba(18,34,64,.55),rgba(12,22,40,.75));border:1px solid rgba(148,180,224,.14);box-shadow:0 8px 24px rgba(2,8,20,.25),inset 0 1px 0 rgba(255,255,255,.05);gap:10px;padding:12px 16px;border-radius:15px}
+.game-info-bar span{font-size:11.5px;font-weight:750}
+.gi-sfx,.gi-back{padding:6px 12px;border-radius:10px;background:rgba(148,180,224,.06);border:1px solid rgba(148,180,224,.12);transition:all .32s cubic-bezier(.16,1,.3,1)}
+.gi-sfx:hover,.gi-back:hover{background:rgba(148,180,224,.12);border-color:rgba(148,180,224,.28);transform:translateY(-1px);color:#fff!important}
+.gi-back{margin-inline-start:auto;background:linear-gradient(165deg,rgba(46,108,184,.18),rgba(46,108,184,.08));border-color:rgba(74,143,226,.32);color:var(--blueB)!important}
+.gi-back:hover{background:linear-gradient(165deg,rgba(46,108,184,.28),rgba(46,108,184,.14));border-color:rgba(74,143,226,.5);color:#fff!important;transform:translateY(-2px)}
+/* بهبود استیج برای 60fps */
+.game-stage{transform:translateZ(0);will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.game-stage canvas{transform:translateZ(0);will-change:transform;backface-visibility:hidden}
+/* کاور صفحه بازی پرمیوم‌تر */
+.gcov.page{height:140px;border-radius:20px;border:1px solid rgba(148,180,224,.16);box-shadow:0 16px 40px rgba(2,8,20,.4),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;position:relative}
+.gcov.page::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 30%,transparent 70%,rgba(0,0,0,.25))}
+.gcov.page .gcov-svg{filter:saturate(1.12) brightness(1.05)}
+/* اسکرول نرم تمام‌صفحه */
+.game-fs-wrap:fullscreen::-webkit-scrollbar{display:none}
+.game-fs-wrap:fullscreen{scrollbar-width:none}
+@media (max-width:560px){
+  .game-fs-wrap{border-radius:18px}
+  .touch-btns{gap:10px}
+  .touch-btns .btn{min-height:52px;padding:14px 14px;font-size:14px;border-radius:14px}
+  .gi-fs{padding:6px 11px;font-size:11px;border-radius:10px}
+  .game-info-bar{padding:10px 12px;gap:8px}
+  .gcov.page{height:110px}
+}
+
 </style>
 </head>
 <body>
@@ -6416,225 +6474,203 @@ const hajEng={
 Object.assign(GAME_ENG,{'hajabbas':hajEng});
 
 /* ================================================================
-   کاورهای پرمیوم بازی‌ها — SVG داخلی با کیفیت بالا، شیک و جذاب
-   نسخه ۱۲٫۰ — طراحی سینمایی با گرادینت، سایه، گلو و جزئیات
+   کاورهای پرمیوم بازی‌ها — نسخه ۱۸٫۰ — کیفیت بالا، خوشگل، واقعی
+   موتور اختصاصی تمیز + طراحی جذاب + گرادینت سینمایی + سایه + گلو
    ================================================================ */
 const COVERS={
   'tetris':()=>'<defs>'
-    +'<linearGradient id="cvt-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1e3a"/><stop offset="1" stop-color="#102e5a"/></linearGradient>'
+    +'<linearGradient id="cvt-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1e3a"/><stop offset="1" stop-color="#0e2e5a"/></linearGradient>'
     +'<linearGradient id="cvt-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4fc3f7"/><stop offset="1" stop-color="#0288d1"/></linearGradient>'
     +'<linearGradient id="cvt-g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd54f"/><stop offset="1" stop-color="#ff8f00"/></linearGradient>'
     +'<linearGradient id="cvt-g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ba68c8"/><stop offset="1" stop-color="#7b1fa2"/></linearGradient>'
     +'<linearGradient id="cvt-g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4db6ac"/><stop offset="1" stop-color="#00695c"/></linearGradient>'
-    +'<radialGradient id="cvt-glow" cx=".5" cy=".2" r=".8"><stop offset="0" stop-color="rgba(79,195,247,.25)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
-    +'<filter id="cvt-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".45"/></filter>'
+    +'<radialGradient id="cvt-glow" cx=".5" cy=".2" r=".8"><stop offset="0" stop-color="rgba(79,195,247,.28)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvt-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<filter id="cvt-gl"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#4fc3f7" flood-opacity=".6"/></filter>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvt-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvt-glow)"/>'
-    +'<g opacity=".06" stroke="#7ec8f0" stroke-width=".8"><path d="M0 40H320M0 80H320M0 120H320M0 160H320"/><path d="M40 0V200M80 0V200M120 0V200M160 0V200M200 0V200M240 0V200M280 0V200"/></g>'
-    // bottom stacked blocks premium
+    +'<rect width="320" height="200" fill="url(#cvt-bg)"/><rect width="320" height="200" fill="url(#cvt-glow)"/>'
+    +'<g opacity=".05" stroke="#7ec8f0" stroke-width=".9"><path d="M0 40H320M0 80H320M0 120H320M0 160H320"/><path d="M40 0V200M80 0V200M120 0V200M160 0V200M200 0V200M240 0V200M280 0V200"/></g>'
     +'<g filter="url(#cvt-sh)">'
-      +'<g transform="translate(18,132)"><rect width="36" height="16" rx="5" fill="url(#cvt-g1)"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.45)"/></g>'
-      +'<g transform="translate(58,132)"><rect width="36" height="16" rx="5" fill="url(#cvt-g2)"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.45)"/></g>'
-      +'<g transform="translate(98,148)"><rect width="36" height="16" rx="5" fill="url(#cvt-g3)"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.4)"/></g>'
-      +'<g transform="translate(138,148)"><rect width="36" height="16" rx="5" fill="url(#cvt-g4)"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.4)"/></g>'
-      +'<g transform="translate(18,152)"><rect width="36" height="16" rx="5" fill="#4db6ac"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.35)"/></g>'
-      +'<g transform="translate(58,152)"><rect width="36" height="16" rx="5" fill="#ef9a9a"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.35)"/></g>'
-      +'<g transform="translate(98,168)"><rect width="36" height="16" rx="5" fill="#aed581"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.35)"/></g>'
-      +'<g transform="translate(138,168)"><rect width="36" height="16" rx="5" fill="#4fc3f7"/><rect x="2" y="2" width="14" height="4" rx="2" fill="rgba(255,255,255,.35)"/></g>'
+      +'<g transform="translate(14,128)"><rect width="40" height="18" rx="6" fill="url(#cvt-g1)"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.5)"/></g>'
+      +'<g transform="translate(58,128)"><rect width="40" height="18" rx="6" fill="url(#cvt-g2)"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.5)"/></g>'
+      +'<g transform="translate(18,150)"><rect width="40" height="18" rx="6" fill="#4db6ac"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.4)"/></g>'
+      +'<g transform="translate(62,150)"><rect width="40" height="18" rx="6" fill="#ef9a9a"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.4)"/></g>'
+      +'<g transform="translate(106,148)"><rect width="40" height="18" rx="6" fill="url(#cvt-g3)"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.4)"/></g>'
+      +'<g transform="translate(150,148)"><rect width="40" height="18" rx="6" fill="url(#cvt-g4)"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.4)"/></g>'
+      +'<g transform="translate(106,170)"><rect width="40" height="18" rx="6" fill="#aed581"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.4)"/></g>'
+      +'<g transform="translate(150,170)"><rect width="40" height="18" rx="6" fill="#4fc3f7"/><rect x="2" y="2" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.4)"/></g>'
     +'</g>'
-    // falling T piece with neon glow
-    +'<g transform="translate(200,18)" filter="url(#cvt-sh)">'
-      +'<rect x="0" y="16" width="72" height="18" rx="6" fill="url(#cvt-g2)" stroke="rgba(255,213,79,.6)" stroke-width="1"/>'
-      +'<rect x="26" y="0" width="20" height="18" rx="5" fill="#ffca28"/>'
-      +'<ellipse cx="18" cy="8" rx="10" ry="3" fill="rgba(255,255,255,.5)"/>'
-      +'<g opacity=".9"><rect x="6" y="20" width="8" height="3" rx="1.5" fill="rgba(255,255,255,.5)"/><rect x="30" y="20" width="8" height="3" rx="1.5" fill="rgba(255,255,255,.5)"/></g>'
+    +'<g transform="translate(200,14)" filter="url(#cvt-sh)">'
+      +'<rect x="0" y="18" width="78" height="20" rx="7" fill="url(#cvt-g2)" stroke="rgba(255,213,79,.7)" stroke-width="1"/>'
+      +'<rect x="28" y="0" width="22" height="20" rx="6" fill="#ffca28"/>'
+      +'<ellipse cx="20" cy="9" rx="11" ry="3.5" fill="rgba(255,255,255,.55)"/>'
     +'</g>'
-    // small particles
-    +'<g fill="#f0c75e" opacity=".85"><circle cx="284" cy="36" r="2.2"><animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="36" cy="28" r="1.6" opacity=".6"/><circle cx="300" cy="88" r="1.4" opacity=".5"/></g>'
-    +'<text x="46" y="54" font-family="Vazirmatn" font-size="11" font-weight="800" fill="rgba(126,200,240,.55)" letter-spacing="1">TETRIS</text>',
+    +'<g fill="#f0c75e" opacity=".85"><circle cx="286" cy="32" r="2.4"><animate attributeName="opacity" values="1;.25;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="34" cy="26" r="1.8" opacity=".6"/><circle cx="302" cy="86" r="1.5" opacity=".5"/></g>'
+    +'<text x="48" y="52" font-family="Vazirmatn" font-size="11.5" font-weight="900" fill="rgba(126,200,240,.6)" letter-spacing="1.2">TETRIS PREMIUM</text>',
 
   '2048':()=>'<defs>'
-    +'<linearGradient id="cv4-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e1b2e"/><stop offset="1" stop-color="#2e2a18"/></linearGradient>'
-    +'<linearGradient id="cv4-t1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f9ecf"/><stop offset="1" stop-color="#3a6ea5"/></linearGradient>'
-    +'<linearGradient id="cv4-t2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b7bd8"/><stop offset="1" stop-color="#5a4aa3"/></linearGradient>'
+    +'<linearGradient id="cv4-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c1930"/><stop offset="1" stop-color="#2e2a18"/></linearGradient>'
+    +'<linearGradient id="cv4-t1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fb0e0"/><stop offset="1" stop-color="#3a6ea5"/></linearGradient>'
+    +'<linearGradient id="cv4-t2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9b8de8"/><stop offset="1" stop-color="#5a4aa3"/></linearGradient>'
     +'<linearGradient id="cv4-t3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fc3a0"/><stop offset="1" stop-color="#2e7d5a"/></linearGradient>'
     +'<linearGradient id="cv4-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset=".5" stop-color="#f0c75e"/><stop offset="1" stop-color="#c9992e"/></linearGradient>'
-    +'<radialGradient id="cv4-glow" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(240,199,94,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
-    +'<filter id="cv4-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cv4-glow" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(240,199,94,.2)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cv4-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".55"/></filter>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cv4-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cv4-glow)"/>'
-    +'<g opacity=".07"><circle cx="40" cy="40" r="28" fill="#3a5f9e"/><circle cx="280" cy="160" r="36" fill="#f0c75e"/></g>'
-    +'<g transform="translate(76,22)" filter="url(#cv4-sh)">'
-      +'<g><rect width="68" height="68" rx="16" fill="url(#cv4-t1)"/><rect x="3" y="3" width="22" height="6" rx="3" fill="rgba(255,255,255,.35)"/><text x="34" y="44" font-family="Vazirmatn" font-size="28" font-weight="900" fill="#fff" text-anchor="middle">۲</text></g>'
-      +'<g transform="translate(76,0)"><rect width="68" height="68" rx="16" fill="url(#cv4-t2)"/><rect x="3" y="3" width="22" height="6" rx="3" fill="rgba(255,255,255,.3)"/><text x="34" y="44" font-family="Vazirmatn" font-size="28" font-weight="900" fill="#fff" text-anchor="middle">۴</text></g>'
-      +'<g transform="translate(0,76)"><rect width="68" height="68" rx="16" fill="url(#cv4-t3)"/><rect x="3" y="3" width="22" height="6" rx="3" fill="rgba(255,255,255,.3)"/><text x="34" y="44" font-family="Vazirmatn" font-size="26" font-weight="900" fill="#fff" text-anchor="middle">۸</text></g>'
-      +'<g transform="translate(76,76)"><rect width="68" height="68" rx="16" fill="url(#cv4-gold)" stroke="rgba(255,233,168,.9)" stroke-width="1.5"/><rect x="3" y="3" width="26" height="7" rx="3.5" fill="rgba(255,255,255,.55)"/><text x="34" y="46" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#4a3608" text-anchor="middle">۲۰۴۸</text><circle cx="52" cy="18" r="2" fill="rgba(255,255,255,.7)"/></g>'
+    +'<rect width="320" height="200" fill="url(#cv4-bg)"/><rect width="320" height="200" fill="url(#cv4-glow)"/>'
+    +'<g opacity=".06"><circle cx="42" cy="42" r="32" fill="#3a5f9e"/><circle cx="282" cy="162" r="40" fill="#f0c75e"/></g>'
+    +'<g transform="translate(72,18)" filter="url(#cv4-sh)">'
+      +'<g><rect width="72" height="72" rx="18" fill="url(#cv4-t1)"/><rect x="4" y="4" width="24" height="7" rx="3.5" fill="rgba(255,255,255,.38)"/><text x="36" y="48" font-family="Vazirmatn" font-size="30" font-weight="900" fill="#fff" text-anchor="middle">۲</text></g>'
+      +'<g transform="translate(80,0)"><rect width="72" height="72" rx="18" fill="url(#cv4-t2)"/><rect x="4" y="4" width="24" height="7" rx="3.5" fill="rgba(255,255,255,.32)"/><text x="36" y="48" font-family="Vazirmatn" font-size="30" font-weight="900" fill="#fff" text-anchor="middle">۴</text></g>'
+      +'<g transform="translate(0,80)"><rect width="72" height="72" rx="18" fill="url(#cv4-t3)"/><rect x="4" y="4" width="24" height="7" rx="3.5" fill="rgba(255,255,255,.32)"/><text x="36" y="48" font-family="Vazirmatn" font-size="28" font-weight="900" fill="#fff" text-anchor="middle">۸</text></g>'
+      +'<g transform="translate(80,80)"><rect width="72" height="72" rx="18" fill="url(#cv4-gold)" stroke="rgba(255,233,168,.9)" stroke-width="1.8"/><rect x="4" y="4" width="28" height="8" rx="4" fill="rgba(255,255,255,.6)"/><text x="36" y="50" font-family="Vazirmatn" font-size="24" font-weight="900" fill="#4a3608" text-anchor="middle">۲۰۴۸</text><circle cx="54" cy="18" r="2.4" fill="rgba(255,255,255,.75)"/></g>'
     +'</g>'
-    +'<g fill="rgba(240,199,94,.5)"><circle cx="26" cy="28" r="1.8"/><circle cx="296" cy="36" r="2"/><circle cx="292" cy="168" r="1.6"/></g>',
+    +'<g fill="rgba(240,199,94,.6)"><circle cx="28" cy="30" r="2"/><circle cx="298" cy="38" r="2.2"/><circle cx="294" cy="170" r="1.8"/></g>',
 
   'snake':()=>'<defs>'
-    +'<linearGradient id="cvs-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e2712"/><stop offset="1" stop-color="#1c4a18"/></linearGradient>'
+    +'<linearGradient id="cvs-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e2712"/><stop offset="1" stop-color="#1a4a18"/></linearGradient>'
     +'<linearGradient id="cvs-s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5da84e"/><stop offset="1" stop-color="#7ec86f"/></linearGradient>'
     +'<linearGradient id="cvs-s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7ec86f"/><stop offset="1" stop-color="#a8e6a0"/></linearGradient>'
-    +'<radialGradient id="cvs-glow" cx=".7" cy=".3" r=".8"><stop offset="0" stop-color="rgba(126,200,111,.2)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
-    +'<filter id="cvs-sh"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity=".45"/></filter>'
+    +'<radialGradient id="cvs-glow" cx=".7" cy=".3" r=".8"><stop offset="0" stop-color="rgba(126,200,111,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvs-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".5"/></filter>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvs-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvs-glow)"/>'
-    +'<g opacity=".06" fill="#fff"><rect x="0" y="0" width="40" height="40"/><rect x="80" y="40" width="40" height="40"/><rect x="160" y="0" width="40" height="40"/><rect x="240" y="80" width="40" height="40"/><rect x="120" y="120" width="40" height="40"/><rect x="200" y="160" width="40" height="40"/></g>'
-    +'<path d="M24 156 C 68 92, 118 178, 168 126 S 248 68, 280 92" fill="none" stroke="url(#cvs-s1)" stroke-width="22" stroke-linecap="round" filter="url(#cvs-sh)" opacity=".95"/>'
-    +'<path d="M24 156 C 68 92, 118 178, 168 126 S 248 68, 280 92" fill="none" stroke="url(#cvs-s2)" stroke-width="14" stroke-linecap="round"/>'
-    // scales
-    +'<g fill="rgba(0,0,0,.18)"><circle cx="72" cy="128" r="3"/><circle cx="96" cy="138" r="2.5"/><circle cx="122" cy="146" r="3"/><circle cx="150" cy="136" r="2.8"/><circle cx="180" cy="118" r="3"/><circle cx="208" cy="102" r="2.6"/><circle cx="236" cy="90" r="2.8"/></g>'
-    // head
-    +'<g transform="translate(278,88)" filter="url(#cvs-sh)">'
-      +'<circle r="16" fill="#a8e6a0" stroke="#5da84e" stroke-width="1.5"/>'
-      +'<circle cx="5" cy="-3" r="5" fill="#fff"/><circle cx="6" cy="-2" r="2.4" fill="#0e2712"/><circle cx="-3" cy="-4" r="4" fill="#fff"/><circle cx="-2" cy="-3" r="2" fill="#0e2712"/>'
-      +'<path d="M8 6 q 10 -2 14 4" stroke="#ff6b6b" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
-      +'<path d="M-2 14 q -2 6 0 10" fill="#ff6b6b" opacity=".9"/>'
+    +'<rect width="320" height="200" fill="url(#cvs-bg)"/><rect width="320" height="200" fill="url(#cvs-glow)"/>'
+    +'<g opacity=".05" fill="#fff"><rect x="0" y="0" width="40" height="40"/><rect x="80" y="40" width="40" height="40"/><rect x="160" y="0" width="40" height="40"/><rect x="240" y="80" width="40" height="40"/><rect x="120" y="120" width="40" height="40"/><rect x="200" y="160" width="40" height="40"/></g>'
+    +'<path d="M20 158 C 66 94, 116 180, 166 128 S 246 70, 282 94" fill="none" stroke="url(#cvs-s1)" stroke-width="24" stroke-linecap="round" filter="url(#cvs-sh)" opacity=".95"/>'
+    +'<path d="M20 158 C 66 94, 116 180, 166 128 S 246 70, 282 94" fill="none" stroke="url(#cvs-s2)" stroke-width="15" stroke-linecap="round"/>'
+    +'<g fill="rgba(0,0,0,.2)"><circle cx="70" cy="130" r="3.2"/><circle cx="96" cy="140" r="2.8"/><circle cx="122" cy="148" r="3.2"/><circle cx="150" cy="138" r="3"/><circle cx="180" cy="120" r="3.2"/><circle cx="210" cy="104" r="2.8"/><circle cx="238" cy="92" r="3"/></g>'
+    +'<g transform="translate(280,90)" filter="url(#cvs-sh)">'
+      +'<circle r="18" fill="#a8e6a0" stroke="#5da84e" stroke-width="1.6"/>'
+      +'<circle cx="6" cy="-4" r="5.5" fill="#fff"/><circle cx="7" cy="-3" r="2.6" fill="#0e2712"/><circle cx="-4" cy="-5" r="4.5" fill="#fff"/><circle cx="-3" cy="-4" r="2.2" fill="#0e2712"/>'
+      +'<path d="M9 7 q 11 -2 15 5" stroke="#ff6b6b" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
     +'</g>'
-    // apple premium
-    +'<g transform="translate(62,42)" filter="url(#cvs-sh)">'
-      +'<path d="M0 8 C 0 -6, 22 -8, 22 8 C 22 20, 11 24, 11 24 C 11 24, 0 20, 0 8 Z" fill="#e94e4e"/>'
-      +'<path d="M0 8 C 0 -6, 22 -8, 22 8 C 22 16, 16 22, 11 24" fill="#ff6b6b"/>'
-      +'<ellipse cx="7" cy="6" rx="5" ry="3.5" fill="rgba(255,255,255,.55)" transform="rotate(-18 7 6)"/>'
-      +'<path d="M11 0 q 4 -8 10 -6" stroke="#5da84e" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
-      +'<ellipse cx="21" cy="-5" rx="7" ry="3.5" fill="#7ec86f" transform="rotate(20 21 -5)"/>'
+    +'<g transform="translate(60,44)" filter="url(#cvs-sh)">'
+      +'<path d="M0 9 C 0 -7, 24 -9, 24 9 C 24 22, 12 26, 12 26 C 12 26, 0 22, 0 9 Z" fill="#e94e4e"/><path d="M0 9 C 0 -7, 24 -9, 24 9 C 24 18, 17 24, 12 26" fill="#ff6b6b"/>'
+      +'<ellipse cx="8" cy="7" rx="5.5" ry="4" fill="rgba(255,255,255,.6)" transform="rotate(-18 8 7)"/>'
+      +'<path d="M12 0 q 5 -9 11 -7" stroke="#5da84e" stroke-width="2.8" fill="none" stroke-linecap="round"/>'
+      +'<ellipse cx="23" cy="-6" rx="7.5" ry="4" fill="#7ec86f" transform="rotate(20 23 -6)"/>'
     +'</g>'
-    +'<g fill="#f0c75e" opacity=".7"><circle cx="18" cy="22" r="1.6"/><circle cx="300" cy="32" r="1.8"><animate attributeName="opacity" values="1;.2;1" dur="2.2s" repeatCount="indefinite"/></circle></g>',
+    +'<g fill="#f0c75e" opacity=".75"><circle cx="20" cy="24" r="1.8"/><circle cx="302" cy="34" r="2"><animate attributeName="opacity" values="1;.2;1" dur="2.2s" repeatCount="indefinite"/></circle></g>',
 
   'ttt':()=>'<defs>'
     +'<linearGradient id="cvt3-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1a0e"/><stop offset="1" stop-color="#1a0e06"/></linearGradient>'
     +'<linearGradient id="cvt3-line" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f0c75e"/><stop offset=".5" stop-color="#d9ae3e"/><stop offset="1" stop-color="#b8922f"/></linearGradient>'
-    +'<filter id="cvt3-glow"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#f0c75e" flood-opacity=".6"/></filter>'
-    +'<radialGradient id="cvt3-glow2" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(240,199,94,.15)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvt3-glow"><feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#f0c75e" flood-opacity=".7"/></filter>'
+    +'<radialGradient id="cvt3-glow2" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(240,199,94,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvt3-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvt3-glow2)"/>'
-    // board
-    +'<g opacity=".9" stroke="url(#cvt3-line)" stroke-width="4" stroke-linecap="round" filter="url(#cvt3-glow)">'
-      +'<path d="M124 32 L120 168"/><path d="M196 32 L200 168"/><path d="M60 78 L260 74"/><path d="M58 132 L262 136"/>'
+    +'<rect width="320" height="200" fill="url(#cvt3-bg)"/><rect width="320" height="200" fill="url(#cvt3-glow2)"/>'
+    +'<g opacity=".92" stroke="url(#cvt3-line)" stroke-width="5" stroke-linecap="round" filter="url(#cvt3-glow)">'
+      +'<path d="M124 28 L120 172"/><path d="M196 28 L200 172"/><path d="M56 78 L264 74"/><path d="M54 132 L266 136"/>'
     +'</g>'
-    // X and O premium with glow
     +'<g filter="url(#cvt3-glow)">'
-      +'<g transform="translate(88,54)"><line x1="0" y1="0" x2="22" y2="22" stroke="#6ea8f0" stroke-width="7" stroke-linecap="round"/><line x1="22" y1="0" x2="0" y2="22" stroke="#6ea8f0" stroke-width="7" stroke-linecap="round"/><circle cx="11" cy="11" r="18" fill="none" stroke="rgba(110,168,240,.15)" stroke-width="8"/></g>'
-      +'<g transform="translate(152,102)"><circle cx="12" cy="12" r="16" fill="none" stroke="#e08b85" stroke-width="7" stroke-linecap="round"/><circle cx="12" cy="12" r="24" fill="none" stroke="rgba(224,139,133,.15)" stroke-width="8"/></g>'
-      +'<g transform="translate(208,52)"><circle cx="12" cy="12" r="16" fill="none" stroke="#e08b85" stroke-width="7"/><circle cx="12" cy="12" r="24" fill="none" stroke="rgba(224,139,133,.15)" stroke-width="8"/></g>'
+      +'<g transform="translate(84,50)"><line x1="0" y1="0" x2="24" y2="24" stroke="#6ea8f0" stroke-width="8" stroke-linecap="round"/><line x1="24" y1="0" x2="0" y2="24" stroke="#6ea8f0" stroke-width="8" stroke-linecap="round"/><circle cx="12" cy="12" r="20" fill="none" stroke="rgba(110,168,240,.18)" stroke-width="9"/></g>'
+      +'<g transform="translate(148,98)"><circle cx="14" cy="14" r="18" fill="none" stroke="#e08b85" stroke-width="8" stroke-linecap="round"/><circle cx="14" cy="14" r="26" fill="none" stroke="rgba(224,139,133,.18)" stroke-width="9"/></g>'
+      +'<g transform="translate(204,48)"><circle cx="14" cy="14" r="18" fill="none" stroke="#e08b85" stroke-width="8"/><circle cx="14" cy="14" r="26" fill="none" stroke="rgba(224,139,133,.18)" stroke-width="9"/></g>'
     +'</g>'
-    // winning line gold
-    +'<line x1="78" y1="56" x2="238" y2="152" stroke="url(#cvt3-line)" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 6" opacity=".95" filter="url(#cvt3-glow)"/>'
-    +'<g fill="#ffe9a8" opacity=".8"><circle cx="286" cy="36" r="2"/><circle cx="34" cy="162" r="1.8"/><circle cx="300" cy="118" r="1.5"/></g>',
+    +'<line x1="74" y1="52" x2="242" y2="154" stroke="url(#cvt3-line)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 7" opacity=".96" filter="url(#cvt3-glow)"/>'
+    +'<g fill="#ffe9a8" opacity=".85"><circle cx="288" cy="34" r="2.2"/><circle cx="36" cy="164" r="2"/><circle cx="302" cy="120" r="1.7"/></g>',
 
   'memory':()=>'<defs>'
     +'<linearGradient id="cvm-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#221333"/><stop offset="1" stop-color="#3d2058"/></linearGradient>'
     +'<linearGradient id="cvm-c1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2a4d"/><stop offset="1" stop-color="#0f1d38"/></linearGradient>'
     +'<linearGradient id="cvm-c2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3f6e"/><stop offset="1" stop-color="#182a4d"/></linearGradient>'
-    +'<filter id="cvm-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
-    +'<radialGradient id="cvm-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(139,123,216,.2)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvm-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".55"/></filter>'
+    +'<radialGradient id="cvm-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(139,123,216,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvm-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvm-glow)"/>'
+    +'<rect width="320" height="200" fill="url(#cvm-bg)"/><rect width="320" height="200" fill="url(#cvm-glow)"/>'
     +'<g filter="url(#cvm-sh)">'
-      +'<g transform="rotate(-16 110 104) translate(68,48)"><rect width="62" height="88" rx="14" fill="url(#cvm-c1)" stroke="#3a5f9e" stroke-width="1.5"/><rect x="4" y="4" width="20" height="6" rx="3" fill="rgba(110,168,240,.3)"/><path d="M31 62 c-11 -9 -18 -16 -18 -25 a9 9 0 0 1 18 -4 a9 9 0 0 1 18 4 c0 9 -7 16 -18 25 Z" fill="#ff6b8a"/><circle cx="50" cy="18" r="2" fill="rgba(255,255,255,.5)"/></g>'
-      +'<g transform="rotate(8 180 100) translate(128,44)"><rect width="62" height="88" rx="14" fill="url(#cvm-c2)" stroke="#4d78c4" stroke-width="2"/><rect x="4" y="4" width="20" height="6" rx="3" fill="rgba(240,199,94,.35)"/><path d="M31 34 l6.5 13.5 15 2 -11 10.5 2.7 15 -13.2 -7.3 -13.2 7.3 2.7 -15 -11 -10.5 15 -2 Z" fill="#f0c75e"/><circle cx="50" cy="18" r="2" fill="rgba(255,255,255,.5)"/></g>'
-      +'<g transform="rotate(20 238 108) translate(188,52)"><rect width="62" height="88" rx="14" fill="url(#cvm-c1)" stroke="#3a5f9e" stroke-width="1.5"/><rect x="4" y="4" width="20" height="6" rx="3" fill="rgba(110,168,240,.25)"/><g transform="translate(16,30)"><circle cx="15" cy="15" r="12" fill="none" stroke="#7ec8f0" stroke-width="2.5"/><path d="M15 8 v14 M8 15 h14" stroke="#7ec8f0" stroke-width="2.5" stroke-linecap="round"/></g></g>'
+      +'<g transform="rotate(-16 110 104) translate(66,46)"><rect width="66" height="92" rx="16" fill="url(#cvm-c1)" stroke="#3a5f9e" stroke-width="1.6"/><rect x="5" y="5" width="22" height="7" rx="3.5" fill="rgba(110,168,240,.32)"/><path d="M33 64 c-12 -10 -19 -17 -19 -26 a10 10 0 0 1 19 -4 a10 10 0 0 1 19 4 c0 9 -7 17 -19 26 Z" fill="#ff6b8a"/><circle cx="52" cy="20" r="2.2" fill="rgba(255,255,255,.55)"/></g>'
+      +'<g transform="rotate(8 180 100) translate(126,42)"><rect width="66" height="92" rx="16" fill="url(#cvm-c2)" stroke="#4d78c4" stroke-width="2.2"/><rect x="5" y="5" width="22" height="7" rx="3.5" fill="rgba(240,199,94,.38)"/><path d="M33 36 l7 14 16 2 -12 11 3 16 -14 -8 -14 8 3 -16 -12 -11 16 -2 Z" fill="#f0c75e"/><circle cx="52" cy="20" r="2.2" fill="rgba(255,255,255,.55)"/></g>'
+      +'<g transform="rotate(20 238 108) translate(186,50)"><rect width="66" height="92" rx="16" fill="url(#cvm-c1)" stroke="#3a5f9e" stroke-width="1.6"/><rect x="5" y="5" width="22" height="7" rx="3.5" fill="rgba(110,168,240,.28)"/><g transform="translate(18,32)"><circle cx="15" cy="15" r="13" fill="none" stroke="#7ec8f0" stroke-width="2.8"/><path d="M15 8 v14 M8 15 h14" stroke="#7ec8f0" stroke-width="2.8" stroke-linecap="round"/></g></g>'
     +'</g>'
-    +'<g fill="rgba(240,199,94,.7)"><circle cx="44" cy="36" r="2.2"/><circle cx="282" cy="32" r="2"/><circle cx="52" cy="164" r="1.8"/></g>',
+    +'<g fill="rgba(240,199,94,.75)"><circle cx="46" cy="34" r="2.4"/><circle cx="284" cy="30" r="2.2"/><circle cx="54" cy="166" r="2"/></g>',
 
   'rps':()=>'<defs>'
     +'<linearGradient id="cvr-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#33141c"/><stop offset="1" stop-color="#1f0b10"/></linearGradient>'
     +'<linearGradient id="cvr-b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f5a"/><stop offset="1" stop-color="#1e2438"/></linearGradient>'
-    +'<radialGradient id="cvr-glow" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(224,139,133,.15)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
-    +'<filter id="cvr-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cvr-glow" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(224,139,133,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvr-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".55"/></filter>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvr-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvr-glow)"/>'
+    +'<rect width="320" height="200" fill="url(#cvr-bg)"/><rect width="320" height="200" fill="url(#cvr-glow)"/>'
     +'<g filter="url(#cvr-sh)">'
-      +'<g transform="translate(56,60)"><circle cx="40" cy="40" r="38" fill="url(#cvr-b1)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/><path d="M22 44 l8 -18 12 -4 14 8 4 14 -10 10 -20 2 Z" fill="#9aa5b8"/><path d="M30 32 l6 -6" stroke="#c3ccd9" stroke-width="3" stroke-linecap="round"/><circle cx="40" cy="40" r="38" fill="none" stroke="rgba(240,199,94,.15)" stroke-width="6"/></g>'
-      +'<g transform="translate(134,52)"><circle cx="40" cy="40" r="38" fill="url(#cvr-b1)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/><g transform="rotate(-6 40 40)"><rect x="18" y="16" width="44" height="54" rx="6" fill="#eef2f8"/><path d="M18 16 h28 l16 14 v40 h-44 Z" fill="#fff"/><path d="M46 16 l16 14 h-16 Z" fill="#c8d4e8"/><g stroke="#aab8cc" stroke-width="2.6" stroke-linecap="round"><line x1="26" y1="38" x2="52" y2="38"/><line x1="26" y1="48" x2="52" y2="48"/><line x1="26" y1="58" x2="44" y2="58"/></g></g><circle cx="40" cy="40" r="38" fill="none" stroke="rgba(110,168,240,.18)" stroke-width="6"/></g>'
-      +'<g transform="translate(212,60)"><circle cx="40" cy="40" r="38" fill="url(#cvr-b1)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/><g stroke="#c3ccd9" stroke-width="6" stroke-linecap="round"><line x1="22" y1="18" x2="52" y2="58"/><line x1="58" y1="18" x2="28" y2="58"/></g><circle cx="24" cy="64" r="8" fill="none" stroke="#ff8a8a" stroke-width="4"/><circle cx="56" cy="64" r="8" fill="none" stroke="#ff8a8a" stroke-width="4"/><circle cx="40" cy="34" r="4" fill="#eef2f8"/><circle cx="40" cy="40" r="38" fill="none" stroke="rgba(224,139,133,.18)" stroke-width="6"/></g>'
-    +'</g>'
-    +'<g font-family="Vazirmatn" font-weight="900" fill="#f0c75e" text-anchor="middle" opacity=".9"><text x="108" y="108" font-size="16">؟</text><text x="208" y="108" font-size="16">؟</text></g>',
+      +'<g transform="translate(52,56)"><circle cx="42" cy="42" r="40" fill="url(#cvr-b1)" stroke="rgba(255,255,255,.14)" stroke-width="1.6"/><path d="M22 46 l8 -19 13 -4 15 8 4 15 -10 11 -21 2 Z" fill="#9aa5b8"/><path d="M30 33 l6 -6" stroke="#c3ccd9" stroke-width="3.2" stroke-linecap="round"/><circle cx="42" cy="42" r="40" fill="none" stroke="rgba(240,199,94,.16)" stroke-width="7"/></g>'
+      +'<g transform="translate(130,48)"><circle cx="42" cy="42" r="40" fill="url(#cvr-b1)" stroke="rgba(255,255,255,.14)" stroke-width="1.6"/><g transform="rotate(-6 42 42)"><rect x="19" y="17" width="46" height="56" rx="7" fill="#eef2f8"/><path d="M19 17 h29 l17 15 v42 h-46 Z" fill="#fff"/><path d="M48 17 l17 15 h-17 Z" fill="#c8d4e8"/><g stroke="#aab8cc" stroke-width="2.8" stroke-linecap="round"><line x1="27" y1="40" x2="54" y2="40"/><line x1="27" y1="50" x2="54" y2="50"/><line x1="27" y1="60" x2="46" y2="60"/></g></g><circle cx="42" cy="42" r="40" fill="none" stroke="rgba(110,168,240,.2)" stroke-width="7"/></g>'
+      +'<g transform="translate(208,56)"><circle cx="42" cy="42" r="40" fill="url(#cvr-b1)" stroke="rgba(255,255,255,.14)" stroke-width="1.6"/><g stroke="#c3ccd9" stroke-width="6.5" stroke-linecap="round"><line x1="23" y1="19" x2="54" y2="61"/><line x1="61" y1="19" x2="30" y2="61"/></g><circle cx="25" cy="67" r="9" fill="none" stroke="#ff8a8a" stroke-width="4.2"/><circle cx="59" cy="67" r="9" fill="none" stroke="#ff8a8a" stroke-width="4.2"/><circle cx="42" cy="36" r="4.5" fill="#eef2f8"/><circle cx="42" cy="42" r="40" fill="none" stroke="rgba(224,139,133,.2)" stroke-width="7"/></g>'
+    +'</g>',
 
   'react':()=>'<defs>'
     +'<linearGradient id="cvr2-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1d3d"/><stop offset="1" stop-color="#1c3a6e"/></linearGradient>'
-    +'<radialGradient id="cvr2-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(110,168,240,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
-    +'<filter id="cvr2-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cvr2-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(110,168,240,.2)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvr2-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".55"/></filter>'
     +'<linearGradient id="cvr2-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#f0c75e"/></linearGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvr2-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvr2-glow)"/>'
-    +'<g opacity=".15" stroke="#7ec8f0" stroke-width="2" stroke-linecap="round"><line x1="20" y1="60" x2="64" y2="60"/><line x1="28" y1="86" x2="56" y2="86"/><line x1="20" y1="112" x2="64" y2="112"/></g>'
+    +'<rect width="320" height="200" fill="url(#cvr2-bg)"/><rect width="320" height="200" fill="url(#cvr2-glow)"/>'
+    +'<g opacity=".16" stroke="#7ec8f0" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="60" x2="66" y2="60"/><line x1="28" y1="88" x2="58" y2="88"/><line x1="20" y1="114" x2="66" y2="114"/></g>'
     +'<g transform="translate(160,96)" filter="url(#cvr2-sh)">'
-      +'<circle r="56" fill="rgba(16,40,80,.85)" stroke="rgba(110,168,240,.3)" stroke-width="1.5"/>'
-      +'<circle r="48" fill="none" stroke="url(#cvr2-gold)" stroke-width="1" opacity=".6" stroke-dasharray="3 4"/>'
-      +'<g stroke="#6ea8f0" stroke-width="2.5" stroke-linecap="round" opacity=".85">'
-        +'<line y1="-44" y2="-36"/><line y1="36" y2="44"/><line x1="-44" x2="-36"/><line x1="36" x2="44"/>'
-        +'<line x1="-31" y1="-31" x2="-26" y2="-26"/><line x1="26" y1="26" x2="31" y2="31"/><line x1="31" y1="-31" x2="26" y2="-26"/><line x1="-26" y1="26" x2="-31" y2="31"/>'
+      +'<circle r="60" fill="rgba(16,40,80,.9)" stroke="rgba(110,168,240,.32)" stroke-width="1.6"/>'
+      +'<circle r="52" fill="none" stroke="url(#cvr2-gold)" stroke-width="1.2" opacity=".7" stroke-dasharray="4 5"/>'
+      +'<g stroke="#6ea8f0" stroke-width="2.8" stroke-linecap="round" opacity=".9">'
+        +'<line y1="-48" y2="-39"/><line y1="39" y2="48"/><line x1="-48" x2="-39"/><line x1="39" x2="48"/>'
+        +'<line x1="-34" y1="-34" x2="-28" y2="-28"/><line x1="28" y1="28" x2="34" y2="34"/><line x1="34" y1="-34" x2="28" y2="-28"/><line x1="-28" y1="28" x2="-34" y2="34"/>'
       +'</g>'
-      +'<line y1="-4" y2="-32" stroke="url(#cvr2-gold)" stroke-width="4" stroke-linecap="round" transform="rotate(28)"/>'
-      +'<circle r="7" fill="url(#cvr2-gold)"/>'
-      +'<circle r="3" fill="#0d1d3d"/>'
+      +'<line y1="-4" y2="-36" stroke="url(#cvr2-gold)" stroke-width="4.5" stroke-linecap="round" transform="rotate(28)"/>'
+      +'<circle r="8" fill="url(#cvr2-gold)"/><circle r="3.5" fill="#0d1d3d"/>'
     +'</g>'
-    +'<g transform="translate(236,136)" filter="url(#cvr2-sh)"><circle r="26" fill="rgba(240,199,94,.12)" stroke="#f0c75e" stroke-width="2"/><path d="M5 -14 l-10 16 h8 l-4 14 12 -18 h-8 Z" fill="#f0c75e"/></g>'
-    +'<text x="160" y="182" font-family="Vazirmatn" font-size="13" font-weight="800" fill="#7ec8f0" text-anchor="middle">۲۱۸ میلی‌ثانیه</text>',
+    +'<g transform="translate(238,138)" filter="url(#cvr2-sh)"><circle r="28" fill="rgba(240,199,94,.14)" stroke="#f0c75e" stroke-width="2.2"/><path d="M5 -15 l-11 17 h9 l-4 15 13 -19 h-9 Z" fill="#f0c75e"/></g>'
+    +'<text x="160" y="184" font-family="Vazirmatn" font-size="13.5" font-weight="800" fill="#7ec8f0" text-anchor="middle">۲۱۸ میلی‌ثانیه</text>',
 
   'coin':()=>'<defs>'
     +'<radialGradient id="cvci" cx=".35" cy=".28" r=".9"><stop offset="0" stop-color="#fff6cc"/><stop offset=".2" stop-color="#ffe9a8"/><stop offset=".5" stop-color="#f0c75e"/><stop offset=".85" stop-color="#c9992e"/><stop offset="1" stop-color="#8a6a1c"/></radialGradient>'
     +'<linearGradient id="cvcb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#241a06"/><stop offset="1" stop-color="#3d2c0a"/></linearGradient>'
-    +'<filter id="cvci-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".5"/></filter>'
-    +'<radialGradient id="cvci-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(240,199,94,.25)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvci-sh"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".55"/></filter>'
+    +'<radialGradient id="cvci-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(240,199,94,.28)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvcb)"/>'
-    +'<rect width="320" height="200" fill="url(#cvci-glow)"/>'
-    +'<circle cx="238" cy="136" r="36" fill="#8a6a1c" opacity=".4"/><circle cx="238" cy="136" r="28" fill="none" stroke="rgba(255,224,138,.25)" stroke-width="1.5" stroke-dasharray="5 5"/>'
-    +'<g transform="translate(138,92)" filter="url(#cvci-sh)">'
-      +'<circle r="58" fill="url(#cvci)" stroke="rgba(122,92,20,.6)" stroke-width="1.5"/>'
-      +'<circle r="46" fill="none" stroke="rgba(122,92,20,.35)" stroke-width="1.5" stroke-dasharray="7 5"/>'
-      +'<path d="M0 -28 l8 16 18 2.5 -13 13 3 18 -16 -9 -16 9 3 -18 -13 -13 18 -2.5 Z" fill="#7a5c14"/>'
-      +'<ellipse cx="-18" cy="-20" rx="18" ry="10" fill="rgba(255,255,255,.45)" transform="rotate(-24 -18 -20)"/>'
-      +'<circle cx="22" cy="-12" r="2.5" fill="rgba(255,255,255,.6)"/>'
+    +'<rect width="320" height="200" fill="url(#cvcb)"/><rect width="320" height="200" fill="url(#cvci-glow)"/>'
+    +'<circle cx="242" cy="138" r="38" fill="#8a6a1c" opacity=".45"/><circle cx="242" cy="138" r="30" fill="none" stroke="rgba(255,224,138,.28)" stroke-width="1.6" stroke-dasharray="6 6"/>'
+    +'<g transform="translate(136,90)" filter="url(#cvci-sh)">'
+      +'<circle r="62" fill="url(#cvci)" stroke="rgba(122,92,20,.65)" stroke-width="1.6"/>'
+      +'<circle r="50" fill="none" stroke="rgba(122,92,20,.38)" stroke-width="1.6" stroke-dasharray="8 6"/>'
+      +'<path d="M0 -30 l9 17 19 3 -14 14 3 19 -17 -10 -17 10 3 -19 -14 -14 19 -3 Z" fill="#7a5c14"/>'
+      +'<ellipse cx="-20" cy="-22" rx="20" ry="11" fill="rgba(255,255,255,.5)" transform="rotate(-24 -20 -22)"/>'
+      +'<circle cx="24" cy="-14" r="2.8" fill="rgba(255,255,255,.65)"/>'
     +'</g>'
-    +'<text x="252" y="48" font-family="Vazirmatn" font-size="13" font-weight="800" fill="#ffe08a" text-anchor="middle">شیر یا خط؟</text>'
-    +'<g fill="#f0c75e" opacity=".6"><circle cx="28" cy="28" r="1.8"/><circle cx="302" cy="32" r="1.6"/><circle cx="18" cy="168" r="1.4"/></g>',
+    +'<text x="254" y="46" font-family="Vazirmatn" font-size="14" font-weight="900" fill="#ffe08a" text-anchor="middle">شیر یا خط؟</text>'
+    +'<g fill="#f0c75e" opacity=".65"><circle cx="30" cy="30" r="2"/><circle cx="304" cy="34" r="1.8"/><circle cx="20" cy="170" r="1.6"/></g>',
 
   'dice':()=>'<defs>'
     +'<linearGradient id="cvd-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#311726"/><stop offset="1" stop-color="#4a2038"/></linearGradient>'
     +'<linearGradient id="cvd-d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9e2f2"/></linearGradient>'
-    +'<filter id="cvd-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".5"/></filter>'
-    +'<radialGradient id="cvd-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(196,106,142,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvd-sh"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".55"/></filter>'
+    +'<radialGradient id="cvd-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(196,106,142,.2)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvd-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvd-glow)"/>'
+    +'<rect width="320" height="200" fill="url(#cvd-bg)"/><rect width="320" height="200" fill="url(#cvd-glow)"/>'
     +'<g filter="url(#cvd-sh)">'
-      +'<g transform="rotate(-12 112 98) translate(74,64)"><rect width="72" height="72" rx="18" fill="url(#cvd-d1)" stroke="#d9e2f2" stroke-width="1.5"/><rect x="2" y="2" width="28" height="8" rx="4" fill="rgba(255,255,255,.7)"/><g fill="#1c2b52"><circle cx="20" cy="20" r="6"/><circle cx="52" cy="20" r="6"/><circle cx="36" cy="36" r="6"/><circle cx="20" cy="52" r="6"/><circle cx="52" cy="52" r="6"/></g></g>'
-      +'<g transform="rotate(10 204 104) translate(168,68)"><rect width="72" height="72" rx="18" fill="url(#cvd-d1)" stroke="#d9e2f2" stroke-width="1.5"/><rect x="2" y="2" width="28" height="8" rx="4" fill="rgba(255,255,255,.7)"/><g fill="#c46a8e"><circle cx="18" cy="18" r="5.5"/><circle cx="54" cy="18" r="5.5"/><circle cx="18" cy="36" r="5.5"/><circle cx="54" cy="36" r="5.5"/><circle cx="18" cy="54" r="5.5"/><circle cx="54" cy="54" r="5.5"/></g></g>'
+      +'<g transform="rotate(-12 112 98) translate(72,62)"><rect width="76" height="76" rx="20" fill="url(#cvd-d1)" stroke="#d9e2f2" stroke-width="1.6"/><rect x="3" y="3" width="30" height="9" rx="4.5" fill="rgba(255,255,255,.75)"/><g fill="#1c2b52"><circle cx="21" cy="21" r="6.5"/><circle cx="55" cy="21" r="6.5"/><circle cx="38" cy="38" r="6.5"/><circle cx="21" cy="55" r="6.5"/><circle cx="55" cy="55" r="6.5"/></g></g>'
+      +'<g transform="rotate(10 204 104) translate(166,66)"><rect width="76" height="76" rx="20" fill="url(#cvd-d1)" stroke="#d9e2f2" stroke-width="1.6"/><rect x="3" y="3" width="30" height="9" rx="4.5" fill="rgba(255,255,255,.75)"/><g fill="#c46a8e"><circle cx="19" cy="19" r="6"/><circle cx="57" cy="19" r="6"/><circle cx="19" cy="38" r="6"/><circle cx="57" cy="38" r="6"/><circle cx="19" cy="57" r="6"/><circle cx="57" cy="57" r="6"/></g></g>'
     +'</g>'
-    +'<g opacity=".5" stroke="rgba(255,255,255,.25)" stroke-width="2" fill="none" stroke-linecap="round"><path d="M32 56 a 24 24 0 0 1 22 -12"/><path d="M286 132 a 24 24 0 0 1 -22 12"/></g>',
+    +'<g opacity=".55" stroke="rgba(255,255,255,.28)" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M32 56 a 26 26 0 0 1 24 -13"/><path d="M288 134 a 26 26 0 0 1 -24 13"/></g>',
 
   'puzzle':()=>'<defs>'
     +'<linearGradient id="cvp-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d2b27"/><stop offset="1" stop-color="#164640"/></linearGradient>'
     +'<linearGradient id="cvp-t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fb3a6"/><stop offset="1" stop-color="#2a837a"/></linearGradient>'
     +'<linearGradient id="cvp-t2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fc3f7"/><stop offset="1" stop-color="#2a7ab5"/></linearGradient>'
-    +'<filter id="cvp-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".45"/></filter>'
+    +'<filter id="cvp-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
     +'</defs>'
     +'<rect width="320" height="200" fill="url(#cvp-bg)"/>'
-    +'<g filter="url(#cvp-sh)" transform="translate(84,36)">'
-      +'<g><rect width="56" height="56" rx="12" fill="url(#cvp-t)"/><text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">۱</text><rect x="3" y="3" width="18" height="5" rx="2.5" fill="rgba(255,255,255,.35)"/></g>'
-      +'<g transform="translate(64,0)"><rect width="56" height="56" rx="12" fill="url(#cvp-t)"/><text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">۲</text><rect x="3" y="3" width="18" height="5" rx="2.5" fill="rgba(255,255,255,.35)"/></g>'
-      +'<g transform="translate(128,0)"><rect width="56" height="56" rx="12" fill="url(#cvp-t2)"/><text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">۳</text><rect x="3" y="3" width="18" height="5" rx="2.5" fill="rgba(255,255,255,.4)"/></g>'
-      +'<g transform="translate(0,64)"><rect width="56" height="56" rx="12" fill="url(#cvp-t)"/><text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">۴</text></g>'
-      +'<g transform="translate(64,64)"><rect width="56" height="56" rx="12" fill="#2e8f84"/><text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">۵</text></g>'
-      +'<g transform="translate(128,64)"><rect width="56" height="56" rx="12" fill="rgba(148,180,224,.08)" stroke="rgba(148,180,224,.2)" stroke-width="1.5" stroke-dasharray="6 5"/><text x="28" y="36" font-family="Vazirmatn" font-size="16" font-weight="800" fill="rgba(148,180,224,.35)" text-anchor="middle">✦</text></g>'
+    +'<g filter="url(#cvp-sh)" transform="translate(80,32)">'
+      +'<g><rect width="60" height="60" rx="14" fill="url(#cvp-t)"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">۱</text><rect x="4" y="4" width="20" height="6" rx="3" fill="rgba(255,255,255,.38)"/></g>'
+      +'<g transform="translate(68,0)"><rect width="60" height="60" rx="14" fill="url(#cvp-t)"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">۲</text><rect x="4" y="4" width="20" height="6" rx="3" fill="rgba(255,255,255,.38)"/></g>'
+      +'<g transform="translate(136,0)"><rect width="60" height="60" rx="14" fill="url(#cvp-t2)"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">۳</text><rect x="4" y="4" width="20" height="6" rx="3" fill="rgba(255,255,255,.45)"/></g>'
+      +'<g transform="translate(0,68)"><rect width="60" height="60" rx="14" fill="url(#cvp-t)"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">۴</text></g>'
+      +'<g transform="translate(68,68)"><rect width="60" height="60" rx="14" fill="#2e8f84"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">۵</text></g>'
+      +'<g transform="translate(136,68)"><rect width="60" height="60" rx="14" fill="rgba(148,180,224,.09)" stroke="rgba(148,180,224,.22)" stroke-width="1.6" stroke-dasharray="7 6"/><text x="30" y="38" font-family="Vazirmatn" font-size="18" font-weight="800" fill="rgba(148,180,224,.38)" text-anchor="middle">✦</text></g>'
     +'</g>'
-    +'<g fill="#f0c75e" opacity=".6"><circle cx="28" cy="30" r="1.6"/><circle cx="292" cy="36" r="1.8"/></g>',
+    +'<g fill="#f0c75e" opacity=".65"><circle cx="30" cy="32" r="1.8"/><circle cx="294" cy="38" r="2"/></g>',
 
   'word':()=>'<defs>'
     +'<linearGradient id="cvw-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#191539"/><stop offset="1" stop-color="#2c2454"/></linearGradient>'
     +'<linearGradient id="cvw-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#f0c75e"/></linearGradient>'
-    +'<filter id="cvw-sh"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity=".4"/></filter>'
+    +'<filter id="cvw-sh"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity=".45"/></filter>'
     +'</defs>'
     +'<rect width="320" height="200" fill="url(#cvw-bg)"/>'
     +'<g opacity=".08" fill="#aab8dd">'
@@ -6642,202 +6678,209 @@ const COVERS={
       +'<rect x="20" y="60" width="36" height="32" rx="8"/><rect x="64" y="60" width="36" height="32" rx="8"/><rect x="108" y="60" width="36" height="32" rx="8"/><rect x="152" y="60" width="36" height="32" rx="8"/>'
     +'</g>'
     +'<g filter="url(#cvw-sh)">'
-      +'<g transform="translate(20,20)"><rect width="36" height="32" rx="9" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">ق</text></g>'
-      +'<g transform="translate(64,20)"><rect width="36" height="32" rx="9" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">ه</text></g>'
-      +'<g transform="translate(108,20)"><rect width="36" height="32" rx="9" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">و</text></g>'
-      +'<g transform="translate(152,20)"><rect width="36" height="32" rx="9" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">ه</text></g>'
-      +'<g transform="translate(20,60)"><rect width="36" height="32" rx="9" fill="rgba(148,180,224,.12)" stroke="rgba(148,180,224,.2)"/><text x="18" y="22" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#aab8dd" text-anchor="middle">ب</text></g>'
-      +'<g transform="translate(64,60)"><rect width="36" height="32" rx="9" fill="rgba(148,180,224,.12)" stroke="rgba(148,180,224,.2)"/><text x="18" y="22" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#aab8dd" text-anchor="middle">ی</text></g>'
-      +'<g transform="translate(108,60)"><rect width="36" height="32" rx="9" fill="rgba(148,180,224,.12)" stroke="rgba(148,180,224,.2)"/><text x="18" y="22" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#aab8dd" text-anchor="middle">ا</text></g>'
+      +'<g transform="translate(20,20)"><rect width="36" height="32" rx="10" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">ق</text></g>'
+      +'<g transform="translate(64,20)"><rect width="36" height="32" rx="10" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">ه</text></g>'
+      +'<g transform="translate(108,20)"><rect width="36" height="32" rx="10" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">و</text></g>'
+      +'<g transform="translate(152,20)"><rect width="36" height="32" rx="10" fill="url(#cvw-gold)"/><text x="18" y="22" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#241a06" text-anchor="middle">ه</text></g>'
+      +'<g transform="translate(20,60)"><rect width="36" height="32" rx="10" fill="rgba(148,180,224,.13)" stroke="rgba(148,180,224,.22)"/><text x="18" y="22" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#aab8dd" text-anchor="middle">ب</text></g>'
+      +'<g transform="translate(64,60)"><rect width="36" height="32" rx="10" fill="rgba(148,180,224,.13)" stroke="rgba(148,180,224,.22)"/><text x="18" y="22" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#aab8dd" text-anchor="middle">ی</text></g>'
+      +'<g transform="translate(108,60)"><rect width="36" height="32" rx="10" fill="rgba(148,180,224,.13)" stroke="rgba(148,180,224,.22)"/><text x="18" y="22" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#aab8dd" text-anchor="middle">ا</text></g>'
     +'</g>'
-    +'<g opacity=".6" fill="#f0c75e"><circle cx="282" cy="34" r="2"/><circle cx="38" cy="164" r="1.6"/></g>',
+    +'<g opacity=".65" fill="#f0c75e"><circle cx="284" cy="36" r="2.2"/><circle cx="40" cy="166" r="1.8"/></g>',
 
   'flappy':()=>'<defs>'
     +'<linearGradient id="cvf-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fc3f7"/><stop offset="1" stop-color="#a8d8f0"/></linearGradient>'
     +'<linearGradient id="cvf-pipe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2f7a45"/><stop offset=".5" stop-color="#5fbf6f"/><stop offset="1" stop-color="#2f7a45"/></linearGradient>'
     +'<linearGradient id="cvf-bird" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7e0"/><stop offset="1" stop-color="#f0c75e"/></linearGradient>'
-    +'<filter id="cvf-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".45"/></filter>'
-    +'<radialGradient id="cvf-glow" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="rgba(255,255,255,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvf-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cvf-glow" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="rgba(255,255,255,.24)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvf-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvf-glow)"/>'
-    +'<g opacity=".7" fill="#fff"><circle cx="48" cy="36" r="14"/><circle cx="66" cy="30" r="16"/><circle cx="84" cy="36" r="12"/><circle cx="220" cy="42" r="12"/><circle cx="234" cy="36" r="14"/><circle cx="250" cy="42" r="10"/></g>'
-    +'<g transform="translate(54,26)" filter="url(#cvf-sh)"><rect width="38" height="96" rx="8" fill="url(#cvf-pipe)"/><rect x="-3" y="82" width="44" height="14" rx="5" fill="#3f9e52"/></g>'
-    +'<g transform="translate(54,144)" filter="url(#cvf-sh)"><rect width="38" height="56" rx="8" fill="url(#cvf-pipe)"/><rect x="-3" y="0" width="44" height="14" rx="5" fill="#3f9e52"/></g>'
-    +'<g transform="translate(198,16)" filter="url(#cvf-sh)"><rect width="38" height="86" rx="8" fill="url(#cvf-pipe)"/><rect x="-3" y="72" width="44" height="14" rx="5" fill="#3f9e52"/></g>'
-    +'<g transform="translate(198,134)" filter="url(#cvf-sh)"><rect width="38" height="66" rx="8" fill="url(#cvf-pipe)"/><rect x="-3" y="0" width="44" height="14" rx="5" fill="#3f9e52"/></g>'
-    +'<g transform="translate(126,76)" filter="url(#cvf-sh)">'
-      +'<rect x="-14" y="-12" width="28" height="22" rx="8" fill="url(#cvf-bird)"/>'
-      +'<rect x="-12" y="-10" width="24" height="4" rx="2" fill="#7a4a1e"/>'
-      +'<circle cx="-4" cy="-2" r="5" fill="#fff"/><circle cx="6" cy="-2" r="5" fill="#fff"/>'
-      +'<circle cx="-2" cy="0" r="2.2" fill="#1d2b3a"/><circle cx="8" cy="0" r="2.2" fill="#1d2b3a"/>'
+    +'<rect width="320" height="200" fill="url(#cvf-bg)"/><rect width="320" height="200" fill="url(#cvf-glow)"/>'
+    +'<g opacity=".75" fill="#fff"><circle cx="48" cy="36" r="15"/><circle cx="67" cy="30" r="17"/><circle cx="86" cy="36" r="13"/><circle cx="222" cy="42" r="13"/><circle cx="237" cy="36" r="15"/><circle cx="253" cy="42" r="11"/></g>'
+    +'<g transform="translate(54,22)" filter="url(#cvf-sh)"><rect width="42" height="100" rx="9" fill="url(#cvf-pipe)"/><rect x="-4" y="86" width="50" height="16" rx="6" fill="#3f9e52"/></g>'
+    +'<g transform="translate(54,144)" filter="url(#cvf-sh)"><rect width="42" height="56" rx="9" fill="url(#cvf-pipe)"/><rect x="-4" y="0" width="50" height="16" rx="6" fill="#3f9e52"/></g>'
+    +'<g transform="translate(196,12)" filter="url(#cvf-sh)"><rect width="42" height="90" rx="9" fill="url(#cvf-pipe)"/><rect x="-4" y="76" width="50" height="16" rx="6" fill="#3f9e52"/></g>'
+    +'<g transform="translate(196,134)" filter="url(#cvf-sh)"><rect width="42" height="66" rx="9" fill="url(#cvf-pipe)"/><rect x="-4" y="0" width="50" height="16" rx="6" fill="#3f9e52"/></g>'
+    +'<g transform="translate(126,78)" filter="url(#cvf-sh)">'
+      +'<rect x="-16" y="-14" width="32" height="26" rx="10" fill="url(#cvf-bird)"/>'
+      +'<rect x="-14" y="-12" width="28" height="5" rx="2.5" fill="#7a4a1e"/>'
+      +'<circle cx="-5" cy="-2" r="5.5" fill="#fff"/><circle cx="7" cy="-2" r="5.5" fill="#fff"/>'
+      +'<circle cx="-3" cy="0" r="2.4" fill="#1d2b3a"/><circle cx="9" cy="0" r="2.4" fill="#1d2b3a"/>'
     +'</g>'
     +'<rect y="184" width="320" height="16" fill="#e7c27d"/><rect y="184" width="320" height="4" fill="#c9a06a"/>',
 
   'breakout':()=>'<defs>'
     +'<linearGradient id="cvb-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1730"/><stop offset="1" stop-color="#1a2a4a"/></linearGradient>'
     +'<linearGradient id="cvb-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#f0c75e"/></linearGradient>'
-    +'<filter id="cvb-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".5"/></filter>'
-    +'<radialGradient id="cvb-glow" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(79,195,247,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvb-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".55"/></filter>'
+    +'<radialGradient id="cvb-glow" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="rgba(79,195,247,.2)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvb-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvb-glow)"/>'
+    +'<rect width="320" height="200" fill="url(#cvb-bg)"/><rect width="320" height="200" fill="url(#cvb-glow)"/>'
     +'<g filter="url(#cvb-sh)">'
-      +'<rect x="24" y="28" width="38" height="14" rx="5" fill="#4fc3f7"/><rect x="26" y="30" width="12" height="3" rx="1.5" fill="rgba(255,255,255,.4)"/>'
-      +'<rect x="68" y="28" width="38" height="14" rx="5" fill="#8b7bd8"/><rect x="70" y="30" width="12" height="3" rx="1.5" fill="rgba(255,255,255,.35)"/>'
-      +'<rect x="112" y="28" width="38" height="14" rx="5" fill="#f0c75e"/><rect x="114" y="30" width="12" height="3" rx="1.5" fill="rgba(255,255,255,.5)"/>'
-      +'<rect x="156" y="28" width="38" height="14" rx="5" fill="#4db6ac"/>'
-      +'<rect x="24" y="48" width="38" height="14" rx="5" fill="#ef9a9a"/>'
-      +'<rect x="68" y="48" width="38" height="14" rx="5" fill="#aed581"/>'
-      +'<rect x="112" y="48" width="38" height="14" rx="5" fill="#4fc3f7"/>'
-      +'<rect x="156" y="48" width="38" height="14" rx="5" fill="#8b7bd8"/>'
-      +'<rect x="46" y="90" width="68" height="10" rx="5" fill="url(#cvb-gold)"/>'
+      +'<rect x="22" y="26" width="42" height="16" rx="6" fill="#4fc3f7"/><rect x="24" y="28" width="14" height="4" rx="2" fill="rgba(255,255,255,.45)"/>'
+      +'<rect x="70" y="26" width="42" height="16" rx="6" fill="#8b7bd8"/><rect x="72" y="28" width="14" height="4" rx="2" fill="rgba(255,255,255,.38)"/>'
+      +'<rect x="118" y="26" width="42" height="16" rx="6" fill="#f0c75e"/><rect x="120" y="28" width="14" height="4" rx="2" fill="rgba(255,255,255,.55)"/>'
+      +'<rect x="166" y="26" width="42" height="16" rx="6" fill="#4db6ac"/>'
+      +'<rect x="22" y="48" width="42" height="16" rx="6" fill="#ef9a9a"/>'
+      +'<rect x="70" y="48" width="42" height="16" rx="6" fill="#aed581"/>'
+      +'<rect x="118" y="48" width="42" height="16" rx="6" fill="#4fc3f7"/>'
+      +'<rect x="166" y="48" width="42" height="16" rx="6" fill="#8b7bd8"/>'
+      +'<rect x="48" y="90" width="72" height="12" rx="6" fill="url(#cvb-gold)"/>'
     +'</g>'
-    +'<g transform="translate(140,116)" filter="url(#cvb-sh)"><circle r="8" fill="#fff"/><circle r="8" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="6" opacity=".25"/></g>'
-    +'<g fill="#f0c75e" opacity=".6"><circle cx="24" cy="22" r="1.6"/><circle cx="292" cy="36" r="2"/></g>',
+    +'<g transform="translate(142,118)" filter="url(#cvb-sh)"><circle r="9" fill="#fff"/><circle r="9" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="7" opacity=".28"/></g>'
+    +'<g fill="#f0c75e" opacity=".65"><circle cx="26" cy="24" r="1.8"/><circle cx="294" cy="38" r="2.2"/></g>',
 
   'mines':()=>'<defs>'
     +'<linearGradient id="cvmn-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a1f2e"/><stop offset="1" stop-color="#252b3a"/></linearGradient>'
-    +'<filter id="cvmn-sh"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity=".45"/></filter>'
-    +'<radialGradient id="cvmn-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(240,199,94,.14)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvmn-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cvmn-glow" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="rgba(240,199,94,.16)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvmn-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvmn-glow)"/>'
-    +'<g transform="translate(96,36)" filter="url(#cvmn-sh)">'
-      +'<g><rect width="42" height="42" rx="10" fill="rgba(148,180,224,.08)" stroke="rgba(148,180,224,.18)"/><text x="21" y="26" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#4fc3f7" text-anchor="middle">۱</text></g>'
-      +'<g transform="translate(50,0)"><rect width="42" height="42" rx="10" fill="rgba(148,180,224,.08)" stroke="rgba(148,180,224,.18)"/><text x="21" y="26" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#7ec8a0" text-anchor="middle">۲</text></g>'
-      +'<g transform="translate(0,50)"><rect width="42" height="42" rx="10" fill="#2a3f6e" stroke="#4a6fb0"/><text x="21" y="28" font-family="Vazirmatn" font-size="14" font-weight="900" fill="#f0c75e" text-anchor="middle">F</text></g>'
-      +'<g transform="translate(50,50)"><rect width="42" height="42" rx="10" fill="#1c2a4d" stroke="#3a5f9e"/><rect x="4" y="4" width="14" height="4" rx="2" fill="rgba(255,255,255,.2)"/></g>'
+    +'<rect width="320" height="200" fill="url(#cvmn-bg)"/><rect width="320" height="200" fill="url(#cvmn-glow)"/>'
+    +'<g transform="translate(92,32)" filter="url(#cvmn-sh)">'
+      +'<g><rect width="46" height="46" rx="12" fill="rgba(148,180,224,.09)" stroke="rgba(148,180,224,.2)"/><text x="23" y="29" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#4fc3f7" text-anchor="middle">۱</text></g>'
+      +'<g transform="translate(54,0)"><rect width="46" height="46" rx="12" fill="rgba(148,180,224,.09)" stroke="rgba(148,180,224,.2)"/><text x="23" y="29" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#7ec8a0" text-anchor="middle">۲</text></g>'
+      +'<g transform="translate(0,54)"><rect width="46" height="46" rx="12" fill="#2a3f6e" stroke="#4a6fb0"/><text x="23" y="31" font-family="Vazirmatn" font-size="16" font-weight="900" fill="#f0c75e" text-anchor="middle">F</text></g>'
+      +'<g transform="translate(54,54)"><rect width="46" height="46" rx="12" fill="#1c2a4d" stroke="#3a5f9e"/><rect x="5" y="5" width="16" height="5" rx="2.5" fill="rgba(255,255,255,.22)"/></g>'
     +'</g>'
-    +'<g transform="translate(214,56)" filter="url(#cvmn-sh)"><circle r="32" fill="rgba(224,139,133,.12)" stroke="#e08b85" stroke-width="1.5"/><text x="0" y="10" font-family="Vazirmatn" font-size="16" font-weight="900" fill="#e08b85" text-anchor="middle">M</text></g>'
-    +'<g fill="#f0c75e" opacity=".5"><circle cx="28" cy="32" r="1.8"/><circle cx="292" cy="34" r="1.6"/></g>',
+    +'<g transform="translate(216,56)" filter="url(#cvmn-sh)"><circle r="34" fill="rgba(224,139,133,.14)" stroke="#e08b85" stroke-width="1.6"/><text x="0" y="11" font-family="Vazirmatn" font-size="18" font-weight="900" fill="#e08b85" text-anchor="middle">M</text></g>'
+    +'<g fill="#f0c75e" opacity=".55"><circle cx="30" cy="34" r="2"/><circle cx="294" cy="36" r="1.8"/></g>',
 
   'bubble':()=>'<defs>'
     +'<linearGradient id="cvbb-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1b33"/><stop offset="1" stop-color="#132a4a"/></linearGradient>'
-    +'<radialGradient id="cvbb-b1" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.85)"/><stop offset=".2" stop-color="#4fc3f7"/><stop offset="1" stop-color="#4fc3f788"/></radialGradient>'
-    +'<radialGradient id="cvbb-b2" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.85)"/><stop offset=".2" stop-color="#f0c75e"/><stop offset="1" stop-color="#f0c75e88"/></radialGradient>'
-    +'<radialGradient id="cvbb-b3" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.85)"/><stop offset=".2" stop-color="#ba68c8"/><stop offset="1" stop-color="#ba68c888"/></radialGradient>'
-    +'<filter id="cvbb-sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".4"/></filter>'
+    +'<radialGradient id="cvbb-b1" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.9)"/><stop offset=".2" stop-color="#4fc3f7"/><stop offset="1" stop-color="#4fc3f788"/></radialGradient>'
+    +'<radialGradient id="cvbb-b2" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.9)"/><stop offset=".2" stop-color="#f0c75e"/><stop offset="1" stop-color="#f0c75e88"/></radialGradient>'
+    +'<radialGradient id="cvbb-b3" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.9)"/><stop offset=".2" stop-color="#ba68c8"/><stop offset="1" stop-color="#ba68c888"/></radialGradient>'
+    +'<filter id="cvbb-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".45"/></filter>'
     +'</defs>'
     +'<rect width="320" height="200" fill="url(#cvbb-bg)"/>'
     +'<g filter="url(#cvbb-sh)">'
-      +'<circle cx="82" cy="72" r="34" fill="url(#cvbb-b1)"/><ellipse cx="70" cy="60" rx="12" ry="7" fill="rgba(255,255,255,.5)" transform="rotate(-18 70 60)"/>'
-      +'<circle cx="168" cy="88" r="28" fill="url(#cvbb-b2)"/><ellipse cx="158" cy="78" rx="10" ry="6" fill="rgba(255,255,255,.5)" transform="rotate(-18 158 78)"/>'
-      +'<circle cx="238" cy="62" r="24" fill="url(#cvbb-b3)"/><ellipse cx="230" cy="54" rx="8" ry="5" fill="rgba(255,255,255,.5)" transform="rotate(-18 230 54)"/>'
-      +'<circle cx="126" cy="136" r="20" fill="url(#cvbb-b1)" opacity=".85"/>'
-      +'<circle cx="196" cy="144" r="16" fill="url(#cvbb-b2)" opacity=".85"/>'
+      +'<circle cx="84" cy="74" r="36" fill="url(#cvbb-b1)"/><ellipse cx="72" cy="62" rx="13" ry="8" fill="rgba(255,255,255,.55)" transform="rotate(-18 72 62)"/>'
+      +'<circle cx="172" cy="90" r="30" fill="url(#cvbb-b2)"/><ellipse cx="162" cy="80" rx="11" ry="6.5" fill="rgba(255,255,255,.55)" transform="rotate(-18 162 80)"/>'
+      +'<circle cx="242" cy="64" r="26" fill="url(#cvbb-b3)"/><ellipse cx="234" cy="56" rx="9" ry="5.5" fill="rgba(255,255,255,.55)" transform="rotate(-18 234 56)"/>'
+      +'<circle cx="128" cy="138" r="22" fill="url(#cvbb-b1)" opacity=".9"/>'
+      +'<circle cx="200" cy="146" r="18" fill="url(#cvbb-b2)" opacity=".9"/>'
     +'</g>'
-    +'<g fill="#f0c75e" opacity=".5"><circle cx="26" cy="28" r="1.6"/><circle cx="300" cy="36" r="1.8"/></g>',
+    +'<g fill="#f0c75e" opacity=".55"><circle cx="28" cy="30" r="1.8"/><circle cx="302" cy="38" r="2"/></g>',
 
   'chess':()=>'<defs>'
     +'<linearGradient id="cvc-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#171106"/><stop offset="1" stop-color="#33270d"/></linearGradient>'
-    +'<radialGradient id="cvc-glow" cx=".6" cy=".4" r=".8"><stop offset="0" stop-color="rgba(240,199,94,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
-    +'<filter id="cvc-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".55"/></filter>'
+    +'<radialGradient id="cvc-glow" cx=".6" cy=".4" r=".8"><stop offset="0" stop-color="rgba(240,199,94,.2)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvc-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".6"/></filter>'
     +'<linearGradient id="cvc-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#d9ae3e"/></linearGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvc-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvc-glow)"/>'
-    // board perspective
-    +'<g transform="translate(24,128)" opacity=".9">'
-      +'<g><rect width="14" height="14" fill="#c8d4e8"/><rect x="14" width="14" height="14" fill="#46598a"/><rect x="28" width="14" height="14" fill="#c8d4e8"/><rect x="42" width="14" height="14" fill="#46598a"/></g>'
-      +'<g transform="translate(0,14)"><rect width="14" height="14" fill="#46598a"/><rect x="14" width="14" height="14" fill="#c8d4e8"/><rect x="28" width="14" height="14" fill="#46598a"/><rect x="42" width="14" height="14" fill="#c8d4e8"/></g>'
+    +'<rect width="320" height="200" fill="url(#cvc-bg)"/><rect width="320" height="200" fill="url(#cvc-glow)"/>'
+    +'<g transform="translate(22,126)" opacity=".92">'
+      +'<g><rect width="15" height="15" fill="#c8d4e8"/><rect x="15" width="15" height="15" fill="#46598a"/><rect x="30" width="15" height="15" fill="#c8d4e8"/><rect x="45" width="15" height="15" fill="#46598a"/></g>'
+      +'<g transform="translate(0,15)"><rect width="15" height="15" fill="#46598a"/><rect x="15" width="15" height="15" fill="#c8d4e8"/><rect x="30" width="15" height="15" fill="#46598a"/><rect x="45" width="15" height="15" fill="#c8d4e8"/></g>'
     +'</g>'
-    // queen premium
-    +'<g transform="translate(116,36)" filter="url(#cvc-sh)">'
-      +'<text x="0" y="96" font-family="serif" font-size="92" fill="url(#cvc-gold)" text-anchor="middle">♛</text>'
-      +'<ellipse cx="0" cy="102" rx="26" ry="6" fill="rgba(0,0,0,.35)"/>'
-      +'<circle cx="18" cy="18" r="2" fill="rgba(255,255,255,.7)"/>'
+    +'<g transform="translate(114,32)" filter="url(#cvc-sh)">'
+      +'<text x="0" y="100" font-family="serif" font-size="96" fill="url(#cvc-gold)" text-anchor="middle">♛</text>'
+      +'<ellipse cx="0" cy="106" rx="28" ry="6.5" fill="rgba(0,0,0,.38)"/>'
+      +'<circle cx="20" cy="16" r="2.2" fill="rgba(255,255,255,.75)"/>'
     +'</g>'
-    +'<g transform="translate(188,44)" filter="url(#cvc-sh)">'
-      +'<text x="0" y="90" font-family="serif" font-size="84" fill="#f8fbff" text-anchor="middle">♞</text>'
-      +'<ellipse cx="0" cy="96" rx="22" ry="5" fill="rgba(0,0,0,.3)"/>'
+    +'<g transform="translate(188,40)" filter="url(#cvc-sh)">'
+      +'<text x="0" y="94" font-family="serif" font-size="88" fill="#f8fbff" text-anchor="middle">♞</text>'
+      +'<ellipse cx="0" cy="100" rx="24" ry="5.5" fill="rgba(0,0,0,.32)"/>'
     +'</g>'
-    +'<g transform="translate(246,78)" opacity=".8">'
-      +'<text x="0" y="48" font-family="serif" font-size="48" fill="rgba(248,251,255,.7)" text-anchor="middle">♟</text>'
-    +'</g>'
-    +'<g fill="#ffe9a8" opacity=".7"><circle cx="288" cy="30" r="2.2"/><circle cx="36" cy="40" r="1.8"/><circle cx="300" cy="154" r="1.6"/></g>',
+    +'<g fill="#ffe9a8" opacity=".75"><circle cx="290" cy="28" r="2.4"/><circle cx="38" cy="38" r="2"/><circle cx="302" cy="156" r="1.8"/></g>',
 
   'angry':()=>'<defs>'
     +'<linearGradient id="cva-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ec6ff"/><stop offset="1" stop-color="#a8d8ff"/></linearGradient>'
     +'<linearGradient id="cva-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a1887f"/><stop offset="1" stop-color="#5d4037"/></linearGradient>'
     +'<linearGradient id="cva-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a80"/><stop offset="1" stop-color="#e53935"/></linearGradient>'
-    +'<radialGradient id="cva-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
-    +'<filter id="cva-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
+    +'<radialGradient id="cva-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.24)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cva-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".55"/></filter>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cva-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cva-glow)"/>'
-    +'<g fill="#fff" opacity=".85"><circle cx="52" cy="38" r="14"/><circle cx="70" cy="32" r="16"/><circle cx="88" cy="38" r="12"/><circle cx="230" cy="44" r="10"/></g>'
-    +'<g transform="translate(34,124)">'
-      +'<path d="M0 56 L12 12 L24 0 L36 12 L48 56" fill="none" stroke="#5d4037" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>'
-      +'<path d="M12 12 L36 12" stroke="#8d6e63" stroke-width="6" stroke-linecap="round"/>'
-      +'<rect x="18" y="46" width="12" height="10" rx="3" fill="#3e2723"/>'
+    +'<rect width="320" height="200" fill="url(#cva-bg)"/><rect width="320" height="200" fill="url(#cva-glow)"/>'
+    +'<g fill="#fff" opacity=".9"><circle cx="52" cy="38" r="15"/><circle cx="71" cy="32" r="17"/><circle cx="90" cy="38" r="13"/><circle cx="232" cy="44" r="11"/></g>'
+    +'<g transform="translate(32,122)">'
+      +'<path d="M0 58 L13 12 L26 0 L39 12 L52 58" fill="none" stroke="#5d4037" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>'
+      +'<path d="M13 12 L39 12" stroke="#8d6e63" stroke-width="7" stroke-linecap="round"/>'
+      +'<rect x="19" y="48" width="14" height="11" rx="3.5" fill="#3e2723"/>'
     +'</g>'
-    +'<g transform="translate(54,96)" filter="url(#cva-sh)">'
-      +'<circle r="22" fill="url(#cva-red)" stroke="#b71c1c" stroke-width="1.2"/>'
-      +'<circle cx="-6" cy="-4" r="6" fill="#fff"/><circle cx="6" cy="-4" r="6" fill="#fff"/>'
-      +'<circle cx="-4" cy="-2" r="2.6" fill="#212121"/><circle cx="8" cy="-2" r="2.6" fill="#212121"/>'
-      +'<path d="M14 -2 L24 0 L14 4 Z" fill="#ffca28" stroke="#f57f17" stroke-width=".8"/>'
-      +'<path d="M-8 -10 L0 -8" stroke="#b71c1c" stroke-width="2" stroke-linecap="round"/>'
-      +'<path d="M2 -10 L10 -8" stroke="#b71c1c" stroke-width="2" stroke-linecap="round"/>'
+    +'<g transform="translate(54,94)" filter="url(#cva-sh)">'
+      +'<circle r="24" fill="url(#cva-red)" stroke="#b71c1c" stroke-width="1.3"/>'
+      +'<circle cx="-7" cy="-5" r="6.5" fill="#fff"/><circle cx="7" cy="-5" r="6.5" fill="#fff"/>'
+      +'<circle cx="-5" cy="-3" r="2.8" fill="#212121"/><circle cx="9" cy="-3" r="2.8" fill="#212121"/>'
+      +'<path d="M15 -2 L26 0 L15 5 Z" fill="#ffca28" stroke="#f57f17" stroke-width=".9"/>'
+      +'<path d="M-9 -11 L0 -9" stroke="#b71c1c" stroke-width="2.2" stroke-linecap="round"/><path d="M2 -11 L11 -9" stroke="#b71c1c" stroke-width="2.2" stroke-linecap="round"/>'
     +'</g>'
-    +'<g transform="translate(138,112)">'
-      +'<rect x="-2" y="-22" width="12" height="44" rx="3" fill="url(#cva-wood)"/>'
-      +'<rect x="24" y="-22" width="12" height="44" rx="3" fill="url(#cva-wood)"/>'
-      +'<rect x="-6" y="-26" width="48" height="10" rx="3" fill="#8d6e63"/>'
-      +'<rect x="-6" y="12" width="48" height="10" rx="3" fill="#8d6e63"/>'
+    +'<g transform="translate(138,110)">'
+      +'<rect x="-2" y="-24" width="13" height="48" rx="3.5" fill="url(#cva-wood)"/>'
+      +'<rect x="26" y="-24" width="13" height="48" rx="3.5" fill="url(#cva-wood)"/>'
+      +'<rect x="-7" y="-28" width="52" height="11" rx="4" fill="#8d6e63"/>'
+      +'<rect x="-7" y="13" width="52" height="11" rx="4" fill="#8d6e63"/>'
     +'</g>'
-    +'<g transform="translate(186,118)" filter="url(#cva-sh)">'
-      +'<circle r="18" fill="#aed581" stroke="#558b2f" stroke-width="1.2"/>'
-      +'<ellipse cx="0" cy="6" rx="9" ry="5.5" fill="#c5e1a5"/>'
-      +'<circle cx="-2" cy="7" r="1.3" fill="#33691e"/><circle cx="4" cy="7" r="1.3" fill="#33691e"/>'
-      +'<circle cx="-5" cy="-3" r="4" fill="#fff"/><circle cx="5" cy="-3" r="4" fill="#fff"/>'
-      +'<circle cx="-4" cy="-1" r="1.8" fill="#1b5e20"/><circle cx="6" cy="-1" r="1.8" fill="#1b5e20"/>'
+    +'<g transform="translate(188,116)" filter="url(#cva-sh)">'
+      +'<circle r="20" fill="#aed581" stroke="#558b2f" stroke-width="1.3"/>'
+      +'<ellipse cx="0" cy="7" rx="10" ry="6" fill="#c5e1a5"/>'
+      +'<circle cx="-2" cy="8" r="1.4" fill="#33691e"/><circle cx="5" cy="8" r="1.4" fill="#33691e"/>'
+      +'<circle cx="-6" cy="-3" r="4.5" fill="#fff"/><circle cx="6" cy="-3" r="4.5" fill="#fff"/>'
+      +'<circle cx="-5" cy="-1" r="2" fill="#1b5e20"/><circle cx="7" cy="-1" r="2" fill="#1b5e20"/>'
     +'</g>'
-    +'<g fill="#f0c75e" opacity=".6"><circle cx="18" cy="22" r="1.6"/><circle cx="300" cy="34" r="1.8"/></g>',
-
+    +'<g fill="#f0c75e" opacity=".65"><circle cx="20" cy="24" r="1.8"/><circle cx="302" cy="36" r="2"/></g>',
 
   'hajabbas':()=>'<defs>'
     +'<linearGradient id="cvh-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1e0e"/><stop offset="1" stop-color="#4a3314"/></linearGradient>'
     +'<linearGradient id="cvh-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#d9ae3e"/></linearGradient>'
     +'<linearGradient id="cvh-face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffecb3"/><stop offset="1" stop-color="#e6c27a"/></linearGradient>'
-    +'<filter id="cvh-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
-    +'<radialGradient id="cvh-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,233,168,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'<filter id="cvh-sh"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".55"/></filter>'
+    +'<radialGradient id="cvh-glow" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="rgba(255,233,168,.24)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
     +'</defs>'
-    +'<rect width="320" height="200" fill="url(#cvh-bg)"/>'
-    +'<rect width="320" height="200" fill="url(#cvh-glow)"/>'
+    +'<rect width="320" height="200" fill="url(#cvh-bg)"/><rect width="320" height="200" fill="url(#cvh-glow)"/>'
     +'<g opacity=".06" fill="#ffe9a8"><rect x="20" y="20" width="36" height="32" rx="8"/><rect x="64" y="20" width="36" height="32" rx="8"/><rect x="108" y="20" width="36" height="32" rx="8"/><rect x="152" y="20" width="36" height="32" rx="8"/></g>'
-    +'<g transform="translate(48,26)" filter="url(#cvh-sh)">'
-      +'<rect width="56" height="56" rx="14" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.14)"/>'
-      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#ffe9a8" text-anchor="middle">ا</text>'
-    +'</g>'
-    +'<g transform="translate(112,26)" filter="url(#cvh-sh)">'
-      +'<rect width="56" height="56" rx="14" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.14)"/>'
-      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#ffe9a8" text-anchor="middle">ب</text>'
-    +'</g>'
-    +'<g transform="translate(176,26)" filter="url(#cvh-sh)">'
-      +'<rect width="56" height="56" rx="14" fill="url(#cvh-gold)" stroke="#b8922f"/>'
-      +'<text x="28" y="36" font-family="Vazirmatn" font-size="20" font-weight="900" fill="#3e2723" text-anchor="middle">ج</text>'
-    +'</g>'
+    +'<g transform="translate(46,24)" filter="url(#cvh-sh)"><rect width="60" height="60" rx="16" fill="rgba(255,255,255,.09)" stroke="rgba(255,255,255,.16)"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#ffe9a8" text-anchor="middle">ا</text></g>'
+    +'<g transform="translate(112,24)" filter="url(#cvh-sh)"><rect width="60" height="60" rx="16" fill="rgba(255,255,255,.09)" stroke="rgba(255,255,255,.16)"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#ffe9a8" text-anchor="middle">ب</text></g>'
+    +'<g transform="translate(178,24)" filter="url(#cvh-sh)"><rect width="60" height="60" rx="16" fill="url(#cvh-gold)" stroke="#b8922f"/><text x="30" y="38" font-family="Vazirmatn" font-size="22" font-weight="900" fill="#3e2723" text-anchor="middle">ج</text></g>'
     +'<g transform="translate(200,96)" filter="url(#cvh-sh)">'
-      +'<circle r="34" fill="url(#cvh-face)" stroke="#b8922f" stroke-width="1.2"/>'
-      +'<path d="M-22 -18 Q0 -28 22 -18 L22 -12 Q0 -22 -22 -12 Z" fill="#5d4037"/>'
-      +'<circle cx="-8" cy="-2" r="3" fill="#fff"/><circle cx="8" cy="-2" r="3" fill="#fff"/>'
-      +'<circle cx="-7" cy="0" r="1.4" fill="#212121"/><circle cx="9" cy="0" r="1.4" fill="#212121"/>'
-      +'<path d="M-6 10 Q0 14 6 10" stroke="#5d4037" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
-      +'<path d="M-18 12 Q0 26 18 12 L18 20 Q0 34 -18 20 Z" fill="#fff" stroke="#b0bec5" stroke-width=".8"/>'
+      +'<circle r="36" fill="url(#cvh-face)" stroke="#b8922f" stroke-width="1.3"/>'
+      +'<path d="M-24 -20 Q0 -30 24 -20 L24 -13 Q0 -24 -24 -13 Z" fill="#5d4037"/>'
+      +'<circle cx="-9" cy="-2" r="3.5" fill="#fff"/><circle cx="9" cy="-2" r="3.5" fill="#fff"/>'
+      +'<circle cx="-8" cy="0" r="1.6" fill="#212121"/><circle cx="10" cy="0" r="1.6" fill="#212121"/>'
+      +'<path d="M-7 11 Q0 15 7 11" stroke="#5d4037" stroke-width="1.8" fill="none" stroke-linecap="round"/>'
+      +'<path d="M-20 13 Q0 28 20 13 L20 21 Q0 36 -20 21 Z" fill="#fff" stroke="#b0bec5" stroke-width=".9"/>'
     +'</g>'
-    +'<g transform="translate(48,108)" opacity=".9">'
-      +'<rect width="56" height="18" rx="9" fill="rgba(126,200,111,.18)" stroke="rgba(126,200,111,.32)"/>'
-      +'<text x="28" y="13" font-family="Vazirmatn" font-size="11" font-weight="800" fill="#a5d6a7" text-anchor="middle">عباس</text>'
-    +'</g>'
-    +'<g transform="translate(112,108)">'
-      +'<rect width="56" height="18" rx="9" fill="rgba(240,199,94,.18)" stroke="rgba(240,199,94,.35)"/>'
-      +'<text x="28" y="13" font-family="Vazirmatn" font-size="11" font-weight="800" fill="#ffe9a8" text-anchor="middle">حاجی</text>'
-    +'</g>'
-    +'<g fill="#f0c75e" opacity=".5"><circle cx="18" cy="18" r="1.6"/><circle cx="300" cy="32" r="1.8"/></g>',
+    +'<g transform="translate(46,108)" opacity=".95"><rect width="60" height="20" rx="10" fill="rgba(126,200,111,.2)" stroke="rgba(126,200,111,.35)"/><text x="30" y="14" font-family="Vazirmatn" font-size="12" font-weight="800" fill="#a5d6a7" text-anchor="middle">عباس</text></g>'
+    +'<g transform="translate(114,108)"><rect width="60" height="20" rx="10" fill="rgba(240,199,94,.2)" stroke="rgba(240,199,94,.38)"/><text x="30" y="14" font-family="Vazirmatn" font-size="12" font-weight="800" fill="#ffe9a8" text-anchor="middle">حاجی</text></g>'
+    +'<g fill="#f0c75e" opacity=".55"><circle cx="20" cy="20" r="1.8"/><circle cx="302" cy="34" r="2"/></g>',
 
+  'dino':()=>'<defs>'
+    +'<linearGradient id="cvdino-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fc3f7"/><stop offset="1" stop-color="#fdeec9"/></linearGradient>'
+    +'<linearGradient id="cvdino-gnd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e7c27d"/><stop offset="1" stop-color="#c9a06a"/></linearGradient>'
+    +'<filter id="cvdino-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".4"/></filter>'
+    +'<radialGradient id="cvdino-glow" cx=".5" cy=".2" r=".8"><stop offset="0" stop-color="rgba(255,255,255,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'</defs>'
+    +'<rect width="320" height="200" fill="url(#cvdino-bg)"/><rect width="320" height="200" fill="url(#cvdino-glow)"/>'
+    +'<g fill="#fff" opacity=".85"><circle cx="46" cy="32" r="12"/><circle cx="62" cy="26" r="14"/><circle cx="80" cy="32" r="10"/><circle cx="220" cy="38" r="9"/><circle cx="234" cy="32" r="12"/></g>'
+    +'<rect y="144" width="320" height="56" fill="url(#cvdino-gnd)"/><rect y="144" width="320" height="4" fill="#a88a55"/>'
+    +'<g transform="translate(56,96)" filter="url(#cvdino-sh)"><rect x="0" y="0" width="12" height="40" rx="6" fill="#3f9e5c"/><rect x="-8" y="12" width="6" height="16" rx="3" fill="#3f9e5c"/><rect x="14" y="8" width="6" height="20" rx="3" fill="#3f9e5c"/></g>'
+    +'<g transform="translate(230,108)" filter="url(#cvdino-sh)"><path d="M0 28 L6 6 L22 0 L36 12 L36 28 Z" fill="#3c4468"/><path d="M6 6 L22 0 L18 28 L4 28 Z" fill="#4c5580"/></g>'
+    +'<g transform="translate(120,86)" filter="url(#cvdino-sh)">'
+      +'<rect x="0" y="0" width="48" height="52" rx="14" fill="#5cc46f"/><rect x="18" y="22" width="18" height="22" rx="7" fill="#d9f2cf"/>'
+      +'<path d="M5 2 L9 -8 L14 2 Z" fill="#2f8a41"/><path d="M17 2 L21 -8 L26 2 Z" fill="#2f8a41"/><path d="M29 2 L33 -8 L38 2 Z" fill="#2f8a41"/>'
+      +'<circle cx="36" cy="14" r="8" fill="#fff"/><circle cx="38.5" cy="15" r="3.8" fill="#1d2b3a"/><circle cx="40" cy="13.5" r="1.2" fill="#fff"/>'
+      +'<circle cx="28" cy="24" r="3.5" fill="rgba(247,140,160,.55)"/><path d="M30 27 q4 4 9 1" stroke="#1d4a2c" stroke-width="2" fill="none" stroke-linecap="round"/>'
+      +'<rect x="9" y="48" width="10" height="9" rx="3.5" fill="#3f9e52"/><rect x="27" y="48" width="10" height="9" rx="3.5" fill="#3f9e52"/>'
+    +'</g>'
+    +'<g fill="#f0c75e" opacity=".6"><circle cx="18" cy="20" r="1.6"/><circle cx="300" cy="30" r="1.8"/></g>',
+
+  'tower':()=>'<defs>'
+    +'<linearGradient id="cvtw-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f7fd4"/><stop offset=".65" stop-color="#9fd0f0"/><stop offset="1" stop-color="#e8f3ea"/></linearGradient>'
+    +'<filter id="cvtw-sh"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".35"/></filter>'
+    +'<radialGradient id="cvtw-glow" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="rgba(255,255,255,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>'
+    +'</defs>'
+    +'<rect width="320" height="200" fill="url(#cvtw-bg)"/><rect width="320" height="200" fill="url(#cvtw-glow)"/>'
+    +'<g fill="#fff" opacity=".75"><ellipse cx="80" cy="36" rx="28" ry="10"/><ellipse cx="102" cy="30" rx="22" ry="9"/><ellipse cx="240" cy="28" rx="30" ry="11"/><ellipse cx="262" cy="22" rx="20" ry="8"/></g>'
+    +'<g transform="translate(100,34)" filter="url(#cvtw-sh)">'
+      +'<g transform="translate(0,108)"><rect width="120" height="22" rx="5" fill="hsl(205 62% 48%)"/><path d="M3 0 L11 -7 L109 -7 L117 0 Z" fill="hsl(205 68% 60%)"/></g>'
+      +'<g transform="translate(6,86)"><rect width="120" height="22" rx="5" fill="hsl(223 62% 48%)"/><path d="M3 0 L11 -7 L109 -7 L117 0 Z" fill="hsl(223 68% 60%)"/></g>'
+      +'<g transform="translate(16,64)"><rect width="104" height="22" rx="5" fill="hsl(241 62% 50%)"/><path d="M3 0 L11 -7 L93 -7 L101 0 Z" fill="hsl(241 68% 62%)"/></g>'
+      +'<g transform="translate(10,42)"><rect width="110" height="22" rx="5" fill="hsl(259 62% 52%)"/><path d="M3 0 L11 -7 L99 -7 L107 0 Z" fill="hsl(259 68% 64%)"/></g>'
+      +'<g transform="translate(22,20)"><rect width="96" height="22" rx="5" fill="hsl(277 62% 56%)"/><path d="M3 0 L11 -7 L85 -7 L93 0 Z" fill="hsl(277 68% 68%)"/></g>'
+      +'<g transform="translate(30,0)"><rect width="96" height="22" rx="5" fill="hsl(295 62% 58%)"/><path d="M3 0 L11 -7 L85 -7 L93 0 Z" fill="hsl(295 68% 70%)"/></g>'
+    +'</g>'
+    +'<rect y="186" width="320" height="14" fill="#79b877"/><g fill="#ffd76e"><path d="M40 50 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 Z"/><path d="M270 86 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z"/></g>',
 };
-
 
 function gcov(k){const f=COVERS[k];return f?'<svg class="gcov-svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+f()+'</svg>':'';}
 
@@ -8464,7 +8507,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۷٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۸٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -8536,7 +8579,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۷٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۸٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -8791,6 +8834,58 @@ function vShop(){
 }
 
 
+/* ---------- تمام صفحه پرمیوم برای بازی‌ها ---------- */
+function isGameFS(){try{return !!document.fullscreenElement;}catch(e){return false;}}
+function toggleGameFS(){
+  try{
+    if(isGameFS()){
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      return;
+    }
+    const stage=document.querySelector('.game-stage');
+    if(!stage) return;
+    const target=stage.closest('.game-fs-wrap')||stage;
+    if(target.requestFullscreen) target.requestFullscreen({navigationUI:'hide'});
+    else if(target.webkitRequestFullscreen) target.webkitRequestFullscreen();
+    try{gSfx('click');}catch(e){}
+  }catch(e){}
+}
+function updateFSBtn(){
+  const btn=document.querySelector('.gi-fs');
+  if(!btn) return;
+  const on=isGameFS();
+  btn.classList.toggle('on',on);
+  btn.innerHTML=ic(on?'minimize':'maximize',14)+(on?' خروج از تمام‌صفحه':' تمام‌صفحه');
+  btn.title=on?'خروج (Esc / Backspace)':'تمام‌صفحه (مخصوص کامپیوتر)';
+}
+function resizeGameCanvas(){
+  try{
+    const cv=document.getElementById('gameCv');
+    if(!cv) return;
+    const wrap=cv.closest('.game-fs-wrap');
+    const targetW=wrap?wrap.clientWidth:cv.parentElement.clientWidth;
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    // keep aspect ratio from style if set
+    const rect=cv.getBoundingClientRect();
+    const cssW=rect.width||targetW;
+    const cssH=rect.height|| (cssW*0.6);
+    // only resize if significant change
+    if(Math.abs(cv.width/dpr - cssW) > 2){
+      // preserve context
+      const ctx=cv.getContext('2d');
+      cv.width=Math.round(cssW*dpr);
+      cv.height=Math.round(cssH*dpr);
+      cv.style.width=cssW+'px';
+      cv.style.height=cssH+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+  }catch(e){}
+}
+document.addEventListener('fullscreenchange',()=>{updateFSBtn(); try{document.body.classList.toggle('fs-on',isGameFS());}catch(e){} setTimeout(resizeGameCanvas,120);});
+document.addEventListener('webkitfullscreenchange',()=>{updateFSBtn(); setTimeout(resizeGameCanvas,120);});
+window.addEventListener('resize',()=>{ if(isGameFS()) resizeGameCanvas(); });
+
 function vGames(){
   return '<section class="soon-hero" style="margin-bottom:18px"><span class="soon-badge live"><span class="d"></span> '+faNum(Object.keys(GAME_META).length)+' بازی کامل — همین حالا بازی کن!</span>'
     +'<h2>بازی‌خانهٔ کافی‌نت</h2>'
@@ -8816,14 +8911,17 @@ function vGame(id){
   const area=m.type==='dom'?'<div id="gameDom"></div>':'<canvas id="gameCv"></canvas>';
   const btns=(m.btns||[]).map(b=>'<button class="btn '+(b.cls||'ghost')+'" data-gk="'+b.k+'" '+(b.hold?'data-hold="1"':'')+'>'+ic(b.i||'zap',15)+b.t+'</button>').join('');
   const rec=m.best?'<span>'+ic('trophy',13)+'رکورد شما: <b>'+faNum(store.get(m.best[0],0))+'</b> '+m.best[1]+'</span>':'';
+  const fsBtn='<span class="gi-fs" onclick="toggleGameFS()" title="تمام‌صفحه — Esc یا Backspace برای خروج">'+ic('maximize',14)+' تمام‌صفحه</span>';
   return secHead('gamepad','blue',m.t,'بازی سرویس‌شدهٔ کافی‌نت — رکوردت روی همین دستگاه ذخیره می‌شود')
   +'<div class="gcov page">'+gcov(id)+'<span class="gcov-shine"></span></div>'
-  +'<div class="game-stage">'+area+'</div>'
+  +'<div class="game-fs-wrap"><div class="game-stage">'+area+'</div>'
   +(btns?'<div class="touch-btns">'+btns+'</div>':'')
   +'<div class="game-info-bar"><span>'+ic('keyboard',13)+m.ctrl+'</span>'+rec
+    +fsBtn
     +'<span class="gi-sfx" onclick="gSfxToggle()" title="صدای بازی">'+ic((typeof gSfxOn==='function'&&gSfxOn())?'volume':'volume-x',13)+'</span>'
     +'<span class="gi-back" onclick="go(\'games\')">'+ic('arrow-left',13)+'بازی‌خانه</span></div>'
-  +'<p class="game-desc">'+m.d+'</p>'
+  +'</div>'
+  +'<p class="game-desc">'+m.d+' — برای تمام‌صفحه دکمه «تمام‌صفحه» را بزن، با Esc یا Backspace خارج شو (مخصوص کامپیوتر).</p>'
   +footHtml();
 }
 function soon(name){toast('بخش «'+name+'» به‌زودی فعال می‌شود','lightbulb');}
@@ -9756,6 +9854,15 @@ document.addEventListener('keydown',e=>{
   const ae=document.activeElement;
   const tag=(ae&&ae.tagName)||'';
   const inInput=tag==='INPUT'||tag==='TEXTAREA';
+  // تمام‌صفحه: Esc یا Backspace اول خروج از تمام‌صفحه
+  if(isGameFS() && (e.key==='Escape' || e.key==='Backspace')){
+    e.preventDefault();
+    try{
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }catch(x){}
+    return;
+  }
   if(e.key==='Escape'){
     if(state.sbOpen){closeSidebar();return;}
     if(document.querySelector('.overlay')){document.querySelector('.overlay').remove();return;}
@@ -9763,6 +9870,10 @@ document.addEventListener('keydown',e=>{
     if(state.view==='calc'&&!inInput){calcKey('AC');return;}
     if(state.q){state.q='';render();}
     return;
+  }
+  if(e.key==='Backspace' && GAME_VIEWS.includes(state.view) && !inInput){
+    // Backspace در بازی‌ها برای حذف نیست، خروج از تمام‌صفحه اگر فعال باشد قبلاً هندل شد، در غیر این صورت هیچ (جلوگیری از بازگشت مرورگر)
+    if(isGameFS()){ e.preventDefault(); return; }
   }
   if(document.querySelector('.overlay'))return;
   if(inInput)return;

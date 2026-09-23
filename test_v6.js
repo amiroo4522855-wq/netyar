@@ -219,7 +219,7 @@ T('دکمه‌های گوگل/یوتیوب',!!$('a[href*="google.com/search"]')&
 
 console.log('— رگرسیون v5 —');
 w.go('home');await sleep(300);
-  T('نسخه ۱۷٫۰',bodyTxt().includes('نسخه ۱۷٫۰'));
+  T('نسخه ۱۸٫۰',bodyTxt().includes('نسخه ۱۸٫۰'));
 w.go('sites');await sleep(320);
 T('۵۳۱ سایت',$$('.content article.card').length===531);
 w.go('home');await sleep(300);
@@ -423,6 +423,22 @@ T('مدل پیش‌فرض', ev('AI.model')==='openai/gpt-4o-mini');
 // تست responsive: بدون overflow افقی
 T('بدون overflow افقی AI', ev('document.querySelector(".ai-wrap")') && ev('document.querySelector(".ai-wrap").scrollWidth - document.querySelector(".ai-wrap").clientWidth')<=2);
 
+console.log('— v18: تمام‌صفحه پرمیوم + کاورهای باکیفیت + کلیدهای خفن —');
+T('تابع تمام‌صفحه وجود دارد', typeof ev('toggleGameFS')==='function' && typeof ev('isGameFS')==='function');
+w.go('game-dino');await sleep(320);
+T('دکمه تمام‌صفحه در بازی', !!$('.gi-fs') && $('.gi-fs').textContent.includes('تمام‌صفحه'));
+T('wrapper تمام‌صفحه', !!$('.game-fs-wrap'));
+T('کاور دایی ناصر', ev('typeof gcov==="function" && gcov("dino").length>100'));
+T('کاور برج‌سازی', ev('typeof gcov==="function" && gcov("tower").length>100'));
+w.go('games');await sleep(320);
+T('۲۰ کاور SVG با کیفیت بالا', $$('.game-card.playable .gcov > svg').length>=18);
+T('کاورها پرمیوم با شاین', $$('.gcov-shine').length>=10 && $$('.gcov-svg').length>=10);
+w.go('game-tetris');await sleep(320);
+T('کلیدهای با کیفیت — touch-btns استایل', $$('.touch-btns .btn').length>=1 && ev('document.querySelector(".touch-btns .btn")')!==null);
+T('Esc و Backspace برای خروج تمام‌صفحه در کد', src.includes('isGameFS()') && src.includes('Backspace'));
+T('CSS تمام‌صفحه :fullscreen', src.includes(':fullscreen') && src.includes('game-fs-wrap'));
+T('CSS دکمه مربع خوشگل تمام‌صفحه', src.includes('.gi-fs') && src.includes('maximize'));
+T('۲۰ بازی در متا', ev('Object.keys(GAME_META).length')===20);
 
 function kbKey(k){return [...$$('.kk')].find(b=>b.dataset.k===k);}
 console.log('\n═══ v11: '+pass+' ✓ / '+fail+' ✗ ═══');

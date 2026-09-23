@@ -288,7 +288,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۷٫۰ — '+faNum(SITES.length)+' سایت</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۸٫۰ — '+faNum(SITES.length)+' سایت</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -360,7 +360,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۷٫۰</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۸٫۰</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -615,6 +615,58 @@ function vShop(){
 }
 
 
+/* ---------- تمام صفحه پرمیوم برای بازی‌ها ---------- */
+function isGameFS(){try{return !!document.fullscreenElement;}catch(e){return false;}}
+function toggleGameFS(){
+  try{
+    if(isGameFS()){
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      return;
+    }
+    const stage=document.querySelector('.game-stage');
+    if(!stage) return;
+    const target=stage.closest('.game-fs-wrap')||stage;
+    if(target.requestFullscreen) target.requestFullscreen({navigationUI:'hide'});
+    else if(target.webkitRequestFullscreen) target.webkitRequestFullscreen();
+    try{gSfx('click');}catch(e){}
+  }catch(e){}
+}
+function updateFSBtn(){
+  const btn=document.querySelector('.gi-fs');
+  if(!btn) return;
+  const on=isGameFS();
+  btn.classList.toggle('on',on);
+  btn.innerHTML=ic(on?'minimize':'maximize',14)+(on?' خروج از تمام‌صفحه':' تمام‌صفحه');
+  btn.title=on?'خروج (Esc / Backspace)':'تمام‌صفحه (مخصوص کامپیوتر)';
+}
+function resizeGameCanvas(){
+  try{
+    const cv=document.getElementById('gameCv');
+    if(!cv) return;
+    const wrap=cv.closest('.game-fs-wrap');
+    const targetW=wrap?wrap.clientWidth:cv.parentElement.clientWidth;
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    // keep aspect ratio from style if set
+    const rect=cv.getBoundingClientRect();
+    const cssW=rect.width||targetW;
+    const cssH=rect.height|| (cssW*0.6);
+    // only resize if significant change
+    if(Math.abs(cv.width/dpr - cssW) > 2){
+      // preserve context
+      const ctx=cv.getContext('2d');
+      cv.width=Math.round(cssW*dpr);
+      cv.height=Math.round(cssH*dpr);
+      cv.style.width=cssW+'px';
+      cv.style.height=cssH+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+  }catch(e){}
+}
+document.addEventListener('fullscreenchange',()=>{updateFSBtn(); try{document.body.classList.toggle('fs-on',isGameFS());}catch(e){} setTimeout(resizeGameCanvas,120);});
+document.addEventListener('webkitfullscreenchange',()=>{updateFSBtn(); setTimeout(resizeGameCanvas,120);});
+window.addEventListener('resize',()=>{ if(isGameFS()) resizeGameCanvas(); });
+
 function vGames(){
   return '<section class="soon-hero" style="margin-bottom:18px"><span class="soon-badge live"><span class="d"></span> '+faNum(Object.keys(GAME_META).length)+' بازی کامل — همین حالا بازی کن!</span>'
     +'<h2>بازی‌خانهٔ کافی‌نت</h2>'
@@ -640,14 +692,17 @@ function vGame(id){
   const area=m.type==='dom'?'<div id="gameDom"></div>':'<canvas id="gameCv"></canvas>';
   const btns=(m.btns||[]).map(b=>'<button class="btn '+(b.cls||'ghost')+'" data-gk="'+b.k+'" '+(b.hold?'data-hold="1"':'')+'>'+ic(b.i||'zap',15)+b.t+'</button>').join('');
   const rec=m.best?'<span>'+ic('trophy',13)+'رکورد شما: <b>'+faNum(store.get(m.best[0],0))+'</b> '+m.best[1]+'</span>':'';
+  const fsBtn='<span class="gi-fs" onclick="toggleGameFS()" title="تمام‌صفحه — Esc یا Backspace برای خروج">'+ic('maximize',14)+' تمام‌صفحه</span>';
   return secHead('gamepad','blue',m.t,'بازی سرویس‌شدهٔ کافی‌نت — رکوردت روی همین دستگاه ذخیره می‌شود')
   +'<div class="gcov page">'+gcov(id)+'<span class="gcov-shine"></span></div>'
-  +'<div class="game-stage">'+area+'</div>'
+  +'<div class="game-fs-wrap"><div class="game-stage">'+area+'</div>'
   +(btns?'<div class="touch-btns">'+btns+'</div>':'')
   +'<div class="game-info-bar"><span>'+ic('keyboard',13)+m.ctrl+'</span>'+rec
+    +fsBtn
     +'<span class="gi-sfx" onclick="gSfxToggle()" title="صدای بازی">'+ic((typeof gSfxOn==='function'&&gSfxOn())?'volume':'volume-x',13)+'</span>'
     +'<span class="gi-back" onclick="go(\'games\')">'+ic('arrow-left',13)+'بازی‌خانه</span></div>'
-  +'<p class="game-desc">'+m.d+'</p>'
+  +'</div>'
+  +'<p class="game-desc">'+m.d+' — برای تمام‌صفحه دکمه «تمام‌صفحه» را بزن، با Esc یا Backspace خارج شو (مخصوص کامپیوتر).</p>'
   +footHtml();
 }
 function soon(name){toast('بخش «'+name+'» به‌زودی فعال می‌شود','lightbulb');}
@@ -1580,6 +1635,15 @@ document.addEventListener('keydown',e=>{
   const ae=document.activeElement;
   const tag=(ae&&ae.tagName)||'';
   const inInput=tag==='INPUT'||tag==='TEXTAREA';
+  // تمام‌صفحه: Esc یا Backspace اول خروج از تمام‌صفحه
+  if(isGameFS() && (e.key==='Escape' || e.key==='Backspace')){
+    e.preventDefault();
+    try{
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }catch(x){}
+    return;
+  }
   if(e.key==='Escape'){
     if(state.sbOpen){closeSidebar();return;}
     if(document.querySelector('.overlay')){document.querySelector('.overlay').remove();return;}
@@ -1587,6 +1651,10 @@ document.addEventListener('keydown',e=>{
     if(state.view==='calc'&&!inInput){calcKey('AC');return;}
     if(state.q){state.q='';render();}
     return;
+  }
+  if(e.key==='Backspace' && GAME_VIEWS.includes(state.view) && !inInput){
+    // Backspace در بازی‌ها برای حذف نیست، خروج از تمام‌صفحه اگر فعال باشد قبلاً هندل شد، در غیر این صورت هیچ (جلوگیری از بازگشت مرورگر)
+    if(isGameFS()){ e.preventDefault(); return; }
   }
   if(document.querySelector('.overlay'))return;
   if(inInput)return;
