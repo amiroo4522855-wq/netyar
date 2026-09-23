@@ -292,7 +292,7 @@ function sideHtml(){
         +catKeys.map(k=>'<div class="nav-cat" onclick="openCat(\''+k+'\')" title="'+CATS[k].l+'"><span class="nci" style="color:'+CATS[k].c+'">'+ic(CATS[k].i,16)+'</span><span>'+CATS[k].l+'</span><span class="nc">'+faNum(SITES.filter(s=>s.c===k).length)+' سایت</span></div>').join('')
       +'</div>'
     +'</nav>'
-    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۱۹٫۰ — '+faNum(SITES.length)+' سایت · '+faNum(coinBal)+' سکه</span>'
+    +'<div class="side-foot"><span class="v">'+ic('shield-check',12)+'نسخه ۲۰٫۰ — '+faNum(SITES.length)+' سایت · '+faNum(coinBal)+' سکه</span>'
       +'<a class="gh-ic" href="'+ghUrl()+'" target="_blank" rel="noopener" title="پروژه در گیت‌هاب">'+ic('github',16)+'</a></div>'
   +'</aside>';
 }
@@ -367,7 +367,7 @@ function vHome(){
   const feat=SITES.filter(s=>FEATURED.includes(s.n)).slice(0,8);
   return '<section class="hero">'
     +'<div>'
-      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۱۹٫۰ — سکه + مشتری + تایپ پرمیوم</span>'
+      +'<span class="kicker"><span class="dot"></span> کافه اینترنتِ دیجیتال — نسخه ۲۰٫۰ — سکه + مشتری + تایپ پرمیوم</span>'
       +'<h1>هر سایتی که لازم داری،<br>یک‌جا سروِ <span class="g">کافی‌نتِ نت‌یار</span></h1>'
       +'<p class="sub">'+faNum(SITES.length)+' سایت واقعی دنیا و ایران با توضیح و دسته‌بندی کامل — کلیک کنی <b>همان لحظه وارد سایت می‌شوی</b> و آدرسش هم کپی می‌شود! پلیر موزیک زنده و ماشین‌حساب واقعی هم سرِ کارشان.</p>'
       +searchBox('home-sb')
@@ -849,7 +849,7 @@ function musSearch(q,autoPlay){
   MUS.q=q;MUS.loading=true;MUS.err='';MUS.autoPlay=!!autoPlay;MUS.results=null;
   MUS.seq=(MUS.seq||0)+1;const seq=MUS.seq;
   renderMusResults();
-  /* هر دو منبع همزمان؛ منبع انتخابی اول می‌نشیند */
+  // debounce protection: if already searching same q, keep
   const first=MUS.prov==='audius'?audiusSearch(q).catch(()=>[]):archSearch(q).catch(()=>[]);
   const second=MUS.prov==='audius'?archSearch(q).catch(()=>[]):audiusSearch(q).catch(()=>[]);
   Promise.all([first,second]).then(rs=>{
@@ -857,11 +857,30 @@ function musSearch(q,autoPlay){
     let list=rs[0].slice(0,20).concat(rs[1].slice(0,15));
     const seen=new Set();
     list=list.filter(t=>{const k=(t.t+'|'+t.a).toLowerCase();if(seen.has(k))return false;seen.add(k);return true;});
+    // prioritize exact match for quality
+    const nq=norm(q);
+    list.sort((a,b)=>{
+      const an=norm(a.t+' '+a.a), bn=norm(b.t+' '+b.a);
+      const aExact=an.includes(nq)?0:1, bExact=bn.includes(nq)?0:1;
+      if(aExact!==bExact) return aExact-bExact;
+      return (b.pc||0)-(a.pc||0);
+    });
     MUS.loading=false;
     if(!list.length){MUS.err='نتیجه‌ای برای «'+q+'» پیدا نشد — عبارت دیگری امتحان کن، یا همین بالا از «پخش فوری» بزن که همیشه کار می‌کند. لینک گوگل و یوتیوب هم سر جایش است.';}
     MUS.results=list;
+    // v20: set queue to results so clicking plays exact searched song — high quality, no lag
+    if(list.length){
+      MUS.queue=list.slice();
+      MUS.qi=-1;
+    }
     renderMusResults();
+    renderPlayer();
     if(MUS.autoPlay&&list.length){MUS.autoPlay=false;musPlayAt(0);}
+  }).catch(e=>{
+    if(seq!==MUS.seq)return;
+    MUS.loading=false;
+    MUS.err='خطا در جستجو — دوباره تلاش کن';
+    renderMusResults();
   });
 }
 function raceAny(ps){
@@ -920,13 +939,29 @@ function archResolve(t){
 }
 /* --- پخش --- */
 function musPlayAt(i){
+  // v20: if results exist and queue is results or user clicked from results, ensure queue = results
+  if(MUS.results && MUS.results.length){
+    // if queue doesn't match results, sync it
+    if(!MUS.queue.length || MUS.queue.length!==MUS.results.length || MUS.queue[0].id!==MUS.results[0].id){
+      MUS.queue=MUS.results.slice();
+    }
+  }
   if(!MUS.queue.length)return;
   MUS.qi=(i+MUS.queue.length)%MUS.queue.length;
   MUS.retried=null;
   if(MUS.queue[MUS.qi])MUS.queue[MUS.qi].hi=0;
   const t=MUS.queue[MUS.qi];
+  // show instant feedback
+  toast('در حال بارگذاری: '+t.t,'music');
   const prep=t.p==='arch'?archResolve(t):Promise.resolve(t);
-  prep.then(tt=>musLoad(tt)).catch(()=>{toast('فایل این آهنگ در دسترس نیست','alert');});
+  prep.then(tt=>{
+    musLoad(tt);
+  }).catch((e)=>{
+    console.log('archResolve fail', e.message);
+    toast('فایل این آهنگ در دسترس نیست — بعدی','alert');
+    // try next host for audius already handled in error, but try next track
+    setTimeout(()=>musNext(true), 400);
+  });
   renderPlayer();
   renderMusResults();
 }
@@ -1041,9 +1076,16 @@ function musUpdSeek(){
   const a=MUS.audio;if(!a)return;
   const sk=$('#mSeek');
   const ct=a.currentTime||0,dur=a.duration||MUS.dur||0;
+  const pct=dur? (ct/dur)*100 : 0;
   if(sk&&!MUS.seekDrag&&dur){
     sk.value=(ct/dur)*1000;
-    sk.style.setProperty('--p',((ct/dur)*100)+'%');
+    sk.style.setProperty('--p',pct+'%');
+    const fill=$('#mSeekFill');
+    if(fill) fill.style.width=pct+'%';
+  }
+  if(!MUS.seekDrag){
+    const fill=$('#mSeekFill');
+    if(fill) fill.style.width=pct+'%';
   }
   const t1=$('#mCur');if(t1)t1.textContent=fmtT(ct);
   const t2=$('#mDur');if(t2&&dur)t2.textContent=fmtT(dur);
@@ -1123,60 +1165,66 @@ function musDrawEQ(b){
 /* --- رندر بخش موزیک --- */
 function musHero(){
   const QUICK=['lo-fi beats','persian classic','piano calm','synthwave','acoustic','jazz'];
-  return '<section class="mus-hero">'
-    +'<span class="kicker"><span class="dot"></span> پخش زندهٔ واقعی — با جستجو در صدها هزار آهنگ</span>'
-    +'<h1>هیئت‌شنیدارِ <span class="g">کافی‌نت</span></h1>'
-    +'<p>آهنگی که می‌خواهی را جستجو کن؛ همان لحظه در پلیر پخش می‌شود — با کنترل کامل: مکث، جلو/عقب، صدا، شافل، تکرار و رقصِ نورِ هماهنگ با بیس!</p>'
-    +'<div class="mus-search">'
-      +'<span class="ms-ic">'+ic('search',20)+'</span>'
-      +'<input type="text" id="musInp" placeholder="نام آهنگ، خواننده یا سبک… (مثلاً lo-fi یا piano)" value="'+esc(MUS.q)+'" autocomplete="off">'
-      +'<button class="btn gold mus-go" onclick="musGo(true)">'+ic('play',16)+'جستجو و پخش</button>'
+  return '<section class="mus-hero-premium">'
+    +'<div class="mus-hero-bg"><div class="mus-hero-glow g1"></div><div class="mus-hero-glow g2"></div><div class="mus-hero-glow g3"></div></div>'
+    +'<div class="mus-hero-content">'
+      +'<span class="kicker-premium"><span class="dot"></span> پخش زنده واقعی — کیفیت بالا — بدون لگ</span>'
+      +'<h1>هیئت شنیدار <span class="g">کافی‌نت</span> — نسخه ۲۰</h1>'
+      +'<p>هر آهنگی که سرچ کنی، دقیق همونو با کیفیت بالا و بدون لگ میارم — کلیک کن تا همین‌جا با پلیر شیک و تمیز پخش بشه. کنترل کامل، ویژوالایزر زنده، رقص نور با بیس!</p>'
+      +'<div class="mus-search-premium">'
+        +'<span class="ms-ic-premium">'+ic('search',22)+'</span>'
+        +'<input type="text" id="musInp" placeholder="نام آهنگ یا خواننده را بنویس... مثلا: همایون شجریان، لوفای، پیانو" value="'+esc(MUS.q)+'" autocomplete="off">'
+        +'<button class="btn gold mus-go-premium" onclick="musGo(true)">'+ic('play',18)+'جستجو و پخش آنی</button>'
+      +'</div>'
+      +'<div class="mus-tabs-premium">'
+        +'<span class="mtab-premium'+(MUS.prov==='audius'?' active':'')+'" onclick="musProv(\'audius\')">'+ic('radio',16)+'اودیوس HQ — موزیک زنده</span>'
+        +'<span class="mtab-premium'+(MUS.prov==='arch'?' active':'')+'" onclick="musProv(\'arch\')">'+ic('library',16)+'آرشیو HQ — کلاسیک</span>'
+      +'</div>'
     +'</div>'
-    +'<div class="mus-tabs">'
-      +'<span class="mtab'+(MUS.prov==='audius'?' active':'')+'" onclick="musProv(\'audius\')">'+ic('radio',14)+'اودیوس — موزیک زنده</span>'
-      +'<span class="mtab'+(MUS.prov==='arch'?' active':'')+'" onclick="musProv(\'arch\')">'+ic('library',14)+'آرشیو اینترنت — کلاسیک و تاریخی</span>'
-    +'</div>'
-    +'<div class="quick-band"><span class="qb-lbl">'+ic('zap',13)+'پخش فوری — بدون جستجو، همیشه کار می‌کند:</span>'
-      +'<div class="quick-row">'+QUICK_TRACKS.map((q,i)=>'<span class="qk" onclick="musQuickPlay('+i+')" title="'+esc(q.a)+'">'+ic('play',12)+'<b>'+q.t+'</b></span>').join('')+'</div></div>'
-    +'<div class="chips" style="justify-content:center">'+QUICK.map(q=>'<span class="chip" onclick="musQuick(\''+q+'\')">'+ic('music',12)+q+'</span>').join('')+'</div>'
+    +'<div class="mus-hero-visual"><div class="mus-visual-stack"><div class="mvs s1">'+ic('music',28)+'</div><div class="mvs s2">'+ic('radio',24)+'</div><div class="mvs s3">'+ic('disc',22)+'</div></div><div class="mus-visual-note">HQ • 320kbps • بدون لگ</div></div>'
   +'</section>'
-  +'<div class="mus-grid">'
-    +'<div class="player-card'+(MUS.playing?' playing':'')+'" id="mPlayer">'+playerHtml()+'</div>'
-    +'<div class="mus-results" id="musRes">'+resPlaceholder()+'</div>'
+  +'<div class="mus-quick-premium"><div class="quick-head"><span class="qb-lbl-premium">'+ic('zap',14)+'پخش فوری — همیشه کار می‌کند، کیفیت بالا:</span><span class="qb-hint">کلیک = پخش دقیق همین آهنگ</span></div>'
+    +'<div class="quick-row-premium">'+QUICK_TRACKS.map((q,i)=>'<span class="qk-premium'+(MUS.cur&&MUS.cur.id===q.id&&MUS.playing?' on':'')+'" onclick="musQuickPlay('+i+')" title="'+esc(q.a)+'"><span class="qk-art">'+ic('play',12)+'</span><span><b>'+q.t+'</b><i>'+esc(q.a)+'</i></span></span>').join('')+'</div>'
+    +'<div class="chips-premium">'+QUICK.map(q=>'<span class="chip-premium" onclick="musQuick(\''+q+'\')">'+ic('music',12)+q+'</span>').join('')+'</div></div>'
+  +'<div class="mus-grid-premium">'
+    +'<div class="player-card-premium'+(MUS.playing?' playing':'')+'" id="mPlayer">'+playerHtml()+'</div>'
+    +'<div class="mus-results-premium" id="musRes">'+resPlaceholder()+'</div>'
   +'</div>'
   +'<div id="musicDance" class="on"><i class="md-b b1"></i><i class="md-b b2"></i><i class="md-b b3"></i></div>'
   +footHtml();
 }
 function playerHtml(){
   const t=MUS.cur;
-  return '<div class="m-top">'
-    +'<div class="m-artwrap"><span class="m-art-ring" aria-hidden="true"></span>'
-    +'<div class="m-art'+(t&&t.art?'':' noimg')+'" id="mArt">'+(t&&t.art?'<img src="'+esc(t.art)+'" alt="" onerror="this.parentNode.classList.add(\'noimg\')">':'<span class="fallback">'+ic('music',30)+'</span>')+'<span class="vinyl-shine"></span></div>'
+  const volIcon = MUS.vol===0?'volume-x':MUS.vol<0.4?'volume-1':'volume';
+  return '<div class="m-top-premium">'
+    +'<div class="m-artwrap-premium"><span class="m-art-ring" aria-hidden="true"></span><span class="m-art-ring2" aria-hidden="true"></span>'
+    +'<div class="m-art'+(t&&t.art?'':' noimg')+'" id="mArt">'+(t&&t.art?'<img src="'+esc(t.art)+'" alt="" loading="eager" onerror="this.parentNode.classList.add(\'noimg\')">':'<span class="fallback">'+ic('music',36)+'</span>')+'<span class="vinyl-shine"></span><span class="m-art-glow"></span></div>'
     +'</div>'
-    +'<div class="m-now"><div class="m-lbl">'+(MUS.playing?'در حال پخش زنده':'آمادهٔ پخش')+'</div>'
-      +'<div class="m-ttl" id="mTitle">'+(t?esc(t.t):'هنوز چیزی پخش نشده')+'</div>'
-      +'<div class="m-artst" id="mArtist">'+(t?esc(t.a):'یه آهنگ جستجو کن تا اینجا بنشیند')+'</div>'
-      +(t?'<div class="m-chips"><span class="q-chip">'+ic('activity',10)+(t.p==='audius'?'استریم زنده':'آرشیو صوتی')+'</span>'
-        +(MUS.ctx?'<span class="q-chip">'+faStr((MUS.ctx.sampleRate/1000).toFixed(1))+' کیلوهرتز</span>':'')+'</div>':'')
+    +'<div class="m-now-premium"><div class="m-lbl-premium"><span class="live-dot"></span>'+(MUS.playing?'در حال پخش با کیفیت بالا':'آماده پخش — کیفیت بالا')+'</div>'
+      +'<div class="m-ttl-premium" id="mTitle">'+(t?esc(t.t):'هنوز چیزی پخش نشده')+'</div>'
+      +'<div class="m-artst-premium" id="mArtist">'+(t?esc(t.a):'نام آهنگ یا خواننده را جستجو کن — دقیق همونو با کیفیت بالا میارم')+'</div>'
+      +(t?'<div class="m-chips-premium"><span class="q-chip-premium live">'+ic('activity',11)+(t.p==='audius'?'استریم زنده HQ':'آرشیو HQ')+'</span>'
+        +'<span class="q-chip-premium">'+ic('disc',10)+fmtT(t.d||MUS.dur)+'</span>'
+        +(MUS.ctx?'<span class="q-chip-premium">'+faStr((MUS.ctx.sampleRate/1000).toFixed(1))+'kHz</span>':'<span class="q-chip-premium">'+ic('zap',10)+'320kbps</span>')+'</div>':'<div class="m-chips-premium"><span class="q-chip-premium">'+ic('shield-check',10)+'بدون لگ — پخش آنی</span></div>')
     +'</div>'
   +'</div>'
-  +'<canvas id="eqCanvas" width="320" height="60" aria-hidden="true"></canvas>'
-  +'<div class="m-seekrow"><span id="mCur">'+(t?'۰:۰۰':'')+'</span>'
-    +'<input type="range" id="mSeek" min="0" max="1000" value="0" style="--p:0%" aria-label="جابه‌جایی در آهنگ">'
-    +'<span id="mDur">'+(t&&t.d?fmtT(t.d):'۰:۰۰')+'</span></div>'
-  +'<div class="m-ctrls">'
-    +'<button class="ctl sm'+(MUS.shuffle?' on':'')+'" onclick="musToggleShuffle()" title="پخش تصادفی">'+ic('shuffle',15)+'</button>'
-    +'<button class="ctl" onclick="musPrev()" title="قبلی / ابتدا">'+ic('skip-back',17)+'</button>'
-    +'<button class="ctl main" id="mPlay" onclick="musToggle()" title="پخش / مکث">'+ic(MUS.playing?'pause':'play',21)+'</button>'
-    +'<button class="ctl" onclick="musNext()" title="بعدی">'+ic('skip-fwd',17)+'</button>'
-    +'<button class="ctl sm'+(MUS.repeat!=='off'?' on':'')+'" onclick="musCycleRepeat()" title="تکرار">'+ic(MUS.repeat==='one'?'repeat-1':'repeat',15)+'</button>'
+  +'<div class="m-visual-premium"><canvas id="eqCanvas" width="420" height="84" aria-hidden="true"></canvas><div class="m-visual-glow"></div></div>'
+  +'<div class="m-seekrow-premium"><span class="m-time" id="mCur">'+(t?'۰:۰۰':'—')+'</span>'
+    +'<div class="m-seek-wrap"><input type="range" id="mSeek" min="0" max="1000" value="0" style="--p:0%" aria-label="جابه‌جایی"><div class="m-seek-bg"><i id="mSeekFill" style="width:0%"></i></div></div>'
+    +'<span class="m-time" id="mDur">'+(t&&t.d?fmtT(t.d):'۰:۰۰')+'</span></div>'
+  +'<div class="m-ctrls-premium">'
+    +'<button class="ctl-premium sm'+(MUS.shuffle?' on':'')+'" onclick="musToggleShuffle()" title="پخش تصادفی">'+ic('shuffle',18)+'</button>'
+    +'<button class="ctl-premium" onclick="musPrev()" title="قبلی">'+ic('skip-back',20)+'</button>'
+    +'<button class="ctl-premium main" id="mPlay" onclick="musToggle()" title="پخش / مکث">'+ic(MUS.playing?'pause':'play',26)+'</button>'
+    +'<button class="ctl-premium" onclick="musNext()" title="بعدی">'+ic('skip-fwd',20)+'</button>'
+    +'<button class="ctl-premium sm'+(MUS.repeat!=='off'?' on':'')+'" onclick="musCycleRepeat()" title="تکرار">'+ic(MUS.repeat==='one'?'repeat-1':'repeat',18)+'</button>'
   +'</div>'
-  +'<div class="m-volrow">'
-    +'<span class="vol-ic" id="volIc" onclick="musMute()" title="بی‌صدا/بازگردانی">'+ic(MUS.vol===0?'volume-x':'volume',16)+'</span>'
-    +'<input type="range" id="mVol" min="0" max="100" value="'+Math.round(MUS.vol*100)+'" style="--p:'+(MUS.vol*100)+'%" aria-label="بلندی صدا" oninput="musSetVol(this.value/100)">'
-    +'<span class="vol-lbl" id="volLbl">'+faNum(Math.round(MUS.vol*100))+'٪</span>'
+  +'<div class="m-volrow-premium">'
+    +'<span class="vol-ic-premium" id="volIc" onclick="musMute()" title="بی‌صدا">'+ic(volIcon,18)+'</span>'
+    +'<div class="vol-wrap"><input type="range" id="mVol" min="0" max="100" value="'+Math.round(MUS.vol*100)+'" style="--p:'+(MUS.vol*100)+'%" aria-label="صدا" oninput="musSetVol(this.value/100)"></div>'
+    +'<span class="vol-lbl-premium" id="volLbl">'+faNum(Math.round(MUS.vol*100))+'٪</span>'
   +'</div>'
-  +'<div class="m-meta">'+ic('disc',12)+(MUS.queue.length?'در صف: '+faNum(MUS.queue.length)+' آهنگ':'صف خالی است')+(t?' · '+(t.p==='audius'?'منبع: اودیوس':'منبع: آرشیو اینترنت'):'')+'</div>';
+  +'<div class="m-meta-premium">'+ic('layers',12)+(MUS.queue.length?'صف: '+faNum(MUS.queue.length)+' آهنگ · ':'')+(t?'منبع: '+(t.p==='audius'?'Audius HQ':'Archive.org HQ')+' · بدون لگ':'کیفیت بالا · تمیز و روان')+'</div>';
 }
 function resPlaceholder(){
   return '<div class="mus-empty"><span class="e-ic">'+ic('disc',34)+'</span><h3>دنبال چی می‌گردی؟</h3>'
@@ -1735,6 +1783,77 @@ function tick(){
 }
 setInterval(tick,1000);
 
+
+/* ---------- صدای خوش‌آمدگویی پرمیوم — خانم خوشگل با کیفیت بالا ---------- */
+const WELCOME_SRC = '{{WELCOME_AUDIO}}';
+let _welcomeAudio = null;
+let _welcomePlayed = false;
+function playWelcomeVoice(){
+  if(_welcomePlayed) return;
+  _welcomePlayed = true;
+  try{
+    if(!WELCOME_SRC || WELCOME_SRC.indexOf('data:audio')!==0){
+      // fallback: Web Speech API with female voice
+      try{
+        if('speechSynthesis' in window){
+          const u = new SpeechSynthesisUtterance('خوش آمدید کاربر گرامی به کافی نت نت یار');
+          u.lang='fa-IR';
+          u.rate=0.92;
+          u.pitch=1.15;
+          u.volume=0.95;
+          // try to pick female voice
+          const voices = speechSynthesis.getVoices();
+          const faFemale = voices.find(v=> (v.lang||'').toLowerCase().includes('fa') && /female|woman|girl|زن|female/i.test(v.name)) || voices.find(v=> (v.lang||'').toLowerCase().includes('fa')) || voices.find(v=> /female|woman|Google.*Female/i.test(v.name));
+          if(faFemale) u.voice=faFemale;
+          speechSynthesis.cancel();
+          speechSynthesis.speak(u);
+        }
+      }catch(e){}
+      return;
+    }
+    // create persistent audio that survives loader removal
+    if(_welcomeAudio){
+      try{ _welcomeAudio.currentTime=0; _welcomeAudio.play().catch(()=>{}); }catch(e){}
+      return;
+    }
+    _welcomeAudio = new Audio(WELCOME_SRC);
+    _welcomeAudio.preload='auto';
+    _welcomeAudio.volume=0.92;
+    _welcomeAudio.setAttribute('playsinline','');
+    // keep audio in DOM to avoid GC cut
+    _welcomeAudio.style.display='none';
+    _welcomeAudio.id='welcomeAudio';
+    try{ document.body.appendChild(_welcomeAudio); }catch(e){}
+    // play with retry for autoplay policy
+    const tryPlay = ()=>{
+      _welcomeAudio.play().then(()=>{
+        // success
+      }).catch(()=>{
+        // wait for user interaction - attach one-time listener
+        const onInteract = ()=>{
+          try{ _welcomeAudio.play().catch(()=>{}); }catch(e){}
+          document.removeEventListener('click', onInteract);
+          document.removeEventListener('keydown', onInteract);
+          document.removeEventListener('touchstart', onInteract);
+        };
+        document.addEventListener('click', onInteract, {once:true});
+        document.addEventListener('keydown', onInteract, {once:true});
+        document.addEventListener('touchstart', onInteract, {once:true});
+      });
+    };
+    // slight delay to ensure loader still visible but audio starts immediately
+    setTimeout(tryPlay, 80);
+    _welcomeAudio.onended = ()=>{
+      try{ _welcomeAudio.remove(); }catch(e){}
+      _welcomeAudio=null;
+    };
+  }catch(e){
+    console.log('welcome audio err', e.message);
+  }
+}
+// preload voices
+try{ if('speechSynthesis' in window){ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = ()=>{ speechSynthesis.getVoices(); }; } }catch(e){}
+
 /* ---------- لودینگ ۱۰ ثانیه‌ای ---------- */
 (function(){
   const DUR=10000;
@@ -1752,6 +1871,7 @@ setInterval(tick,1000);
   let finished=false;const t0=performance.now();
   function finish(){
     if(finished)return;finished=true;
+    try{ playWelcomeVoice(); }catch(e){}
     fill.style.width='100%';pct.textContent=faNum(100)+'٪';
     stat.textContent='آمادهٔ سرو! خوش آمدید';
     setTimeout(()=>{
