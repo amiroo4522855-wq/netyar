@@ -257,7 +257,6 @@ const NAV=[
   {v:'fav',i:'star',t:'علاقه‌مندی‌ها'},
   {sec:'سرگرمیِ کافی‌نت'},
   {v:'games',i:'gamepad',t:'بازی‌ها'},
-  {v:'shop',i:'shopping-bag',t:'فروشگاه'},
   {v:'customers',i:'users',t:'مشتری‌ها',secret:true},
   {v:'music',i:'music',t:'موزیک'},
   {v:'calc',i:'calculator',t:'ماشین‌حساب'},
@@ -1127,7 +1126,9 @@ function musStartViz(){
 function musStopViz(){if(MUS.raf){cancelAnimationFrame(MUS.raf);MUS.raf=0;}}
 function musDrawEQ(b){
   const cv=document.getElementById('eqCanvas');if(!cv)return;
-  const ctx2=cv.getContext('2d');
+  let ctx2=null;
+  try{ ctx2=cv.getContext('2d'); }catch(e){ return; }
+  if(!ctx2) return;
   const W=cv.width,H=cv.height;
   ctx2.clearRect(0,0,W,H);
   const N=44,gap=3,bw=(W-gap*(N-1))/N;

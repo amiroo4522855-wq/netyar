@@ -1,41 +1,45 @@
 /* ================================================================
-   اقتصاد سکه — کافی‌نت نت‌یار
-   سکه از بازی‌ها + فروشگاه اسکین شطرنج + آیتم‌های من
+   اقتصاد سکه — کافی‌نت نت‌یار — فروشگاه دسته‌بندی شده v20.1
+   سکه از بازی‌ها + فروشگاه اسکین شطرنج + دسته‌بندی
    ================================================================ */
 'use strict';
 
 const COIN_KEY='netyar_coins';
 const SHOP_OWNED_KEY='netyar_shop_owned';
 const CHESS_SKIN_KEY='netyar_chess_skin';
+const SHOP_CAT_KEY='netyar_shop_cat';
 
 const CHESS_SKINS=[
-  {id:'classic', name:'کلاسیک آبی', desc:'آبی سرمه‌ای استاندارد کافی‌نت', price:0, light:'#c8d4e8', dark:'#46598a', owned:true, badge:'پیش‌فرض', icon:'♔'},
-  {id:'wood', name:'چوب گردو', desc:'گرمای چوب طبیعی با کنتراست بالا', price:60, light:'#f0d9b5', dark:'#b58863', badge:'چوبی', icon:'♜'},
-  {id:'gold', name:'طلایی لوکس', desc:'طلایی سلطنتی با سایه‌های پرمیوم', price:140, light:'#ffe9a8', dark:'#9a7a2a', badge:'لوکس', icon:'✦'},
-  {id:'neon', name:'نئون شب', desc:'تیره نئونی با درخشش آبی', price:95, light:'#2a3a5a', dark:'#0d1a30', badge:'نئون', icon:'◍'},
-  {id:'forest', name:'جنگل سبز', desc:'سبز آرامش‌بخش جنگلی', price:80, light:'#d9e8c8', dark:'#4a7a4a', badge:'طبیعت', icon:'♗'},
-  {id:'rose', name:'رز صورتی', desc:'صورتی رز با حس لطیف', price:70, light:'#f8d8e0', dark:'#a85a6a', badge:'رز', icon:'♕'},
-  {id:'midnight', name:'نیمه‌شب', desc:'مشکی مات پرمیوم برای گیمرهای حرفه‌ای', price:110, light:'#3a3a5a', dark:'#16161e', badge:'تاریک', icon:'♚'},
-  {id:'sand', name:'صحرا', desc:'شنی گرم الهام از کویر ایران', price:65, light:'#f5e6c8', dark:'#c9a86a', badge:'کویر', icon:'♞'},
-  {id:'ocean', name:'اقیانوس', desc:'آبی اقیانوسی عمیق و شفاف', price:85, light:'#a8d8f0', dark:'#2a6a9a', badge:'اقیانوس', icon:'♖'},
-  {id:'cherry', name:'آلبالویی', desc:'قرمز آلبالویی شیک', price:75, light:'#f0c8c8', dark:'#8a3a4a', badge:'آلبالو', icon:'♝'},
+  {id:'classic', name:'کلاسیک آبی', desc:'آبی سرمه‌ای استاندارد کافی‌نت', price:0, light:'#c8d4e8', dark:'#46598a', owned:true, badge:'پیش‌فرض', icon:'♔', cat:'classic'},
+  {id:'wood', name:'چوب گردو', desc:'گرمای چوب طبیعی با کنتراست بالا', price:60, light:'#f0d9b5', dark:'#b58863', badge:'چوبی', icon:'♜', cat:'classic'},
+  {id:'gold', name:'طلایی لوکس', desc:'طلایی سلطنتی با سایه‌های پرمیوم', price:140, light:'#ffe9a8', dark:'#9a7a2a', badge:'لوکس', icon:'✦', cat:'lux'},
+  {id:'neon', name:'نئون شب', desc:'تیره نئونی با درخشش آبی', price:95, light:'#2a3a5a', dark:'#0d1a30', badge:'نئون', icon:'◍', cat:'dark'},
+  {id:'forest', name:'جنگل سبز', desc:'سبز آرامش‌بخش جنگلی', price:80, light:'#d9e8c8', dark:'#4a7a4a', badge:'طبیعت', icon:'♗', cat:'nature'},
+  {id:'rose', name:'رز صورتی', desc:'صورتی رز با حس لطیف', price:70, light:'#f8d8e0', dark:'#a85a6a', badge:'رز', icon:'♕', cat:'fancy'},
+  {id:'midnight', name:'نیمه‌شب', desc:'مشکی مات پرمیوم برای گیمرهای حرفه‌ای', price:110, light:'#3a3a5a', dark:'#16161e', badge:'تاریک', icon:'♚', cat:'dark'},
+  {id:'sand', name:'صحرا', desc:'شنی گرم الهام از کویر ایران', price:65, light:'#f5e6c8', dark:'#c9a86a', badge:'کویر', icon:'♞', cat:'nature'},
+  {id:'ocean', name:'اقیانوس', desc:'آبی اقیانوسی عمیق و شفاف', price:85, light:'#a8d8f0', dark:'#2a6a9a', badge:'اقیانوس', icon:'♖', cat:'nature'},
+  {id:'cherry', name:'آلبالویی', desc:'قرمز آلبالویی شیک', price:75, light:'#f0c8c8', dark:'#8a3a4a', badge:'آلبالو', icon:'♝', cat:'fancy'},
 ];
 
-function coinGet(){ return store.get(COIN_KEY, 120); } // start with 120 to test
+const SHOP_CATS=[
+  {id:'all', l:'همه اسکین‌ها', i:'layers', c:'#d9ae3e'},
+  {id:'classic', l:'کلاسیک و چوبی', i:'book-open', c:'#4c8ddb'},
+  {id:'lux', l:'لوکس طلایی', i:'crown', c:'#d9ae3e'},
+  {id:'nature', l:'طبیعت', i:'heart-pulse', c:'#4fa98c'},
+  {id:'dark', l:'تاریک و نئون', i:'shield', c:'#7c8da6'},
+  {id:'fancy', l:'فانتزی رنگی', i:'palette', c:'#c46a8e'},
+];
+
+function coinGet(){ return store.get(COIN_KEY, 120); }
 function coinSet(v){ store.set(COIN_KEY, Math.max(0, Math.floor(v))); }
 function coinAdd(amount, reason){
   if(!amount || amount<=0) return coinGet();
   const cur=coinGet();
   const next=cur+amount;
   coinSet(next);
-  // toast with animation
-  if(reason){
-    toast('+'+faNum(amount)+' سکه — '+reason, 'coins');
-  }else{
-    toast('+'+faNum(amount)+' سکه', 'coins');
-  }
+  if(reason){ toast('+'+faNum(amount)+' سکه — '+reason, 'coins'); }else{ toast('+'+faNum(amount)+' سکه', 'coins'); }
   try{
-    // coin pop effect if exists
     const el=document.getElementById('coinBalance');
     if(el){ el.classList.add('pop'); setTimeout(()=>el.classList.remove('pop'),400); el.textContent=faNum(next); }
     const el2=document.getElementById('coinBalShop');
@@ -59,11 +63,7 @@ function coinSpend(amount){
 
 function shopOwnedGet(){
   let owned=store.get(SHOP_OWNED_KEY, null);
-  if(!owned){
-    // default: classic owned
-    owned=['classic'];
-    store.set(SHOP_OWNED_KEY, owned);
-  }
+  if(!owned){ owned=['classic']; store.set(SHOP_OWNED_KEY, owned); }
   return owned;
 }
 function shopOwnedSet(arr){ store.set(SHOP_OWNED_KEY, arr); }
@@ -71,6 +71,9 @@ function isOwned(id){ return shopOwnedGet().includes(id); }
 
 function chessSkinGet(){ return store.get(CHESS_SKIN_KEY, 'classic'); }
 function chessSkinSet(id){ store.set(CHESS_SKIN_KEY, id); }
+
+function shopCatGet(){ return store.get(SHOP_CAT_KEY, 'all'); }
+function shopCatSet(id){ store.set(SHOP_CAT_KEY, id); }
 
 function buySkin(id){
   const skin=CHESS_SKINS.find(s=>s.id===id);
@@ -86,7 +89,6 @@ function buySkin(id){
   shopOwnedSet(owned);
   toast('خرید شد ✓ '+skin.name+' — حالا می‌تونی انتخابش کنی','shopping-bag');
   try{gSfx('win');}catch(e){}
-  // re-render shop if open
   if(typeof shopRerender==='function') shopRerender();
 }
 
@@ -94,7 +96,6 @@ function selectSkin(id){
   if(!isOwned(id)){ toast('اول باید بخریش!','alert'); return; }
   chessSkinSet(id);
   toast('اسکین '+ (CHESS_SKINS.find(s=>s.id===id)||{}).name +' فعال شد ✓','palette');
-  // apply to chess board if exists
   applyChessSkin();
   if(typeof shopRerender==='function') shopRerender();
 }
@@ -102,7 +103,6 @@ function selectSkin(id){
 function applyChessSkin(){
   const skinId=chessSkinGet();
   const skin=CHESS_SKINS.find(s=>s.id===skinId) || CHESS_SKINS[0];
-  // inject style
   let styleEl=document.getElementById('chessSkinStyle');
   if(!styleEl){
     styleEl=document.createElement('style');
@@ -111,20 +111,41 @@ function applyChessSkin(){
   }
   styleEl.textContent=
     '.chs-c.l{background:'+skin.light+'!important}'+
-    '.chs-c.d{background:'+skin.dark+'!important}'+
-    (skin.pieceW ? '.chs-p.w{color:'+skin.pieceW+'!important}' : '')+
-    (skin.pieceB ? '.chs-p.b{color:'+skin.pieceB+'!important}' : '');
+    '.chs-c.d{background:'+skin.dark+'!important}';
 }
 
-// shop render helper
 function shopRerender(){
   const wrap=document.querySelector('.content[data-view="shop"]');
-  if(wrap){
-    wrap.innerHTML=vShopFull();
-  }
+  if(wrap){ wrap.innerHTML=vShopFull(); }
 }
 
-// expose
+function setShopCat(id){
+  shopCatSet(id);
+  const wrap=document.getElementById('shopSkins');
+  const chips=document.querySelectorAll('.shop-cat-chip');
+  chips.forEach(c=>c.classList.toggle('on', c.dataset.cat===id));
+  if(wrap){
+    const coins=coinGet();
+    const owned=shopOwnedGet();
+    const active=chessSkinGet();
+    const list=id==='all'?CHESS_SKINS:CHESS_SKINS.filter(s=>s.cat===id);
+    wrap.innerHTML=list.map(s=>{
+      const ow=isOwned(s.id);
+      const isActive=active===s.id;
+      return '<div class="shop-skin-card'+(ow?' owned':'')+(isActive?' active':'')+' reveal" style="--cl:'+s.light+';--cd:'+s.dark+'">'
+        +'<div class="ssk-preview"><div class="ssk-board"><div class="ssk-c l"></div><div class="ssk-c d"></div><div class="ssk-c d"></div><div class="ssk-c l"></div></div><span class="ssk-icon">'+s.icon+'</span>'+(isActive?'<span class="ssk-active">'+ic('check',12)+' فعال</span>':'')+'</div>'
+        +'<div class="ssk-info"><div class="ssk-name">'+s.name+' <span class="ssk-badge">'+s.badge+'</span></div><div class="ssk-desc">'+s.desc+'</div><div class="ssk-price">'+(ow?'<span class="owned">'+ic('check-circle',12)+' خریده شده</span>':'<span>'+ic('coins',12)+faNum(s.price)+' سکه</span>')+'</div></div>'
+        +'<div class="ssk-acts">'+(ow
+          ? (isActive ? '<button class="btn ghost sm" disabled>'+ic('check',12)+' همین الان فعاله</button>' : '<button class="btn gold sm" onclick="selectSkin(\''+s.id+'\')">'+ic('palette',12)+' انتخاب</button>')
+          : '<button class="btn gold sm" onclick="buySkin(\''+s.id+'\')">'+ic('shopping-bag',12)+' خرید</button>')+'</div>'
+      +'</div>';
+    }).join('') || '<div class="empty small"><p>در این دسته اسکینی نیست</p></div>';
+    // trigger reveal
+    setTimeout(()=>{ try{ observeReveals(); }catch(e){} }, 50);
+  }
+  toast('دسته: '+(SHOP_CATS.find(c=>c.id===id)||{}).l, 'layers');
+}
+
 window.coinGet=coinGet;
 window.coinAdd=coinAdd;
 window.coinSpend=coinSpend;
@@ -135,29 +156,33 @@ window.shopRerender=shopRerender;
 window.CHESS_SKINS=CHESS_SKINS;
 window.isOwned=isOwned;
 window.shopOwnedGet=shopOwnedGet;
+window.setShopCat=setShopCat;
+window.shopCatGet=shopCatGet;
 
-// improved shop view
 function vShopFull(){
   const coins=coinGet();
   const owned=shopOwnedGet();
   const active=chessSkinGet();
-  // hero
+  const curCat=shopCatGet();
+  const filtered=curCat==='all'?CHESS_SKINS:CHESS_SKINS.filter(s=>s.cat===curCat);
   return '<section class="shop-hero-premium">'
     +'<div class="shop-hero-bg"></div><div class="shop-hero-glow g1"></div><div class="shop-hero-glow g2"></div>'
     +'<div class="shop-hero-content">'
-      +'<span class="shop-badge">'+ic('shopping-bag',14)+' فروشگاه پرمیوم نت‌یار — '+faNum(coins)+' سکه داری</span>'
+      +'<span class="shop-badge">'+ic('shopping-bag',14)+' فروشگاه پرمیوم — داخل بازی‌ها — '+faNum(coins)+' سکه</span>'
       +'<h1>با سکه‌هات <span class="g">تخته شطرنج</span> خاص بخر</h1>'
-      +'<p>هر برد در بازی‌های <b>حاج عباس، انگری بردز، دوز، ۲۰۴۸، حافظه، فلپی و...</b> بهت سکه میده. سکه‌ها رو اینجا خرج کن و تخته شطرنجتو شیک کن — همه واقعی و ذخیره پایدار.</p>'
+      +'<p>این فروشگاه از منوی همبرگری برداشته شد و الان <b>داخل بازی‌خانه</b> قرار دارد — جهت اطلاع. هر برد در بازی‌ها بهت سکه میده، اینجا دسته‌بندی شده خرج کن.</p>'
       +'<div class="shop-stats"><span>'+ic('coins',12)+' موجودی: <b id="coinBalShop">'+faNum(coins)+'</b> سکه</span><span>'+ic('palette',12)+' '+faNum(CHESS_SKINS.length)+' اسکین</span><span>'+ic('check-circle',12)+' '+faNum(owned.length)+' خریداری شده</span></div>'
-      +'<div class="shop-hero-acts"><button class="btn gold" onclick="document.getElementById(\'shopSkins\').scrollIntoView({behavior:\'smooth\'})">'+ic('shopping-bag',16)+' ورود به فروشگاه</button><button class="btn ghost" onclick="goView(\'games\')">'+ic('gamepad',14)+' بازی و جمع سکه</button></div>'
+      +'<div class="shop-hero-acts"><button class="btn gold" onclick="document.getElementById(\'shopSkins\').scrollIntoView({behavior:\'smooth\'})">'+ic('shopping-bag',16)+' ورود به فروشگاه</button><button class="btn ghost" onclick="go(\'games\')">'+ic('gamepad',14)+' بازگشت به بازی‌خانه</button></div>'
     +'</div>'
-    +'<div class="shop-visual-premium"><div class="shop-cover-svg">'+gcov('shop','',0)+'</div><div class="shop-coin-float">'+ic('coins',20)+'<b>'+faNum(coins)+'</b></div></div>'
+    +'<div class="shop-visual-premium"><div class="shop-cover-svg">'+(typeof gcov==='function'?gcov('shop','',0):'')+'</div><div class="shop-coin-float">'+ic('coins',20)+'<b>'+faNum(coins)+'</b></div></div>'
   +'</section>'
-  +'<div class="sec-head"><span class="sq">'+ic('palette',16)+'</span><h2>اسکین‌های شطرنج</h2><span class="mini">انتخاب کن، بخر، اعمال کن</span><span class="ln"></span></div>'
-  +'<div id="shopSkins" class="shop-skins-grid">'+CHESS_SKINS.map(s=>{
+  +'<div class="sec-head"><span class="sq">'+ic('layers',16)+'</span><h2>دسته‌بندی اسکین‌ها</h2><span class="mini">انتخاب دسته برای فیلتر سریع</span><span class="ln"></span></div>'
+  +'<div class="chips" style="margin-bottom:16px">'+SHOP_CATS.map(c=>'<span class="chip shop-cat-chip'+(curCat===c.id?' active on':'')+'" data-cat="'+c.id+'" style="--cc:'+c.c+'" onclick="setShopCat(\''+c.id+'\')">'+ic(c.i,13)+c.l+' <span class="cc">'+faNum(c.id==='all'?CHESS_SKINS.length:CHESS_SKINS.filter(s=>s.cat===c.id).length)+'</span></span>').join('')+'</div>'
+  +'<div class="sec-head"><span class="sq blue">'+ic('palette',16)+'</span><h2>'+ (SHOP_CATS.find(c=>c.id===curCat)||SHOP_CATS[0]).l +'</h2><span class="mini">'+faNum(filtered.length)+' اسکین در این دسته</span><span class="ln"></span></div>'
+  +'<div id="shopSkins" class="shop-skins-grid">'+filtered.map(s=>{
     const ow=isOwned(s.id);
     const isActive=active===s.id;
-    return '<div class="shop-skin-card'+(ow?' owned':'')+(isActive?' active':'')+'" style="--cl:'+s.light+';--cd:'+s.dark+'">'
+    return '<div class="shop-skin-card'+(ow?' owned':'')+(isActive?' active':'')+' reveal" style="--cl:'+s.light+';--cd:'+s.dark+'">'
       +'<div class="ssk-preview"><div class="ssk-board"><div class="ssk-c l"></div><div class="ssk-c d"></div><div class="ssk-c d"></div><div class="ssk-c l"></div></div><span class="ssk-icon">'+s.icon+'</span>'+(isActive?'<span class="ssk-active">'+ic('check',12)+' فعال</span>':'')+'</div>'
       +'<div class="ssk-info"><div class="ssk-name">'+s.name+' <span class="ssk-badge">'+s.badge+'</span></div><div class="ssk-desc">'+s.desc+'</div><div class="ssk-price">'+(ow?'<span class="owned">'+ic('check-circle',12)+' خریده شده</span>':'<span>'+ic('coins',12)+faNum(s.price)+' سکه</span>')+'</div></div>'
       +'<div class="ssk-acts">'+(ow
@@ -165,11 +190,11 @@ function vShopFull(){
         : '<button class="btn gold sm" onclick="buySkin(\''+s.id+'\')">'+ic('shopping-bag',12)+' خرید</button>')+'</div>'
     +'</div>';
   }).join('')+'</div>'
-  +'<div class="sec-head"><span class="sq blue">'+ic('layers',16)+'</span><h2>آیتم‌های من</h2><span class="mini">اسکین‌های خریداری شده</span><span class="ln"></span></div>'
+  +'<div class="sec-head"><span class="sq">'+ic('layers',16)+'</span><h2>آیتم‌های من</h2><span class="mini">اسکین‌های خریداری شده</span><span class="ln"></span></div>'
   +'<div class="my-items-grid">'+(owned.length?owned.map(id=>{
     const s=CHESS_SKINS.find(x=>x.id===id)||CHESS_SKINS[0];
     const isActive=active===id;
-    return '<div class="my-item-card'+(isActive?' active':'')+'" style="--cl:'+s.light+';--cd:'+s.dark+'"><div class="my-board"><div class="ssk-c l"></div><div class="ssk-c d"></div></div><div class="my-info"><b>'+s.name+'</b><span>'+s.badge+'</span></div><button class="btn '+(isActive?'ghost':'gold')+' sm" '+(isActive?'disabled':'onclick="selectSkin(\''+id+'\')"')+'>'+(isActive?ic('check',12)+' فعال':ic('palette',12)+' اعمال')+'</button></div>';
+    return '<div class="my-item-card'+(isActive?' active':'')+'" style="--cl:'+s.light+';--cd:'+s.dark+'"><div class="my-board"><div class="ssk-c l"></div><div class="ssk-c d"></div></div><div class="my-info"><b>'+s.name+'</b><span>'+s.badge+' · '+(SHOP_CATS.find(c=>c.id===s.cat)||{}).l+'</span></div><button class="btn '+(isActive?'ghost':'gold')+' sm" '+(isActive?'disabled':'onclick="selectSkin(\''+id+'\')"')+'>'+(isActive?ic('check',12)+' فعال':ic('palette',12)+' اعمال')+'</button></div>';
   }).join('') : '<div class="empty small"><span class="e-ic">'+ic('shopping-bag',22)+'</span><p>هنوز چیزی نخریدی — برو اسکین بخر!</p></div>')+'</div>'
   +'<div class="shop-earn">'
     +'<h3>'+ic('trophy',16)+' چطور سکه جمع کنم؟</h3>'
@@ -183,8 +208,5 @@ function vShopFull(){
   +footHtml();
 }
 
-// legacy vShop placeholder for old code path (will be overridden)
 function vShop(){ return vShopFull(); }
-
-// coin balance in topbar
 function coinBalanceHtml(){ return '<span class="coin-pill" id="coinBalanceWrap">'+ic('coins',12)+'<b id="coinBalance">'+faNum(coinGet())+'</b></span>'; }
