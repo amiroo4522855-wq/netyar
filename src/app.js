@@ -116,9 +116,6 @@ function toast(msg,iconName,url){
 function pushHist(){HIST.push(state.view);if(HIST.length>25)HIST.shift();}
 function go(v){
   if(v===state.view){render();return;}
-  if(state.view==='customers' || v==='customers'){
-    try{if(typeof crmSetAuth==='function')crmSetAuth(false);}catch(e){}
-  }
   pushHist();
   state.view=v;state.cat=null;
   if(location.hash!=='#'+v)location.hash=v;
@@ -1185,7 +1182,7 @@ function musHero(){
       +'<p>هر آهنگی که سرچ کنی، دقیق همونو با کیفیت بالا و بدون لگ میارم — کلیک کن تا همین‌جا با پلیر شیک و تمیز پخش بشه. کنترل کامل، ویژوالایزر زنده، رقص نور با بیس!</p>'
       +'<div class="mus-search-premium">'
         +'<span class="ms-ic-premium">'+ic('search',22)+'</span>'
-        +'<input type="text" id="musInp" placeholder="نام آهنگ یا خواننده را بنویس... مثلا: همایون شجریان، لوفای، پیانو" value="'+esc(MUS.q)+'" autocomplete="off">'
+        +'<input type="text" id="musInp" placeholder="نام آهنگ یا خواننده را بنویس... مثلا: همایون شجریان، لوفای، پیانو" value="'+esc(MUS.q)+'" autocomplete="off" onkeydown="if(event.key===\'Enter\'){event.preventDefault();musGo(true);}">'
         +'<button class="btn gold mus-go-premium" onclick="musGo(true)">'+ic('play',18)+'جستجو و پخش آنی</button>'
       +'</div>'
       +'<div class="mus-tabs-premium">'
@@ -1193,7 +1190,7 @@ function musHero(){
         +'<span class="mtab-premium'+(MUS.prov==='arch'?' active':'')+'" onclick="musProv(\'arch\')">'+ic('library',16)+'آرشیو HQ — کلاسیک</span>'
       +'</div>'
     +'</div>'
-    +'<div class="mus-hero-visual"><div class="mus-visual-stack"><div class="mvs s1">'+ic('music',28)+'</div><div class="mvs s2">'+ic('radio',24)+'</div><div class="mvs s3">'+ic('disc',22)+'</div></div><div class="mus-visual-note">HQ • 320kbps • بدون لگ</div></div>'
+    +'<div class="mus-hero-visual"><div class="mus-visual-stack"><div class="mvs s1">'+ic('music',28)+'</div><div class="mvs s2">'+ic('radio',24)+'</div><div class="mvs s3">'+ic('disc',22)+'</div></div><div class="mus-visual-note">HQ Stereo • Lossless Audio • بدون لگ</div></div>'
   +'</section>'
   +'<div class="mus-quick-premium"><div class="quick-head"><span class="qb-lbl-premium">'+ic('zap',14)+'پخش فوری — همیشه کار می‌کند، کیفیت بالا:</span><span class="qb-hint">کلیک = پخش دقیق همین آهنگ</span></div>'
     +'<div class="quick-row-premium">'+QUICK_TRACKS.map((q,i)=>'<span class="qk-premium'+(MUS.cur&&MUS.cur.id===q.id&&MUS.playing?' on':'')+'" onclick="musQuickPlay('+i+')" title="'+esc(q.a)+'"><span class="qk-art">'+ic('play',12)+'</span><span><b>'+q.t+'</b><i>'+esc(q.a)+'</i></span></span>').join('')+'</div>'
@@ -1215,9 +1212,10 @@ function playerHtml(){
     +'<div class="m-now-premium"><div class="m-lbl-premium"><span class="live-dot"></span>'+(MUS.playing?'در حال پخش با کیفیت بالا':'آماده پخش — کیفیت بالا')+'</div>'
       +'<div class="m-ttl-premium" id="mTitle">'+(t?esc(t.t):'هنوز چیزی پخش نشده')+'</div>'
       +'<div class="m-artst-premium" id="mArtist">'+(t?esc(t.a):'نام آهنگ یا خواننده را جستجو کن — دقیق همونو با کیفیت بالا میارم')+'</div>'
-      +(t?'<div class="m-chips-premium"><span class="q-chip-premium live">'+ic('activity',11)+(t.p==='audius'?'استریم زنده HQ':'آرشیو HQ')+'</span>'
+      +(t?'<div class="m-chips-premium"><span class="q-chip-premium live">'+ic('activity',11)+(t.p==='audius'?'استریم Audius (HQ)':'آرشیو دیجیتال (عادی)')+'</span>'
         +'<span class="q-chip-premium">'+ic('disc',10)+fmtT(t.d||MUS.dur)+'</span>'
-        +(MUS.ctx?'<span class="q-chip-premium">'+faStr((MUS.ctx.sampleRate/1000).toFixed(1))+'kHz</span>':'<span class="q-chip-premium">'+ic('zap',10)+'320kbps</span>')+'</div>':'<div class="m-chips-premium"><span class="q-chip-premium">'+ic('shield-check',10)+'بدون لگ — پخش آنی</span></div>')
+        +'<span class="q-chip-premium gold">'+ic('zap',10)+(t.p==='audius'?'کیفیت اصلی (HQ 320k)':'کیفیت بهینه (192k)')+'</span>'
+        +(MUS.ctx?'<span class="q-chip-premium">'+faStr((MUS.ctx.sampleRate/1000).toFixed(1))+'kHz</span>':'')+'</div>':'<div class="m-chips-premium"><span class="q-chip-premium">'+ic('shield-check',10)+'استریم باکیفیت و بدون قطعی</span></div>')
     +'</div>'
   +'</div>'
   +'<div class="m-visual-premium"><canvas id="eqCanvas" width="420" height="84" aria-hidden="true"></canvas><div class="m-visual-glow"></div></div>'
@@ -1239,9 +1237,32 @@ function playerHtml(){
   +'<div class="m-meta-premium">'+ic('layers',12)+(MUS.queue.length?'صف: '+faNum(MUS.queue.length)+' آهنگ · ':'')+(t?'منبع: '+(t.p==='audius'?'Audius HQ':'Archive.org HQ')+' · بدون لگ':'کیفیت بالا · تمیز و روان')+'</div>';
 }
 function resPlaceholder(){
-  return '<div class="mus-empty"><span class="e-ic">'+ic('disc',34)+'</span><h3>دنبال چی می‌گردی؟</h3>'
-  +'<p>اسم آهنگ یا خواننده را بالا بنویس و Enter بزن — نتیجه‌های واقعی می‌آیند و اولی خودکار پخش می‌شود.</p>'
-  +'<div class="mus-hints">'+ic('lightbulb',13)+' پیشنهاد: «lo-fi beats» برای تمرکز، «persian classic» برای نوستالژی، «synthwave» برای انرژی!</div></div>';
+  const MOODS = [
+    {t:'لوفای کافی‌نت', q:'lo-fi chill beats study', desc:'مخصوص تمرکز، کار و آرامش', i:'coffee', c:'#4fa98c'},
+    {t:'سنتی و اصیل', q:'persian traditional classic setar', desc:'نوای تار، سه‌تار و کمانچه', i:'music', c:'#d9ae3e'},
+    {t:'تمرکز و کدنویسی', q:'synthwave electronic focus', desc:'بیس ملایم و ریتمیک', i:'code', c:'#4c8ddb'},
+    {t:'پرانرژی و ورزشی', q:'workout bass energetic', desc:'ریتم تند و انگیزه بالا', i:'zap', c:'#ef4444'}
+  ];
+
+  return '<div class="mus-curated-wrap">'
+    +'<div class="mus-curated-head">'
+      +'<span class="mch-badge">'+ic('sparkles',14)+'پلی‌لیست‌های اختصاصی کافی‌نت</span>'
+      +'<h3>موزیک متناسب با حال و هوای شما</h3>'
+      +'<p>روی هر دسته‌بندی بزنید تا بهترین قطعات استریم شده فوراً برایتان لود و پخش شوند:</p>'
+    +'</div>'
+    +'<div class="mus-mood-grid">'
+      +MOODS.map(m => '<div class="mus-mood-card" style="--mc:'+m.c+'" onclick="musQuick(\''+m.q+'\')">'
+        +'<div class="mm-ic" style="color:'+m.c+'">'+ic(m.i,24)+'</div>'
+        +'<div class="mm-info">'
+          +'<b>'+m.t+'</b>'
+          +'<span>'+m.desc+'</span>'
+        +'</div>'
+        +'<span class="mm-play">'+ic('play',14)+' پخش</span>'
+      +'</div>').join('')
+    +'</div>'
+    +'<div class="mus-empty" style="padding-top:16px"><span class="e-ic">'+ic('disc',32)+'</span>'
+    +'<p>یا در کادر جستجوی بالا، نام خواننده یا آهنگ محبوبتان را بنویسید و <b>Enter</b> بزنید.</p>'
+    +'</div></div>';
 }
 function renderMusResults(){
   const box=$('#musRes');if(!box)return;
@@ -1949,9 +1970,6 @@ window.addEventListener('resize',()=>{try{if(window.innerWidth>=921&&!state.sbOp
 window.addEventListener('hashchange',()=>{
   const h=(location.hash||'').replace('#','');
   if(ALL_VIEWS.includes(h)&&h!==state.view){
-    if(state.view==='customers' || h==='customers'){
-      try{if(typeof crmSetAuth==='function')crmSetAuth(false);}catch(e){}
-    }
     state.view=h;state.cat=null;render();
   }
 });

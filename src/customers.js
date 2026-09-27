@@ -8,8 +8,10 @@
 const CRM_PASS = '5585';
 const CRM_STORE_KEY = 'crm_customers';
 
-// در هر بار ورود به بخش مشتریان باید رمز مجدداً وارد شود
-let _crmSessionAuth = false;
+// احراز هویت امنیتی سشن (تا زمان بستن تب یا کلیک روی قفل فوری معتبر است)
+let _crmSessionAuth = (function(){
+  try{ return sessionStorage.getItem('crm_active_auth') === '1'; }catch(e){ return false; }
+})();
 
 const CRM_CATS = [
   {id:'regular', l:'عادی', c:'#4c8ddb', i:'user'},
@@ -25,11 +27,18 @@ function crmGet(){ return store.get(CRM_STORE_KEY, []); }
 function crmSet(arr){ store.set(CRM_STORE_KEY, arr); }
 
 function crmIsAuth(){
+  try{
+    if(sessionStorage.getItem('crm_active_auth') === '1') return true;
+  }catch(e){}
   return _crmSessionAuth === true;
 }
 
 function crmSetAuth(v){
   _crmSessionAuth = !!v;
+  try{
+    if(v) sessionStorage.setItem('crm_active_auth', '1');
+    else sessionStorage.removeItem('crm_active_auth');
+  }catch(e){}
 }
 
 function crmNow(){ 
@@ -120,7 +129,7 @@ function crmTryPass(){
     CRM._pinVal = '';
     toast('هویت مدیریت احراز شد — دسترسی آزاد شد', 'shield-check');
     try{ if(typeof gSfx === 'function') gSfx('win'); }catch(e){}
-    crmRerender();
+    render();
   } else {
     toast('پین‌کد امنیتی نادرست است!', 'alert');
     CRM._pinVal = '';
@@ -138,7 +147,7 @@ function crmLogout(){
   crmSetAuth(false);
   CRM._pinVal = '';
   toast('از بخش مشتریان خارج شدید — دسترسی مجدداً قفل شد', 'lock');
-  crmRerender();
+  render();
 }
 
 function crmFormHtml(editObj){

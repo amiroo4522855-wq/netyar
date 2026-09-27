@@ -238,7 +238,7 @@ function tbBuildStage(worldId, stageNum){
 
   // زمین اصلی (مسیر پایین)
   let curX = 0;
-  for(let i = 0; i < 24; i++){
+  for(let i = 0; i < 42; i++){ // مرحله طولانی‌تر و ماجراجویانه‌تر
     const gap = (i > 1 && i % 4 === 0) ? 90 : 0;
     const w = 240;
     const y = 380 + Math.sin(i * 0.7) * 40;
