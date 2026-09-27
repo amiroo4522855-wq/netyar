@@ -2504,3 +2504,8 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
   .fc-opponent-cards .fc-card{width:30px;height:44px}
   .fc-st-row{font-size:11px;grid-template-columns:1.2fr 1fr 1fr}
 }
+
+
+.crm-privacy-alert{display:flex;align-items:center;gap:12px;background:rgba(217,174,62,.08);border:1px solid rgba(217,174,62,.3);padding:12px 16px;border-radius:14px;color:var(--tx2);font-size:12px;line-height:1.8;margin-bottom:16px}
+.crm-privacy-alert svg{color:#ffd76e;flex-shrink:0}
+.crm-privacy-alert b{color:#ffd76e}

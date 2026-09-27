@@ -305,9 +305,9 @@ function crmPrint(id){
     +'<tr><td class="lbl">تاریخ ثبت پرونده</td><td>' + new Date(c.createdAt).toLocaleDateString('fa-IR') + '</td></tr>'
     +'</table>'
     +'<div style="margin-top:40px;text-align:left;">امضای متصدی کافی‌نت: ............................</div>'
-    +'<script>window.onload=function(){window.print();}</script>'
     +'</body></html>');
   w.document.close();
+  try{ setTimeout(() => { w.focus(); w.print(); }, 250); }catch(e){}
 }
 
 function crmGallerySave(id){
@@ -570,6 +570,7 @@ function crmBodyHtml(){
     +'</div>'
     +'<div class="crm-hero-visual"><div class="crm-stack"><div class="cs s1">' + ic('users', 28) + '</div><div class="cs s2">' + ic('shield-check', 24) + '</div><div class="cs s3">' + ic('crown', 22) + '</div></div></div>'
   +'</section>'
+  +'<div class="crm-privacy-alert">'+ic('shield',16)+' <div><b>هشدار امنیت و حریم خصوصی:</b> پرونده‌ها صرفاً روی مرورگر همین سیستم به‌صورت محلی نگهداری می‌شوند و برای امنیت بیشتر، در هر بار خروج سامانه مجدداً قفل می‌شود. لطفاً پس از اتمام کار، خروجی پشتیبان (JSON) تهیه فرمایید.</div></div>'
   +'<div class="crm-toolbar">'
     +'<div class="crm-search"><span class="si">' + ic('search', 16) + '</span><input id="crmSearch" placeholder="جستجو بر اساس نام، کدملی، موبایل، شغل یا نشانی..." oninput="CRM.q=this.value;crmRerender()"><span class="clear" onclick="CRM.q=\'\';crmRerender()">' + ic('x', 12) + '</span></div>'
     +'<div class="crm-cats">'
