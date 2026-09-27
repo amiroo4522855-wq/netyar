@@ -885,7 +885,7 @@ function wrdRender(){
   h+='</div><div class="wrd-words">'+WRD.words.map(w=>'<span class="'+(WRD.found.includes(w.w)?'fd':'')+'">'+w.w+'</span>').join('')+'</div>';
   el.innerHTML=h;
   const wb=el.querySelector('.wrd-words');
-  if(wb){
+  if(wb && wb.parentNode){
     const bar=document.createElement('div');
     bar.className='wrd-pbar';
     bar.innerHTML='<i style="width:'+Math.round(WRD.found.length/Math.max(1,WRD.words.length)*100)+'%"></i>';

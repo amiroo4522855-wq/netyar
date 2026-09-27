@@ -4784,7 +4784,7 @@ function wrdRender(){
   h+='</div><div class="wrd-words">'+WRD.words.map(w=>'<span class="'+(WRD.found.includes(w.w)?'fd':'')+'">'+w.w+'</span>').join('')+'</div>';
   el.innerHTML=h;
   const wb=el.querySelector('.wrd-words');
-  if(wb){
+  if(wb && wb.parentNode){
     const bar=document.createElement('div');
     bar.className='wrd-pbar';
     bar.innerHTML='<i style="width:'+Math.round(WRD.found.length/Math.max(1,WRD.words.length)*100)+'%"></i>';
@@ -8147,12 +8147,12 @@ if(typeof document!=='undefined'&&document.addEventListener&&!window.__typBound)
 
 /* ================================================================
    مشتریان کافی‌نت نت‌یار — CRM پرمیوم فوق امنیتی و دقیق
-   رمز امنیتی: 5581 — الزامی در هر بار مراجعه به بخش مشتریان
+   رمز امنیتی: 5585 — الزامی در هر بار مراجعه به بخش مشتریان
    کاملاً امن، مخفی، بدون افشای رمز، با امکانات کامل و ذخیره‌سازی پایدار
    ================================================================ */
 'use strict';
 
-const CRM_PASS = '5581';
+const CRM_PASS = '5585';
 const CRM_STORE_KEY = 'crm_customers';
 
 // در هر بار ورود به بخش مشتریان باید رمز مجدداً وارد شود
