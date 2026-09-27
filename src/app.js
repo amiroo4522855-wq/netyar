@@ -267,7 +267,7 @@ const NAV=[
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
 const VIEWS=['home','sites','fav','games','shop','customers','music','calc','typing','ai'];
-const GAME_VIEWS=['game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
+const GAME_VIEWS=['game-fourcards','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 
@@ -454,6 +454,10 @@ const GAMES=[
   {t:'تاس شانس',i:'dice5',c:'#c46a8e',d:'بدون تاس، شروع نکن!'},
 ];
 const GAME_META={
+  'fourcards':{t:'چهاربرگ',i:'cards',c:'#1b7947',type:'dom',best:['fourcardsBest','برد'],
+    d:'بازی اصیل و هیجان‌انگیز پاسور چهاربرگ (۱۱) به‌صورت ۴ نفره (دو تیم ۲ نفره). با هوش مصنوعی چندسطحی، قوانین رسمی، سور، سرباز، خشت و گشنیز!',
+    ctrl:'کلیک روی کارت = بازی کردن · Esc = خروج',
+    btns:[{t:'دست جدید',k:'r',i:'refresh-cw'},{t:'راهنما',k:'h',i:'info'},{t:'صدا',k:'m',i:'volume'}]},
   'dino':{t:'دایی ناصر',i:'zap',c:'#4fae6b',type:'canvas',best:['dinoBest','امتیاز'],
     d:'دایناسور گوگولی ما! با Enter بپر، با فلش پایین خم شو. صحرا، جنگل و رود — و شب و روزی که هر چند ثانیه عوض می‌شود. هرچه بروی جلو، تندتر و سخت‌تر!',
     ctrl:'Enter یا کلیک = پرش · فلش پایین = خم شدن · Esc = خروج',
@@ -683,7 +687,7 @@ function vGames(){
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
   +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
   +secHead('gamepad','blue','بازی‌ها + فروشگاه','همگی کامل و قابل بازی — فروشگاه هم اینجاست!')
-  +'<div class="game-grid">'+['hajabbas','angry','shop','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+  +'<div class="game-grid">'+['fourcards','hajabbas','angry','shop','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       if(k==='shop'){
         return '<div class="game-card playable reveal shop-card-in-games" data-k="shop" style="--gc:#d9ae3e;transition-delay:'+Math.min(i*30,400)+'ms" onclick="go(\'shop\')">'
           +'<div class="gcov">'+gcov('shop')+'<span class="gcov-shine"></span><span class="gcov-play">'+ic('shopping-bag',12)+'فروشگاه</span></div>'
@@ -703,7 +707,7 @@ function vGames(){
 function vGame(id){
   const m=GAME_META[id];
   if(!m)return vGames();
-  const area=m.type==='dom'?'<div id="gameDom"></div>':'<canvas id="gameCv"></canvas>';
+  const area=id==='fourcards'?'<div id="fcTableWrap" class="fc-table-wrap"></div>':(m.type==='dom'?'<div id="gameDom"></div>':'<canvas id="gameCv"></canvas>');
   const btns=(m.btns||[]).map(b=>'<button class="btn '+(b.cls||'ghost')+'" data-gk="'+b.k+'" '+(b.hold?'data-hold="1"':'')+'>'+ic(b.i||'zap',15)+b.t+'</button>').join('');
   const rec=m.best?'<span>'+ic('trophy',13)+'رکورد شما: <b>'+faNum(store.get(m.best[0],0))+'</b> '+m.best[1]+'</span>':'';
   const fsBtn='<span class="gi-fs" onclick="toggleGameFS()" title="تمام‌صفحه — Esc یا Backspace برای خروج">'+ic('maximize',14)+' تمام‌صفحه</span>';

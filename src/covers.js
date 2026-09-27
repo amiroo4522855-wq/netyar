@@ -3,6 +3,20 @@
    موتور اختصاصی تمیز + طراحی جذاب + گرادینت سینمایی + سایه + گلو
    ================================================================ */
 const COVERS={
+  'fourcards':()=>'<defs>'
+    +'<linearGradient id="cvfc-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a2a1b"/><stop offset="50" stop-color="#144d32"/><stop offset="100" stop-color="#071f14"/></linearGradient>'
+    +'<radialGradient id="cvfc-felt" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#1b5e3d" stop-opacity="0.8"/><stop offset="100" stop-color="#082215" stop-opacity="0.95"/></radialGradient>'
+    +'<filter id="cvfc-sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.6"/></filter>'
+    +'</defs>'
+    +'<rect width="320" height="200" fill="url(#cvfc-bg)"/>'
+    +'<ellipse cx="160" cy="100" rx="145" ry="85" fill="url(#cvfc-felt)" stroke="rgba(217,174,62,0.3)" stroke-width="2"/>'
+    +'<g filter="url(#cvfc-sh)">'
+      +'<g transform="translate(70,45) rotate(-18 30 45)"><rect width="60" height="90" rx="6" fill="#fff" stroke="#d5dde8" stroke-width="1.5"/><text x="10" y="24" font-family="sans-serif" font-weight="bold" font-size="18" fill="#c22">A</text><path d="M10 28 C8 32 4 35 4 38 A3 3 0 0 0 7 41 C8 41 9.5 40 10 39 C10.5 40 12 41 13 41 A3 3 0 0 0 16 38 C16 35 12 32 10 28 Z" fill="#c22" transform="scale(0.8) translate(1, -2)"/><path d="M30 48 C24 40 14 47 14 55 A8 8 0 0 0 22 63 C25 63 28 61 30 58 C32 61 35 63 38 63 A8 8 0 0 0 46 55 C46 47 36 40 30 48 Z" fill="#c22"/></g>'
+      +'<g transform="translate(130,35) rotate(4 30 45)"><rect width="60" height="90" rx="6" fill="#fff" stroke="#d5dde8" stroke-width="1.5"/><text x="10" y="24" font-family="sans-serif" font-weight="bold" font-size="18" fill="#1a202c">10</text><path d="M30 45 L42 60 L30 75 L18 60 Z" fill="#c22"/></g>'
+      +'<g transform="translate(185,45) rotate(22 30 45)"><rect width="60" height="90" rx="6" fill="#fff" stroke="#d5dde8" stroke-width="1.5"/><text x="10" y="24" font-family="sans-serif" font-weight="bold" font-size="18" fill="#1a202c">J</text><path d="M30 45 C27 49 20 54 20 58 A4 4 0 0 0 24 62 C26 62 27.5 61 28 59 v5 h-2 v2 h8 v-2 h-2 v-5 c0.5 2 2 3 4 3 a4 4 0 0 0 4-4 C38 54 33 49 30 45 Z" fill="#1a202c"/></g>'
+    +'</g>'
+    +'<circle cx="160" cy="165" r="16" fill="rgba(217,174,62,0.2)" stroke="#d9ae3e" stroke-width="1.5"/>'
+    +'<text x="160" y="170" font-family="Vazirmatn, sans-serif" font-weight="900" font-size="12" fill="#ffd76e" text-anchor="middle">۴ برگ</text>',
   'tetris':()=>'<defs>'
     +'<linearGradient id="cvt-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1e3a"/><stop offset="1" stop-color="#0e2e5a"/></linearGradient>'
     +'<linearGradient id="cvt-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4fc3f7"/><stop offset="1" stop-color="#0288d1"/></linearGradient>'

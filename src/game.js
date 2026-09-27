@@ -706,7 +706,8 @@ function gameStart(id){
   if(!eng)return;
   const cv=document.getElementById('gameCv');
   const dom=document.getElementById('gameDom');
-  eng.start(cv||dom);
+  const fc=document.getElementById('fcTableWrap');
+  eng.start(fc||cv||dom);
 }
 function gameStopAll(){
   for(const k in GAME_ENG)GAME_ENG[k].stop();

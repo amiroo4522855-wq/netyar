@@ -2380,3 +2380,122 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 
 /* welcome audio hidden */
 #welcomeAudio{display:none!important}
+
+
+/* ================================================================
+   چهاربرگ — استایل‌های حرفه‌ای میز پاسور، کارت‌ها و انیمیشن‌ها
+   ================================================================ */
+.fc-table-wrap{position:relative;width:100%;max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:14px;user-select:none;-webkit-user-select:none}
+.fc-topbar{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(15,26,46,.85),rgba(9,17,32,.95));border:1px solid rgba(148,180,224,.18);padding:10px 18px;border-radius:18px;box-shadow:0 8px 24px rgba(2,6,18,.4);flex-wrap:wrap;gap:10px}
+.fc-team-score{display:flex;align-items:center;gap:10px;padding:6px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.fc-team-score.team0{border-color:rgba(74,143,226,.3);background:rgba(46,108,184,.15)}
+.fc-team-score.team1{border-color:rgba(224,98,90,.3);background:rgba(199,62,54,.15)}
+.fc-ts-lbl{font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:6px;font-weight:700}
+.fc-ts-val{font-size:18px;font-weight:900;color:#fff}
+.fc-ts-sur{font-size:11px;background:linear-gradient(135deg,#ffd76e,#d9ae3e);color:#1a202c;padding:2px 8px;border-radius:99px;font-weight:900}
+.fc-game-info{display:flex;gap:10px;align-items:center}
+.fc-round-badge,.fc-deck-badge{font-size:11.5px;color:var(--tx2);background:rgba(148,180,224,.08);padding:5px 12px;border-radius:99px;border:1px solid rgba(148,180,224,.12);display:inline-flex;align-items:center;gap:5px;font-weight:800}
+
+/* میز پاسور نمدی سبز */
+.fc-felt-table{position:relative;width:100%;min-height:560px;background:radial-gradient(ellipse at center,#195c3a 0%,#0e3822 65%,#071d12 100%);border:12px solid #2d1c11;border-radius:36px;box-shadow:inset 0 0 60px rgba(0,0,0,.7),0 20px 60px rgba(0,0,0,.6),0 0 0 2px rgba(217,174,62,.3);display:grid;grid-template-areas:". top ." "left center right" ". bottom .";grid-template-columns:120px 1fr 120px;grid-template-rows:120px 1fr 160px;padding:16px;overflow:hidden}
+.fc-table-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(46,196,122,.12) 0%,transparent 70%);pointer-events:none}
+
+/* صندلی‌ها و جایگاه بازیکنان */
+.fc-seat{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:2;transition:all .3s ease}
+.fc-seat.top{grid-area:top;gap:6px}
+.fc-seat.left{grid-area:left;gap:6px}
+.fc-seat.right{grid-area:right;gap:6px}
+.fc-seat.bottom{grid-area:bottom;gap:10px;width:100%}
+.fc-seat-avatar{width:36px;height:36px;border-radius:50%;background:rgba(20,36,66,.8);border:2px solid rgba(217,174,62,.4);display:flex;align-items:center;justify-content:center;color:#ffd76e;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.fc-seat.active-turn .fc-seat-avatar{border-color:#52e396;box-shadow:0 0 16px rgba(82,227,150,.6);transform:scale(1.1)}
+.fc-seat-info{display:flex;flex-direction:column;align-items:center;text-align:center}
+.fc-p-name{font-size:12px;font-weight:850;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.8)}
+.fc-p-cards{font-size:10.5px;color:#a2c9b2;font-weight:700}
+.fc-seat.active-turn .fc-p-cards{color:#52e396;font-weight:900}
+
+/* کارت‌های پشت رو برای حریفان */
+.fc-opponent-cards{display:flex;gap:-18px}
+.fc-opponent-cards.vertical{flex-direction:column;gap:-26px}
+.fc-opponent-cards .fc-card{width:40px;height:58px;transform:scale(.85)}
+
+/* زمین وسط میز */
+.fc-center-ground{grid-area:center;display:flex;align-items:center;justify-content:center;position:relative;border:1.5px dashed rgba(217,174,62,.2);border-radius:24px;margin:10px;background:rgba(0,0,0,.15);box-shadow:inset 0 0 30px rgba(0,0,0,.3)}
+.fc-ground-decor{position:absolute;font-size:28px;font-weight:900;color:rgba(255,255,255,.05);letter-spacing:6px;pointer-events:none}
+.fc-table-cards{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;padding:20px;max-width:85%}
+.fc-ground-card-slot{transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.fc-ground-card-slot:hover{transform:scale(1.08) rotate(0deg)!important;z-index:10}
+.fc-empty-ground{color:rgba(255,255,255,.3);font-size:13px;font-weight:700}
+
+/* دست بازیکن اصلی (پایین) */
+.fc-my-hand-label{display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.fc-turn-prompt{font-size:13px;font-weight:900;color:#ffd76e;background:rgba(9,17,32,.75);padding:4px 16px;border-radius:99px;border:1px solid rgba(217,174,62,.3);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.fc-my-cards{display:flex;justify-content:center;gap:12px;padding:6px}
+.fc-my-card-wrap{transition:transform .2s cubic-bezier(.16,1,.3,1)}
+.fc-my-card-wrap.playable{cursor:pointer}
+.fc-my-card-wrap.playable:hover{transform:translateY(-14px) scale(1.06);z-index:15}
+
+/* استایل کارت‌های پاسور */
+.fc-card{position:relative;width:68px;height:98px;border-radius:8px;background:#fff;border:1px solid #d1d8e0;box-shadow:0 6px 16px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.2);display:flex;flex-direction:column;justify-content:space-between;padding:5px;box-sizing:border-box;transition:all .2s ease}
+.fc-card.face.red{color:#dc2626}
+.fc-card.face.black{color:#1e293b}
+.fc-card-corner{display:flex;flex-direction:column;align-items:center;line-height:1}
+.fc-card-corner.top{align-self:flex-start}
+.fc-card-corner.bottom{align-self:flex-end;transform:rotate(180deg)}
+.fc-c-val{font-size:14px;font-weight:900;font-family:Arial,sans-serif}
+.fc-c-suit{font-size:12px}
+.fc-card-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.fc-main-suit{font-size:26px;opacity:.9}
+
+/* پشت کارت */
+.fc-card.back{background:linear-gradient(135deg,#1e3a8a,#172554);border:2px solid #fff;overflow:hidden}
+.fc-card-back-pattern{position:absolute;inset:2px;border:1px solid rgba(255,255,255,.3);border-radius:4px;background-image:radial-gradient(rgba(255,255,255,.2) 15%,transparent 16%),radial-gradient(rgba(255,255,255,.2) 15%,transparent 16%);background-size:8px 8px;background-position:0 0,4px 4px}
+.fc-card-back-ic{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4)}
+
+/* نوار کنترل پایین */
+.fc-controls-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-radius:18px;background:linear-gradient(135deg,rgba(15,26,46,.85),rgba(9,17,32,.95));border:1px solid rgba(148,180,224,.18);flex-wrap:wrap;gap:12px}
+.fc-ctrl-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fc-ctrl-group label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tx2);font-weight:800}
+.fc-select{background:rgba(4,10,20,.6);border:1.5px solid var(--line2);color:#fff;padding:6px 12px;border-radius:10px;font-family:inherit;font-size:12px;font-weight:800;outline:none;cursor:pointer}
+.fc-select:focus{border-color:#d9ae3e}
+
+/* بنر انیمیشنی سور */
+.fc-sur-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:25;opacity:0;transition:opacity .3s ease}
+.fc-sur-overlay.active{opacity:1}
+.fc-sur-badge{font-size:26px;font-weight:900;padding:16px 36px;border-radius:99px;box-shadow:0 12px 40px rgba(0,0,0,.7);animation:surPop .6s cubic-bezier(.16,1,.3,1)}
+.fc-sur-badge.team0{background:linear-gradient(135deg,#ffd76e,#d9ae3e);color:#111;border:3px solid #fff}
+.fc-sur-badge.team1{background:linear-gradient(135deg,#f87171,#dc2626);color:#fff;border:3px solid #fff}
+@keyframes surPop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+
+/* مودال امتیاز و قوانین */
+.fc-modal-overlay{position:absolute;inset:0;background:rgba(4,10,24,.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:30;padding:20px}
+.fc-modal-overlay.active{display:flex}
+.fc-modal-card{width:min(94vw,560px);background:linear-gradient(165deg,rgba(20,36,66,.96),rgba(12,22,40,.98));border:1px solid rgba(148,180,224,.22);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.7);padding:26px;display:flex;flex-direction:column;gap:18px;max-height:90vh;overflow-y:auto}
+.fc-modal-head{display:flex;align-items:center;gap:14px;border-bottom:1px solid rgba(148,180,224,.12);padding-bottom:14px}
+.fc-modal-ic{width:54px;height:54px;border-radius:16px;background:rgba(217,174,62,.15);border:1px solid rgba(217,174,62,.3);color:#ffd76e;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fc-modal-head h3{font-size:18px;font-weight:900;margin-bottom:4px;color:#fff}
+.fc-modal-head p{font-size:12px;color:var(--tx2);line-height:1.7}
+
+.fc-score-table{display:flex;flex-direction:column;gap:6px;background:rgba(4,10,20,.4);padding:10px;border-radius:14px;border:1px solid rgba(148,180,224,.08)}
+.fc-st-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;align-items:center;padding:8px 10px;border-radius:8px;font-size:12px}
+.fc-st-row.head{font-weight:900;color:var(--tx3);background:rgba(148,180,224,.06);border-bottom:1px solid rgba(148,180,224,.1)}
+.fc-st-row span{color:var(--tx2)}
+.fc-st-row b{color:#fff;font-weight:800;text-align:center}
+.fc-st-row.total{background:rgba(74,143,226,.15);border-top:1px dashed rgba(74,143,226,.3);font-weight:900}
+.fc-st-row.grand{background:rgba(217,174,62,.15);border:1px solid rgba(217,174,62,.3);color:#ffd76e}
+.fc-st-row.grand b{color:#ffd76e;font-size:15px}
+
+.fc-rules-body{display:flex;flex-direction:column;gap:12px;font-size:12px;line-height:1.9;color:var(--tx2)}
+.fc-rule-item{background:rgba(148,180,224,.05);padding:10px 14px;border-radius:12px;border:1px solid rgba(148,180,224,.08)}
+.fc-rule-item b{color:#fff;display:block;margin-bottom:4px}
+.fc-rule-item ul{margin:4px 18px 0;padding:0}
+.fc-modal-acts{display:flex;justify-content:flex-end;gap:10px;margin-top:6px}
+
+/* ریسپانسیو برای موبایل */
+@media(max-width:768px){
+  .fc-felt-table{min-height:480px;grid-template-columns:70px 1fr 70px;grid-template-rows:90px 1fr 130px;padding:8px;border-width:8px}
+  .fc-card{width:48px;height:72px;padding:3px}
+  .fc-c-val{font-size:11px}
+  .fc-main-suit{font-size:18px}
+  .fc-opponent-cards .fc-card{width:30px;height:44px}
+  .fc-st-row{font-size:11px;grid-template-columns:1.2fr 1fr 1fr}
+}
