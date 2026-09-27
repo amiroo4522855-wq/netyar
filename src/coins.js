@@ -44,6 +44,12 @@ function coinAdd(amount, reason){
     if(el){ el.classList.add('pop'); setTimeout(()=>el.classList.remove('pop'),400); el.textContent=faNum(next); }
     const el2=document.getElementById('coinBalShop');
     if(el2){ el2.textContent=faNum(next); }
+    // انیمیشن پرتاب سکه طلایی و پرواز عدد سکه
+    const flyWrap = document.createElement('div');
+    flyWrap.className = 'fly-coin-reward';
+    flyWrap.innerHTML = '<span class="fcr-coin">'+ic('coins',28)+'</span><b class="fcr-text">+'+faNum(amount)+' سکه!</b>';
+    document.body.appendChild(flyWrap);
+    setTimeout(()=>{ flyWrap.remove(); }, 1200);
   }catch(e){}
   try{gSfx('win');}catch(e){}
   return next;

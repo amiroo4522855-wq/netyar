@@ -381,7 +381,10 @@ svg.fill path{fill:currentColor}
 .soon-badge .d{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 1.6s infinite}
 
 /* ============ بازی‌ها ============ */
-.game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:15px}
+.game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+@media(min-width:1024px){
+  .game-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+}
 .game-card{position:relative;padding:26px 18px 20px;border-radius:19px;cursor:pointer;text-align:center;overflow:hidden;
   background:linear-gradient(170deg,rgba(148,180,224,.07),rgba(148,180,224,.02));border:1px solid var(--line);transition:all .28s}
 .game-card:hover{transform:translateY(-6px);border-color:rgba(74,143,226,.5);box-shadow:0 22px 46px -12px rgba(46,108,184,.3)}
@@ -1362,13 +1365,12 @@ blockquote p{margin:4px 0;color:var(--tx2)}
   animation: vEnterPremium .68s cubic-bezier(.16,1,.3,1) forwards;
 }
 @keyframes vLeavePremium{
-  0%{opacity:1;transform:translateY(0) scale(1);filter:blur(0) saturate(1)}
-  100%{opacity:0;transform:translateY(-18px) scale(.96);filter:blur(8px) saturate(.8)}
+  0%{opacity:1;transform:translateY(0)}
+  100%{opacity:0;transform:translateY(-12px)}
 }
 @keyframes vEnterPremium{
-  0%{opacity:0;transform:translateY(28px) scale(.96);filter:blur(14px) saturate(.85)}
-  40%{opacity:1}
-  100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0) saturate(1)}
+  0%{opacity:0;transform:translateY(16px)}
+  100%{opacity:1;transform:none;filter:none}
 }
 /* استگر داخلی برای المان‌های داخل نما */
 .content.v-enter .sec-head{animation: vEnterInner .6s cubic-bezier(.16,1,.3,1) both .06s}
@@ -1784,7 +1786,8 @@ body.sb-open .main{margin-inline-end:var(--side)}
   .sidebar.closed{transform:translateX(106%) scale(.97)}
   .menu-btn{width:42px;height:42px;border-radius:12px}
   body.sb-open{overflow:hidden}
-  body.sb-open .sb-overlay{opacity:1}
+  body.sb-open .sb-overlay{opacity:1;pointer-events:auto}
+  body:not(.sb-open) .sb-overlay{opacity:0;pointer-events:none;display:none}
   .main{margin-inline-end:0!important}
 }
 @media (max-width:560px){
@@ -2571,6 +2574,96 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 .mm-info span{font-size:11px;color:var(--tx3)}
 .mm-play{font-size:11px;font-weight:850;color:#ffd76e;background:rgba(217,174,62,.15);border:1px solid rgba(217,174,62,.3);padding:6px 12px;border-radius:99px;display:flex;align-items:center;gap:4px;flex-shrink:0}
 
+.content{
+  position:relative;
+  filter:none!important;
+}
+.content:not(.v-enter):not(.v-leave){
+  filter:none!important;
+  transform:none!important;
+}
+
+/* میانبرهای پیشخوان سریع متصدی */
+.cafe-shortcuts-wrap{margin:28px 0 34px;background:linear-gradient(135deg,rgba(16,32,58,.8),rgba(8,18,34,.95));border:1.5px solid rgba(217,174,62,.25);border-radius:24px;padding:24px;box-shadow:0 18px 48px rgba(0,0,0,.45)}
+.csw-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.csw-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:900;color:var(--gold2);background:rgba(217,174,62,.12);border:1px solid rgba(217,174,62,.3);padding:5px 14px;border-radius:99px}
+.csw-head h3{font-size:18px;font-weight:900;color:#fff;margin:0}
+.csw-note{font-size:12px;color:var(--tx3);margin-inline-start:auto}
+.csw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.csw-btn{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(148,180,224,.12);text-decoration:none;color:var(--tx);transition:all .22s cubic-bezier(.16,1,.3,1)}
+.csw-btn:hover{background:rgba(255,255,255,.07);border-color:var(--sc-col);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.35),0 0 16px color-mix(in srgb,var(--sc-col) 22%,transparent)}
+.csw-ic{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.csw-info{display:flex;flex-direction:column;min-width:0;flex:1}
+.csw-info b{font-size:13px;font-weight:850;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.csw-info span{font-size:11px;color:var(--tx3);margin-top:2px}
+.csw-go{color:var(--tx3);transition:transform .2s;flex-shrink:0}
+.csw-btn:hover .csw-go{color:var(--sc-col);transform:translateX(-3px)}
+
+/* نشان پیشنهاد متصدی کافی‌نت */
+.motasadi-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:850;color:#ffd76e;background:rgba(217,174,62,.15);border:1px solid rgba(217,174,62,.35);padding:2px 8px;border-radius:99px;margin-inline-start:6px;vertical-align:middle}
+
+
+/* انیمیشن پرتاب سکه و پریدن عدد بعد از برد */
+.fly-coin-reward{
+  position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);z-index:9999;
+  display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;
+  animation:flyCoinPop 1.1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.fcr-coin{
+  width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ffd76e,#d9ae3e);
+  color:#101a2e;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 30px rgba(255,215,110,.8),0 10px 24px rgba(0,0,0,.5);
+  animation:fcrSpin 1s ease-in-out;
+}
+.fcr-text{
+  font-size:22px;font-weight:900;color:#ffd76e;
+  text-shadow:0 0 20px rgba(255,215,110,.8),0 4px 10px rgba(0,0,0,.8);
+}
+@keyframes flyCoinPop{
+  0%{opacity:0;transform:translate(-50%,20px) scale(.5)}
+  25%{opacity:1;transform:translate(-50%,-30px) scale(1.2)}
+  70%{opacity:1;transform:translate(-50%,-60px) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-100px) scale(.8)}
+}
+@keyframes fcrSpin{
+  0%{transform:rotateY(0deg)}
+  100%{transform:rotateY(720deg)}
+}
+
+
+/* بنر ویژه بازی هفته (توربو رانر) */
+.g-banner-featured{
+  position:relative;margin-bottom:28px;border-radius:26px;overflow:hidden;
+  border:1.5px solid rgba(217,174,62,.35);cursor:pointer;
+  background:linear-gradient(135deg,rgba(10,24,46,.95),rgba(4,12,24,.98));
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:32px 36px;box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 35px rgba(2,132,199,.2);
+  transition:all .32s cubic-bezier(.16,1,.3,1);
+}
+.g-banner-featured:hover{
+  transform:translateY(-4px);border-color:#ffd76e;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 45px rgba(2,132,199,.35);
+}
+.gbf-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;z-index:2}
+.gbf-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:900;color:var(--gold2);background:rgba(217,174,62,.15);border:1px solid rgba(217,174,62,.3);padding:5px 14px;border-radius:99px;width:fit-content}
+.gbf-content h2{font-size:24px;font-weight:900;color:#fff;margin:0}
+.gbf-content p{font-size:13.5px;color:var(--tx2);line-height:1.8;margin:0;max-width:560px}
+.gbf-acts{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+.gbf-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--tx3);font-weight:700}
+.gbf-visual{width:180px;height:140px;border-radius:20px;overflow:hidden;flex-shrink:0;box-shadow:0 14px 34px rgba(0,0,0,.5);border:1px solid rgba(148,180,224,.2)}
+@media(max-width:768px){
+  .g-banner-featured{flex-direction:column;align-items:flex-start;padding:22px}
+  .gbf-visual{width:100%;height:140px}
+}
+
+/* فیلتر بار دسته‌بندی بازی‌ها */
+.g-filter-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0 24px;background:rgba(12,24,44,.6);border:1px solid rgba(148,180,224,.12);padding:10px 16px;border-radius:18px}
+.g-filter-lbl{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:850;color:var(--gold2)}
+.g-filter-group{display:flex;gap:8px;flex-wrap:wrap}
+.g-filter-btn{padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(148,180,224,.15);color:var(--tx2);font-size:12px;font-weight:800;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .2s ease}
+.g-filter-btn:hover{background:rgba(255,255,255,.08);color:#fff;transform:translateY(-1px)}
+.g-filter-btn.active{background:rgba(217,174,62,.18);border-color:#ffd76e;color:#ffd76e;box-shadow:0 0 14px rgba(217,174,62,.25)}
+
 </style>
 </head>
 <body>
@@ -3097,7 +3190,7 @@ const SITES_P8=[
 ["نورمگز","noormags.ir","book","آرشیو مقالات و مجلات علمی فارسی"],
 ["مگیران","magiran.com","book","بانک مقالات نشریات علمی ایران"],
 ["گنج","ganj.irandoc.ac.ir","book","پایگاه گردآوری پایان‌نامه‌های ایران"],
-["دیوار","divar.ir","car","بزرگ‌ترین سامانهٔ آگهی املاک، خودرو و کالا"],
+["دیوار","divar.ir","life","بزرگ‌ترین سامانهٔ نیازمندی، آگهی املاک، خودرو و کالا"],
 ["شیپور","sheypoor.com","car","آگهی خرید و فروش در شهر تو"],
 ["باما","bama.ir","car","خرید، فروش و قیمت روز خودرو"],
 ["خودرو ۴۵","khodro45.com","car","استعلام قیمت و آگهی ماشین"],
@@ -3189,14 +3282,14 @@ const SITES_P10=[
 const SITES_P11=[
 ["سامانه ثنا","sana.adliran.ir","iran","ابلاغ الکترونیک قضایی و پیگیری پرونده‌ها - قوه قضاییه"],
 ["ابلاغ الکترونیک","eblagh.adliran.ir","iran","سامانه ابلاغ دادگستری — مشاهده ابلاغیه‌ها"],
-["عدل ایران","adliran.ir","iran","درگاه جامع خدمات الکترونیک قضایی"],
+["اسکای‌روم","skyroom.online","tools","پلتفرم بومی وبینار، کلاس آنلاین و جلسات تصویری"],
 ["دولت من — درگاه هوشمند","my.gov.ir","iran","پنجره ملی خدمات دولت هوشمند — همه خدمات یک‌جا"],
 ["دولت همراه","mob.gov.ir","iran","اپلیکیشن دولت همراه — خدمات دولت روی موبایل"],
 ["سامانه سخا","sakha.epolice.ir","iran","خدمات الکترونیک انتظامی — پلیس +۱۰ آنلاین"],
 ["نوبت‌دهی تعویض پلاک","nobatdehi.epolice.ir","iran","نوبت‌دهی اینترنتی تعویض پلاک و خدمات راهور"],
-["استعلام خلافی خودرو","rahvar120.ir","iran","استعلام و پرداخت خلافی خودرو آنلاین — راهور ۱۲۰"],
+["گوگل میت","meet.google.com","tools","جلسات تصویری و ویدیویی آنلاین بدون محدودیت"],
 ["سامانه همتا","hamta.ntsw.ir","iran","رجیستری گوشی و استعلام اصالت موبایل"],
-["سامانه سجام","sejam.ir","iran","ثبت‌نام و احراز هویت در بازار سرمایه — سجام"],
+["تپسی","tapsi.ir","car","تاکسی اینترنتی، پیک آنلاین و خدمات شهری تپسی"],
 ["سهام عدالت","sahamedalat.ir","iran","مشاهده و مدیریت سهام عدالت"],
 ["سامانه یارانه — حمایت","hemayat.mcls.gov.ir","iran","پیگیری یارانه معیشتی و اعتراض"],
 ["سامانه رفاهی","refahi.ir","iran","استعلام یارانه و دهک‌بندی خانوار"],
@@ -3207,26 +3300,26 @@ const SITES_P11=[
 ["روزنامه رسمی","rrk.ir","iran","آگهی‌های رسمی شرکت‌ها و روزنامه رسمی کشور"],
 ["ثبت شرکت‌ها","irsherkat.ssaa.ir","iran","ثبت شرکت و مؤسسات غیرتجاری آنلاین"],
 ["ثبت احوال — سامانه هویت","ncr.ir","iran","سازمان ثبت احوال — کارت ملی و شناسنامه"],
-["سامانه ثبت احوال","sabteahval.ir","iran","خدمات ثبت احوال — گواهی و استعلام"],
-["پست ایران","post.ir","iran","شرکت ملی پست — خدمات پستی"],
+["زوم","zoom.us","tools","بستر جهانی جلسات کاری، کنفرانس و وبینار تصویری"],
+["تودوایست","todoist.com","tools","مدیریت کارهای روزمره، لیست انجام کار و تسک منیجر پیشرفته"],
 ["رهگیری پست","tracking.post.ir","iran","رهگیری مرسولات پستی با کد رهگیری"],
 ["برق من","bargheman.com","iran","مشاهده و پرداخت قبض برق — برق من"],
 ["توانیر","tavanir.org.ir","iran","شرکت توانیر — مدیریت برق ایران"],
-["شرکت گاز","nigc.ir","iran","شرکت ملی گاز ایران — پرداخت و خدمات"],
+["سامانه شاهکار","shahkar.cra.ir","iran","استعلام تعداد سیم‌کارت‌های به نام و تطبیق مالکیت شماره"],
 ["آب و فاضلاب","abfa.ir","iran","شرکت آب و فاضلاب — پرداخت قبض آب"],
 ["بانک ملی — بام","my.bmi.ir","bank","سامانه بام بانک ملی — اینترنت بانک"],
-["بانک ملت — بانکداری","bankmellat.ir","bank","بانک ملت — خدمات اینترنتی و همراه بانک"],
-["بانک صادرات","bsi.ir","bank","بانک صادرات ایران — اینترنت بانک"],
-["بانک تجارت","tejaratbank.ir","bank","بانک تجارت — همراه بانک و پرداخت"],
+["تکنولایف","technolife.ir","shop","فروشگاه تخصصی گوشی موبایل، لپ‌تاپ و کالای دیجیتال"],
+["مقداد آی‌تی","meghdadit.com","shop","مرکز تخصصی قطعات کامپیوتر، لپ‌تاپ و ماشین‌های اداری"],
+["تخفیفان","takhfifan.com","shop","سامانه رزرو بلیت، تورهای تفریحی و کدهای تخفیف"],
 ["بانک سپه","banksepah.ir","bank","بانک سپه — اولین بانک ایرانی"],
-["بانک پارسیان","parsian-bank.ir","bank","بانک پارسیان — بانکداری الکترونیک"],
-["بانک پاسارگاد","bpi.ir","bank","بانک پاسارگاد — بانکداری نوین"],
+["پیام‌رسان گپ","gap.im","social","پیام‌رسان ابری ایرانی با امکانات مالی، بات و تماس صوتی و تصویری"],
+["ایمیل موقت ۱۰ دقیقه‌ای","10minutemail.com","tools","سرویس سریع ساخت ایمیل یکبار مصرف ۱۰ دقیقه‌ای بدون ثبت‌نام"],
 ["بانک آینده","ba24.ir","bank","بانک آینده — خدمات آنلاین"],
 ["ایران خودرو — فروش","esale.ikco.ir","iran","ثبت‌نام و فروش محصولات ایران خودرو"],
 ["سایپا — فروش","saipa.iranecar.com","iran","فروش اینترنتی محصولات سایپا"],
-["همراه اول","mci.ir","iran","همراه اول — شارژ و خدمات سیم‌کارت"],
-["ایرانسل","irancell.ir","iran","ایرانسل — بسته اینترنت و شارژ"],
-["رایتل","rightel.ir","iran","رایتل — اپراتور سوم کشور"],
+["همراه من","my.mci.ir","iran","سامانه جامع خدمات الکترونیک همراه اول — خرید بسته و صورتحساب"],
+["ایرانسل من","my.irancell.ir","iran","سامانه مدیریت حساب کاربری، شارژ و بسته اینترنت ایرانسل"],
+["رایتل من","my.rightel.ir","iran","سامانه مدیریت سیم‌کارت و خدمات مشترکین رایتل"],
 ["سامانه شاد","shad.ir","learn","شبکه آموزشی دانش‌آموزی شاد"],
 ["سامانه سیدا","sida.medu.ir","learn","سامانه دانش‌آموزی سیدا — آموزش و پرورش"],
 ["سامانه کارا","kara.mcls.gov.ir","job","سامانه تسهیلات اشتغال روستایی و فراگیر"],
@@ -11132,6 +11225,12 @@ function coinAdd(amount, reason){
     if(el){ el.classList.add('pop'); setTimeout(()=>el.classList.remove('pop'),400); el.textContent=faNum(next); }
     const el2=document.getElementById('coinBalShop');
     if(el2){ el2.textContent=faNum(next); }
+    // انیمیشن پرتاب سکه طلایی و پرواز عدد سکه
+    const flyWrap = document.createElement('div');
+    flyWrap.className = 'fly-coin-reward';
+    flyWrap.innerHTML = '<span class="fcr-coin">'+ic('coins',28)+'</span><b class="fcr-text">+'+faNum(amount)+' سکه!</b>';
+    document.body.appendChild(flyWrap);
+    setTimeout(()=>{ flyWrap.remove(); }, 1200);
   }catch(e){}
   try{gSfx('win');}catch(e){}
   return next;
@@ -12278,8 +12377,31 @@ function enterSite(st){
     else toast('آدرس: <span class="turl">'+esc(fullUrl(st.u))+'</span>','info');
   });
 }
+function getTodayVisits(){
+  const today = new Date().toISOString().slice(0, 10);
+  try{
+    const d = JSON.parse(localStorage.getItem('ny_visits_today') || '{}');
+    return d.date === today ? (d.count || 0) : 0;
+  }catch(e){ return 0; }
+}
+function incTodayVisits(){
+  const today = new Date().toISOString().slice(0, 10);
+  try{
+    let count = getTodayVisits() + 1;
+    localStorage.setItem('ny_visits_today', JSON.stringify({date: today, count}));
+    const el = document.getElementById('todayVisitsCount');
+    if(el) el.textContent = faNum(count);
+  }catch(e){}
+}
+
+const MOTASADI_DOMS = new Set([
+  'sana.adliran.ir','rahvar120.ir','divar.ir','snappfood.ir','chatgpt.com',
+  'speedtest.net','my.gov.ir','sakha.epolice.ir','digikala.com','aparat.com','skyroom.online'
+]);
+
 function openSite(id,ev){
   const st=SITES[id];
+  incTodayVisits();
   if(ev&&ev.currentTarget&&ev.currentTarget.classList){
     const c=ev.currentTarget;
     c.classList.remove('pressed');void c.offsetWidth;c.classList.add('pressed');
@@ -12332,7 +12454,7 @@ function siteCard(st,q,i){
   return '<article class="card" onclick="openSite('+st.id+',event)" title="کلیک = ورود آنی + کپی آدرس">'
     +'<div class="av" style="--cc:'+col+';--csh:'+col+'66">'+ic(cat.i,20)+'</div>'
     +'<div class="meta">'
-      +'<div class="nm">'+hi(st.n,q)+(isFav?'<span class="on-star">'+ic('star',12,'fill')+'</span>':'')+'</div>'
+      +'<div class="nm">'+hi(st.n,q)+(MOTASADI_DOMS.has(st.u)?'<span class="motasadi-badge" title="پیشنهاد رسمی متصدی کافی‌نت">'+ic('sparkles',11)+'پیشنهاد متصدی</span>':'')+(isFav?'<span class="on-star">'+ic('star',12,'fill')+'</span>':'')+'</div>'
       +'<div class="url">'+esc(st.u)+'</div>'
     +'</div>'
     +'<div class="desc">'+hi(st.d,q)+'</div>'
@@ -12485,11 +12607,37 @@ function vHome(){
       +'<div class="stats">'
         +'<div class="stat"><span class="sic">'+ic('globe',17)+'</span><div><div class="n"><span class="count" data-n="'+SITES.length+'">۰</span><em>+</em></div><div class="l">سایت کاربردی</div></div></div>'
         +'<div class="stat gold"><span class="sic">'+ic('layers',17)+'</span><div><div class="n"><span class="count" data-n="'+Object.keys(CATS).length+'">۰</span></div><div class="l">دسته‌بندی رسمی</div></div></div>'
-        +'<div class="stat green"><span class="sic">'+ic('activity',17)+'</span><div><div class="n">زنده</div><div class="l">جستجوی موزیک واقعی</div></div></div>'
+        +'<div class="stat green"><span class="sic">'+ic('activity',17)+'</span><div><div class="n"><span id="todayVisitsCount">'+faNum(getTodayVisits())+'</span></div><div class="l">امروز باز شد (زنده)</div></div></div>'
         +'<div class="stat"><span class="sic">'+ic('shield',17)+'</span><div><div class="n">۱۰۰٪</div><div class="l">رایگان و بدون تبلیغ</div></div></div>'
       +'</div>'
     +'</div>'
     +heroVisual()
+  +'</section>'
+  +'<section class="cafe-shortcuts-wrap">'
+    +'<div class="csw-head">'
+      +'<span class="csw-badge">'+ic('zap',13)+'پیشخوان سریع متصدی</span>'
+      +'<h3>میانبرهای پرکاربرد مراجعین کافی‌نت</h3>'
+      +'<span class="csw-note">کلیک مستقیم = ورود فوری و بدون معطلی به سامانه</span>'
+    +'</div>'
+    +'<div class="csw-grid">'
+      +[
+        {n:'سامانه ثنا', u:'sana.adliran.ir', i:'shield', c:'#3b82f6', d:'ابلاغ قضایی'},
+        {n:'استعلام خلافی', u:'rahvar120.ir', i:'alert', c:'#ef4444', d:'پلیس راهور ۱۲۰'},
+        {n:'دیوار', u:'divar.ir', i:'grid', c:'#e11d48', d:'آگهی و نیازمندی'},
+        {n:'اسنپ‌فود', u:'snappfood.ir', i:'coffee', c:'#ec4899', d:'سفارش آنلاین غذا'},
+        {n:'چت‌جی‌پی‌تی', u:'chatgpt.com', i:'cpu', c:'#10b981', d:'هوش مصنوعی OpenAI'},
+        {n:'تست سرعت', u:'speedtest.net', i:'activity', c:'#06b6d4', d:'اسپیدتست اوکلا'},
+        {n:'سامانه سخا', u:'sakha.epolice.ir', i:'file-text', c:'#8b5cf6', d:'پلیس +۱۰ آنلاین'},
+        {n:'دولت من', u:'my.gov.ir', i:'layers', c:'#d9ae3e', d:'پنجره ملی خدمات'}
+      ].map(sc => '<a class="csw-btn" href="'+fullUrl(sc.u)+'" target="_blank" rel="noopener" onclick="incTodayVisits();copyText(fullUrl(\''+sc.u+'\'));toast(\'ورود به '+sc.n+' — آدرس کپی شد\',\'log-in\')" style="--sc-col:'+sc.c+'">'
+        +'<span class="csw-ic" style="color:'+sc.c+'">'+ic(sc.i,22)+'</span>'
+        +'<div class="csw-info">'
+          +'<b>'+sc.n+'</b>'
+          +'<span>'+sc.d+'</span>'
+        +'</div>'
+        +'<span class="csw-go">'+ic('external-link',13)+'</span>'
+      +'</a>').join('')
+    +'</div>'
   +'</section>'
   +secHead('trending-up','blue','پرطرفدارها','پرکلیک‌ترین سایت‌های کافی‌نت')
   +'<div class="strip-wrap"><div class="strip">'+feat.map((s,i)=>siteCard(s,'',i)).join('')+'</div></div>'
@@ -12788,13 +12936,59 @@ document.addEventListener('fullscreenchange',()=>{updateFSBtn(); try{document.bo
 document.addEventListener('webkitfullscreenchange',()=>{updateFSBtn(); setTimeout(resizeGameCanvas,120);});
 window.addEventListener('resize',()=>{ if(isGameFS()) resizeGameCanvas(); });
 
+
+let GAME_FILTER = 'all';
+function setGameFilter(cat){
+  GAME_FILTER = cat;
+  const btns = document.querySelectorAll('.g-filter-btn');
+  btns.forEach(b => b.classList.toggle('active', b.dataset.f === cat));
+  const cards = document.querySelectorAll('.game-grid .game-card');
+  cards.forEach(c => {
+    const k = c.dataset.k;
+    if(!k || cat === 'all'){ c.style.display = ''; return; }
+    const isArcade = ['turbo','dino','flappy','breakout','bubble','angry','snake','hajabbas','react'].includes(k);
+    const isPuzzle = ['tetris','2048','ttt','memory','mines','puzzle','word','chess','tower','coin','dice'].includes(k);
+    const isIranian = ['fourcards','hajabbas','dino','word'].includes(k);
+    let match = false;
+    if(cat === 'arcade' && isArcade) match = true;
+    if(cat === 'puzzle' && isPuzzle) match = true;
+    if(cat === 'iranian' && isIranian) match = true;
+    if(k === 'shop') match = true;
+    c.style.display = match ? '' : 'none';
+  });
+}
+
+function bannerTurboFeatured(){
+  return '<div class="g-banner-featured" onclick="go(\'game-turbo\')" role="button" title="بازی ویژه هفته — توربو رانر">'
+    +'<div class="gbf-bg"><div class="gbf-glow"></div></div>'
+    +'<div class="gbf-content">'
+      +'<span class="gbf-badge">'+ic('zap',13)+'بازی ویژه هفته — انتخاب کافی‌نت</span>'
+      +'<h2>توربو رانر (Turbo Runner) — پلتفرمر سرعتی</h2>'
+      +'<p>فیزیک واقعی مومنتوم، دابل‌جامپ، شتاب سرسام‌آور دش، رول زمینی، فنرها و باس‌فایت‌های نفس‌گیر در ۶ دنیای متفاوت!</p>'
+      +'<div class="gbf-acts">'
+        +'<button class="btn gold">'+ic('play',16)+'شروع بازی سرعتی</button>'
+        +'<span class="gbf-tag">'+ic('wind',14)+'۶۰ فریم بر ثانیه · بدون لگ</span>'
+      +'</div>'
+    +'</div>'
+    +'<div class="gbf-visual">'+gcov('turbo')+'</div>'
+  +'</div>';
+}
 function vGames(){
   return '<section class="soon-hero" style="margin-bottom:18px"><span class="soon-badge live"><span class="d"></span> '+faNum(Object.keys(GAME_META).length)+' بازی کامل — همین حالا بازی کن!</span>'
     +'<h2>بازی‌خانهٔ کافی‌نت</h2>'
     +'<p>قهوه‌ات را بردار و بازی کن — بدون نصب، بدون انتظار، همه با کیبورد و لمس. رکوردهایت روی همین دستگاه ذخیره می‌شود!</p>'
     +'<span class="big">'+ic('gamepad',86)+'</span></section>'
-  +'<div class="g-showcase">'+bannerDino()+bannerTower()+'</div>'
-  +secHead('gamepad','blue','بازی‌ها + فروشگاه','همگی کامل و قابل بازی — فروشگاه هم اینجاست!')
+  +bannerTurboFeatured()
+  +'<div class="g-filter-bar">'
+    +'<div class="g-filter-lbl">'+ic('filter',14)+'دسته‌بندی بازی‌ها:</div>'
+    +'<div class="g-filter-group">'
+      +'<button class="g-filter-btn'+(GAME_FILTER==='all'?' active':'')+'" data-f="all" onclick="setGameFilter(\'all\')">همه بازی‌ها</button>'
+      +'<button class="g-filter-btn'+(GAME_FILTER==='arcade'?' active':'')+'" data-f="arcade" onclick="setGameFilter(\'arcade\')">'+ic('zap',12)+'آرکید و سرعتی</button>'
+      +'<button class="g-filter-btn'+(GAME_FILTER==='puzzle'?' active':'')+'" data-f="puzzle" onclick="setGameFilter(\'puzzle\')">'+ic('cpu',12)+'فکری و استراتژیک</button>'
+      +'<button class="g-filter-btn'+(GAME_FILTER==='iranian'?' active':'')+'" data-f="iranian" onclick="setGameFilter(\'iranian\')">'+ic('heart',12)+'بازی‌های ایرانی</button>'
+    +'</div>'
+  +'</div>'
+  +secHead('gamepad','blue','ویترین بازی‌ها و فروشگاه','گرید یکپارچه، سبک، روان و پرسرعت')
   +'<div class="game-grid">'+['turbo','fourcards','hajabbas','angry','shop','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       if(k==='shop'){
         return '<div class="game-card playable reveal shop-card-in-games" data-k="shop" style="--gc:#d9ae3e;transition-delay:'+Math.min(i*30,400)+'ms" onclick="go(\'shop\')">'
@@ -13663,7 +13857,12 @@ function render(){
         el.style.transitionDelay=Math.min(i*38,420)+'ms';
       });
     }
-    renderTimer=setTimeout(()=>{oldC.classList.remove('v-enter');if(!isTestEnv)oldC.querySelectorAll('.reveal').forEach(el=>el.style.transitionDelay='');renderTimer=0;},enterMs);
+    renderTimer=setTimeout(()=>{
+      oldC.classList.remove('v-enter');
+      oldC.style.filter='none';
+      if(!isTestEnv)oldC.querySelectorAll('.reveal').forEach(el=>el.style.transitionDelay='');
+      renderTimer=0;
+    },Math.min(enterMs, 220));
   },leaveMs);
 }
 let renderTimer=0;
