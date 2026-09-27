@@ -2989,6 +2989,77 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 .cpo-modal p{font-size:12.5px;color:var(--tx2);margin:0 0 20px}
 .cpo-acts{display:flex;flex-direction:column;gap:10px}
 
+
+/* تم‌های اختصاصی صفحه کیلومتر هر خودرو */
+.cr-speedo-hud.theme-dena-digital .csh-dial{
+  border-color: #38bdf8;
+  box-shadow: 0 16px 40px rgba(0,0,0,.7), 0 0 25px rgba(56,189,248,.3);
+}
+.cr-speedo-hud.theme-dena-digital .csh-speed-num{
+  color: #38bdf8;
+  text-shadow: 0 0 20px rgba(56,189,248,.6);
+}
+.cr-speedo-hud.theme-dena-digital .csh-unit{
+  color: #7dd3fc;
+}
+
+.cr-speedo-hud.theme-pars-sport .csh-dial{
+  border-color: #ef4444;
+  box-shadow: 0 16px 40px rgba(0,0,0,.7), 0 0 25px rgba(239,68,68,.3);
+}
+.cr-speedo-hud.theme-pars-sport .csh-speed-num{
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(239,68,68,.6);
+}
+.cr-speedo-hud.theme-pars-sport .csh-unit{
+  color: #f87171;
+}
+
+.cr-speedo-hud.theme-paykan-classic .csh-dial{
+  border-color: #d97706;
+  background: linear-gradient(135deg,rgba(30,20,10,.95),rgba(15,10,5,.98));
+  box-shadow: 0 16px 40px rgba(0,0,0,.7), 0 0 25px rgba(217,119,6,.3);
+}
+.cr-speedo-hud.theme-paykan-classic .csh-speed-num{
+  color: #fbbf24;
+  text-shadow: 0 0 18px rgba(251,191,36,.6);
+}
+.cr-speedo-hud.theme-paykan-classic .csh-unit{
+  color: #f59e0b;
+}
+
+.csh-car-brand{
+  font-size: 11px;
+  font-weight: 850;
+  color: var(--tx3);
+  margin-bottom: 2px;
+}
+
+/* کلید انتخاب گیربکس در منو */
+.cr-trans-selector{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15,26,46,.6);
+  border: 1px solid rgba(148,180,224,.15);
+  padding: 10px 18px;
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  flex-wrap: wrap;
+}
+.cts-lbl{
+  font-size: 12.5px;
+  font-weight: 850;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cts-btns{
+  display: flex;
+  gap: 8px;
+}
+
 </style>
 </head>
 <body>
@@ -9753,8 +9824,9 @@ window.tbRestart = tbRestart;
 window.tbToggleSound = tbToggleSound;
 
 /* ================================================================
-   بازی ماشین‌سواری ایرانی پرمیوم — «رانندگی در شهر» (Speed City Racing) v23.0
-   دنا، پژو پارس، پیکان — فیزیک واقعی، کیلومترشمار، گیربکس، گاراژ، مپ‌ها و هوش مصنوعی
+   بازی ماشین‌سواری ایرانی پرمیوم — «رانندگی در شهر» (Speed City Racing) v23.5
+   دنا، پژو پارس، پیکان — فیزیک نرم، کیلومترشمار اختصاصی هر خودرو، گیربکس اتومات/دنده‌ای،
+   گرافیک با جزئیات بالا، دوربین‌های نرم و صدای غرش موتور وب‌آودیو
    ================================================================ */
 'use strict';
 
@@ -9764,43 +9836,47 @@ const CR_CARS = [
     name: 'دنا پلاس توربو',
     enName: 'Dena Plus Turbo',
     cls: 'سدان اسپرت مدرن',
-    desc: 'موتور EF7 توربوشارژ، شتاب عالی، آیرودینامیک تیز و چراغ‌های هدلایت نئونی',
+    desc: 'موتور EF7 توربوشارژ، شتاب عالی، آیرودینامیک تیز، چراغ‌های لوزی و پشت آمپر دیجیتال نئونی فیروزه‌ای',
     price: 0,
-    topSpeed: 215,
-    accel: 0.28,
-    brake: 0.42,
-    handling: 0.048,
-    grip: 0.94,
+    topSpeed: 220,
+    accel: 0.30,
+    brake: 0.44,
+    handling: 0.050,
+    grip: 0.95,
     weight: 1260,
-    power: 150,
+    power: 155,
     defaultColor: '#e2e8f0',
     colors: ['#e2e8f0', '#0f172a', '#b91c1c', '#1e3a8a', '#d9ae3e'],
-    soundPitch: 1.15
+    soundPitch: 1.18,
+    dialTheme: 'dena-digital',
+    accentCol: '#38bdf8'
   },
   {
     id: 'pars',
     name: 'پژو پارس ELX',
     enName: 'Peugeot Pars ELX',
     cls: 'سدان اصیل و پرطرفدار',
-    desc: 'موتور پرشتاب زانتیا (XUM)، پایداری بالا در پیچ‌ها، جلوپنجره کلاسیک و بدنه آیرودینامیک',
+    desc: 'موتور پرشتاب زانتیا (XUM)، پایداری بالا در پیچ‌ها، جلوپنجره کلاسیک و کیلومترشمار اسپرت با نورپردازی یخی و قرمز',
     price: 40,
-    topSpeed: 205,
-    accel: 0.26,
-    brake: 0.40,
-    handling: 0.052,
-    grip: 0.92,
+    topSpeed: 208,
+    accel: 0.27,
+    brake: 0.41,
+    handling: 0.053,
+    grip: 0.93,
     weight: 1190,
-    power: 135,
+    power: 138,
     defaultColor: '#0f172a',
     colors: ['#0f172a', '#ffffff', '#71717a', '#1e293b', '#854d0e'],
-    soundPitch: 1.05
+    soundPitch: 1.05,
+    dialTheme: 'pars-sport',
+    accentCol: '#ef4444'
   },
   {
     id: 'paykan',
     name: 'پیکان جوانان ۵۷',
     enName: 'Paykan Javanan 1978',
     cls: 'کلاسیک نوستالژیک ایرانی',
-    desc: 'سپر کروم براق، چراغ‌های دوبل گرد، فنربندی نرم، هندلینگ خاص و لذت رانندگی اصیل',
+    desc: 'سپر کروم براق، چراغ‌های گرد دوبل، فنربندی نرم، کیلومترشمار عقربه‌ای کلاسیک با نور کهربایی گرم',
     price: 80,
     topSpeed: 175,
     accel: 0.20,
@@ -9811,7 +9887,9 @@ const CR_CARS = [
     power: 90,
     defaultColor: '#f59e0b',
     colors: ['#f59e0b', '#065f46', '#991b1b', '#f8fafc', '#3b82f6'],
-    soundPitch: 0.88
+    soundPitch: 0.88,
+    dialTheme: 'paykan-classic',
+    accentCol: '#f59e0b'
   }
 ];
 
@@ -9854,101 +9932,81 @@ const CR_MAPS = [
   }
 ];
 
-const CR_MODES = [
-  {id:'free', name:'گشت‌وگذار آزاد', desc:'رانندگی دلخواه در تمام نقشه بدون محدودیت زمانی', icon:'compass'},
-  {id:'checkpoint', name:'مسابقه زمانی و چک‌پوینت', desc:'رسیدن به نقاط مشخص شده قبل از اتمام زمان', icon:'clock'},
-  {id:'speed', name:'چالش ثبت بالاترین سرعت', desc:'گاز دادن روی آسفالت خط مستقیم و شکستن رکورد سرعت', icon:'zap'},
-  {id:'parking', name:'چالش پارک دقیق خودرو', desc:'پارک در محدوده طلایی بدون کوچک‌ترین برخورد', icon:'map-pin'}
-];
-
 const CR = {
-  view: 'menu', // menu, select_car, garage, select_map, loading, ingame, pause, gameover
+  view: 'menu', // menu, select_car, garage, select_map, controls
   carId: 'dena',
   mapId: 'city',
   mode: 'free',
   cameraMode: 0, // 0: Third Person, 1: Hood, 2: First Person, 3: Far
-  camModes: ['نمای پشت (دوربین سوم شخص)', 'نمای روی کاپوت (Hood)', 'نمای راننده (First Person)', 'نمای دور سینمایی'],
-  
+  camModes: ['نمای پشت (سوم‌شخص سینمایی)', 'نمای کاپوت (Hood Cam)', 'نمای راننده (First Person)', 'نمای دور و نقشه'],
+  transmission: 'auto', // 'auto' | 'manual'
+
   // فیزیک خودرو
   p: {
-    x: 0, y: 0, z: 0,
+    x: 400, y: 400,
     vx: 0, vy: 0,
-    angle: -Math.PI / 2,
+    angle: 0,
     speed: 0,
     rpm: 900,
     gear: 1, // 0: R, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5
-    gearMode: 'D', // P, R, N, D
+    gearMode: 'D', // P, R, N, D, M
     acc: 0,
     steer: 0,
     brake: 0,
     handbrake: false,
     headlights: true,
-    turnSignal: 0, // -1: left, 0: none, 1: right
+    turnSignal: 0,
     fuel: 100,
     nitro: 100,
     distance: 0,
-    driftScore: 0,
     health: 100
   },
 
-  // دوربین بازی
-  cam: { x: 0, y: 0, zoom: 1, smoothAngle: -Math.PI / 2 },
+  cam: { x: 400, y: 400, zoom: 1, smoothAngle: 0 },
   
-  // تنظیمات
   cfg: {
     quality: 'ultra',
     sound: true,
     music: true,
-    particles: true,
-    controls: 'wasd', // wasd or arrows
-    sensitivity: 1.0
+    particles: true
   },
 
-  // گاراژ و شخصی‌سازی (ذخیره در localStorage)
   custom: {
     dena: { color: '#e2e8f0', rim: 'sport', tint: 20, height: 0, engineLvl: 1, brakeLvl: 1, plate: '۶۸ ج ۵۴۹ ایران ۲۲' },
     pars: { color: '#0f172a', rim: 'classic', tint: 35, height: -5, engineLvl: 1, brakeLvl: 1, plate: '۱۱ ب ۸۸۳ ایران ۳۳' },
     paykan: { color: '#f59e0b', rim: 'chrome', tint: 0, height: 10, engineLvl: 1, brakeLvl: 1, plate: '۴۴ ص ۱۲۹ ایران ۱۱' }
   },
 
-  // کنترل‌ها
   keys: {
     up: false, down: false, left: false, right: false,
     space: false, shift: false, l: false, c: false
   },
 
-  // محیط و ترافیک
   world: {
-    width: 3200,
-    height: 3200,
+    width: 3400,
+    height: 3400,
     roads: [],
     buildings: [],
     props: [],
-    traffic: [],
-    checkpoints: [],
-    curCp: 0,
-    parkSpot: {x: 400, y: 300, w: 90, h: 50, angle: 0}
+    traffic: []
   },
 
-  // وضعیت و حلقه
   raf: 0,
   lastTime: 0,
   active: false,
   container: null,
-  cv: null,
-  ctx: null,
   audioCtx: null,
-  engineOsc: null,
+  engineOsc1: null,
+  engineOsc2: null,
   engineGain: null,
   records: {
     bestSpeed: 0,
-    totalDistance: 0,
-    parkingScore: 0
+    totalDistance: 0
   }
 };
 
 /* ================================================================
-   صداهای وب‌اودیو برای موتور و افکت‌ها
+   سیستم صوتی چندکاناله واقع‌گرایانه موتور با وب‌آودیو
    ================================================================ */
 function crInitAudio(){
   if(CR.audioCtx) return;
@@ -9956,26 +10014,36 @@ function crInitAudio(){
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     CR.audioCtx = new AudioContext();
     
-    // اسیلاتور موتور
-    CR.engineOsc = CR.audioCtx.createOscillator();
+    // کانال اصلی غرش پیستون
+    CR.engineOsc1 = CR.audioCtx.createOscillator();
+    CR.engineOsc2 = CR.audioCtx.createOscillator();
     CR.engineGain = CR.audioCtx.createGain();
-    CR.engineOsc.type = 'sawtooth';
-    CR.engineGain.gain.setValueAtTime(0.001, CR.audioCtx.currentTime);
-    CR.engineOsc.connect(CR.engineGain);
+
+    CR.engineOsc1.type = 'sawtooth';
+    CR.engineOsc2.type = 'triangle';
+
+    CR.engineOsc1.connect(CR.engineGain);
+    CR.engineOsc2.connect(CR.engineGain);
     CR.engineGain.connect(CR.audioCtx.destination);
-    CR.engineOsc.start();
+
+    CR.engineGain.gain.setValueAtTime(0.001, CR.audioCtx.currentTime);
+    CR.engineOsc1.start();
+    CR.engineOsc2.start();
   } catch(e){}
 }
 
 function crUpdateSound(){
-  if(!CR.audioCtx || !CR.engineOsc || !CR.cfg.sound) return;
+  if(!CR.audioCtx || !CR.engineOsc1 || !CR.cfg.sound) return;
   try {
     const curCar = CR_CARS.find(c => c.id === CR.carId) || CR_CARS[0];
-    const baseFreq = 45 * curCar.soundPitch;
-    const targetFreq = baseFreq + (CR.p.rpm / 7000) * 160;
-    CR.engineOsc.frequency.setTargetAtTime(targetFreq, CR.audioCtx.currentTime, 0.05);
+    const baseFreq = 42 * curCar.soundPitch;
+    const rpmRatio = (CR.p.rpm - 900) / 5900;
+    const targetFreq = baseFreq + rpmRatio * 180;
 
-    let vol = 0.03 + (CR.p.rpm / 7000) * 0.06;
+    CR.engineOsc1.frequency.setTargetAtTime(targetFreq, CR.audioCtx.currentTime, 0.04);
+    CR.engineOsc2.frequency.setTargetAtTime(targetFreq * 1.5, CR.audioCtx.currentTime, 0.04);
+
+    let vol = 0.035 + rpmRatio * 0.075;
     if(CR.view !== 'ingame') vol = 0.001;
     CR.engineGain.gain.setTargetAtTime(vol, CR.audioCtx.currentTime, 0.05);
   } catch(e){}
@@ -10002,31 +10070,31 @@ function crSfx(type){
       osc.start(now); osc.stop(now + 0.08);
     } else if(type === 'gear'){
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(220, now);
-      osc.frequency.exponentialRampToValueAtTime(110, now + 0.12);
-      g.gain.setValueAtTime(0.12, now);
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.exponentialRampToValueAtTime(90, now + 0.12);
+      g.gain.setValueAtTime(0.14, now);
       g.gain.linearRampToValueAtTime(0, now + 0.12);
       osc.start(now); osc.stop(now + 0.12);
     } else if(type === 'crash'){
       osc.type = 'square';
-      osc.frequency.setValueAtTime(140, now);
-      osc.frequency.exponentialRampToValueAtTime(40, now + 0.25);
-      g.gain.setValueAtTime(0.2, now);
-      g.gain.linearRampToValueAtTime(0, now + 0.25);
-      osc.start(now); osc.stop(now + 0.25);
+      osc.frequency.setValueAtTime(160, now);
+      osc.frequency.exponentialRampToValueAtTime(40, now + 0.28);
+      g.gain.setValueAtTime(0.22, now);
+      g.gain.linearRampToValueAtTime(0, now + 0.28);
+      osc.start(now); osc.stop(now + 0.28);
     } else if(type === 'nitro'){
       osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(400, now);
-      osc.frequency.linearRampToValueAtTime(900, now + 0.3);
-      g.gain.setValueAtTime(0.15, now);
-      g.gain.linearRampToValueAtTime(0, now + 0.3);
-      osc.start(now); osc.stop(now + 0.3);
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.linearRampToValueAtTime(850, now + 0.35);
+      g.gain.setValueAtTime(0.18, now);
+      g.gain.linearRampToValueAtTime(0, now + 0.35);
+      osc.start(now); osc.stop(now + 0.35);
     }
   } catch(e){}
 }
 
 /* ================================================================
-   تولید نقشه و محیط پویا
+   ساخت مپ و ترافیک
    ================================================================ */
 function crBuildWorld(){
   const W = CR.world.width;
@@ -10035,85 +10103,59 @@ function crBuildWorld(){
   CR.world.buildings = [];
   CR.world.props = [];
   CR.world.traffic = [];
-  CR.world.checkpoints = [];
 
-  // شبکه خیابان‌های پایتخت و بزرگراه
   const roadW = 160;
-  // خیابان‌های افقی
-  for(let y = 400; y < H; y += 700){
+  for(let y = 450; y < H; y += 750){
     CR.world.roads.push({x: 0, y: y - roadW/2, w: W, h: roadW, dir: 'h'});
   }
-  // خیابان‌های عمودی
-  for(let x = 400; x < W; x += 700){
+  for(let x = 450; x < W; x += 750){
     CR.world.roads.push({x: x - roadW/2, y: 0, w: roadW, h: H, dir: 'v'});
   }
 
-  // ساختمان‌ها و بلوک‌های شهری
-  for(let x = 100; x < W - 200; x += 700){
-    for(let y = 100; y < H - 200; y += 700){
-      const bw = 460;
-      const bh = 460;
-      const floors = Math.floor(Math.random() * 8 + 3);
+  for(let x = 120; x < W - 250; x += 750){
+    for(let y = 120; y < H - 250; y += 750){
+      const bw = 500, bh = 500;
       CR.world.buildings.push({
         x, y, w: bw, h: bh,
-        floors,
-        color: CR.mapId === 'night' ? '#111827' : (Math.random() > 0.5 ? '#1f293d' : '#27354f'),
+        color: CR.mapId === 'night' ? '#0f172a' : (Math.random() > 0.5 ? '#1e293b' : '#27354f'),
         trimColor: Math.random() > 0.5 ? '#d9ae3e' : '#38bdf8'
       });
-      // درختان و چراغ‌های کنار جدول
-      CR.world.props.push({type: 'tree', x: x - 25, y: y + 80});
-      CR.world.props.push({type: 'tree', x: x + bw + 25, y: y + 200});
-      CR.world.props.push({type: 'light', x: x - 35, y: y + 250});
-      CR.world.props.push({type: 'light', x: x + bw + 35, y: y + 350});
+      CR.world.props.push({type: 'tree', x: x - 30, y: y + 100});
+      CR.world.props.push({type: 'tree', x: x + bw + 30, y: y + 250});
+      CR.world.props.push({type: 'light', x: x - 40, y: y + 300});
+      CR.world.props.push({type: 'light', x: x + bw + 40, y: y + 420});
     }
   }
 
-  // خودروهای NPC و ترافیک شهری
   const curMap = CR_MAPS.find(m => m.id === CR.mapId) || CR_MAPS[0];
-  const npcCount = curMap.trafficDense;
-  for(let i = 0; i < npcCount; i++){
+  for(let i = 0; i < curMap.trafficDense; i++){
     const isHoriz = Math.random() > 0.5;
     const roadIdx = Math.floor(Math.random() * 4);
-    const posOnRoad = Math.random() * (W - 400) + 200;
-    const roadCoord = 400 + roadIdx * 700;
+    const posOnRoad = Math.random() * (W - 500) + 250;
+    const roadCoord = 450 + roadIdx * 750;
     
     CR.world.traffic.push({
       id: i,
       x: isHoriz ? posOnRoad : roadCoord + (Math.random() > 0.5 ? 40 : -40),
       y: isHoriz ? roadCoord + (Math.random() > 0.5 ? 40 : -40) : posOnRoad,
       angle: isHoriz ? (Math.random() > 0.5 ? 0 : Math.PI) : (Math.random() > 0.5 ? Math.PI/2 : -Math.PI/2),
-      speed: Math.random() * 2 + 3,
+      speed: Math.random() * 2 + 3.2,
       color: ['#ffffff', '#0f172a', '#71717a', '#b91c1c', '#2563eb'][i % 5],
-      w: 48, h: 24
+      w: 50, h: 26
     });
   }
-
-  // چک‌پوینت‌های حالت رکوردی
-  CR.world.checkpoints = [
-    {x: 400, y: 1100, r: 120, name: 'میدان آزادی'},
-    {x: 1800, y: 1100, r: 120, name: 'تقاطع ولیعصر'},
-    {x: 1800, y: 2500, r: 120, name: 'ورودی بزرگراه همت'},
-    {x: 2500, y: 2500, r: 120, name: 'خط پایان'}
-  ];
-  CR.world.curCp = 0;
-
-  // موقعیت پارک
-  CR.world.parkSpot = {x: 480, y: 400, w: 80, h: 46, angle: 0};
 }
 
-/* ================================================================
-   ریست و ستاپ وضعیت خودروی بازیکن
-   ================================================================ */
 function crResetCar(){
-  CR.p.x = 400;
-  CR.p.y = 400;
+  CR.p.x = 450;
+  CR.p.y = 450;
   CR.p.vx = 0;
   CR.p.vy = 0;
   CR.p.speed = 0;
   CR.p.angle = 0;
   CR.p.rpm = 900;
   CR.p.gear = 1;
-  CR.p.gearMode = 'D';
+  CR.p.gearMode = CR.transmission === 'manual' ? 'M' : 'D';
   CR.p.fuel = 100;
   CR.p.nitro = 100;
   CR.p.health = 100;
@@ -10126,7 +10168,7 @@ function crResetCar(){
 }
 
 /* ================================================================
-   رندر و ساختار UI بازی
+   منوی اصلی گیمی‌تور و فوق‌العاده جذاب
    ================================================================ */
 function crMenuHtml(){
   const curCar = CR_CARS.find(c => c.id === CR.carId) || CR_CARS[0];
@@ -10134,38 +10176,48 @@ function crMenuHtml(){
   const custom = CR.custom[CR.carId] || {};
 
   return '<div class="cr-wrapper">'
-    // پس‌زمینه سینمایی
     +'<div class="cr-cinema-bg">'
       +'<div class="cr-hero-cover-art">'+(typeof gcov==='function'?gcov('carracing'):'')+'</div>'
       +'<div class="cr-cinema-overlay"></div>'
     +'</div>'
 
-    // منوی اصلی بازی
     +'<div class="cr-main-panel">'
+      // نوار بالا
       +'<div class="cr-header">'
         +'<div class="cr-title-box">'
-          +'<span class="cr-badge">'+ic('zap',13)+'رانندگی و مسابقه ایرانی — نسخه ۲۳</span>'
-          +'<h1>شبیه‌ساز رانندگی <span class="g">نت‌یار اسپید</span></h1>'
-          +'<p>دنا پلاس، پژو پارس و پیکان جوانان — فیزیک روان و واقعی، شخصی‌سازی گاراژ، مپ‌های متنوع و کنترل آسان</p>'
+          +'<span class="cr-badge">'+ic('zap',13)+'شبیه‌ساز مسابقه و رانندگی ایرانی — نسخه ۲۳.۵</span>'
+          +'<h1>مسابقه در شهر <span class="g">نت‌یار اسپید</span></h1>'
+          +'<p>دنا پلاس توربو، پژو پارس ELX و پیکان جوانان — فیزیک روان و نرم، صدای غرش موتور، کیلومترشمار اختصاصی هر ماشین و گیربکس انتخابی</p>'
         +'</div>'
+
+        // کارت پیش‌نمایش خودرو و نوع دنده
         +'<div class="cr-car-badge-card" onclick="crSetView(\'select_car\')">'
           +'<div class="ccb-info">'
-            +'<span class="ccb-lbl">خودروی فعال شما:</span>'
+            +'<span class="ccb-lbl">ماشین انتخاب‌شده:</span>'
             +'<b>'+curCar.name+'</b>'
-            +'<i>'+curCar.cls+'</i>'
+            +'<i>گیربکس: '+(CR.transmission==='manual'?'دنده‌ای دستی (M)':'اتوماتیک هوشمند (A)')+'</i>'
           +'</div>'
           +'<div class="ccb-color-dot" style="background:'+(custom.color||curCar.defaultColor)+'"></div>'
-          +'<button class="btn gold small">'+ic('car',12)+'تغییر خودرو</button>'
+          +'<button class="btn gold small">'+ic('car',12)+'تغییر ماشین</button>'
         +'</div>'
       +'</div>'
 
-      // دکمه‌های اصلی و حالت‌ها
+      // انتخاب سریع گیربکس و تنظیمات قبل بازی
+      +'<div class="cr-trans-selector">'
+        +'<span class="cts-lbl">'+ic('activity',14)+'نوع گیربکس رانندگی:</span>'
+        +'<div class="cts-btns">'
+          +'<button class="btn small'+(CR.transmission==='auto'?' gold':' ghost')+'" onclick="crSetTransmission(\'auto\')">'+ic('zap',12)+'اتوماتیک (رانندگی آسان و روان)</button>'
+          +'<button class="btn small'+(CR.transmission==='manual'?' gold':' ghost')+'" onclick="crSetTransmission(\'manual\')">'+ic('wrench',12)+'دنده‌ای دستی (کلید E دنده بالا / Q معکوس)</button>'
+        +'</div>'
+      +'</div>'
+
+      // گرید دکمه‌های گیمی‌تور
       +'<div class="cr-menu-grid">'
         +'<div class="cr-action-card primary" onclick="crStartGame()">'
-          +'<div class="cac-ic">'+ic('play',26)+'</div>'
+          +'<div class="cac-ic">'+ic('play',28)+'</div>'
           +'<div class="cac-tt">'
-            +'<b>شروع رانندگی و مسابقه</b>'
-            +'<span>ورود فوری به مپ «'+curMap.name+'» با '+curCar.name+'</span>'
+            +'<b>استارت موتور و شروع رانندگی</b>'
+            +'<span>ورود به جاده «'+curMap.name+'» با '+curCar.name+'</span>'
           +'</div>'
           +'<span class="cac-arrow">'+ic('arrow-left',16)+'</span>'
         +'</div>'
@@ -10173,32 +10225,32 @@ function crMenuHtml(){
         +'<div class="cr-action-card" onclick="crSetView(\'select_car\')">'
           +'<div class="cac-ic">'+ic('car',22)+'</div>'
           +'<div class="cac-tt">'
-            +'<b>انتخاب خودرو</b>'
-            +'<span>دنا، پژو پارس، پیکان — مشاهده جزئیات فنی و شتاب</span>'
+            +'<b>گاراژ خودروها و کیلومترشمار</b>'
+            +'<span>دنا، پارس، پیکان — مشاهده تم آمپر و شتاب</span>'
           +'</div>'
         +'</div>'
 
         +'<div class="cr-action-card" onclick="crSetView(\'garage\')">'
           +'<div class="cac-ic">'+ic('wrench',22)+'</div>'
           +'<div class="cac-tt">'
-            +'<b>گاراژ و شخصی‌سازی</b>'
-            +'<span>رنگ بدنه، رینگ اسپرت، دودی شیشه و ارتقای موتور</span>'
+            +'<b>تیونینگ و شخصی‌سازی</b>'
+            +'<span>تغییر رنگ بدنه، دودی شیشه، تقویت موتور و پلاک</span>'
           +'</div>'
         +'</div>'
 
         +'<div class="cr-action-card" onclick="crSetView(\'select_map\')">'
           +'<div class="cac-ic">'+ic('compass',22)+'</div>'
           +'<div class="cac-tt">'
-            +'<b>انتخاب مپ و وضعیت هوا</b>'
-            +'<span>شهر تهران، جاده کوهستان چالوس، بزرگراه شب و بارانی</span>'
+            +'<b>انتخاب مپ و وضعیت آب‌وهوا</b>'
+            +'<span>شهر تهران، جاده چالوس، بزرگراه شبانه و بارانی</span>'
           +'</div>'
         +'</div>'
 
         +'<div class="cr-action-card" onclick="crSetView(\'controls\')">'
           +'<div class="cac-ic">'+ic('activity',22)+'</div>'
           +'<div class="cac-tt">'
-            +'<b>راهنمای کنترل و کلیدها</b>'
-            +'<span>W/A/S/D یا فلش‌ها، ترمز دستی با Space، نیترو با Shift</span>'
+            +'<b>راهنمای کلیدها و کنترل</b>'
+            +'<span>W/A/S/D یا فلش‌ها، ترمز دستی، نیترو و تغییر دوربین</span>'
           +'</div>'
         +'</div>'
 
@@ -10206,7 +10258,7 @@ function crMenuHtml(){
           +'<div class="cac-ic">'+ic('log-out',22)+'</div>'
           +'<div class="cac-tt">'
             +'<b>خروج به بازی‌خانه</b>'
-            +'<span>بازگشت به لیست بازی‌های کافی‌نت نت‌یار</span>'
+            +'<span>بازگشت به لیست بازی‌های کافی‌نت</span>'
           +'</div>'
         +'</div>'
       +'</div>'
@@ -10221,8 +10273,15 @@ function crMenuHtml(){
   +'</div>';
 }
 
+function crSetTransmission(t){
+  CR.transmission = t;
+  crSfx('gear');
+  toast(t === 'manual' ? 'گیربکس دستی فعال شد (کلید E دنده بالا / Q دنده پایین)' : 'گیربکس اتوماتیک فعال شد', 'activity');
+  crRenderApp();
+}
+
 /* ================================================================
-   صفحه انتخاب خودرو با پیش‌نمایش گرافیکی
+   صفحه انتخاب خودرو با معرفی کیلومترشمار اختصاصی
    ================================================================ */
 function crSelectCarHtml(){
   const curCar = CR_CARS.find(c => c.id === CR.carId) || CR_CARS[0];
@@ -10231,12 +10290,11 @@ function crSelectCarHtml(){
   return '<div class="cr-wrapper cr-panel-view">'
     +'<div class="cr-view-header">'
       +'<button class="btn ghost small" onclick="crSetView(\'menu\')">'+ic('arrow-right',14)+' بازگشت به منو</button>'
-      +'<h2>انتخاب خودروی مسابقه‌ای</h2>'
+      +'<h2>انتخاب خودرو و بررسی صفحه کیلومتر</h2>'
       +'<button class="btn gold small" onclick="crStartGame()">'+ic('play',14)+' شروع بازی با این ماشین</button>'
     +'</div>'
 
     +'<div class="cr-car-select-layout">'
-      // لیست کارت‌های انتخاب
       +'<div class="cr-cars-list">'
         +CR_CARS.map(c => {
           const isSel = c.id === CR.carId;
@@ -10251,13 +10309,13 @@ function crSelectCarHtml(){
             +'</div>'
             +'<div class="ccc-mini-specs">'
               +'<span>'+ic('zap',11)+' '+faNum(c.topSpeed)+' KM/H</span>'
-              +'<span>'+ic('activity',11)+' '+faNum(c.power)+' اسب‌بخار</span>'
+              +'<span>'+ic('gauge',11)+' تم آمپر: '+(c.id==='dena'?'دیجیتال نئون':c.id==='pars'?'اسپرت یخی':'کلاسیک کهربایی')+'</span>'
             +'</div>'
           +'</div>';
         }).join('')
       +'</div>'
 
-      // پنل مشخصات فنی خودرو انتخاب شده
+      // پنل جزئیات فنی و معرفی تم کیلومترشمار
       +'<div class="cr-car-details-panel">'
         +'<div class="cdp-title">'
           +'<span class="badge gold">'+curCar.cls+'</span>'
@@ -10268,9 +10326,9 @@ function crSelectCarHtml(){
         +'<div class="cdp-bars">'
           +crSpecBar('حداکثر سرعت', (curCar.topSpeed/240)*100, faNum(curCar.topSpeed) + ' KM/H')
           +crSpecBar('شتاب اولیه (۰ تا ۱۰۰)', (curCar.accel/0.32)*100, (curCar.accel*100).toFixed(0) + ' %')
-          +crSpecBar('هندلینگ و فرمان‌پذیری', (curCar.handling/0.06)*100, (curCar.handling*1000).toFixed(0) + ' pt')
+          +crSpecBar('هندلینگ و پیچیدن در سرعت', (curCar.handling/0.06)*100, (curCar.handling*1000).toFixed(0) + ' pt')
           +crSpecBar('قدرت ترمزگیری', (curCar.brake/0.5)*100, (curCar.brake*100).toFixed(0) + ' %')
-          +crSpecBar('چسبندگی لاستیک (Grip)', curCar.grip*100, (curCar.grip*100).toFixed(0) + ' %')
+          +crSpecBar('چسبندگی لاستیک', curCar.grip*100, (curCar.grip*100).toFixed(0) + ' %')
         +'</div>'
 
         +'<div class="cdp-acts">'
@@ -10290,7 +10348,7 @@ function crSpecBar(label, percent, valStr){
 }
 
 /* ================================================================
-   گاراژ شخصی‌سازی خودرو
+   گاراژ شخصی‌سازی
    ================================================================ */
 function crGarageHtml(){
   const curCar = CR_CARS.find(c => c.id === CR.carId) || CR_CARS[0];
@@ -10299,12 +10357,11 @@ function crGarageHtml(){
   return '<div class="cr-wrapper cr-panel-view">'
     +'<div class="cr-view-header">'
       +'<button class="btn ghost small" onclick="crSetView(\'menu\')">'+ic('arrow-right',14)+' بازگشت به منو</button>'
-      +'<h2>گاراژ شخصی‌سازی «'+curCar.name+'»</h2>'
+      +'<h2>گاراژ تیونینگ و شخصی‌سازی «'+curCar.name+'»</h2>'
       +'<button class="btn gold small" onclick="crStartGame()">'+ic('play',14)+' تست در جاده</button>'
     +'</div>'
 
     +'<div class="cr-garage-layout">'
-      // استیج ماشین در گاراژ
       +'<div class="cr-garage-stage">'
         +'<div class="cgs-glow"></div>'
         +'<div class="cgs-car-preview" style="--car-col:'+(custom.color||curCar.defaultColor)+';--car-tint:'+(custom.tint||20)+'%">'
@@ -10318,9 +10375,7 @@ function crGarageHtml(){
         +'<div class="cgs-pedestal"></div>'
       +'</div>'
 
-      // ابزارهای شخصی‌سازی
       +'<div class="cr-garage-controls">'
-        // ۱. انتخاب رنگ بدنه
         +'<div class="cgc-section">'
           +'<label>'+ic('palette',14)+' انتخاب رنگ بدنه:</label>'
           +'<div class="cgc-colors">'
@@ -10328,7 +10383,6 @@ function crGarageHtml(){
           +'</div>'
         +'</div>'
 
-        // ۲. دودی شیشه‌ها
         +'<div class="cgc-section">'
           +'<label>'+ic('eye',14)+' درصد دودی شیشه‌ها:</label>'
           +'<div class="cgc-btns-group">'
@@ -10336,20 +10390,18 @@ function crGarageHtml(){
           +'</div>'
         +'</div>'
 
-        // ۳. ارتقای موتور و ترمز
         +'<div class="cgc-section">'
           +'<label>'+ic('zap',14)+' ارتقای تیونینگ و قدرت:</label>'
           +'<div class="cgc-tuning-row">'
-            +'<span>موتور ریمپ شده (Stage 2)</span>'
+            +'<span>ریمپ موتور (افزایش شتاب توربو)</span>'
             +'<button class="btn gold small" onclick="crUpgradeEngine()">'+ic('check',12)+' اعمال ریمپ</button>'
           +'</div>'
           +'<div class="cgc-tuning-row">'
-            +'<span>دیسک ترمز خنک‌شونده</span>'
-            +'<button class="btn gold small" onclick="crUpgradeBrake()">'+ic('check',12)+' ارتقای ترمز</button>'
+            +'<span>کالیپرهای ترمز مسابقه‌ای</span>'
+            +'<button class="btn gold small" onclick="crUpgradeBrake()">'+ic('check',12)+' تقویت ترمز</button>'
           +'</div>'
         +'</div>'
 
-        // ۴. پلاک خودرو
         +'<div class="cgc-section">'
           +'<label>'+ic('tag',14)+' شماره پلاک اختصاصی:</label>'
           +'<input type="text" class="cgc-plate-input" value="'+(custom.plate||'۶۸ ج ۵۴۹ ایران ۲۲')+'" onchange="crSetPlate(this.value)">'
@@ -10392,7 +10444,7 @@ function crSelectMapHtml(){
 }
 
 /* ================================================================
-   راهنمای کنترل و تنظیمات
+   راهنمای کنترل
    ================================================================ */
 function crControlsHtml(){
   return '<div class="cr-wrapper cr-panel-view">'
@@ -10403,13 +10455,14 @@ function crControlsHtml(){
     +'</div>'
 
     +'<div class="cr-controls-grid">'
-      +'<div class="cr-ctrl-card"><span class="cr-key">W / ↑</span><b>گاز دادن و شتاب گرفتن خودرو</b></div>'
-      +'<div class="cr-ctrl-card"><span class="cr-key">S / ↓</span><b>ترمز شدید / دنده عقب (R)</b></div>'
+      +'<div class="cr-ctrl-card"><span class="cr-key">W / ↑</span><b>گاز دادن نرم و شتاب پیوسته</b></div>'
+      +'<div class="cr-ctrl-card"><span class="cr-key">S / ↓</span><b>ترمز ABS و دنده عقب (R)</b></div>'
       +'<div class="cr-ctrl-card"><span class="cr-key">A / ←</span><b>فرمان به چپ</b></div>'
       +'<div class="cr-ctrl-card"><span class="cr-key">D / →</span><b>فرمان به راست</b></div>'
-      +'<div class="cr-ctrl-card"><span class="cr-key">Space</span><b>ترمز دستی (دریفت و چرخش سریع)</b></div>'
-      +'<div class="cr-ctrl-card"><span class="cr-key">Shift</span><b>نیترو بوست (شتاب آنی)</b></div>'
-      +'<div class="cr-ctrl-card"><span class="cr-key">C</span><b>تغییر دوربین (سوم‌شخص، کاپوت، داخل، دور)</b></div>'
+      +'<div class="cr-ctrl-card"><span class="cr-key">Space</span><b>ترمز دستی (دریفت کشیدن)</b></div>'
+      +'<div class="cr-ctrl-card"><span class="cr-key">Shift</span><b>نیتروبوست موقت</b></div>'
+      +'<div class="cr-ctrl-card"><span class="cr-key">E / Q</span><b>تعویض دنده دستی (در حالت گیربکس دستی)</b></div>'
+      +'<div class="cr-ctrl-card"><span class="cr-key">C</span><b>تغییر نرم دوربین (سوم‌شخص، کاپوت، داخل، دور)</b></div>'
       +'<div class="cr-ctrl-card"><span class="cr-key">L</span><b>چراغ‌های جلو / نور بالا</b></div>'
       +'<div class="cr-ctrl-card"><span class="cr-key">Esc</span><b>توقف بازی (Pause Menu)</b></div>'
     +'</div>'
@@ -10417,17 +10470,15 @@ function crControlsHtml(){
 }
 
 /* ================================================================
-   صفحه داخل بازی با کیلومترشمار مدرن HUD
+   صفحه داخل بازی با کیلومترشمار اختصاصی هر ماشین
    ================================================================ */
 function crInGameHtml(){
   const curCar = CR_CARS.find(c => c.id === CR.carId) || CR_CARS[0];
   const curMap = CR_MAPS.find(m => m.id === CR.mapId) || CR_MAPS[0];
 
   return '<div class="cr-ingame-wrap">'
-    // کانواس رندر بازی
     +'<canvas id="crCanvas" width="1280" height="720"></canvas>'
 
-    // نوار بالای صفحه (مود، زمان و مینی‌مپ)
     +'<div class="cr-hud-top">'
       +'<div class="cht-badge">'
         +'<span class="cht-dot"></span>'
@@ -10438,27 +10489,27 @@ function crInGameHtml(){
       +'<button class="btn ghost small" onclick="crPauseGame()">'+ic('pause',14)+' مکث (Esc)</button>'
     +'</div>'
 
-    // مینی‌مپ گوشه بالا
     +'<div class="cr-minimap-wrap">'
       +'<canvas id="crMinimap" width="140" height="140"></canvas>'
     +'</div>'
 
-    // کیلومترشمار دیجیتال و آنالوگ لوکس در پایین
-    +'<div class="cr-speedo-hud">'
+    // صفحه کیلومتر اختصاصی خودرو
+    +'<div class="cr-speedo-hud theme-'+curCar.dialTheme+'">'
       +'<div class="csh-dial">'
+        +'<div class="csh-car-brand">'+curCar.name+'</div>'
         +'<div class="csh-speed-num" id="crSpeedNum">۰۰۰</div>'
         +'<div class="csh-unit">KM/H</div>'
         +'<div class="csh-rpm-bar"><div class="crb-fill" id="crRpmBar" style="width:15%"></div></div>'
         +'<div class="csh-rpm-text"><span id="crRpmNum">۹۰۰</span> RPM</div>'
       +'</div>'
 
-      // نشانگر دنده و وضعیت گیربکس
+      // دنده و گیربکس
       +'<div class="csh-gear-box">'
-        +'<div class="cgb-mode" id="crGearMode">D</div>'
+        +'<div class="cgb-mode" id="crGearMode">'+CR.p.gearMode+'</div>'
         +'<div class="cgb-gear">دنده <b id="crGearNum">۱</b></div>'
       +'</div>'
 
-      // نیترو و باک بنزین
+      // نیترو و سلامت
       +'<div class="csh-meters">'
         +'<div class="csh-meter-row">'
           +'<span>'+ic('zap',11)+' نیترو</span>'
@@ -10471,7 +10522,7 @@ function crInGameHtml(){
       +'</div>'
     +'</div>'
 
-    // کنترل‌های لمسی موبایل
+    // کنترل‌های لمسی
     +'<div class="cr-touch-controls">'
       +'<div class="ctc-group left">'
         +'<button class="ctc-btn" data-key="left">'+ic('chevron-left',24)+'</button>'
@@ -10485,15 +10536,15 @@ function crInGameHtml(){
       +'</div>'
     +'</div>'
 
-    // منوی مکث (Pause Overlay)
+    // منوی مکث
     +'<div class="cr-pause-overlay" id="crPauseOverlay" style="display:none">'
       +'<div class="cpo-modal">'
         +'<h3>بازی متوقف شد</h3>'
-        +'<p>می‌توانید بازی را ادامه دهید، از نو شروع کنید یا به منوی بازی برگردید.</p>'
+        +'<p>تنظیمات، تعویض زاویه دید یا شروع مجدد مرحله</p>'
         +'<div class="cpo-acts">'
           +'<button class="btn gold" onclick="crResumeGame()">'+ic('play',16)+' ادامه بازی</button>'
           +'<button class="btn primary" onclick="crRestartGame()">'+ic('refresh-cw',16)+' شروع مجدد</button>'
-          +'<button class="btn ghost" onclick="crCycleCamera()">'+ic('camera',16)+' تغییر دوربین ('+CR.camModes[CR.cameraMode]+')</button>'
+          +'<button class="btn ghost" onclick="crCycleCamera()">'+ic('camera',16)+' تغییر زاویه دوربین</button>'
           +'<button class="btn ghost" onclick="crExitToMenu()">'+ic('log-out',16)+' خروج به منوی اصلی</button>'
         +'</div>'
       +'</div>'
@@ -10502,7 +10553,7 @@ function crInGameHtml(){
 }
 
 /* ================================================================
-   کنترل‌های وضعیت و اکشن‌ها
+   توابع کنترل وضعیت
    ================================================================ */
 function crSetView(v){
   CR.view = v;
@@ -10562,6 +10613,24 @@ function crCycleCamera(){
   toast('دوربین: ' + CR.camModes[CR.cameraMode], 'camera');
 }
 
+function crShiftGearUp(){
+  if(CR.transmission !== 'manual') return;
+  if(CR.p.gear < 5){
+    CR.p.gear++;
+    crSfx('gear');
+    toast('دنده ' + faNum(CR.p.gear), 'activity');
+  }
+}
+
+function crShiftGearDown(){
+  if(CR.transmission !== 'manual') return;
+  if(CR.p.gear > 1){
+    CR.p.gear--;
+    crSfx('gear');
+    toast('دنده ' + faNum(CR.p.gear), 'activity');
+  }
+}
+
 function crStartGame(){
   crInitAudio();
   CR.view = 'ingame';
@@ -10608,19 +10677,19 @@ function crExitToMenu(){
 }
 
 /* ================================================================
-   هسته فیزیک و حلقه بازی (Real Momentum & Physics)
+   فیزیک واقعی شتاب، ترمز، اصطکاک و انتقال وزن
    ================================================================ */
 function crUpdatePhysics(dt){
   const curCar = CR_CARS.find(c => c.id === CR.carId) || CR_CARS[0];
   const curMap = CR_MAPS.find(m => m.id === CR.mapId) || CR_MAPS[0];
   const p = CR.p;
 
-  // شتاب‌گیری و ترمز
+  // ورودی گاز و ترمز
   let throttle = 0;
   if(CR.keys.up) throttle = 1;
   else if(CR.keys.down) throttle = -0.6;
 
-  // نیترو
+  // نیتروبوست
   let nitroBoost = 1;
   if(CR.keys.shift && p.nitro > 0 && throttle > 0){
     nitroBoost = 1.45;
@@ -10633,57 +10702,59 @@ function crUpdatePhysics(dt){
   // فرمان‌دهی
   const maxSteer = curCar.handling;
   if(CR.keys.left){
-    p.steer = Math.max(-maxSteer, p.steer - dt * 0.2);
+    p.steer = Math.max(-maxSteer, p.steer - dt * 0.22);
     p.turnSignal = -1;
   } else if(CR.keys.right){
-    p.steer = Math.min(maxSteer, p.steer + dt * 0.2);
+    p.steer = Math.min(maxSteer, p.steer + dt * 0.22);
     p.turnSignal = 1;
   } else {
-    p.steer *= 0.8;
+    p.steer *= 0.82;
     p.turnSignal = 0;
   }
 
-  // ترمز دستی
-  const grip = (CR.keys.space ? 0.72 : curCar.grip) * curMap.gripMod;
-
-  // محاسبه سرعت و نیرو
+  // چسبندگی و ترمز دستی
+  const grip = (CR.keys.space ? 0.70 : curCar.grip) * curMap.gripMod;
   const maxSpd = (curCar.topSpeed / 3.6) * 0.35 * nitroBoost;
+
+  // شبیه‌سازی انتقال قدرت
   if(throttle > 0){
-    p.speed += curCar.accel * throttle * nitroBoost * dt * 35;
-    if(p.speed > maxSpd) p.speed = maxSpd;
+    // در حالت دستی دنده پایین سقف سرعت محدودی دارد
+    let gearMaxSpd = maxSpd;
+    if(CR.transmission === 'manual'){
+      gearMaxSpd = maxSpd * (p.gear * 0.22);
+    }
+    if(p.speed < gearMaxSpd){
+      p.speed += curCar.accel * throttle * nitroBoost * dt * 36;
+      if(p.speed > gearMaxSpd) p.speed = gearMaxSpd;
+    }
   } else if(throttle < 0){
-    // ترمز یا دنده عقب
     if(p.speed > 0.5){
-      p.speed -= curCar.brake * dt * 50;
+      p.speed -= curCar.brake * dt * 52;
       if(p.speed < 0) p.speed = 0;
     } else {
-      p.speed -= curCar.accel * 0.4 * dt * 30;
-      if(p.speed < -maxSpd * 0.3) p.speed = -maxSpd * 0.3;
+      p.speed -= curCar.accel * 0.42 * dt * 30;
+      if(p.speed < -maxSpd * 0.32) p.speed = -maxSpd * 0.32;
     }
   } else {
-    // اصطکاک طبیعی هوا و لاستیک
     p.speed *= (0.985 * grip);
     if(Math.abs(p.speed) < 0.05) p.speed = 0;
   }
 
-  // چرخش زاویه بدنه خودرو
+  // چرخش بدنه
   if(Math.abs(p.speed) > 0.1){
     const dir = p.speed > 0 ? 1 : -1;
     p.angle += p.steer * (p.speed / maxSpd) * dir;
   }
 
-  // بردار سرعت
   p.vx = Math.cos(p.angle) * p.speed;
   p.vy = Math.sin(p.angle) * p.speed;
 
   p.x += p.vx;
   p.y += p.vy;
 
-  // محدوده نقشه
   p.x = Math.max(80, Math.min(CR.world.width - 80, p.x));
   p.y = Math.max(80, Math.min(CR.world.height - 80, p.y));
 
-  // مسافت طی شده و رکورد
   p.distance += Math.abs(p.speed);
   const kmh = Math.round(Math.abs(p.speed) * 11.2);
   if(kmh > CR.records.bestSpeed){
@@ -10691,28 +10762,31 @@ function crUpdatePhysics(dt){
   }
   CR.records.totalDistance += Math.abs(p.speed) * 0.1;
 
-  // شبیه‌سازی گیربکس و دور موتور (RPM)
+  // مدیریت گیربکس اتوماتیک vs دستی
   const ratio = Math.abs(p.speed) / maxSpd;
-  let gear = 1;
-  let gearRatio = ratio;
   if(p.speed < -0.1){
     p.gearMode = 'R';
-    gear = 1;
-    gearRatio = Math.abs(p.speed) / (maxSpd * 0.3);
+  } else if(CR.transmission === 'manual'){
+    p.gearMode = 'M';
   } else {
     p.gearMode = 'D';
-    if(ratio < 0.2) { gear = 1; gearRatio = ratio / 0.2; }
-    else if(ratio < 0.4) { gear = 2; gearRatio = (ratio - 0.2) / 0.2; }
-    else if(ratio < 0.65) { gear = 3; gearRatio = (ratio - 0.4) / 0.25; }
-    else if(ratio < 0.85) { gear = 4; gearRatio = (ratio - 0.65) / 0.2; }
-    else { gear = 5; gearRatio = (ratio - 0.85) / 0.15; }
+    if(ratio < 0.22) p.gear = 1;
+    else if(ratio < 0.44) p.gear = 2;
+    else if(ratio < 0.68) p.gear = 3;
+    else if(ratio < 0.88) p.gear = 4;
+    else p.gear = 5;
   }
-  p.gear = gear;
-  p.rpm = Math.min(6800, Math.max(900, Math.round(900 + gearRatio * 5200 + (throttle > 0 ? 600 : 0))));
+
+  // محاسبه دور موتور واقعی (RPM)
+  let gearRatio = ratio;
+  if(CR.transmission === 'manual'){
+    gearRatio = Math.min(1.0, (Math.abs(p.speed) / (maxSpd * (p.gear * 0.22))));
+  }
+  p.rpm = Math.min(6800, Math.max(900, Math.round(900 + gearRatio * 5200 + (throttle > 0 ? 650 : 0))));
 
   // برخورد با ساختمان‌ها
   for(const b of CR.world.buildings){
-    if(p.x > b.x - 20 && p.x < b.x + b.w + 20 && p.y > b.y - 20 && p.y < b.y + b.h + 20){
+    if(p.x > b.x - 22 && p.x < b.x + b.w + 22 && p.y > b.y - 22 && p.y < b.y + b.h + 22){
       p.speed = -p.speed * 0.4;
       p.x -= p.vx * 1.5;
       p.y -= p.vy * 1.5;
@@ -10721,7 +10795,7 @@ function crUpdatePhysics(dt){
     }
   }
 
-  // حرکت ترافیک NPC
+  // هوش مصنوعی ترافیک
   for(const npc of CR.world.traffic){
     npc.x += Math.cos(npc.angle) * npc.speed;
     npc.y += Math.sin(npc.angle) * npc.speed;
@@ -10730,9 +10804,8 @@ function crUpdatePhysics(dt){
     if(npc.y < 50) npc.y = CR.world.height - 100;
     if(npc.y > CR.world.height - 50) npc.y = 100;
 
-    // تصادف با خودروی بازیکن
     const distToPlayer = Math.hypot(npc.x - p.x, npc.y - p.y);
-    if(distToPlayer < 40){
+    if(distToPlayer < 42){
       p.speed = -p.speed * 0.5;
       npc.speed *= 0.5;
       p.health = Math.max(10, p.health - 10);
@@ -10740,21 +10813,20 @@ function crUpdatePhysics(dt){
     }
   }
 
-  // تعقیب نرم دوربین
-  const camLag = 0.12;
+  // زاویه نرم دوربین
+  const camLag = 0.14;
   CR.cam.x += (p.x - CR.cam.x) * camLag;
   CR.cam.y += (p.y - CR.cam.y) * camLag;
   let angleDiff = p.angle - CR.cam.smoothAngle;
   while(angleDiff < -Math.PI) angleDiff += Math.PI * 2;
   while(angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-  CR.cam.smoothAngle += angleDiff * 0.08;
+  CR.cam.smoothAngle += angleDiff * 0.085;
 
-  // آپدیت صدا
   crUpdateSound();
 }
 
 /* ================================================================
-   رندر کانواس و گرافیک بازی (Canvas Render)
+   رندر گرافیک با جزئیات دقیق خودروها
    ================================================================ */
 function crDrawGame(){
   const cv = document.getElementById('crCanvas');
@@ -10769,42 +10841,40 @@ function crDrawGame(){
   ctx.save();
   ctx.clearRect(0, 0, W, H);
 
-  // پس‌زمینه آسمان و اتمسفر مپ
+  // پس‌زمینه آسمان مپ
   ctx.fillStyle = curMap.skyTop;
   ctx.fillRect(0, 0, W, H);
 
-  // ترنسفورم دوربین
   ctx.save();
   ctx.translate(W/2, H/2);
 
-  // حالت‌های مختلف دوربین
+  // حالت‌های دوربین
   if(CR.cameraMode === 0){
-    // Third Person: دوربین در زاویه حرکت خودرو
+    // Third person
     ctx.rotate(-CR.cam.smoothAngle - Math.PI/2);
-    ctx.translate(-CR.cam.x, -CR.cam.y + 120);
+    ctx.translate(-CR.cam.x, -CR.cam.y + 130);
   } else if(CR.cameraMode === 1){
-    // Hood Camera: چسبیده به کاپوت
+    // Hood cam
     ctx.rotate(-p.angle - Math.PI/2);
-    ctx.translate(-p.x, -p.y + 40);
+    ctx.translate(-p.x, -p.y + 45);
   } else if(CR.cameraMode === 2){
-    // First Person: از داخل کابین
+    // First person
     ctx.rotate(-p.angle - Math.PI/2);
     ctx.translate(-p.x, -p.y);
   } else {
-    // Far Camera: نمای بالا و دور
+    // Far view
     ctx.translate(-CR.cam.x, -CR.cam.y);
   }
 
-  // ۱. زمین و چمن اطراف
+  // ۱. زمین
   ctx.fillStyle = curMap.roadCol === '#181b20' ? '#090d16' : '#142018';
   ctx.fillRect(0, 0, CR.world.width, CR.world.height);
 
-  // ۲. خیابان‌ها و آسفالت
+  // ۲. آسفالت خیابان‌ها
   for(const r of CR.world.roads){
     ctx.fillStyle = curMap.roadCol;
     ctx.fillRect(r.x, r.y, r.w, r.h);
 
-    // خط‌کشی وسط خیابان
     ctx.strokeStyle = '#ffd76e';
     ctx.lineWidth = 4;
     ctx.setLineDash([24, 20]);
@@ -10820,22 +10890,18 @@ function crDrawGame(){
     ctx.setLineDash([]);
   }
 
-  // ۳. ساختمان‌ها و برج‌ها
+  // ۳. ساختمان‌ها
   for(const b of CR.world.buildings){
-    // سایه ساختمان
     ctx.fillStyle = 'rgba(0,0,0,0.45)';
     ctx.fillRect(b.x + 20, b.y + 20, b.w, b.h);
 
-    // بدنه ساختمان
     ctx.fillStyle = b.color;
     ctx.fillRect(b.x, b.y, b.w, b.h);
 
-    // حاشیه و خطوط نمای مدرن
     ctx.strokeStyle = b.trimColor;
     ctx.lineWidth = 2;
     ctx.strokeRect(b.x + 10, b.y + 10, b.w - 20, b.h - 20);
 
-    // پنجره‌های نورانی شب
     if(curMap.weather === 'night' || curMap.weather === 'rain'){
       ctx.fillStyle = 'rgba(255, 215, 110, 0.45)';
       for(let wx = b.x + 40; wx < b.x + b.w - 40; wx += 60){
@@ -10846,7 +10912,7 @@ function crDrawGame(){
     }
   }
 
-  // ۴. عناصر محیطی (درختان و چراغ‌ها)
+  // ۴. درخت‌ها و چراغ‌ها
   for(const pr of CR.world.props){
     if(pr.type === 'tree'){
       ctx.fillStyle = '#14532d';
@@ -10857,7 +10923,6 @@ function crDrawGame(){
       ctx.fillStyle = '#94a3b8';
       ctx.fillRect(pr.x - 3, pr.y - 3, 6, 6);
       if(curMap.weather === 'night' || curMap.weather === 'rain'){
-        // هاله نور چراغ
         const lg = ctx.createRadialGradient(pr.x, pr.y, 4, pr.x, pr.y, 80);
         lg.addColorStop(0, 'rgba(255, 215, 110, 0.35)');
         lg.addColorStop(1, 'transparent');
@@ -10876,92 +10941,148 @@ function crDrawGame(){
     ctx.rotate(npc.angle);
     ctx.fillStyle = npc.color;
     ctx.fillRect(-npc.w/2, -npc.h/2, npc.w, npc.h);
-    // چراغ جلو
     ctx.fillStyle = '#fef08a';
     ctx.fillRect(npc.w/2 - 4, -npc.h/2 + 2, 4, 5);
     ctx.fillRect(npc.w/2 - 4, npc.h/2 - 7, 4, 5);
-    // چراغ خطر عقب
     ctx.fillStyle = '#ef4444';
     ctx.fillRect(-npc.w/2, -npc.h/2 + 2, 4, 5);
     ctx.fillRect(-npc.w/2, npc.h/2 - 7, 4, 5);
     ctx.restore();
   }
 
-  // ۶. رسم خودروی بازیکن (دنا، پارس یا پیکان)
+  // ۶. رسم خودروی بازیکن با جزئیات متمایز (دنا، پارس، پیکان)
   ctx.save();
   ctx.translate(p.x, p.y);
   ctx.rotate(p.angle);
 
-  // سایه خودرو
-  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  // سایه نرم زیر خودرو
+  ctx.fillStyle = 'rgba(0,0,0,0.55)';
   ctx.beginPath();
   ctx.roundRect(-28, -16, 56, 32, 8);
   ctx.fill();
 
-  // چراغ‌های جلو با پرتو نور بر روی آسفالت
+  // چراغ جلو با پرتو نور
   if(p.headlights){
-    const beam = ctx.createRadialGradient(28, 0, 10, 180, 0, 200);
-    beam.addColorStop(0, 'rgba(255, 255, 230, 0.75)');
-    beam.addColorStop(0.6, 'rgba(56, 189, 248, 0.25)');
+    const beam = ctx.createRadialGradient(28, 0, 10, 190, 0, 220);
+    beam.addColorStop(0, curCar.id==='dena' ? 'rgba(224, 242, 254, 0.85)' : 'rgba(255, 255, 230, 0.8)');
+    beam.addColorStop(0.6, curCar.id==='dena' ? 'rgba(56, 189, 248, 0.35)' : 'rgba(255, 215, 110, 0.25)');
     beam.addColorStop(1, 'transparent');
     ctx.fillStyle = beam;
     ctx.beginPath();
-    ctx.moveTo(26, -10);
-    ctx.lineTo(220, -70);
-    ctx.lineTo(220, 70);
-    ctx.lineTo(26, 10);
+    ctx.moveTo(26, -11);
+    ctx.lineTo(240, -80);
+    ctx.lineTo(240, 80);
+    ctx.lineTo(26, 11);
     ctx.closePath();
     ctx.fill();
   }
 
-  // بدنه خودرو
   const carCol = custom.color || curCar.defaultColor;
-  ctx.fillStyle = carCol;
-  ctx.beginPath();
-  ctx.roundRect(-26, -14, 52, 28, 6);
-  ctx.fill();
 
-  // سقف و شیشه‌ها
-  ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-  ctx.beginPath();
-  ctx.roundRect(-10, -11, 24, 22, 4);
-  ctx.fill();
+  if(curCar.id === 'paykan'){
+    // پیکان جوانان: فرم مکعبی کلاسیک با سپر کروم جلو و عقب
+    ctx.fillStyle = carCol;
+    ctx.beginPath();
+    ctx.roundRect(-27, -13, 54, 26, 3);
+    ctx.fill();
 
-  // کاپوت و خطوط بدنه
-  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(14, -10); ctx.lineTo(24, -8);
-  ctx.moveTo(14, 10); ctx.lineTo(24, 8);
-  ctx.stroke();
+    // سپرهای کرومی براق
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillRect(-29, -14, 3, 28);
+    ctx.fillRect(27, -14, 3, 28);
 
-  // چراغ‌های جلو
-  ctx.fillStyle = '#fef08a';
-  ctx.fillRect(24, -12, 4, 6);
-  ctx.fillRect(24, 6, 4, 6);
+    // سقف و شیشه‌های قائم کلاسیک
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.fillRect(-9, -10, 20, 20);
 
-  // چراغ‌های عقب (قرمز در حالت ترمز روشن‌تر)
-  ctx.fillStyle = (CR.keys.down || CR.keys.space) ? '#ff2222' : '#991b1b';
-  ctx.fillRect(-26, -12, 4, 6);
-  ctx.fillRect(-26, 6, 4, 6);
+    // چراغ‌های گرد دوبل پیکان جوانان
+    ctx.fillStyle = '#fef08a';
+    ctx.beginPath();
+    ctx.arc(26, -8, 3, 0, Math.PI * 2);
+    ctx.arc(26, 8, 3, 0, Math.PI * 2);
+    ctx.fill();
 
-  // لاستیک‌ها
+    // چراغ‌های عمودی عقب
+    ctx.fillStyle = (CR.keys.down || CR.keys.space) ? '#ff2222' : '#991b1b';
+    ctx.fillRect(-28, -10, 2, 5);
+    ctx.fillRect(-28, 5, 2, 5);
+
+  } else if(curCar.id === 'pars'){
+    // پژو پارس: فرم کشیده آیرودینامیک با زه‌های جانبی مشکی
+    ctx.fillStyle = carCol;
+    ctx.beginPath();
+    ctx.roundRect(-27, -14, 54, 28, 5);
+    ctx.fill();
+
+    // زه‌های جانبی مشکی پارس
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(-24, -14.5, 48, 1.5);
+    ctx.fillRect(-24, 13, 48, 1.5);
+
+    // شیشه‌ها و ستون‌های ظریف
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.beginPath();
+    ctx.roundRect(-10, -11, 23, 22, 4);
+    ctx.fill();
+
+    // چراغ‌های مه‌شکن و چراغ‌های جلو پارس
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(24, -12, 4, 6);
+    ctx.fillRect(24, 6, 4, 6);
+
+    // چراغ خطر یکپارچه عقب پارس ELX
+    ctx.fillStyle = (CR.keys.down || CR.keys.space) ? '#ff2222' : '#b91c1c';
+    ctx.fillRect(-27, -12, 3, 7);
+    ctx.fillRect(-27, 5, 3, 7);
+
+  } else {
+    // دنا پلاس: فرم مدرن و اسپرت با جلوپنجره بزرگ و چراغ‌های دی‌لایت نئون
+    ctx.fillStyle = carCol;
+    ctx.beginPath();
+    ctx.roundRect(-28, -15, 56, 30, 7);
+    ctx.fill();
+
+    // خطوط عضلانی روی کاپوت
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(10, -12); ctx.lineTo(26, -9);
+    ctx.moveTo(10, 12); ctx.lineTo(26, 9);
+    ctx.stroke();
+
+    // شیشه‌ها
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.beginPath();
+    ctx.roundRect(-11, -12, 25, 24, 5);
+    ctx.fill();
+
+    // هدلایت‌های نئونی دی‌لایت دنا
+    ctx.fillStyle = '#e0f2fe';
+    ctx.fillRect(25, -13, 4, 7);
+    ctx.fillRect(25, 6, 4, 7);
+
+    // چراغ عقب نئونی دنا
+    ctx.fillStyle = (CR.keys.down || CR.keys.space) ? '#ff2222' : '#991b1b';
+    ctx.fillRect(-28, -13, 3, 8);
+    ctx.fillRect(-28, 5, 3, 8);
+  }
+
+  // لاستیک‌ها با رینگ
   ctx.fillStyle = '#09090b';
-  ctx.fillRect(-20, -16, 10, 4);
-  ctx.fillRect(-20, 12, 10, 4);
-  ctx.fillRect(12, -16, 10, 4);
-  ctx.fillRect(12, 12, 10, 4);
+  ctx.fillRect(-21, -17, 11, 4);
+  ctx.fillRect(-21, 13, 11, 4);
+  ctx.fillRect(13, -17, 11, 4);
+  ctx.fillRect(13, 13, 11, 4);
 
   ctx.restore(); // پایان رسم بازیکن
-
   ctx.restore(); // پایان ترنسفورم دوربین
 
-  // ۷. افکت باران در صورت انتخاب مپ بارانی
+  // باران
   if(curMap.weather === 'rain'){
     ctx.strokeStyle = 'rgba(186, 230, 253, 0.4)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    for(let i = 0; i < 40; i++){
+    for(let i = 0; i < 45; i++){
       const rx = Math.random() * W;
       const ry = Math.random() * H;
       ctx.moveTo(rx, ry);
@@ -10972,13 +11093,12 @@ function crDrawGame(){
 
   ctx.restore();
 
-  // ۸. آپدیت مقادیر HUD و کیلومترشمار
   crUpdateHud();
   crDrawMinimap();
 }
 
 /* ================================================================
-   آپدیت المان‌های HUD و سرعت
+   آپدیت کیلومترشمار اختصاصی هر ماشین
    ================================================================ */
 function crUpdateHud(){
   const p = CR.p;
@@ -10992,7 +11112,7 @@ function crUpdateHud(){
 
   const rpmBar = document.getElementById('crRpmBar');
   const rpmNum = document.getElementById('crRpmNum');
-  if(rpmBar) rpmBar.style.width = Math.min(100, (p.rpm / 7000) * 100) + '%';
+  if(rpmBar) rpmBar.style.width = Math.min(100, ((p.rpm - 900) / 5900) * 100) + '%';
   if(rpmNum) rpmNum.textContent = faStr(String(p.rpm));
 
   const gearNum = document.getElementById('crGearNum');
@@ -11007,9 +11127,6 @@ function crUpdateHud(){
   if(healthBar) healthBar.style.width = p.health + '%';
 }
 
-/* ================================================================
-   رسم مینی‌مپ هماهنگ با جهت خودرو
-   ================================================================ */
 function crDrawMinimap(){
   const cv = document.getElementById('crMinimap');
   if(!cv) return;
@@ -11018,25 +11135,20 @@ function crDrawMinimap(){
   const scale = W / CR.world.width;
 
   ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+  ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
   ctx.fillRect(0, 0, W, H);
 
-  // خیابان‌ها روی مینی‌مپ
-  ctx.fillStyle = 'rgba(148, 180, 224, 0.25)';
+  ctx.fillStyle = 'rgba(148, 180, 224, 0.28)';
   for(const r of CR.world.roads){
     ctx.fillRect(r.x * scale, r.y * scale, Math.max(2, r.w * scale), Math.max(2, r.h * scale));
   }
 
-  // موقعیت خودروی بازیکن
   ctx.fillStyle = '#ffd76e';
   ctx.beginPath();
-  ctx.arc(CR.p.x * scale, CR.p.y * scale, 3.5, 0, Math.PI * 2);
+  ctx.arc(CR.p.x * scale, CR.p.y * scale, 3.8, 0, Math.PI * 2);
   ctx.fill();
 }
 
-/* ================================================================
-   حلقه بازی (Game Loop)
-   ================================================================ */
 function crGameLoop(now){
   if(!CR.active) return;
   const dt = Math.min(0.05, (now - CR.lastTime) / 1000);
@@ -11048,11 +11160,7 @@ function crGameLoop(now){
   CR.raf = requestAnimationFrame(crGameLoop);
 }
 
-/* ================================================================
-   راه‌اندازی و اتصال کنترل‌های کیبورد و لمسی
-   ================================================================ */
 function crAttachListeners(wrap){
-  // کلیدهای کیبورد
   window.addEventListener('keydown', e => {
     if(CR.view !== 'ingame') return;
     if(e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') CR.keys.up = true;
@@ -11061,6 +11169,8 @@ function crAttachListeners(wrap){
     if(e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') CR.keys.right = true;
     if(e.key === ' ') { e.preventDefault(); CR.keys.space = true; }
     if(e.key === 'Shift') CR.keys.shift = true;
+    if(e.key === 'e' || e.key === 'E') crShiftGearUp();
+    if(e.key === 'q' || e.key === 'Q') crShiftGearDown();
     if(e.key === 'c' || e.key === 'C') crCycleCamera();
     if(e.key === 'l' || e.key === 'L') { CR.p.headlights = !CR.p.headlights; toast(CR.p.headlights ? 'چراغ‌ها روشن شد' : 'چراغ‌ها خاموش شد', 'eye'); }
     if(e.key === 'Escape') { e.preventDefault(); crPauseGame(); }
@@ -11076,7 +11186,6 @@ function crAttachListeners(wrap){
     if(e.key === 'Shift') CR.keys.shift = false;
   });
 
-  // کنترل‌های لمسی
   wrap.querySelectorAll('.ctc-btn').forEach(btn => {
     const k = btn.dataset.key;
     if(!k) return;
@@ -11089,9 +11198,6 @@ function crAttachListeners(wrap){
   });
 }
 
-/* ================================================================
-   رندر اصلی ماژول ماشین‌بازی
-   ================================================================ */
 function crRenderApp(){
   const wrap = CR.container || document.getElementById('crGameWrap');
   if(!wrap) return;
@@ -11131,7 +11237,6 @@ const carracingEng = {
   }
 };
 
-// ثبت بازی در سیستم مرکزی بازی‌ها
 Object.assign(GAME_ENG, {'carracing': carracingEng});
 window.carracingEng = carracingEng;
 window.CR = CR;
@@ -11149,6 +11254,9 @@ window.crResumeGame = crResumeGame;
 window.crRestartGame = crRestartGame;
 window.crExitToMenu = crExitToMenu;
 window.crCycleCamera = crCycleCamera;
+window.crSetTransmission = crSetTransmission;
+window.crShiftGearUp = crShiftGearUp;
+window.crShiftGearDown = crShiftGearDown;
 
 /* ================================================================
    کاورهای پرمیوم بازی‌ها — نسخه ۱۸٫۰ — کیفیت بالا، خوشگل، واقعی
