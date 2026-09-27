@@ -3,6 +3,22 @@
    موتور اختصاصی تمیز + طراحی جذاب + گرادینت سینمایی + سایه + گلو
    ================================================================ */
 const COVERS={
+  'turbo':()=>'<defs>'
+    +'<linearGradient id="cvtb-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1e3b"/><stop offset="50" stop-color="#163863"/><stop offset="100" stop-color="#071224"/></linearGradient>'
+    +'<radialGradient id="cvtb-sun" cx="70%" cy="30%" r="50%"><stop offset="0" stop-color="#f59e0b" stop-opacity="0.9"/><stop offset="100" stop-color="#d97706" stop-opacity="0"/></radialGradient>'
+    +'<linearGradient id="cvtb-trail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#38bdf8" stop-opacity="0"/><stop offset="100" stop-color="#38bdf8" stop-opacity="0.9"/></linearGradient>'
+    +'</defs>'
+    +'<rect width="320" height="200" fill="url(#cvtb-bg)"/>'
+    +'<circle cx="230" cy="65" r="45" fill="url(#cvtb-sun)"/>'
+    +'<path d="M0 160 Q 90 120, 180 150 T 320 140 L 320 200 L 0 200 Z" fill="#152e4d"/>'
+    +'<path d="M0 175 Q 110 145, 200 170 T 320 165 L 320 200 L 0 200 Z" fill="#0c1d33"/>'
+    +'<path d="M10 140 C 90 120, 160 145, 210 138" stroke="url(#cvtb-trail)" stroke-width="8" stroke-linecap="round" fill="none"/>'
+    +'<circle cx="225" cy="136" r="14" fill="#0284c7" stroke="#38bdf8" stroke-width="3"/>'
+    +'<circle cx="225" cy="136" r="6" fill="#f0f9ff"/>'
+    +'<circle cx="120" cy="80" r="10" fill="none" stroke="#f59e0b" stroke-width="3"/>'
+    +'<circle cx="160" cy="65" r="10" fill="none" stroke="#f59e0b" stroke-width="3"/>'
+    +'<circle cx="200" cy="75" r="10" fill="none" stroke="#f59e0b" stroke-width="3"/>'
+    +'<text x="160" y="190" font-family="Vazirmatn, sans-serif" font-weight="900" font-size="13" fill="#ffd76e" text-anchor="middle">توربو رانر — پلتفرمر سرعتی</text>',
   'fourcards':()=>'<defs>'
     +'<linearGradient id="cvfc-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a2a1b"/><stop offset="50" stop-color="#144d32"/><stop offset="100" stop-color="#071f14"/></linearGradient>'
     +'<radialGradient id="cvfc-felt" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#1b5e3d" stop-opacity="0.8"/><stop offset="100" stop-color="#082215" stop-opacity="0.95"/></radialGradient>'
