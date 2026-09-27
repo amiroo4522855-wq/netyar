@@ -287,7 +287,8 @@ const NAV=[
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
 const VIEWS=['home','sites','fav','games','shop','customers','music','calc','typing','ai'];
-const GAME_VIEWS=['game-turbo','game-fourcards','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
+const GAME_VIEWS=['game-carracing',
+  'game-turbo','game-fourcards','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
 
@@ -500,6 +501,10 @@ const GAMES=[
   {t:'تاس شانس',i:'dice5',c:'#c46a8e',d:'بدون تاس، شروع نکن!'},
 ];
 const GAME_META={
+  'carracing':{t:'ماشین‌سواری ایرانی',i:'car',c:'#d9ae3e',type:'dom',best:['carBestSpeed','KM/H'],
+    d:'شبیه‌ساز رانندگی واقعی با دنا پلاس، پژو پارس و پیکان جوانان! فیزیک مومنتوم، گاراژ شخصی‌سازی، کیلومترشمار دیجیتال، دور موتور و مپ‌های متنوع شهری، چالوس و شبانه.',
+    ctrl:'W/↑ = گاز · S/↓ = ترمز/دنده عقب · A/D = فرمان · Space = ترمز دستی · Shift = نیترو · C = دوربین · Esc = مکث',
+    btns:[{t:'گاز',k:'w',i:'zap',cls:'primary',hold:true},{t:'ترمز',k:'s',i:'chevron-down',hold:true},{t:'فرمان چپ',k:'a',i:'chevron-left',hold:true},{t:'فرمان راست',k:'d',i:'chevron-right',hold:true},{t:'ترمز دستی',k:' ',i:'shield'},{t:'دوربین',k:'c',i:'camera'}]},
   'turbo':{t:'توربو رانر',i:'wind',c:'#0284c7',type:'dom',best:['turboBest','امتیاز'],
     d:'پلتفرمر سرعتی پرهیجان با فیزیک واقعی مومنتوم، دابل جامپ، دش، رول، حلقه‌ها، شیلد، مگنت، غول‌های باس، و ۶ جهان متنوع (جنگل، شهر سایبر، کویر، قطب، آتشفشان و فضا)!',
     ctrl:'A/D یا فلش‌ها = دویدن · Space = پرش/دابل جامپ · Shift = دش · ↓ = رول · Esc = مکث',
@@ -740,9 +745,9 @@ function setGameFilter(cat){
   cards.forEach(c => {
     const k = c.dataset.k;
     if(!k || cat === 'all'){ c.style.display = ''; return; }
-    const isArcade = ['turbo','dino','flappy','breakout','bubble','angry','snake','hajabbas','react'].includes(k);
+    const isArcade = ['carracing','turbo','dino','flappy','breakout','bubble','angry','snake','hajabbas','react'].includes(k);
     const isPuzzle = ['tetris','2048','ttt','memory','mines','puzzle','word','chess','tower','coin','dice'].includes(k);
-    const isIranian = ['fourcards','hajabbas','dino','word'].includes(k);
+    const isIranian = ['carracing','fourcards','hajabbas','dino','word'].includes(k);
     let match = false;
     if(cat === 'arcade' && isArcade) match = true;
     if(cat === 'puzzle' && isPuzzle) match = true;
@@ -783,7 +788,7 @@ function vGames(){
     +'</div>'
   +'</div>'
   +secHead('gamepad','blue','ویترین بازی‌ها و فروشگاه','گرید یکپارچه، سبک، روان و پرسرعت')
-  +'<div class="game-grid">'+['turbo','fourcards','hajabbas','angry','shop','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
+  +'<div class="game-grid">'+['carracing','turbo','fourcards','hajabbas','angry','shop','flappy','breakout','bubble','mines','tetris','2048','snake','ttt','memory','rps','react','coin','dice','puzzle','word','chess'].map((k,i)=>{
       if(k==='shop'){
         return '<div class="game-card playable reveal shop-card-in-games" data-k="shop" style="--gc:#d9ae3e;transition-delay:'+Math.min(i*30,400)+'ms" onclick="go(\'shop\')">'
           +'<div class="gcov">'+gcov('shop')+'<span class="gcov-shine"></span><span class="gcov-play">'+ic('shopping-bag',12)+'فروشگاه</span></div>'
@@ -803,7 +808,7 @@ function vGames(){
 function vGame(id){
   const m=GAME_META[id];
   if(!m)return vGames();
-  const area=id==='turbo'?'<div id="tbGameWrap" class="tb-game-wrap"></div>':(id==='fourcards'?'<div id="fcTableWrap" class="fc-table-wrap"></div>':(m.type==='dom'?'<div id="gameDom"></div>':'<canvas id="gameCv"></canvas>'));
+  const area=id==='carracing'?'<div id="crGameWrap" class="cr-game-wrap"></div>':id==='turbo'?'<div id="tbGameWrap" class="tb-game-wrap"></div>':(id==='fourcards'?'<div id="fcTableWrap" class="fc-table-wrap"></div>':(m.type==='dom'?'<div id="gameDom"></div>':'<canvas id="gameCv"></canvas>'));
   const btns=(m.btns||[]).map(b=>'<button class="btn '+(b.cls||'ghost')+'" data-gk="'+b.k+'" '+(b.hold?'data-hold="1"':'')+'>'+ic(b.i||'zap',15)+b.t+'</button>').join('');
   const rec=m.best?'<span>'+ic('trophy',13)+'رکورد شما: <b>'+faNum(store.get(m.best[0],0))+'</b> '+m.best[1]+'</span>':'';
   const fsBtn='<span class="gi-fs" onclick="toggleGameFS()" title="تمام‌صفحه — Esc یا Backspace برای خروج">'+ic('maximize',14)+' تمام‌صفحه</span>';

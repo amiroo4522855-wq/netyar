@@ -713,9 +713,10 @@ function gameStart(id){
   if(!eng)return;
   const cv=document.getElementById('gameCv');
   const dom=document.getElementById('gameDom');
+  const cr=document.getElementById('crGameWrap');
   const tb=document.getElementById('tbGameWrap');
   const fc=document.getElementById('fcTableWrap');
-  eng.start(tb||fc||cv||dom);
+  eng.start(cr||tb||fc||cv||dom);
 }
 function gameStopAll(){
   for(const k in GAME_ENG)GAME_ENG[k].stop();
