@@ -110,9 +110,10 @@ svg.fill path{fill:currentColor}
 .ld-pct{color:var(--gold2);font-weight:850;font-variant-numeric:tabular-nums;min-width:38px}
 .ld-stat{color:var(--tx3);font-weight:600;transition:opacity .3s}
 .ld-cap{position:absolute;top:26px;font-size:9.5px;letter-spacing:4px;color:rgba(148,180,224,.35);font-weight:600}
-.ld-skip{position:absolute;bottom:30px;display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:700;color:var(--tx3);
-  background:rgba(148,180,224,.06);border:1px solid var(--line);padding:9px 18px;border-radius:99px;cursor:pointer;transition:all .25s}
-.ld-skip:hover{color:var(--tx);border-color:rgba(217,174,62,.5);background:rgba(217,174,62,.08);box-shadow:0 6px 20px rgba(217,174,62,.12)}
+.ld-skip{position:absolute;bottom:30px;z-index:450;display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:13px;font-weight:850;color:#ffd76e;
+  background:rgba(20,36,66,.85);border:1.5px solid rgba(217,174,62,.55);padding:10px 22px;border-radius:99px;cursor:pointer;transition:all .22s;box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 16px rgba(217,174,62,.25)}
+.ld-skip:hover{color:#fff;border-color:#ffd76e;background:rgba(46,108,184,.6);transform:scale(1.05);box-shadow:0 10px 30px rgba(217,174,62,.4)}
+.ld-skip:active{transform:scale(.95)}
 
 /* ============ چیدمان اصلی ============ */
 .sidebar{position:fixed;top:0;right:0;width:var(--side);height:100vh;z-index:50;display:flex;flex-direction:column;
@@ -2555,7 +2556,7 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
     <div class="ld-meta"><span class="ld-pct" id="ldPct">۰٪</span><span class="ld-stat" id="ldStat">روشن‌کردن چراغ‌های کافی‌نت…</span></div>
   </div>
   <div class="ld-cap">N E T Y A R &nbsp;·&nbsp; D I G I T A L &nbsp; C A F É</div>
-  <button class="ld-skip" id="ldSkip" type="button">ورود سریع <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>
+  <button class="ld-skip" id="ldSkip" type="button" onclick="if(window.__finishLoader)window.__finishLoader()">ورود سریع <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>
 </div>
 
 <div id="app"></div>
@@ -12764,48 +12765,77 @@ function playWelcomeVoice(){
 // preload voices
 try{ if('speechSynthesis' in window){ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = ()=>{ speechSynthesis.getVoices(); }; } }catch(e){}
 
-/* ---------- لودینگ ۱۰ ثانیه‌ای ---------- */
+/* ---------- لودینگ هوشمند و سریع با ضمانت ورود فوری ---------- */
 (function(){
-  const DUR=10000;
-  const fill=document.getElementById('ldFill'),pct=document.getElementById('ldPct'),stat=document.getElementById('ldStat');
-  const loader=document.getElementById('loader'),skip=document.getElementById('ldSkip');
-  const STAGES=[
-    [0,'روشن‌کردن چراغ‌های کافی‌نت…'],
-    [1400,'دم‌کردن قهوهٔ تازه…'],
-    [2900,'چیدن '+faNum(SITES.length)+' سایت روی میزها…'],
-    [4400,'اتصال به وای‌فای کافی‌نت…'],
-    [6000,'تنظیم صندلی‌های راحتی…'],
-    [7500,'نهایی‌کردن منوی سرویس…'],
-    [9200,'آمادهٔ سرو! خوش آمدید'],
+  const DUR = 3600; // لودینگ روان و دلنشین ۳.۶ ثانیه‌ای به جای ۱۰ ثانیه کند
+  const fill = document.getElementById('ldFill');
+  const pct = document.getElementById('ldPct');
+  const stat = document.getElementById('ldStat');
+  const loader = document.getElementById('loader');
+  const skip = document.getElementById('ldSkip');
+
+  const STAGES = [
+    [0, 'روشن‌کردن چراغ‌های کافی‌نت…'],
+    [600, 'دم‌کردن قهوهٔ تازه…'],
+    [1200, 'چیدن ' + faNum(SITES.length) + ' سایت روی میزها…'],
+    [1800, 'اتصال به وای‌فای پرسرعت…'],
+    [2400, 'آماده‌سازی بازی‌ها و سیستم‌ها…'],
+    [3000, 'آمادهٔ سرو! خوش آمدید']
   ];
-  let finished=false;const t0=performance.now();
+
+  let finished = false;
+  const t0 = (typeof performance!=='undefined' && performance.now) ? performance.now() : Date.now();
+
   function finish(){
-    if(finished)return;finished=true;
+    if(finished) return;
+    finished = true;
     try{ playWelcomeVoice(); }catch(e){}
-    fill.style.width='100%';pct.textContent=faNum(100)+'٪';
-    stat.textContent='آمادهٔ سرو! خوش آمدید';
+    if(fill) fill.style.width = '100%';
+    if(pct) pct.textContent = faNum(100) + '٪';
+    if(stat) stat.textContent = 'آمادهٔ سرو! خوش آمدید';
+    
     setTimeout(()=>{
-      loader.classList.add('done');
-      document.body.classList.add('ready');
-      animateCounts();observeReveals();
-      setTimeout(()=>loader.remove(),900);
-    },250);
+      if(loader){
+        loader.classList.add('done');
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+      }
+      try{ document.body.classList.add('ready'); }catch(e){}
+      try{ animateCounts(); observeReveals(); }catch(e){}
+      setTimeout(()=>{
+        try{ if(loader && loader.parentNode) loader.remove(); }catch(e){}
+      }, 600);
+    }, 180);
   }
+
   function frame(now){
-    if(finished)return;
-    const el=now-t0;
-    const p=Math.min(1,el/DUR);
-    fill.style.width=(p*100).toFixed(1)+'%';
-    pct.textContent=faNum(Math.floor(p*100))+'٪';
-    let s=STAGES[0][1];
-    for(const st of STAGES){if(el>=st[0])s=st[1];}
-    if(stat.textContent!==s)stat.textContent=s;
-    if(p>=1){finish();return;}
+    if(finished) return;
+    const curTime = (typeof now==='number' && now>0) ? now : ((typeof performance!=='undefined'&&performance.now)?performance.now():Date.now());
+    const el = curTime - t0;
+    const p = Math.min(1, el / DUR);
+    if(fill) fill.style.width = (p * 100).toFixed(1) + '%';
+    if(pct) pct.textContent = faNum(Math.floor(p * 100)) + '٪';
+    
+    let s = STAGES[0][1];
+    for(const st of STAGES){ if(el >= st[0]) s = st[1]; }
+    if(stat && stat.textContent !== s) stat.textContent = s;
+
+    if(p >= 1){
+      finish();
+      return;
+    }
     requestAnimationFrame(frame);
   }
+
+  // تضمین قطعی ورود بعد از گذشت زمان حداکثر
+  setTimeout(() => { if(!finished) finish(); }, DUR + 400);
+
+  if(skip){
+    skip.addEventListener('click', finish);
+    skip.addEventListener('touchstart', finish, {passive:true});
+  }
+  window.__finishLoader = finish;
   requestAnimationFrame(frame);
-  skip.addEventListener('click',finish);
-  window.__finishLoader=finish;
 })();
 
 /* ---------- شروع ---------- */

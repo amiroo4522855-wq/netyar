@@ -96,9 +96,10 @@ svg.fill path{fill:currentColor}
 .ld-pct{color:var(--gold2);font-weight:850;font-variant-numeric:tabular-nums;min-width:38px}
 .ld-stat{color:var(--tx3);font-weight:600;transition:opacity .3s}
 .ld-cap{position:absolute;top:26px;font-size:9.5px;letter-spacing:4px;color:rgba(148,180,224,.35);font-weight:600}
-.ld-skip{position:absolute;bottom:30px;display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:700;color:var(--tx3);
-  background:rgba(148,180,224,.06);border:1px solid var(--line);padding:9px 18px;border-radius:99px;cursor:pointer;transition:all .25s}
-.ld-skip:hover{color:var(--tx);border-color:rgba(217,174,62,.5);background:rgba(217,174,62,.08);box-shadow:0 6px 20px rgba(217,174,62,.12)}
+.ld-skip{position:absolute;bottom:30px;z-index:450;display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:13px;font-weight:850;color:#ffd76e;
+  background:rgba(20,36,66,.85);border:1.5px solid rgba(217,174,62,.55);padding:10px 22px;border-radius:99px;cursor:pointer;transition:all .22s;box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 16px rgba(217,174,62,.25)}
+.ld-skip:hover{color:#fff;border-color:#ffd76e;background:rgba(46,108,184,.6);transform:scale(1.05);box-shadow:0 10px 30px rgba(217,174,62,.4)}
+.ld-skip:active{transform:scale(.95)}
 
 /* ============ چیدمان اصلی ============ */
 .sidebar{position:fixed;top:0;right:0;width:var(--side);height:100vh;z-index:50;display:flex;flex-direction:column;

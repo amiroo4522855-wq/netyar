@@ -1862,48 +1862,77 @@ function playWelcomeVoice(){
 // preload voices
 try{ if('speechSynthesis' in window){ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = ()=>{ speechSynthesis.getVoices(); }; } }catch(e){}
 
-/* ---------- لودینگ ۱۰ ثانیه‌ای ---------- */
+/* ---------- لودینگ هوشمند و سریع با ضمانت ورود فوری ---------- */
 (function(){
-  const DUR=10000;
-  const fill=document.getElementById('ldFill'),pct=document.getElementById('ldPct'),stat=document.getElementById('ldStat');
-  const loader=document.getElementById('loader'),skip=document.getElementById('ldSkip');
-  const STAGES=[
-    [0,'روشن‌کردن چراغ‌های کافی‌نت…'],
-    [1400,'دم‌کردن قهوهٔ تازه…'],
-    [2900,'چیدن '+faNum(SITES.length)+' سایت روی میزها…'],
-    [4400,'اتصال به وای‌فای کافی‌نت…'],
-    [6000,'تنظیم صندلی‌های راحتی…'],
-    [7500,'نهایی‌کردن منوی سرویس…'],
-    [9200,'آمادهٔ سرو! خوش آمدید'],
+  const DUR = 3600; // لودینگ روان و دلنشین ۳.۶ ثانیه‌ای به جای ۱۰ ثانیه کند
+  const fill = document.getElementById('ldFill');
+  const pct = document.getElementById('ldPct');
+  const stat = document.getElementById('ldStat');
+  const loader = document.getElementById('loader');
+  const skip = document.getElementById('ldSkip');
+
+  const STAGES = [
+    [0, 'روشن‌کردن چراغ‌های کافی‌نت…'],
+    [600, 'دم‌کردن قهوهٔ تازه…'],
+    [1200, 'چیدن ' + faNum(SITES.length) + ' سایت روی میزها…'],
+    [1800, 'اتصال به وای‌فای پرسرعت…'],
+    [2400, 'آماده‌سازی بازی‌ها و سیستم‌ها…'],
+    [3000, 'آمادهٔ سرو! خوش آمدید']
   ];
-  let finished=false;const t0=performance.now();
+
+  let finished = false;
+  const t0 = (typeof performance!=='undefined' && performance.now) ? performance.now() : Date.now();
+
   function finish(){
-    if(finished)return;finished=true;
+    if(finished) return;
+    finished = true;
     try{ playWelcomeVoice(); }catch(e){}
-    fill.style.width='100%';pct.textContent=faNum(100)+'٪';
-    stat.textContent='آمادهٔ سرو! خوش آمدید';
+    if(fill) fill.style.width = '100%';
+    if(pct) pct.textContent = faNum(100) + '٪';
+    if(stat) stat.textContent = 'آمادهٔ سرو! خوش آمدید';
+    
     setTimeout(()=>{
-      loader.classList.add('done');
-      document.body.classList.add('ready');
-      animateCounts();observeReveals();
-      setTimeout(()=>loader.remove(),900);
-    },250);
+      if(loader){
+        loader.classList.add('done');
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+      }
+      try{ document.body.classList.add('ready'); }catch(e){}
+      try{ animateCounts(); observeReveals(); }catch(e){}
+      setTimeout(()=>{
+        try{ if(loader && loader.parentNode) loader.remove(); }catch(e){}
+      }, 600);
+    }, 180);
   }
+
   function frame(now){
-    if(finished)return;
-    const el=now-t0;
-    const p=Math.min(1,el/DUR);
-    fill.style.width=(p*100).toFixed(1)+'%';
-    pct.textContent=faNum(Math.floor(p*100))+'٪';
-    let s=STAGES[0][1];
-    for(const st of STAGES){if(el>=st[0])s=st[1];}
-    if(stat.textContent!==s)stat.textContent=s;
-    if(p>=1){finish();return;}
+    if(finished) return;
+    const curTime = (typeof now==='number' && now>0) ? now : ((typeof performance!=='undefined'&&performance.now)?performance.now():Date.now());
+    const el = curTime - t0;
+    const p = Math.min(1, el / DUR);
+    if(fill) fill.style.width = (p * 100).toFixed(1) + '%';
+    if(pct) pct.textContent = faNum(Math.floor(p * 100)) + '٪';
+    
+    let s = STAGES[0][1];
+    for(const st of STAGES){ if(el >= st[0]) s = st[1]; }
+    if(stat && stat.textContent !== s) stat.textContent = s;
+
+    if(p >= 1){
+      finish();
+      return;
+    }
     requestAnimationFrame(frame);
   }
+
+  // تضمین قطعی ورود بعد از گذشت زمان حداکثر
+  setTimeout(() => { if(!finished) finish(); }, DUR + 400);
+
+  if(skip){
+    skip.addEventListener('click', finish);
+    skip.addEventListener('touchstart', finish, {passive:true});
+  }
+  window.__finishLoader = finish;
   requestAnimationFrame(frame);
-  skip.addEventListener('click',finish);
-  window.__finishLoader=finish;
 })();
 
 /* ---------- شروع ---------- */
