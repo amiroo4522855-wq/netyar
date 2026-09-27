@@ -259,17 +259,17 @@ function crmShare(id){
   const c = crmGet().find(x => x.id === id);
   if(!c) return;
   const catName = (CRM_CATS.find(x => x.id === c.cat) || {}).l || 'عادی';
-  const txt = '📋 پرونده مشتری کافی‌نت نت‌یار\n'
-    + '👤 نام: ' + c.fullName + '\n'
-    + '🔢 کد ملی: ' + c.national + '\n'
-    + '📱 موبایل: ' + c.mobile + '\n'
-    + '💼 شغل: ' + (c.job || '—') + '\n'
-    + '🎂 سن: ' + (c.age ? faNum(c.age) : '—') + '\n'
-    + '🏷 دسته: ' + catName + '\n'
-    + '💬 آیدی‌ها: ' + (c.appIds || '—') + '\n'
-    + '🏠 نشانی: ' + (c.address || '—') + '\n'
-    + (c.note ? ('📝 یادداشت: ' + c.note + '\n') : '')
-    + '📅 تاریخ ثبت: ' + crmNow();
+  const txt = 'پرونده مشتری کافی‌نت نت‌یار\n'
+    + 'نام: ' + c.fullName + '\n'
+    + 'کد ملی: ' + c.national + '\n'
+    + 'موبایل: ' + c.mobile + '\n'
+    + 'شغل: ' + (c.job || '—') + '\n'
+    + 'سن: ' + (c.age ? faNum(c.age) : '—') + '\n'
+    + 'دسته: ' + catName + '\n'
+    + 'آیدی‌ها: ' + (c.appIds || '—') + '\n'
+    + 'نشانی: ' + (c.address || '—') + '\n'
+    + (c.note ? ('یادداشت: ' + c.note + '\n') : '')
+    + 'تاریخ ثبت: ' + crmNow();
   if(navigator.share){
     navigator.share({title: 'پرونده مشتری — ' + c.fullName, text: txt}).catch(() => {});
   } else {

@@ -5,10 +5,10 @@
 'use strict';
 
 const FC_SUITS = [
-  {id:'s', n:'spade', s:'♠', c:'#1e293b', fa:'پیک'},
-  {id:'c', n:'club', s:'♣', c:'#1e293b', fa:'گشنیز'},
-  {id:'d', n:'diamond', s:'♦', c:'#dc2626', fa:'خشت'},
-  {id:'h', n:'heart', s:'♥', c:'#dc2626', fa:'دل'}
+  {id:'s', n:'spade', icName:'spade', c:'#1e293b', fa:'پیک'},
+  {id:'c', n:'club', icName:'club', c:'#1e293b', fa:'گشنیز'},
+  {id:'d', n:'diamond', icName:'diamond', c:'#dc2626', fa:'خشت'},
+  {id:'h', n:'heart', icName:'heart', c:'#dc2626', fa:'دل'}
 ];
 
 const FC_RANKS = [
@@ -73,7 +73,7 @@ function fcMakeDeck(){
         label: r.l,
         id: s.id + '_' + r.v,
         color: s.c,
-        symbol: s.s
+        icName: s.icName
       });
     }
   }
@@ -371,7 +371,7 @@ function fcPlayCard(playerIdx, cardIndex){
       FC.surCounts[team]++;
       FC.totalSurs[team]++;
       fcSfx('sur');
-      toast('💥 سور برای تیم ' + (team===0 ? 'شما' : 'حریف') + '! (+۵ امتیاز)', 'crown');
+      toast(' سور برای تیم ' + (team===0 ? 'شما' : 'حریف') + '! (+۵ امتیاز)', 'crown');
       fcShowSurBanner(team);
     } else {
       fcSfx('collect');
@@ -393,7 +393,7 @@ function fcPlayCard(playerIdx, cardIndex){
 function fcShowSurBanner(team){
   const el = document.getElementById('fcSurOverlay');
   if(!el) return;
-  el.innerHTML = '<div class="fc-sur-badge ' + (team===0 ? 'team0' : 'team1') + '">💥 سور! ۵+ امتیاز برای تیم ' + (team===0 ? 'شما' : 'حریف') + '</div>';
+  el.innerHTML = '<div class="fc-sur-badge ' + (team===0 ? 'team0' : 'team1') + '"> سور! ۵+ امتیاز برای تیم ' + (team===0 ? 'شما' : 'حریف') + '</div>';
   el.classList.add('active');
   setTimeout(() => {
     el.classList.remove('active');
@@ -644,7 +644,7 @@ function fcShowRoundModal(data){
 
   const isWin = FC.teamScores[0] > FC.teamScores[1];
   const title = data.isFinal
-    ? (isWin ? '🏆 پیروزی درخشان تیم شما!' : 'شکست در مسابقه چهاربرگ')
+    ? (isWin ? ' پیروزی درخشان تیم شما!' : 'شکست در مسابقه چهاربرگ')
     : ('پایان راند ' + faNum(FC.round));
 
   const sub = data.isFinal
@@ -708,18 +708,20 @@ function fcRenderCardHtml(card, isFaceDown, onClickStr){
 
   const suitObj = FC_SUITS.find(s => s.id === card.suit) || FC_SUITS[0];
   const isRed = (card.suit === 'h' || card.suit === 'd');
+  const suitSvgSmall = ic(suitObj.icName, 12);
+  const suitSvgBig = ic(suitObj.icName, 26);
 
   return '<div class="fc-card face ' + (isRed ? 'red' : 'black') + '" ' + (onClickStr||'') + ' data-id="' + card.id + '">'
     +'<div class="fc-card-corner top">'
       +'<span class="fc-c-val">' + card.label + '</span>'
-      +'<span class="fc-c-suit">' + suitObj.s + '</span>'
+      +'<span class="fc-c-suit">' + suitSvgSmall + '</span>'
     +'</div>'
     +'<div class="fc-card-center">'
-      +'<span class="fc-main-suit">' + suitObj.s + '</span>'
+      +'<span class="fc-main-suit">' + suitSvgBig + '</span>'
     +'</div>'
     +'<div class="fc-card-corner bottom">'
       +'<span class="fc-c-val">' + card.label + '</span>'
-      +'<span class="fc-c-suit">' + suitObj.s + '</span>'
+      +'<span class="fc-c-suit">' + suitSvgSmall + '</span>'
     +'</div>'
   +'</div>';
 }
@@ -816,7 +818,7 @@ function fcRenderTable(){
       // بازیکن پایین (شما)
       +'<div class="fc-seat bottom ' + (FC.turn===0 ? 'active-turn' : '') + '">'
         +'<div class="fc-my-hand-label">'
-          +'<span class="fc-turn-prompt">' + (FC.turn===0 ? '👈 نوبت شماست — یک کارت را برای بازی انتخاب کنید' : 'نوبت ' + FC_PLAYERS[FC.turn].name + ' است...') + '</span>'
+          +'<span class="fc-turn-prompt">' + (FC.turn===0 ? 'نوبت شماست — یک کارت را برای بازی انتخاب کنید' : 'نوبت ' + FC_PLAYERS[FC.turn].name + ' است...') + '</span>'
         +'</div>'
         +'<div class="fc-my-cards">'
           +myHand.map((c, i) => {
@@ -885,8 +887,8 @@ function fcShowRules(){
       +'<div><h3>قوانین اصیل و نحوه بازی چهاربرگ (۱۱)</h3><p>بازی ۴ نفره دو تیم دو نفره (شما و آرش مقابل سامان و بهرام)</p></div>'
     +'</div>'
     +'<div class="fc-rules-body">'
-      +'<div class="fc-rule-item"><b>🎯 هدف بازی:</b> جمع‌آوری کارت‌های زمین با کارت دست خود به‌طوری‌که مجموعشان ۱۱ شود، و رساندن امتیاز تیم به ۶۲.</div>'
-      +'<div class="fc-rule-item"><b>🃏 نحوه جمع کردن:</b>'
+      +'<div class="fc-rule-item"><b>هدف بازی:</b> جمع‌آوری کارت‌های زمین با کارت دست خود به‌طوری‌که مجموعشان ۱۱ شود، و رساندن امتیاز تیم به ۶۲.</div>'
+      +'<div class="fc-rule-item"><b>نحوه جمع کردن:</b>'
         +'<ul>'
           +'<li>اعداد ۱ تا ۱۰: کارتی که مجموعش با یک یا چند کارت زمین ۱۱ شود، آنها را برمی‌دارد (مثلاً ۷ با ۴، یا ۲ با ۹، یا ۳ با ۵ و ۳).</li>'
           +'<li>سرباز (J): تمام کارت‌های روی زمین به جز شاه و بی‌بی را جمع می‌کند.</li>'
@@ -894,8 +896,8 @@ function fcShowRules(){
           +'<li>شاه (K): فقط شاه‌های روی زمین را برمی‌دارد.</li>'
         +'</ul>'
       +'</div>'
-      +'<div class="fc-rule-item"><b>💥 سور:</b> اگر بازیکنی تمام کارت‌های روی زمین را جمع کند به‌طوری‌که زمین کاملاً خالی شود، ۵ امتیاز سور می‌گیرد (جمع کردن با سرباز یا در دست آخر سور محسوب نمی‌شود).</div>'
-      +'<div class="fc-rule-item"><b>🏆 امتیازدهی پایان هر راند:</b>'
+      +'<div class="fc-rule-item"><b> سور:</b> اگر بازیکنی تمام کارت‌های روی زمین را جمع کند به‌طوری‌که زمین کاملاً خالی شود، ۵ امتیاز سور می‌گیرد (جمع کردن با سرباز یا در دست آخر سور محسوب نمی‌شود).</div>'
+      +'<div class="fc-rule-item"><b> امتیازدهی پایان هر راند:</b>'
         +'<ul>'
           +'<li>هفت گشنیز: تیمی که حداقل ۷ گشنیز (خال ♣) جمع کند، ۷ امتیاز می‌گیرد.</li>'
           +'<li>۱۰ خشت (♦۱۰): ۳ امتیاز</li>'
@@ -944,3 +946,6 @@ window.fcToggleSound = fcToggleSound;
 window.fcShowRules = fcShowRules;
 window.fcStartNewGame = fcStartNewGame;
 window.fcContinueNextRound = fcContinueNextRound;
+window.FC = FC;
+window.fcCheckNextTurn = fcCheckNextTurn;
+window.fcNewRound = fcNewRound;

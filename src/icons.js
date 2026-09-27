@@ -113,6 +113,9 @@ const IC = {
   'club':'<circle cx="12" cy="6.5" r="4.5"/><circle cx="6.5" cy="14.5" r="4.5"/><circle cx="17.5" cy="14.5" r="4.5"/><path d="M12 14v8h-2v2h4v-2h-2v-8"/>',
   'diamond':'<path d="M12 2 3 12l9 10 9-10L12 2Z"/>',
   'cards':'<rect width="12" height="16" x="2" y="6" rx="2"/><path d="M6 2h12a2 2 0 0 1 2 2v14"/>',
+  'refresh-cw':'<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+  'award':'<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',
+  'help-circle':'<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
 
 };
 function ic(n,s,c){

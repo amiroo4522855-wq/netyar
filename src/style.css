@@ -2442,9 +2442,13 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 .fc-card-corner.top{align-self:flex-start}
 .fc-card-corner.bottom{align-self:flex-end;transform:rotate(180deg)}
 .fc-c-val{font-size:14px;font-weight:900;font-family:Arial,sans-serif}
-.fc-c-suit{font-size:12px}
+.fc-c-suit{display:flex;align-items:center;justify-content:center;line-height:1}
+.fc-c-suit svg{width:12px;height:12px;stroke:currentColor}
+.fc-card.face.red svg{stroke:#dc2626;color:#dc2626}
+.fc-card.face.black svg{stroke:#1e293b;color:#1e293b}
 .fc-card-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.fc-main-suit{font-size:26px;opacity:.9}
+.fc-main-suit{display:flex;align-items:center;justify-content:center;opacity:.92}
+.fc-main-suit svg{width:28px;height:28px;stroke:currentColor}
 
 /* پشت کارت */
 .fc-card.back{background:linear-gradient(135deg,#1e3a8a,#172554);border:2px solid #fff;overflow:hidden}
