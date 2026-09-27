@@ -61,6 +61,7 @@ function tetSpawn(){
   return{m:m,x:Math.floor((10-m[0].length)/2),y:0,c:id};
 }
 function tetReset(){
+  try{if(typeof hidePremiumGO==='function')hidePremiumGO();}catch(e){}
   tetInit();
   TET.grid=Array.from({length:20},()=>Array(10).fill(-1));
   TET.cur=tetSpawn();TET.next=tetSpawn();
@@ -91,6 +92,17 @@ function tetMerge(){
   if(tetCollide(TET.cur.m,TET.cur.x,TET.cur.y)){
     TET.over=true;
     if(TET.score>TET.best){TET.best=TET.score;store.set('tetrisBest',TET.best); try{ if(typeof coinAdd==='function') coinAdd(20,'رکورد تتریس'); }catch(e){} }
+    try{
+      if(typeof showPremiumGO==='function'){
+        showPremiumGO({
+          title:'تتریس پر شد!',
+          sub:'ردیف‌ها به سقف رسیدن! خطوط بیشتر = امتیاز بالاتر.',
+          score:TET.score,best:TET.best,win:false,
+          restart:()=>{hidePremiumGO();tetReset();},
+          exit:()=>{hidePremiumGO();go('games');}
+        });
+      }
+    }catch(e){}
   }
 }
 function tetRotate(){
@@ -313,6 +325,7 @@ const SNK={cv:null,ctx:null,on:false,over:false,raf:0,last:0,acc:0,
   snake:[],dir:[1,0],ndir:[1,0],prev:null,pop:0,food:null,score:0,best:0,cell:25,cols:22,rows:16,t:0};
 function snkInit(){SNK.best=store.get('snakeBest',0);}
 function snkReset(){
+  try{if(typeof hidePremiumGO==='function')hidePremiumGO();}catch(e){}
   snkInit();
   SNK.snake=[{x:5,y:8},{x:4,y:8},{x:3,y:8}];
   SNK.dir=[1,0];SNK.ndir=[1,0];SNK.score=0;SNK.over=false;SNK.acc=0;SNK.t=0;SNK.prev=null;SNK.pop=0;
@@ -339,6 +352,17 @@ function snkUpdate(dt){
     SNK.over=true;
     gSfx('bad');
     if(SNK.score>SNK.best){SNK.best=SNK.score;store.set('snakeBest',SNK.best); try{ if(typeof coinAdd==='function') coinAdd(12,'رکورد مار'); }catch(e){} }
+    try{
+      if(typeof showPremiumGO==='function'){
+        showPremiumGO({
+          title:'مار به مانع خورد!',
+          sub:'مواظب دم مار و دیواره‌ها باش! قهوه‌های طلایی رو جمع کن.',
+          score:SNK.score,best:SNK.best,win:false,
+          restart:()=>{hidePremiumGO();snkReset();},
+          exit:()=>{hidePremiumGO();go('games');}
+        });
+      }
+    }catch(e){}
     return;
   }
   SNK.snake.unshift(h);

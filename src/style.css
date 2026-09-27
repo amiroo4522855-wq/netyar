@@ -2003,6 +2003,34 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 .crm-lock-foot{display:flex;justify-content:center;gap:16px;margin-top:18px;font-size:10.5px;color:var(--tx3)}
 .crm-lock-foot span{display:flex;align-items:center;gap:6px}
 
+
+/* CRM Premium Security Lock & Numpad */
+.crm-lock-shield{position:relative;width:76px;height:76px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+.crm-lock-pulse{position:absolute;inset:-6px;border-radius:24px;border:1.5px solid rgba(217,174,62,.4);animation:pinPulse 2.4s ease-out infinite;pointer-events:none}
+@keyframes pinPulse{0%{transform:scale(.92);opacity:.8}50%{transform:scale(1.12);opacity:.2}100%{transform:scale(.92);opacity:.8}}
+.crm-lock-desc{font-size:12.5px;color:var(--tx2);line-height:2;margin-bottom:14px}
+.crm-pin-display{display:flex;gap:12px;justify-content:center;align-items:center;margin:10px 0 16px}
+.crm-pindot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(148,180,224,.35);background:rgba(4,10,20,.6);transition:all .22s cubic-bezier(.16,1,.3,1)}
+.crm-pindot.filled{background:linear-gradient(135deg,#ffd76e,#d9ae3e);border-color:#ffd76e;box-shadow:0 0 12px rgba(240,199,94,.6),0 0 4px #ffd76e;transform:scale(1.18)}
+.crm-lock-input-group{display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:16px}
+.crm-lock-input-group input{width:140px;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line2);background:rgba(4,10,20,.7);color:#ffd76e;font-family:inherit;font-size:22px;font-weight:900;text-align:center;letter-spacing:8px;outline:none;transition:all .25s}
+.crm-lock-input-group input:focus{border-color:rgba(217,174,62,.7);box-shadow:0 0 0 4px rgba(217,174,62,.15)}
+.crm-lock-input-group input.shake{animation:shakeX .4s}
+.crm-unlock-btn{padding:12px 18px!important;font-weight:850;border-radius:14px}
+.crm-numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:260px;margin:0 auto 16px}
+.crm-num-key{height:48px;border-radius:14px;border:1px solid rgba(148,180,224,.18);background:rgba(20,36,66,.55);color:#fff;font-family:inherit;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;user-select:none;-webkit-user-select:none}
+.crm-num-key:hover{background:rgba(46,108,184,.35);border-color:rgba(217,174,62,.4);transform:translateY(-2px);color:#ffd76e}
+.crm-num-key:active{transform:scale(.94);background:rgba(217,174,62,.25)}
+.crm-num-clear{color:#e08b85}
+.crm-num-enter{color:#7ee2a8;background:rgba(63,169,124,.15);border-color:rgba(63,169,124,.3)}
+.crm-form-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(148,180,224,.12)}
+.crm-form-title{display:flex;align-items:center;gap:12px}
+.crm-form-ic{width:42px;height:42px;border-radius:12px;background:rgba(217,174,62,.15);border:1px solid rgba(217,174,62,.3);color:var(--gold2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.crm-form-title h3{font-size:16px;font-weight:900;margin-bottom:3px;color:#fff}
+.crm-form-title p{font-size:11.5px;color:var(--tx2)}
+.crm-row.note{border-color:rgba(217,174,62,.2);background:rgba(217,174,62,.04)}
+.crm-row.note b{color:var(--gold2);font-weight:700}
+
 /* --- customers hero --- */
 .crm-hero{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:42px 36px;border-radius:26px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(148,180,224,.16);background:linear-gradient(150deg,rgba(46,108,184,.16),rgba(12,22,40,.78) 50%,rgba(217,174,62,.12));box-shadow:0 26px 70px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.06)}
 .crm-hero-bg{position:absolute;inset:0;background:radial-gradient(600px 300px at 85% 10%,rgba(240,199,94,.14),transparent 60%),radial-gradient(500px 300px at 10% 90%,rgba(46,108,184,.18),transparent 60%)}

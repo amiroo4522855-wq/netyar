@@ -20,6 +20,7 @@ function flapInit(cv){
   }
 }
 function flapReset(){
+  try{if(typeof hidePremiumGO==='function')hidePremiumGO();}catch(e){}
   FLAP.bird={x:80,y:220,vy:0,r:14,rot:0};
   FLAP.pipes=[];FLAP.t=0;FLAP.score=0;FLAP.over=false;FLAP.parts=[];FLAP.speed=2.2;
   for(let i=0;i<3;i++)flapAddPipe(360+i*160);
@@ -66,6 +67,17 @@ function flapDie(){
   if(FLAP.score>FLAP.best){FLAP.best=FLAP.score;store.set('flapBest',FLAP.best); try{ if(typeof coinAdd==='function') coinAdd(12,'رکورد فلپی'); }catch(e){} }
   gSfx('bad');
   for(let i=0;i<18;i++)FLAP.parts.push({x:FLAP.bird.x,y:FLAP.bird.y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6-1,a:1,r:2+Math.random()*3});
+  try{
+    if(typeof showPremiumGO==='function'){
+      showPremiumGO({
+        title:'پرنده سقوط کرد!',
+        sub:'به لوله‌ها یا زمین خوردی! با کلیک یا اسپیس پر بزن و ریتم رو حفظ کن.',
+        score:FLAP.score,best:FLAP.best,win:false,
+        restart:()=>{hidePremiumGO();flapReset();},
+        exit:()=>{hidePremiumGO();go('games');}
+      });
+    }
+  }catch(e){}
 }
 function flapDraw(){
   const c=FLAP.ctx,W=FLAP.w,H=FLAP.h,G=FLAP.ground;
@@ -175,6 +187,7 @@ function brkInit(cv){
   BRK.ctx=s.ctx;BRK.w=s.w;BRK.h=s.h;
 }
 function brkReset(){
+  try{if(typeof hidePremiumGO==='function')hidePremiumGO();}catch(e){}
   BRK.paddle={x:158,w:84,h:12};
   BRK.ball={x:200,y:320,vx:(Math.random()<0.5?1:-1)*2.6,vy:-3.4,r:7,trail:[]};
   BRK.bricks=[];
@@ -194,7 +207,21 @@ function brkUpdate(dt){
   if(b.y-b.r<0){b.y=b.r;b.vy*=-1;gSfx('click');}
   if(b.y+b.r>BRK.h){
     BRK.lives--;gSfx('bad');
-    if(BRK.lives<=0){BRK.over=true;if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best); try{ if(typeof coinAdd==='function') coinAdd(Math.floor(BRK.score/50)+5,'بریک‌اوت'); }catch(e){} }}
+    if(BRK.lives<=0){
+      BRK.over=true;
+      if(BRK.score>BRK.best){BRK.best=BRK.score;store.set('brkBest',BRK.best); try{ if(typeof coinAdd==='function') coinAdd(Math.floor(BRK.score/50)+5,'بریک‌اوت'); }catch(e){} }
+      try{
+        if(typeof showPremiumGO==='function'){
+          showPremiumGO({
+            title:'توپ از دست رفت!',
+            sub:'تمام جان‌ها تمام شد. آجرها رو با ریتم و کمانه کردن هدف بگیر!',
+            score:BRK.score,best:BRK.best,win:false,
+            restart:()=>{hidePremiumGO();brkReset();},
+            exit:()=>{hidePremiumGO();go('games');}
+          });
+        }
+      }catch(e){}
+    }
     else{BRK.ball={x:p.x+p.w/2,y:300,vx:(Math.random()<0.5?1:-1)*2.6,vy:-3.4,r:7,trail:[]};}
     return;
   }

@@ -116,6 +116,9 @@ function toast(msg,iconName,url){
 function pushHist(){HIST.push(state.view);if(HIST.length>25)HIST.shift();}
 function go(v){
   if(v===state.view){render();return;}
+  if(state.view==='customers' || v==='customers'){
+    try{if(typeof crmSetAuth==='function')crmSetAuth(false);}catch(e){}
+  }
   pushHist();
   state.view=v;state.cat=null;
   if(location.hash!=='#'+v)location.hash=v;
@@ -1908,6 +1911,11 @@ function start(){
 window.addEventListener('resize',()=>{try{if(window.innerWidth>=921&&!state.sbOpen)openSidebar();}catch(e){}});
 window.addEventListener('hashchange',()=>{
   const h=(location.hash||'').replace('#','');
-  if(ALL_VIEWS.includes(h)&&h!==state.view){state.view=h;state.cat=null;render();}
+  if(ALL_VIEWS.includes(h)&&h!==state.view){
+    if(state.view==='customers' || h==='customers'){
+      try{if(typeof crmSetAuth==='function')crmSetAuth(false);}catch(e){}
+    }
+    state.view=h;state.cat=null;render();
+  }
 });
 start();

@@ -52,6 +52,7 @@ function dinoInit(cv){
   }
 }
 function dinoReset(){
+  try{if(typeof hidePremiumGO==='function')hidePremiumGO();}catch(e){}
   const D=DINO;
   D.t=0;D.dist=0;D.speed=6;D.y=0;D.vy=0;D.ground=true;D.over=false;
   D.obs=[];D.nextIn=700;D.deco=[];D.decoIn=100;D.biome=0;D.prevBiome=0;D.mix=1;D.biomeDist=0;
@@ -135,6 +136,17 @@ function dinoUpdate(dt){
         D.over=true;D.shake=1;
         if(D.score>D.best){D.best=D.score;store.set('dinoBest',D.best); try{ if(typeof coinAdd==='function') coinAdd(15,'رکورد دایی ناصر'); }catch(e){} }
         for(let i=0;i<16;i++)D.parts.push({x:px+dw/2,y:py+dh/2,vx:(Math.random()-0.5)*0.5,vy:-Math.random()*0.5-0.1,l:1});
+        try{
+          if(typeof showPremiumGO==='function'){
+            showPremiumGO({
+              title:'آخ! گاز گرفتی!',
+              sub:'دایناسور به مانع برخورد کرد! تمرین کنی رکورد می‌زنی.',
+              score:D.score,best:D.best,win:false,
+              restart:()=>{hidePremiumGO();dinoReset();},
+              exit:()=>{hidePremiumGO();go('games');}
+            });
+          }
+        }catch(e){}
         break;
       }
     }
@@ -461,6 +473,7 @@ function twrInit(cv){
   }
 }
 function twrReset(){
+  try{if(typeof hidePremiumGO==='function')hidePremiumGO();}catch(e){}
   const T=TWR;
   T.blocks=[{x:(T.w-T.baseW)/2,w:T.baseW,hue:210,y:0}];
   T.cur=null;T.pieces=[];T.ring=null;
@@ -486,6 +499,17 @@ function twrDrop(){
     T.pieces.push({x:T.cur.x,w:T.cur.w,y:y,vx:T.cur.dir*0.25,vr:T.cur.dir*0.004,rot:0,hue:T.hueOf()});
     T.cur=null;T.over=true;
     if(T.score>T.best){T.best=T.score;store.set('towerBest',T.best); try{ if(typeof coinAdd==='function') coinAdd(15,'رکورد برج‌سازی'); }catch(e){} }
+    try{
+      if(typeof showPremiumGO==='function'){
+        showPremiumGO({
+          title:'برج فرو ریخت!',
+          sub:'تعادل بلوک‌ها به هم خورد. دقت و زمان‌بندی کلید موفقیته!',
+          score:T.score,best:T.best,win:false,
+          restart:()=>{hidePremiumGO();twrReset();},
+          exit:()=>{hidePremiumGO();go('games');}
+        });
+      }
+    }catch(e){}
     return;
   }
   const diff=Math.abs(T.cur.x-top.x);
