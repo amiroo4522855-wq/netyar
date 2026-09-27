@@ -286,8 +286,9 @@ function g48Render(win){
   const el=G48.el;if(!el)return;
   const C={2:'#7ec8f0',4:'#6ea8f0',8:'#8b7bd8',16:'#b58ad8',32:'#d97fb0',64:'#e07a7a',
     128:'#e09a6a',256:'#e0b45f',512:'#d9c34e',1024:'#a8d05a',2048:'#5ec9a0'};
+  const isGold2048 = (typeof getActiveGameSkin === 'function' && getActiveGameSkin('2048') === 'g2048_gold');
   let h='<div class="g48-top"><span class="g48-sc">امتیاز <b>'+gNum(G48.score)+'</b></span><span class="g48-sc">رکورد <b>'+gNum(G48.best)+'</b></span>'
-    +(G48.gainFx>0?'<span class="g48-float">+'+gNum(G48.gainFx)+'</span>':'')+'</div><div class="g48-grid'+(G48.over?' done':'')+'">';
+    +(G48.gainFx>0?'<span class="g48-float">+'+gNum(G48.gainFx)+'</span>':'')+'</div><div class="g48-grid'+(isGold2048?' gold-theme':'')+(G48.over?' done':'')+'">';
   G48.board.forEach((v,i)=>{
     const fx=(G48.fx&&G48.fx.m.includes(i)?' pop':'')+(G48.fx&&i===G48.fx.born?' born':'');
     if(v)h+='<div class="g48-tile v'+Math.min(v,2048)+fx+'">'+gNum(v)+'</div>';
@@ -391,10 +392,15 @@ function snkDraw(){
   const tt=Math.min(1,SNK.acc/ivc);
   c.save();
   c.shadowColor='rgba(126,224,150,.3)';c.shadowBlur=9;
+  const snkSkin = typeof getActiveGameSkin === 'function' ? getActiveGameSkin('snake') : 'default';
+  let snkHue = 150, snkSat = 55;
+  if(snkSkin === 'snake_neon'){ snkHue = 165; snkSat = 85; }
+  else if(snkSkin === 'snake_gold'){ snkHue = 45; snkSat = 90; }
+
   SNK.snake.forEach((s,i)=>{
     const pv=(SNK.prev&&SNK.prev[i])||s;
     const x=(pv.x+(s.x-pv.x)*tt)*cs, y=(pv.y+(s.y-pv.y)*tt)*cs;
-    c.fillStyle='hsl(150 55% '+Math.max(30,52-i*1.4)+'%)';
+    c.fillStyle='hsl('+snkHue+' '+snkSat+'% '+Math.max(30,52-i*1.4)+'%)';
     c.beginPath();c.roundRect(x+2,y+2,cs-4,cs-4,i===0?11:7);c.fill();
     if(i===0){
       c.restore();

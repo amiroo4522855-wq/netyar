@@ -2649,3 +2649,26 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 .g-filter-btn{padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(148,180,224,.15);color:var(--tx2);font-size:12px;font-weight:800;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .2s ease}
 .g-filter-btn:hover{background:rgba(255,255,255,.08);color:#fff;transform:translateY(-1px)}
 .g-filter-btn.active{background:rgba(217,174,62,.18);border-color:#ffd76e;color:#ffd76e;box-shadow:0 0 14px rgba(217,174,62,.25)}
+
+
+/* پوسته ۲۰۴۸ طلایی مات */
+.g48-grid.gold-theme{
+  background:linear-gradient(135deg,#1c1917,#0c0a09);
+  border:2px solid #d9ae3e;
+  box-shadow:0 0 25px rgba(217,174,62,.3);
+}
+.g48-grid.gold-theme .g48-tile{
+  color:#1c1917!important;
+  font-weight:900!important;
+}
+.g48-grid.gold-theme .g48-tile.v2{background:#fef08a!important}
+.g48-grid.gold-theme .g48-tile.v4{background:#fde047!important}
+.g48-grid.gold-theme .g48-tile.v8{background:#facc15!important}
+.g48-grid.gold-theme .g48-tile.v16{background:#eab308!important}
+.g48-grid.gold-theme .g48-tile.v32{background:#ca8a04!important;color:#fff!important}
+.g48-grid.gold-theme .g48-tile.v64{background:#a16207!important;color:#fff!important}
+.g48-grid.gold-theme .g48-tile.v128{background:#854d0e!important;color:#fff!important}
+.g48-grid.gold-theme .g48-tile.v256{background:#713f12!important;color:#ffd76e!important}
+.g48-grid.gold-theme .g48-tile.v52{background:#ffd76e!important;box-shadow:0 0 15px #ffd76e!important}
+.g48-grid.gold-theme .g48-tile.v1024{background:#f59e0b!important;box-shadow:0 0 20px #f59e0b!important}
+.g48-grid.gold-theme .g48-tile.v2048{background:linear-gradient(135deg,#ffd76e,#d9ae3e)!important;box-shadow:0 0 30px #ffd76e!important}

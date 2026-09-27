@@ -836,8 +836,16 @@ function tbRender(){
     c.restore();
   }
 
-  // ۱۴. مدل و انیمیشن بازیکن (قهرمان سرعتی)
+  // ۱۴. مدل و انیمیشن بازیکن (قهرمان سرعتی با پشتیبانی از اسکین فروشگاه)
   const p = TB.p;
+  const tbSkin = typeof getActiveGameSkin === 'function' ? getActiveGameSkin('turbo') : 'default';
+  let tbColPrimary = '#0284c7', tbColSecondary = '#0369a1', tbColAccent = '#38bdf8', tbColLegs = '#ffd76e';
+  if(tbSkin === 'turbo_fire'){
+    tbColPrimary = '#ef4444'; tbColSecondary = '#991b1b'; tbColAccent = '#f97316'; tbColLegs = '#fef08a';
+  } else if(tbSkin === 'turbo_gold'){
+    tbColPrimary = '#f59e0b'; tbColSecondary = '#b45309'; tbColAccent = '#ffd76e'; tbColLegs = '#fffbeb';
+  }
+
   c.save();
   c.translate(p.x + p.w/2, p.y + p.h/2);
   c.scale(p.facing, 1);
@@ -845,11 +853,11 @@ function tbRender(){
   if(p.isRolling || p.spinAttack){
     // حالت رول و چرخش هجومی
     c.rotate(p.time * 16 * p.facing);
-    c.fillStyle = '#0284c7';
+    c.fillStyle = tbColPrimary;
     c.beginPath();
     c.arc(0, 0, 16, 0, Math.PI * 2);
     c.fill();
-    c.strokeStyle = '#38bdf8';
+    c.strokeStyle = tbColAccent;
     c.lineWidth = 3;
     c.stroke();
   } else {
@@ -857,21 +865,21 @@ function tbRender(){
     const legSwing = Math.sin(p.time * 20) * 12;
     // شیلد دور بازیکن
     if(p.powerups.shield){
-      c.strokeStyle = '#38bdf8';
+      c.strokeStyle = tbColAccent;
       c.lineWidth = 3;
       c.beginPath();
       c.arc(0, 0, 24, 0, Math.PI * 2);
       c.stroke();
     }
-    // بدن آبی متالیک
-    c.fillStyle = '#0284c7';
+    // بدن دونده با رنگ اسکین فعال
+    c.fillStyle = tbColPrimary;
     c.beginPath();
     c.arc(0, -6, 13, 0, Math.PI * 2); // سر و کلاه کاسکت
     c.fill();
-    c.fillStyle = '#0369a1';
+    c.fillStyle = tbColSecondary;
     c.fillRect(-8, 2, 16, 14); // تنه
     // پاها با انیمیشن دویدن
-    c.strokeStyle = '#ffd76e';
+    c.strokeStyle = tbColLegs;
     c.lineWidth = 4;
     c.beginPath();
     c.moveTo(-4, 16); c.lineTo(-4 + legSwing, 24);

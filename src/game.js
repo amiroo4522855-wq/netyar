@@ -283,6 +283,13 @@ function lerpBiome(a,b,t){return t>0.5?b:a;}
 function lerpBiomeName(a,b,t){return t>0.5?b:a;}
 function dinoHero(g,nightAmt){
   const D=DINO,c=D.ctx;
+  const skin = typeof getActiveGameSkin === 'function' ? getActiveGameSkin('dino') : 'default';
+  let colMain = '#4bb05e', colLight = '#66cf78', colDark = '#3f9e52', colBelly = '#d9f2cf';
+  if(skin === 'dino_gold'){
+    colMain = '#d9ae3e'; colLight = '#ffd76e'; colDark = '#b8860b'; colBelly = '#fff8dc';
+  } else if(skin === 'dino_night'){
+    colMain = '#0284c7'; colLight = '#38bdf8'; colDark = '#0369a1'; colBelly = '#e0f2fe';
+  }
   const duck=D.duck&&D.ground;
   const bx=D.x,by=g+D.y;
   const sq=D.squash;
@@ -295,20 +302,20 @@ function dinoHero(g,nightAmt){
   /* پاها */
   if(D.ground&&!duck){
     const ph=Math.sin(D.runP);
-    c.fillStyle='#3f9e52';
+    c.fillStyle=colDark;
     c.beginPath();c.roundRect(6+ph*5,-10,11,12,4);c.fill();
     c.beginPath();c.roundRect(22-ph*5,-10,11,12,4);c.fill();
   }else if(!D.ground){
-    c.fillStyle='#3f9e52';
+    c.fillStyle=colDark;
     c.beginPath();c.roundRect(8,-8,12,10,4);c.fill();
     c.beginPath();c.roundRect(22,-6,12,10,4);c.fill();
   }else{
-    c.fillStyle='#3f9e52';
+    c.fillStyle=colDark;
     c.beginPath();c.roundRect(8,-8,12,9,4);c.fill();
     c.beginPath();c.roundRect(26,-8,12,9,4);c.fill();
   }
   /* دم */
-  c.fillStyle='#4bb05e';
+  c.fillStyle=colMain;
   c.beginPath();
   c.moveTo(2,bodyY+bodyH*0.55);
   c.quadraticCurveTo(-16,bodyY+bodyH*0.42,-20,bodyY+bodyH*0.1);
@@ -316,11 +323,11 @@ function dinoHero(g,nightAmt){
   c.fill();
   /* بدن */
   const bg=c.createLinearGradient(0,bodyY,0,bodyY+bodyH);
-  bg.addColorStop(0,'#66cf78');bg.addColorStop(1,'#4bb05e');
+  bg.addColorStop(0,colLight);bg.addColorStop(1,colMain);
   c.fillStyle=bg;
   c.beginPath();c.roundRect(0,bodyY,bodyW,bodyH,14);c.fill();
   /* شکم */
-  c.fillStyle='#d9f2cf';
+  c.fillStyle=colBelly;
   c.beginPath();c.roundRect(duck?12:16,bodyY+bodyH*0.42,duck?36:17,bodyH*0.5,8);c.fill();
   /* خارهای پشت */
   c.fillStyle='#2f8a41';
