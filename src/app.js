@@ -63,7 +63,7 @@ const store=(()=>{let mem={};let ok=false;
 
 /* ---------- وضعیت ---------- */
 const SITES=RAW.map((r,i)=>({id:i,n:r[0],u:r[1],c:r[2],d:r[3]}));
-const state={view:'home',q:'',cat:null,favs:store.get('favs',[]),mode:store.get('mode','grid'),sbOpen:(typeof window!=='undefined'&&window.innerWidth>=921)};
+const state={view:'home',q:'',cat:null,favs:store.get('favs',[]),mode:store.get('mode','grid'),sbOpen:(typeof window!=='undefined'&&window.innerWidth>=921),sitePage:1};
 const HIST=[];
 const $=s=>document.querySelector(s);
 const app=$('#app');
@@ -357,6 +357,32 @@ function secHead(icon,iconCls,title,mini){
 const GH={user:'amiroo4522855-wq',repo:'netyar'};
 function ghUrl(){return 'https://github.com/'+GH.user+'/'+GH.repo;}
 function ghPage(){return 'https://'+GH.user+'.github.io/'+GH.repo+'/';}
+function setSitePage(p){
+  state.sitePage = p;
+  render();
+  const el = document.getElementById('sites-grid') || document.querySelector('.toolbar');
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function bnavHtml(){
+  return '<nav class="bnav" aria-label="ناوبری سریع موبایل">'
+    +'<div class="bnav-in">'
+      +'<div class="bnav-item'+(state.view==='home'?' active':'')+'" data-v="home" onclick="go(\'home\')">'
+        +ic('home', 20)+'<span>خانه</span>'
+      +'</div>'
+      +'<div class="bnav-item'+(state.view==='sites'?' active':'')+'" data-v="sites" onclick="go(\'sites\')">'
+        +ic('compass', 20)+'<span>سایت‌ها</span>'
+      +'</div>'
+      +'<div class="bnav-item'+(state.view==='games'||state.view.indexOf('game-')===0?' active':'')+'" data-v="games" onclick="go(\'games\')">'
+        +ic('gamepad-2', 20)+'<span>بازی‌خانه</span>'
+      +'</div>'
+      +'<div class="bnav-item'+(state.view==='music'?' active':'')+'" data-v="music" onclick="go(\'music\')">'
+        +ic('music', 20)+'<span>موزیک</span>'
+      +'</div>'
+    +'</div>'
+  +'</nav>';
+}
+
 function footHtml(){
   return '<footer class="foot"><div class="f1">'+ic('coffee',14)+'کافی‌نت <b>نت‌یار</b> — '+faNum(SITES.length)+' سایت کاربردی در '+faNum(Object.keys(CATS).length)+' دسته، همه‌جا یک‌جا</div>'
   +'<div class="f2"><span>'+ic('zap',12)+'ورود آنی</span><span>'+ic('shield',12)+'بدون تبلیغ</span><span>'+ic('check-circle',12)+'۱۰۰٪ رایگان</span>'
@@ -455,6 +481,23 @@ function vHome(){
 function vSites(){
   const res=filterSites(state.q,state.cat);
   const cats=Object.keys(CATS).map(k=>({k,...CATS[k],n:SITES.filter(s=>s.c===k).length}));
+  
+  // صفحه‌بندی روان و پرسرعت برای ۵۸۲ سایت
+  const pageSize = 48;
+  const totalPages = Math.max(1, Math.ceil(res.length / pageSize));
+  const curPage = Math.min(Math.max(1, state.sitePage || 1), totalPages);
+  const startIdx = (curPage - 1) * pageSize;
+  const pagedSites = res.slice(startIdx, startIdx + pageSize);
+
+  let paginationHtml = '';
+  if(totalPages > 1){
+    paginationHtml = '<div class="ny-pagination">'
+      +'<button class="p-btn" onclick="setSitePage('+(curPage-1)+')"' + (curPage <= 1 ? ' disabled' : '') + '>' + ic('chevron-right', 16) + ' قبلی</button>'
+      +'<div class="p-info">صفحه <b>'+faNum(curPage)+'</b> از <b>'+faNum(totalPages)+'</b> ('+faNum(res.length)+' سایت)</div>'
+      +'<button class="p-btn" onclick="setSitePage('+(curPage+1)+')"' + (curPage >= totalPages ? ' disabled' : '') + '>بعدی ' + ic('chevron-left', 16) + '</button>'
+    +'</div>';
+  }
+
   return '<div class="toolbar">'
     +searchBox('sites-sb')
     +'<div class="res-info"><b>'+faNum(res.length)+'</b> نتیجه'+(state.cat?' در «'+CATS[state.cat].l+'»':'')+(state.q?' برای «'+esc(state.q)+'»':'')+'</div>'
@@ -468,7 +511,10 @@ function vSites(){
     +cats.map(c=>'<span class="chip'+(state.cat===c.k?' active':'')+'" onclick="setCat(\''+c.k+'\')">'+ic(c.i,13)+c.l+' <span class="cc">'+faNum(c.n)+'</span></span>').join('')
   +'</div>'
   +(res.length
-    ?'<div class="grid '+(state.mode==='list'?'list':'')+'" id="sites-grid" style="margin-top:16px">'+res.map((s,i)=>siteCard(s,state.q,i)).join('')+'</div>'
+    ?'<div class="grid '+(state.mode==='list'?'list':'')+'" id="sites-grid" style="margin-top:16px">'
+      +pagedSites.map((s,i)=>siteCard(s,state.q,startIdx+i)).join('')
+    +'</div>'
+    +paginationHtml
     :'<div class="empty"><span class="e-ic">'+ic('search',34)+'</span><h3>چیزی پیدا نشد!</h3><p>برای «'+esc(state.q)+'» نتیجه‌ای نداشتیم. یک کلمه دیگر امتحان کن یا از این پیشنهادها استفاده کن:</p>'
       +'<div class="sugg">'+['یوتیوب','هوش مصنوعی','پرینت','ترجمه','بورس','آشپزی','اخبار'].map(w=>'<span class="chip" onclick="setQ(\''+w+'\')">'+w+'</span>').join('')+'</div></div>')
   +footHtml();
@@ -1627,7 +1673,7 @@ function render(){
   const oldC=document.querySelector('.content');
   const viewChanged=oldC&&oldC.dataset.view!==undefined&&oldC.dataset.view!==state.view;
   if(!viewChanged){
-    app.innerHTML=sideHtml()+topHtml()+'<main class="content" data-view="'+state.view+'">'+body+'</main>';
+    app.innerHTML=sideHtml()+topHtml()+'<main class="content" data-view="'+state.view+'">'+body+'</main>'+bnavHtml();
     updateNav();
     afterRender();
     window.scrollTo({top:0});
@@ -1636,8 +1682,8 @@ function render(){
   /* تعویض نما با انیمیشن پرمیوم نرمِ باز و بسته شدن v12 */
   updateNav();
   const isTestEnv = (typeof navigator!=='undefined' && /jsdom/i.test(navigator.userAgent)) || (typeof location!=='undefined' && location.hostname==='example.com');
-  const leaveMs = isTestEnv ? 10 : 320;
-  const enterMs = isTestEnv ? 30 : 760;
+  const leaveMs = isTestEnv ? 10 : 120;
+  const enterMs = isTestEnv ? 30 : 220;
   // افکت فشرده شدن دکمه فعال (فقط در محیط واقعی)
   if(!isTestEnv){
     const activeNav=document.querySelector('.nav-item.active');
