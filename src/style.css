@@ -511,8 +511,8 @@ svg.fill path{fill:currentColor}
   .stats{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:920px){
-  :root{--side:0px;--bh:60px}
-  .sidebar{display:none}
+  :root{--side:0px;--bh:64px}
+  .sidebar{display:flex;width:min(85vw,340px);z-index:150}
   .main{margin-inline-end:0}
   .topbar{padding:0 16px}
   .top-logo{display:flex}
@@ -3794,4 +3794,167 @@ body.sb-open .main {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   background: rgba(4, 8, 18, 0.65) !important;
+}
+
+
+/* ================================================================
+   سیستم بازشوی کشویی فوق روان (Ultra-Smooth Native Mobile Drawer)
+   سریع، بدون لگ، سازگار با ابعاد تمامی گوشی‌ها (iOS & Android)
+   ================================================================ */
+@media (max-width: 920px) {
+  /* تنظیم موقعیت و انیمیشن سایدبار روی موبایل */
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    width: min(86vw, 330px) !important;
+    max-width: 360px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    z-index: 220 !important;
+    background: linear-gradient(180deg, rgba(14, 24, 44, 0.98), rgba(8, 14, 26, 0.99)) !important;
+    border-left: 1.5px solid rgba(217, 174, 62, 0.35) !important;
+    box-shadow: -15px 0 50px rgba(0, 0, 0, 0.75) !important;
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease !important;
+    will-change: transform;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .sidebar.closed {
+    transform: translateX(102%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+
+  .sidebar.open {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+  }
+
+  /* اورلی تیره بدون بلور */
+  .sb-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 210 !important;
+    background: rgba(4, 8, 16, 0.7) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .sb-overlay.open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* المان‌های داخل منوی بازشونده کشویی */
+  .sidebar .nav-item {
+    min-height: 46px !important;
+    padding: 10px 14px !important;
+    border-radius: 14px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    margin-bottom: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(148, 180, 224, 0.08) !important;
+    transition: background 0.18s ease, transform 0.18s ease !important;
+  }
+
+  .sidebar .nav-item:active {
+    transform: scale(0.97) !important;
+    background: rgba(217, 174, 62, 0.12) !important;
+  }
+
+  .sidebar .nav-item.active {
+    background: linear-gradient(90deg, rgba(217, 174, 62, 0.2), rgba(217, 174, 62, 0.05)) !important;
+    border-color: rgba(217, 174, 62, 0.45) !important;
+    color: #ffd76e !important;
+  }
+
+  /* نوار پایین ۵ دکمه‌ای لمسی و ارگونومیک */
+  .bnav {
+    display: block !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 180 !important;
+    height: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    padding: 5px 8px calc(5px + env(safe-area-inset-bottom, 0px)) !important;
+    background: rgba(8, 14, 26, 0.96) !important;
+    border-top: 1.5px solid rgba(217, 174, 62, 0.28) !important;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+  }
+
+  .bnav-in {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 2px !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    height: 100% !important;
+    align-items: center !important;
+  }
+
+  .bnav-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    min-height: 48px !important;
+    padding: 2px 0 !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--tx3) !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.25, 1) !important;
+  }
+
+  .bnav-item svg {
+    width: 21px !important;
+    height: 21px !important;
+    transition: transform 0.2s ease, color 0.2s ease !important;
+  }
+
+  .bnav-item span {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+  }
+
+  .bnav-item.active {
+    color: #ffd76e !important;
+  }
+
+  .bnav-item.active svg {
+    color: #ffd76e !important;
+    transform: scale(1.12) translateY(-1px) !important;
+  }
+
+  .bnav-item:active {
+    transform: scale(0.92) !important;
+  }
+
+  /* پدینگ محتوای اصلی تا روی نوار پایینی نیفتد */
+  .content {
+    padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 }
