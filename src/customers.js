@@ -153,37 +153,42 @@ function crmLogout(){
 function crmFormHtml(editObj){
   const cats = CRM_CATS;
   const obj = editObj || {fullName:'', national:'', mobile:'', age:'', job:'', cat:'regular', appIds:'', address:'', note:''};
+  const activeCat = CRM._pickedCat || obj.cat || 'regular';
+
   return '<div class="crm-form-card reveal">'
     +'<div class="crm-form-head">'
       +'<div class="crm-form-title">'
-        +'<span class="crm-form-ic">' + ic(editObj ? 'edit' : 'plus', 18) + '</span>'
+        +'<span class="crm-form-ic">' + ic(editObj ? 'edit' : 'user-plus', 22) + '</span>'
         +'<div>'
-          +'<h3>' + (editObj ? 'ویرایش اطلاعات مشتری' : 'ثبت پرونده مشتری جدید') + '</h3>'
-          +'<p>' + (editObj ? 'ویرایش سریع و به‌روزرسانی در پایگاه داده محلی' : 'ثبت مشخصات و سوابق مشتری کافی‌نت') + '</p>'
+          +'<h3>' + (editObj ? 'ویرایش پرونده مشتری' : 'ثبت پرونده مشتری جدید کافی‌نت') + '</h3>'
+          +'<p>' + (editObj ? 'اصلاح و به‌روزرسانی آنی در حافظه محلی سیستم' : 'مشخصات کامل، مدارک درخواستی، اطلاعات تماس و ثبت هوشمند') + '</p>'
         +'</div>'
       +'</div>'
       +'<button class="btn ghost sm" onclick="crmCancelEdit()">' + ic('x', 14) + ' انصراف</button>'
     +'</div>'
+
     +'<div class="crm-form-grid">'
-      +'<label><span>' + ic('user', 13) + ' نام و نام خانوادگی *</span><input id="cfName" value="' + esc(obj.fullName||'') + '" placeholder="مثلاً: سید امیر رضایی"></label>'
-      +'<label><span>' + ic('hash', 13) + ' کد ملی (۱۰ رقم) *</span><input id="cfNational" value="' + esc(obj.national||'') + '" maxlength="10" inputmode="numeric" placeholder="مثلاً: 0012345678"></label>'
-      +'<label><span>' + ic('smartphone', 13) + ' شماره همراه *</span><input id="cfMobile" value="' + esc(obj.mobile||'') + '" inputmode="tel" placeholder="مثلاً: 09123456789"></label>'
-      +'<label><span>' + ic('clock', 13) + ' سن</span><input id="cfAge" type="number" min="5" max="120" value="' + esc(obj.age||'') + '" placeholder="مثلاً: 25"></label>'
-      +'<label class="wide"><span>' + ic('briefcase', 13) + ' شغل / سمت</span><input id="cfJob" value="' + esc(obj.job||'') + '" placeholder="مثلاً: دانشجو، مهندس کامپیوتر، آزاد، حسابدار..."></label>'
-      +'<label class="wide"><span>' + ic('layers', 13) + ' دسته‌بندی مشتری</span>'
-        +'<div class="crm-cat-pick">'
-          +cats.map(c => '<span class="crm-cat-opt' + ((CRM._pickedCat || obj.cat) === c.id ? ' on' : '') + '" data-cat="' + c.id + '" style="--cc:' + c.c + '" onclick="crmPickCat(\'' + c.id + '\')">' + ic(c.i, 13) + c.l + '</span>').join('')
-        +'</div>'
-      +'</label>'
-      +'<label class="wide"><span>' + ic('message', 13) + ' آیدی‌های ارتباطی (تلگرام، ایتا، بله، واتساپ)</span><input id="cfAppIds" value="' + esc(obj.appIds||'') + '" placeholder="مثلاً: @amir_net , Eitaa: net_user"></label>'
-      +'<label class="wide"><span>' + ic('home', 13) + ' نشانی و محل سکونت</span><textarea id="cfAddr" placeholder="شهر، خیابان، کوچه، پلاک...">' + esc(obj.address||'') + '</textarea></label>'
-      +'<label class="wide"><span>' + ic('type', 13) + ' یادداشت اداری / سوابق کارهای انجام‌شده</span><textarea id="cfNote" placeholder="سفارش‌های قبلی، مدارک تحویل‌گرفته، نکات مهم...">' + esc(obj.note||'') + '</textarea></label>'
+      +'<label><span>' + ic('user', 14) + ' نام و نام خانوادگی کامل *</span><input id="cfName" value="' + esc(obj.fullName||'') + '" placeholder="مثلاً: مهندس محمدرضا رضایی"></label>'
+      +'<label><span>' + ic('hash', 14) + ' کد ملی (۱۰ رقم) *</span><input id="cfNational" value="' + esc(obj.national||'') + '" maxlength="10" inputmode="numeric" placeholder="مثلاً: 0012345678"></label>'
+      +'<label><span>' + ic('phone', 14) + ' شماره موبایل (۱۱ رقم) *</span><input id="cfMobile" value="' + esc(obj.mobile||'') + '" maxlength="11" inputmode="tel" placeholder="مثلاً: 09123456789"></label>'
+      +'<label><span>' + ic('briefcase', 14) + ' شغل یا زمینه فعالیت</span><input id="cfJob" value="' + esc(obj.job||'') + '" placeholder="مثلاً: دانشجو، کارمند، آزاد"></label>'
+      +'<label><span>' + ic('calendar', 14) + ' سن یا سال تولد</span><input id="cfAge" value="' + esc(obj.age||'') + '" placeholder="مثلاً: ۲۸ یا ۱۳۷۵"></label>'
+      +'<label><span>' + ic('layers', 14) + ' خدمات و اقدامات انجام‌شده</span><input id="cfAppIds" value="' + esc(obj.appIds||'') + '" placeholder="مثلاً: ثبت‌نام کنکور، سوابق بیمه، پرینت"></label>'
+      +'<label class="crm-full"><span>' + ic('map-pin', 14) + ' نشانی یا آدرس محل کار / منزل</span><input id="cfAddr" value="' + esc(obj.address||'') + '" placeholder="شهر، خیابان، پلاک..."></label>'
+      +'<label class="crm-full"><span>' + ic('file-text', 14) + ' یادداشت محرمانه و توضیحات متصدی</span><textarea id="cfNote" rows="2" placeholder="توضیحات و نکات مهم در مورد این پرونده...">' + esc(obj.note||'') + '</textarea></label>'
     +'</div>'
-    +'<div class="crm-form-acts">'
-      +'<button class="btn gold" onclick="crmSave()">' + ic('check', 16) + (editObj ? ' ثبت تغییرات' : ' ذخیره قطعی پرونده') + '</button>'
+
+    +'<div class="crm-cat-picker-wrap">'
+      +'<span class="ccp-title">' + ic('tag', 14) + ' سطح و دسته‌بندی مشتری:</span>'
+      +'<div class="crm-form-cats">'
+        +cats.map(c => '<span class="crm-cat-opt' + (activeCat === c.id ? ' on' : '') + '" style="--cc:' + c.c + '" onclick="crmPickCat(\'' + c.id + '\')">' + ic(c.i, 14) + c.l + '</span>').join('')
+      +'</div>'
+    +'</div>'
+
+    +'<div class="crm-form-actions">'
+      +'<button class="btn gold" onclick="crmSave()">' + ic('check', 16) + ' ' + (editObj ? 'ذخیره تغییرات پرونده' : 'ثبت نهایی و صدور پرونده') + '</button>'
       +'<button class="btn ghost" onclick="crmCancelEdit()">' + ic('x', 14) + ' انصراف</button>'
     +'</div>'
-    +'<div class="crm-form-hint">' + ic('shield-check', 13) + ' تمامی اطلاعات در حافظه محلی مرورگر (Local Storage) با نهایت دقت و امنیت ذخیره می‌شود.</div>'
   +'</div>';
 }
 
@@ -531,9 +536,22 @@ function crmImportFile(inp){
   reader.readAsText(file);
 }
 
+function crmOpenForm(editId){
+  CRM.view = 'form';
+  CRM.editId = editId || null;
+  CRM._pickedCat = null;
+  crmRerender();
+  setTimeout(()=>{
+    const fc = document.querySelector('.crm-form-card') || document.getElementById('crmFormWrap');
+    if(fc) fc.scrollIntoView({behavior:'smooth', block:'start'});
+    const inp = document.getElementById('cfName');
+    if(inp) inp.focus();
+  }, 60);
+}
+
 function crmRerender(){
-  const body = document.querySelector('.content[data-view="customers"]');
-  if(!body){ render(); return; }
+  const body = document.querySelector('.content[data-view="customers"]') || document.querySelector('.content');
+  if(!body || state.view !== 'customers'){ render(); return; }
   body.innerHTML = crmBodyHtml();
   const qInp = document.getElementById('crmSearch');
   if(qInp){ qInp.value = CRM.q; }

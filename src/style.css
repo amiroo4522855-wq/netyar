@@ -3958,3 +3958,292 @@ body.sb-open .main {
     padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+
+/* ================================================================
+   استایل فوق لوکس و مدرن فرم پرونده مشتریان (CRM Luxury Form)
+   ================================================================ */
+.crm-form-card {
+  background: linear-gradient(145deg, rgba(16, 28, 50, 0.94), rgba(9, 16, 30, 0.98)) !important;
+  border: 1.5px solid rgba(217, 174, 62, 0.4) !important;
+  border-radius: 24px !important;
+  padding: 26px 28px !important;
+  margin: 18px 0 28px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.crm-form-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(148, 180, 224, 0.14);
+  margin-bottom: 22px;
+}
+
+.crm-form-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.crm-form-ic {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgba(217, 174, 62, 0.15);
+  border: 1.5px solid rgba(217, 174, 62, 0.35);
+  color: var(--gold2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(217, 174, 62, 0.2);
+}
+
+.crm-form-title h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+}
+
+.crm-form-title p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--tx3);
+}
+
+.crm-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 820px) {
+  .crm-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .crm-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.crm-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.crm-form-grid label.crm-full {
+  grid-column: 1 / -1;
+}
+
+.crm-form-grid span {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--tx2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.crm-form-grid input,
+.crm-form-grid textarea {
+  background: rgba(6, 12, 24, 0.75);
+  border: 1.5px solid rgba(148, 180, 224, 0.18);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: #fff;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.22s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.crm-form-grid input:focus,
+.crm-form-grid textarea:focus {
+  border-color: var(--gold2);
+  background: rgba(10, 20, 38, 0.9);
+  box-shadow: 0 0 14px rgba(217, 174, 62, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.crm-cat-picker-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(148, 180, 224, 0.1);
+}
+
+.ccp-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--tx3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.crm-form-cats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.crm-cat-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(148, 180, 224, 0.15);
+  color: var(--tx2);
+  transition: all 0.2s ease;
+}
+
+.crm-cat-opt.on {
+  background: rgba(217, 174, 62, 0.18);
+  border-color: var(--gold2);
+  color: #ffd76e;
+  box-shadow: 0 0 10px rgba(217, 174, 62, 0.25);
+  transform: scale(1.04);
+}
+
+.crm-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+
+/* ================================================================
+   استایل بازی ضربات پنالتی قهرمانان (Penalty Shootout UI)
+   ================================================================ */
+.pen-game-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  user-select: none;
+}
+.pen-hud-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(16, 28, 50, 0.9), rgba(9, 16, 30, 0.95));
+  border: 1.5px solid rgba(217, 174, 62, 0.35);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+.phb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--tx2);
+}
+.phb-item b {
+  font-size: 16px;
+  color: #fff;
+}
+.phb-item.highlight b {
+  color: var(--gold2);
+}
+.pen-canvas-container {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(148, 180, 224, 0.2);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  background: #091322;
+}
+#penCanvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: crosshair;
+}
+.pen-power-wrap {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(10, 18, 32, 0.85);
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(217, 174, 62, 0.3);
+  backdrop-filter: blur(10px);
+}
+.ppw-lbl {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--tx3);
+}
+.pen-power-track {
+  width: 90px;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.pen-power-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #facc15 60%, #ef4444);
+  border-radius: 99px;
+  width: 50%;
+  transition: width 0.05s linear;
+}
+.pen-controls-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 10px;
+}
+.pen-act-btn {
+  background: linear-gradient(145deg, rgba(16, 28, 50, 0.85), rgba(9, 16, 30, 0.95));
+  border: 1.5px solid rgba(148, 180, 224, 0.2);
+  color: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+.pen-act-btn.shoot-main {
+  background: linear-gradient(135deg, #ffd76e, #d9ae3e 60%, #b8860b);
+  border: none;
+  color: #0b111e;
+  box-shadow: 0 6px 20px rgba(217, 174, 62, 0.35);
+  font-size: 14px;
+}
+.pen-act-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold2);
+}
+.pen-act-btn:active {
+  transform: scale(0.95);
+}

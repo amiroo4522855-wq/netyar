@@ -287,7 +287,7 @@ const NAV=[
   {v:'ai',i:'brain',t:'هوش مصنوعی'},
 ];
 const VIEWS=['home','sites','fav','games','shop','customers','music','calc','typing','ai'];
-const GAME_VIEWS=['game-carracing',
+const GAME_VIEWS=['game-penalties','game-carracing',
   'game-turbo','game-fourcards','game-dino','game-tower','game-tetris','game-2048','game-snake','game-ttt','game-memory','game-rps','game-react','game-coin','game-dice','game-puzzle','game-word','game-chess','game-flappy','game-breakout','game-mines','game-bubble','game-angry','game-hajabbas'];
 const ALL_VIEWS=VIEWS.concat(GAME_VIEWS);
 
@@ -551,6 +551,10 @@ const GAMES=[
   {t:'تاس شانس',i:'dice5',c:'#c46a8e',d:'بدون تاس، شروع نکن!'},
 ];
 const GAME_META={
+  'penalties':{t:'ضربات پنالتی قهرمانان',i:'activity',c:'#10b981',type:'dom',best:['penaltiesBest','گل'],
+    d:'هیجان ضربات پنالتی در استادیوم بزرگ! با هدف‌گیری دقیق زاویه و قدرت، توپ را به کنج دروازه شلیک کنید و مقابل واکنش‌های دروازه‌بان هوشمند پیروز شوید.',
+    ctrl:'کلیک یا لمس جهت دروازه = شلیک توپ · نوار قدرت = قدرت ضربه · Space = شوت مستقیم',
+    btns:[{t:'شوت چپ',k:'ArrowLeft',i:'chevron-left'},{t:'شوت وسط',k:'ArrowUp',i:'zap',cls:'primary'},{t:'شوت راست',k:'ArrowRight',i:'chevron-right'}]},
   'carracing':{t:'ماشین‌سواری ایرانی',i:'car',c:'#d9ae3e',type:'dom',best:['carBestSpeed','KM/H'],
     d:'شبیه‌ساز رانندگی واقعی با دنا پلاس، پژو پارس و پیکان جوانان! فیزیک مومنتوم، گاراژ شخصی‌سازی، کیلومترشمار دیجیتال، دور موتور و مپ‌های متنوع شهری، چالوس و شبانه.',
     ctrl:'W/↑ = گاز · S/↓ = ترمز/دنده عقب · A/D = فرمان · Space = ترمز دستی · Shift = نیترو · C = دوربین · Esc = مکث',

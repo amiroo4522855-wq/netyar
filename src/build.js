@@ -27,6 +27,7 @@ const GAME5JS = read('game5.js');
 const GAME6JS = read('game6.js');
 const GAME7JS = read('game7.js');
 const GAME8JS = read('game8.js');
+const GAME9JS = read('game9.js');
 const COVJS = read('covers.js');
 const TYPJS = read('typing.js');
 const CUSTJS = read('customers.js');
@@ -50,7 +51,7 @@ try{
 APPJS = APPJS.split('{{WELCOME_AUDIO}}').join(WELCOME_DATA);
 
 let out = SHELL;
-for (const [k, v] of [['{{FONTS}}', FONTS], ['{{CSS}}', CSS], ['{{DATA}}', DATA], ['{{ICONS}}', ICONS], ['{{GAMEJS}}', GAMEJS], ['{{GAME2JS}}', GAME2JS], ['{{GAME3JS}}', GAME3JS], ['{{GAME4JS}}', GAME4JS], ['{{GAME5JS}}', GAME5JS], ['{{GAME6JS}}', GAME6JS], ['{{GAME7JS}}', GAME7JS], ['{{GAME8JS}}', GAME8JS], ['{{COVJS}}', COVJS], ['{{TYPJS}}', TYPJS], ['{{CUSTJS}}', CUSTJS], ['{{COINJS}}', COINJS], ['{{AIJS}}', AIJS], ['{{APPJS}}', APPJS]]) {
+for (const [k, v] of [['{{FONTS}}', FONTS], ['{{CSS}}', CSS], ['{{DATA}}', DATA], ['{{ICONS}}', ICONS], ['{{GAMEJS}}', GAMEJS], ['{{GAME2JS}}', GAME2JS], ['{{GAME3JS}}', GAME3JS], ['{{GAME4JS}}', GAME4JS], ['{{GAME5JS}}', GAME5JS], ['{{GAME6JS}}', GAME6JS], ['{{GAME7JS}}', GAME7JS], ['{{GAME8JS}}', GAME8JS], ['{{GAME9JS}}', GAME9JS], ['{{COVJS}}', COVJS], ['{{TYPJS}}', TYPJS], ['{{CUSTJS}}', CUSTJS], ['{{COINJS}}', COINJS], ['{{AIJS}}', AIJS], ['{{APPJS}}', APPJS]]) {
   out = out.split(k).join(v);
 }
 
