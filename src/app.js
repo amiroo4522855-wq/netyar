@@ -365,20 +365,24 @@ function setSitePage(p){
 }
 
 function bnavHtml(){
-  return '<nav class="bnav" aria-label="ناوبری سریع موبایل">'
+  const isMoreActive = ['ai','calc','typing','customers','shop','fav'].includes(state.view);
+  return '<nav class="bnav" aria-label="ناوبری سریع اپ">'
     +'<div class="bnav-in">'
-      +'<div class="bnav-item'+(state.view==='home'?' active':'')+'" data-v="home" onclick="go(\'home\')">'
+      +'<button class="bnav-item'+(state.view==='home'?' active':'')+'" data-v="home" onclick="go(\'home\')">'
         +ic('home', 20)+'<span>خانه</span>'
-      +'</div>'
-      +'<div class="bnav-item'+(state.view==='sites'?' active':'')+'" data-v="sites" onclick="go(\'sites\')">'
+      +'</button>'
+      +'<button class="bnav-item'+(state.view==='sites'?' active':'')+'" data-v="sites" onclick="go(\'sites\')">'
         +ic('compass', 20)+'<span>سایت‌ها</span>'
-      +'</div>'
-      +'<div class="bnav-item'+(state.view==='games'||state.view.indexOf('game-')===0?' active':'')+'" data-v="games" onclick="go(\'games\')">'
-        +ic('gamepad-2', 20)+'<span>بازی‌خانه</span>'
-      +'</div>'
-      +'<div class="bnav-item'+(state.view==='music'?' active':'')+'" data-v="music" onclick="go(\'music\')">'
+      +'</button>'
+      +'<button class="bnav-item'+(state.view==='games'||state.view.indexOf('game-')===0?' active':'')+'" data-v="games" onclick="go(\'games\')">'
+        +ic('gamepad-2', 20)+'<span>بازی‌ها</span>'
+      +'</button>'
+      +'<button class="bnav-item'+(state.view==='music'?' active':'')+'" data-v="music" onclick="go(\'music\')">'
         +ic('music', 20)+'<span>موزیک</span>'
-      +'</div>'
+      +'</button>'
+      +'<button class="bnav-item'+(isMoreActive||state.sbOpen?' active':'')+'" onclick="toggleSidebar()">'
+        +ic('grid', 20)+'<span>بیشتر</span>'
+      +'</button>'
     +'</div>'
   +'</nav>';
 }

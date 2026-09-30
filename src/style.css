@@ -1721,7 +1721,7 @@ blockquote p{margin:4px 0;color:var(--tx2)}
   transform-origin:right center;
 }
 .sidebar.open{transform:translateX(0) scale(1);opacity:1;filter:blur(0) saturate(1);box-shadow:-18px 0 60px rgba(2,8,20,.55),-1px 0 0 rgba(148,180,224,.12),inset 0 1px 0 rgba(255,255,255,.06)}
-.sidebar.closed{transform:translateX(104%) scale(.96);opacity:0;filter:blur(12px) saturate(.85);pointer-events:none;box-shadow:none}
+.sidebar.closed{transform:translateX(104%) scale(.96);opacity:0;filter:none;pointer-events:none;box-shadow:none}
 .sb-glow{position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;pointer-events:none;filter:blur(40px);opacity:.18;background:radial-gradient(circle,rgba(240,199,94,.8),transparent 70%);transition:all .7s ease}
 .sidebar.open .sb-glow{opacity:.32;transform:scale(1.2)}
 .sb-close{
@@ -1736,7 +1736,7 @@ blockquote p{margin:4px 0;color:var(--tx2)}
 .sb-overlay{
   position:fixed;inset:0;z-index:49;
   background:radial-gradient(120% 120% at 80% 20%,rgba(46,108,184,.18),transparent 60%),rgba(6,10,26,.52);
-  backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+  backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
   opacity:0;pointer-events:none;
   transition:opacity .58s cubic-bezier(.16,1,.3,1),backdrop-filter .58s ease;
   will-change:opacity;
@@ -1935,7 +1935,7 @@ body.fs-on .topbar,body.fs-on .bnav{opacity:0;pointer-events:none;transform:tran
 .gi-fs:hover svg{transform:scale(1.18) rotate(-6deg)}
 /* --- کلیدهای بازی با کیفیت بالا --- */
 .touch-btns{gap:12px;margin-top:14px}
-.touch-btns .btn{position:relative;min-height:56px;padding:16px 18px;border-radius:16px;font-size:15px;font-weight:900;letter-spacing:.3px;backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(148,180,224,.18);box-shadow:0 10px 24px rgba(2,8,20,.4),inset 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(148,180,224,.06);transition:all .34s cubic-bezier(.16,1,.3,1);overflow:hidden;isolation:isolate}
+.touch-btns .btn{position:relative;min-height:56px;padding:16px 18px;border-radius:16px;font-size:15px;font-weight:900;letter-spacing:.3px;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;border:1px solid rgba(148,180,224,.18);box-shadow:0 10px 24px rgba(2,8,20,.4),inset 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(148,180,224,.06);transition:all .34s cubic-bezier(.16,1,.3,1);overflow:hidden;isolation:isolate}
 .touch-btns .btn::before{content:"";position:absolute;inset:0;border-radius:16px;background:linear-gradient(115deg,transparent 18%,rgba(255,255,255,.14) 42%,transparent 68%);transform:translateX(-130%);transition:transform .8s cubic-bezier(.16,1,.3,1)}
 .touch-btns .btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 36px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.14),0 0 0 1px rgba(240,199,94,.18)}
 .touch-btns .btn:hover::before{transform:translateX(0)}
@@ -3715,4 +3715,83 @@ button:active, .btn:active, .icon-btn:active, .mode-btn:active, .chip:active, .p
 html, body, #app {
   max-width: 100vw;
   overflow-x: hidden !important;
+}
+
+
+/* ================================================================
+   بهینه‌سازی ویژه تبلت (iPad / Android Tablets: 768px - 1024px)
+   ================================================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --side: 220px;
+  }
+  .content {
+    padding: 22px 20px 40px !important;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+  .cat-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+  }
+  .game-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
+  .hero {
+    padding: 28px 24px !important;
+  }
+  .hero h1 {
+    font-size: 28px !important;
+  }
+  .topbar {
+    padding: 0 20px !important;
+  }
+}
+
+/* ================================================================
+   افکت شیشه‌ای لوکس (Liquid Frosted Glass) و آیکون‌های هماهنگ
+   ================================================================ */
+.card, .game-card, .cat-card, .mus-card, .crm-card, .typ-practice, .cr-settings-card {
+  background: linear-gradient(145deg, rgba(18, 30, 52, 0.72), rgba(10, 18, 32, 0.88)) !important;
+  border: 1px solid rgba(148, 180, 224, 0.16) !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.card:hover, .game-card:hover, .cat-card:hover {
+  background: linear-gradient(145deg, rgba(24, 40, 70, 0.82), rgba(12, 22, 40, 0.94)) !important;
+  border-color: rgba(217, 174, 62, 0.45) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(217, 174, 62, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* نوار ۵ دکمه‌ای مدرن در موبایل */
+@media (max-width: 920px) {
+  .bnav-in {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 4px !important;
+  }
+  .bnav-item span {
+    font-size: 10px !important;
+  }
+}
+
+/* دسترس‌پذیری و استایل فوکوس وضوح بالا */
+:focus-visible {
+  outline: 2px solid var(--gold2) !important;
+  outline-offset: 2px !important;
+}
+
+/* حذف کامل هرگونه بلور در حالت باز بودن سایدبار */
+body.sb-open .content,
+body.sb-open #app,
+body.sb-open .main {
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+.sb-overlay {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(4, 8, 18, 0.65) !important;
 }
