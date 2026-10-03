@@ -5,7 +5,37 @@
    ================================================================ */
 'use strict';
 
-const CRM_PASS = '5585';
+// سیستم پین امنیتی پویا (پیش‌فرض: 5585 با امکان تغییر دلخواه مدیر)
+function crmGetPin(){
+  try{
+    return localStorage.getItem('ny_crm_pin') || '5585';
+  }catch(e){
+    return '5585';
+  }
+}
+
+function crmChangePinPrompt(){
+  const curPin = crmGetPin();
+  const oldEntered = prompt('جهت تغییر رمز، لطفاً پین‌کد فعلی را وارد کنید:');
+  if(!oldEntered) return;
+  if(oldEntered.trim() !== curPin){
+    alert('پین‌کد فعلی نادرست است!');
+    return;
+  }
+  const newPin = prompt('پین‌کد جدید ۴ رقمی خود را وارد کنید:');
+  if(!newPin || newPin.trim().length !== 4 || isNaN(newPin.trim())){
+    alert('پین‌کد باید دقیقاً ۴ رقم عددی باشد!');
+    return;
+  }
+  try{
+    localStorage.setItem('ny_crm_pin', newPin.trim());
+    toast('پین‌کد امنیتی با موفقیت تغییر یافت ✓', 'shield-check');
+  }catch(e){
+    alert('خطا در ذخیره‌سازی پین‌کد');
+  }
+}
+
+const CRM_PASS = crmGetPin();
 const CRM_STORE_KEY = 'crm_customers';
 
 // احراز هویت امنیتی سشن (تا زمان بستن تب یا کلیک روی قفل فوری معتبر است)
@@ -247,7 +277,7 @@ function crmSave(){
   crmSet(list);
   CRM.editId = null;
   CRM._pickedCat = null;
-  CRM.view = 'list';
+  CRM.view = 'list'; CRM.newSavedId = CRM.editId || newId;
   crmRerender();
 }
 
@@ -303,7 +333,7 @@ function crmPrint(id){
   const w = window.open('', '_blank');
   if(!w) { toast('پاپ‌آپ مسدود است، لطفاً اجازه دهید', 'alert'); return; }
   w.document.write('<!DOCTYPE html><html dir="rtl" lang="fa"><head><meta charset="utf-8"><title>پرونده ' + c.fullName + '</title>'
-    +'<style>body{font-family:sans-serif;padding:30px;direction:rtl;color:#111;}h2{color:#1a3c6e;border-bottom:2px solid #d9ae3e;padding-bottom:8px;}table{width:100%;border-collapse:collapse;margin-top:20px;}td{padding:10px;border-bottom:1px solid #ddd;}td.lbl{font-weight:bold;width:30%;color:#555;}@media print{button{display:none;}}</style>'
+    +'<style>body{font-family:Tahoma,sans-serif;padding:24px;direction:rtl;background:#f8fafc;color:#0f172a;max-width:650px;margin:0 auto;} .receipt{background:#fff;border:2px solid #0f2b5c;border-radius:14px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,0.08);} .hdr{text-align:center;border-bottom:2px dashed #cbd5e1;padding-bottom:14px;margin-bottom:18px;} .hdr h2{margin:0;color:#0f2b5c;font-size:20px;} .hdr p{margin:4px 0 0;font-size:12px;color:#64748b;} table{width:100%;border-collapse:collapse;} td{padding:10px 8px;border-bottom:1px solid #f1f5f9;font-size:13px;} td.lbl{font-weight:bold;color:#475569;width:35%;} .ftr{margin-top:20px;text-align:center;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:10px;} @media print{body{padding:0;background:#fff;} .receipt{border:1px solid #000;box-shadow:none;} button{display:none;}}</style>'
     +'</head><body>'
     +'<h2>کافی‌نت نت‌یار — برگ مشخصات مشتری</h2>'
     +'<table>'
@@ -592,6 +622,7 @@ function crmBodyHtml(){
         +'<button class="btn gold" onclick="CRM.view=\'form\';CRM.editId=null;CRM._pickedCat=null;crmRerender();document.querySelector(\'.crm-form-card\')?.scrollIntoView({behavior:\'smooth\'});">' + ic('plus', 16) + ' ثبت مشتری جدید</button>'
         +'<button class="btn ghost" onclick="crmExport()">' + ic('download', 14) + ' خروجی پشتیبان</button>'
         +'<label class="btn ghost" style="cursor:pointer">' + ic('upload', 14) + ' ورود داده<input type="file" accept=".json" style="display:none" onchange="crmImportFile(this)"></label>'
+        +'<button class="btn ghost" onclick="crmChangePinPrompt()" title="تغییر پین‌کد امنیتی">' + ic('key', 14) + ' تغییر پین</button>'
         +'<button class="btn ghost" onclick="crmLogout()" title="خروج و قفل مجدد سامانه">' + ic('lock', 14) + ' قفل فوری</button>'
       +'</div>'
     +'</div>'
@@ -621,7 +652,8 @@ function crmCard(c, i){
       return c.createdAt;
     }
   })();
-  return '<div class="crm-card reveal" style="--cc:' + cat.c + ';transition-delay:' + Math.min(i*40, 400) + 'ms">'
+  const isNew = (CRM.newSavedId === c.id);
+  return '<div class="crm-card reveal' + (isNew ? ' crm-card-highlight' : '') + '" style="--cc:' + cat.c + ';transition-delay:' + Math.min(i*40, 400) + 'ms">'
     +'<div class="crm-card-head">'
       +'<span class="crm-av" style="--cc:' + cat.c + '">' + ic(cat.i, 18) + '</span>'
       +'<div class="crm-meta"><div class="crm-name">' + esc(c.fullName) + '</div><div class="crm-sub">' + ic('hash', 10) + esc(c.national) + ' · ' + ic('smartphone', 10) + esc(c.mobile) + '</div></div>'
@@ -649,6 +681,7 @@ function vCustomers(){ return crmBodyHtml(); }
 
 // expose globals
 window.crmTryPass = crmTryPass;
+window.crmChangePinPrompt = crmChangePinPrompt;
 window.crmPinOnInput = crmPinOnInput;
 window.crmNumPress = crmNumPress;
 window.crmNumClear = crmNumClear;

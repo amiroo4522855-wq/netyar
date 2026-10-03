@@ -453,7 +453,11 @@ function vHome(){
         {n:'چت‌جی‌پی‌تی', u:'chatgpt.com', i:'cpu', c:'#10b981', d:'هوش مصنوعی OpenAI'},
         {n:'تست سرعت', u:'speedtest.net', i:'activity', c:'#06b6d4', d:'اسپیدتست اوکلا'},
         {n:'سامانه سخا', u:'sakha.epolice.ir', i:'file-text', c:'#8b5cf6', d:'پلیس +۱۰ آنلاین'},
-        {n:'دولت من', u:'my.gov.ir', i:'layers', c:'#d9ae3e', d:'پنجره ملی خدمات'}
+        {n:'دولت من', u:'my.gov.ir', i:'layers', c:'#d9ae3e', d:'پنجره ملی خدمات'},
+        {n:'سازمان سنجش', u:'sanjesh.org', i:'award', c:'#059669', d:'کنکور و استخدامی'},
+        {n:'تامین اجتماعی', u:'eservices.tamin.ir', i:'shield-check', c:'#0284c7', d:'سوابق و بیمه'},
+        {n:'سامانه مالیاتی', u:'my.tax.gov.ir', i:'briefcase', c:'#d97706', d:'اظهارنامه و فاکتور'},
+        {n:'پست من', u:'post.ir', i:'navigation', c:'#dc2626', d:'پیگیری مرسولات پستی'}
       ].map(sc => '<a class="csw-btn" href="'+fullUrl(sc.u)+'" target="_blank" rel="noopener" onclick="incTodayVisits();copyText(fullUrl(\''+sc.u+'\'));toast(\'ورود به '+sc.n+' — آدرس کپی شد\',\'log-in\')" style="--sc-col:'+sc.c+'">'
         +'<span class="csw-ic" style="color:'+sc.c+'">'+ic(sc.i,22)+'</span>'
         +'<div class="csw-info">'
@@ -2048,7 +2052,7 @@ try{ if('speechSynthesis' in window){ speechSynthesis.getVoices(); speechSynthes
 
 /* ---------- لودینگ هوشمند و سریع با ضمانت ورود فوری ---------- */
 (function(){
-  const DUR = 3600; // لودینگ روان و دلنشین ۳.۶ ثانیه‌ای به جای ۱۰ ثانیه کند
+  const DUR = 1800; // لودینگ روان و دلنشین ۳.۶ ثانیه‌ای به جای ۱۰ ثانیه کند
   const fill = document.getElementById('ldFill');
   const pct = document.getElementById('ldPct');
   const stat = document.getElementById('ldStat');

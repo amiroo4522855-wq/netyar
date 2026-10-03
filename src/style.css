@@ -4364,3 +4364,101 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #d9ae3e;
 }
+
+
+/* ================================================================
+   فیکس حیاتی رندر و اسکرول بخش مشتریان در موبایل (CRM Mobile Fix)
+   ================================================================ */
+@media (max-width: 920px) {
+  /* تضمین نمایش قطعی محتوا و حذف صفر شدن ارتفاع */
+  .crm-hero {
+    grid-template-columns: 1fr !important;
+    padding: 20px 16px !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+  .crm-hero h1 {
+    font-size: 22px !important;
+    line-height: 1.35 !important;
+  }
+  .crm-hero p {
+    font-size: 12px !important;
+    line-height: 1.7 !important;
+  }
+  .crm-hero-stats {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .crm-hero-acts {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .crm-hero-acts .btn {
+    flex: 1 1 calc(50% - 6px) !important;
+    min-height: 44px !important;
+    font-size: 12px !important;
+    justify-content: center !important;
+    padding: 8px 10px !important;
+  }
+  .crm-hero-visual {
+    display: none !important;
+  }
+  .crm-lock-wrap {
+    min-height: auto !important;
+    padding: 20px 12px !important;
+  }
+  .crm-lock-card {
+    width: 100% !important;
+    padding: 24px 16px !important;
+  }
+  .crm-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .crm-card {
+    padding: 14px !important;
+    border-radius: 16px !important;
+  }
+  .crm-card-acts {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .crm-card-acts .btn {
+    flex: 1 1 calc(33.3% - 6px) !important;
+    min-height: 38px !important;
+    font-size: 11px !important;
+    padding: 6px 8px !important;
+    justify-content: center !important;
+  }
+  .crm-card-acts .crm-del-btn {
+    flex: 1 1 100% !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+    color: #fca5a5 !important;
+  }
+  /* هدر شلوغ موبایل: مخفی کردن موارد اضافی در عرض کوچک */
+  .top-right .clock {
+    display: none !important;
+  }
+}
+
+/* انیمیشن لایت‌آپ کارت جدید ثبت‌شده */
+.crm-card-highlight {
+  animation: cardHighlight 2.4s ease-out !important;
+  border-color: var(--gold2) !important;
+}
+@keyframes cardHighlight {
+  0% { transform: scale(0.95); box-shadow: 0 0 35px rgba(217, 174, 62, 0.8); }
+  50% { transform: scale(1.02); box-shadow: 0 0 25px rgba(217, 174, 62, 0.5); }
+  100% { transform: none; box-shadow: 0 10px 26px rgba(2, 8, 20, 0.35); }
+}
+
+/* افزایش کنتراست متون کم‌رنگ برای خوانایی و دسترسی‌پذیری بالا */
+:root {
+  --tx2: #b8c8e2 !important;
+  --tx3: #8298ba !important;
+}
+.card .desc, .hero p.sub, .crm-row span, .crm-form-title p {
+  color: #a4b7d4 !important;
+}
